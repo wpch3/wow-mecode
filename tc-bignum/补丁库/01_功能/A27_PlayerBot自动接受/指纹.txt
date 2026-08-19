@@ -1,0 +1,10 @@
+step42 文件指纹（含 42b 交易/释放）
+生成时间: 2026-08-04
+
+d66cdc2afb3a37a093adaa91e45faa1f  patches/step42_PlayerBot自动接受/源文件/pbot_autoaccept.h
+cb25fb57304ca288d25471d7d60f9d7e  patches/step42_PlayerBot自动接受/源文件/pbot_autoaccept.cpp
+46193dc13c641d337e7ea5988ca5c748  patches/step40_PlayerBot验证/源文件/cs_playerbot.cpp
+
+   78 patches/step42_PlayerBot自动接受/源文件/pbot_autoaccept.h
+  572 patches/step42_PlayerBot自动接受/源文件/pbot_autoaccept.cpp
+  870 patches/step40_PlayerBot验证/源文件/cs_playerbot.cpp

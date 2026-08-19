@@ -1,0 +1,69 @@
+Wandering bot Llane id 82355 class 1 level 29 WAS KILLED BY wandering bot Serena id 82539 class 8 level 39 on their way to RefugePointeExitS!
+Bot Llane id 82155 class 1 level 25 map 1 TELEPORTING to node 753 ('AddlesSteadW') map 0, X: -11054.9 Y: 270.776 Z: 25.2035 O: 6.01338, dist 21114.418 yd!
+Wandering bot Tuten'arak id 82303 class 20 level 27 KILLED wandering bot Llane id 82373 class 1 level 18 on their way to RedridgeE4!
+Wandering bot Llane id 82373 class 1 level 18 WAS KILLED BY wandering bot Tuten'arak id 82303 class 1 level 27 on their way to RedridgeE4!
+Wandering bot Prakar id 82504 class 18 level 30 KILLED wandering bot Llane id 82241 class 1 level 25 on their way to AshenvaleC_hub11!
+Wandering bot Llane id 82241 class 1 level 25 WAS KILLED BY wandering bot Prakar id 82504 class 9 level 30 on their way to AshenvaleC_hub11!
+Bot Llane id 82462 class 1 level 56 map 1 TELEPORTING to node 1264 ('FrostwhisperGorgeBridge2') map 1, X: 5184.44 Y: -4704.74 Z: 823.398 O: 6.16966, dist 8255.95 yd!
+Bot Llane id 82518 class 1 level 25 map 1 TELEPORTING to node 38 ('Astranaar') map 1, X: 2687.8 Y: -420.338 Z: 107.402 O: 0.195851, dist 7756.977 yd!
+Bot Lankral id 82365 class 6 level 57 map 1 TELEPORTING to node 1241 ('EverlookFlightA') map 1, X: 6790.08 Y: -4744.29 Z: 701.5 O: 3.20441, dist 7491.8726 yd!
+Bot Llane id 82511 class 1 level 46 map 1 TELEPORTING to node 2146 ('GadgetzanA2') map 1, X: -7232.4 Y: -3740.53 Z: 8.47838 O: 5.52708, dist 18167.305 yd!
+Wandering bot Nephri'thos id 82313 class 20 level 6 KILLED wandering bot Llane id 82184 class 1 level 3 on their way to TradeDistrict!
+Wandering bot Llane id 82184 class 1 level 3 WAS KILLED BY wandering bot Nephri'thos id 82313 class 1 level 6 on their way to TradeDistrict!
+Bot Llane id 82213 class 1 level 52 can't find full path to node 646 (res 4) from pos X: -7499.29 Y: -2176.38 Z: 167.6 O: 2.57387, falling back to default PF!
+Bot Valustraa id 82292 class 8 level 18 map 1 TELEPORTING to node 15 ('Sentinel Hill') map 0, X: -10509.5 Y: 1047.74 Z: 60.519 O: 5.20046, dist 20518.355 yd!
+Bot Illyrie id 82395 class 6 level 55 map 0 TELEPORTING to node 173 ('Chillwind Camp') map 0, X: 940.955 Y: -1419.2 Z: 66.7723 O: 0.796556, dist 1047.0782 yd!
+Bot Llane id 82443 class 1 level 22 map 1 TELEPORTING to node 40 ('Thalanaar') map 1, X: -4496.36 Y: -778.473 Z: -40.558
+AuraEffect::HandlePeriodicTriggerSpellAuraTick: Spell 768 [EffectIndex: 2] does not have triggered spell.
+Wandering bot Eanor id 82171 class 16 level 21 KILLED wandering bot Llane id 82411 class 1 level 20 on their way to RatchetSpawn!
+Wandering bot Llane id 82411 class 1 level 20 WAS KILLED BY wandering bot Eanor id 82171 class 2 level 21 on their way to RatchetSpawn!
+Wandering bot Llane id 82587 class 1 level 69 WAS KILLED BY creature Stormspire Nexus-Guard id 19529 class 1 level 71 on their way to net1166!
+AuraEffect::HandlePeriodicTriggerSpellAuraTick: Spell 768 [EffectIndex: 2] does not have triggered spell.
+Wandering bot Benjamin id 82421 class 5 level 57 WAS KILLED BY wandering bot Benjamin id 82421 class 5 level 57 on their way to Silithus19!
+Wandering bot Amot id 82207 class 13 level 72 KILLED creature Altar of Sha'tar Vindicator id 21986 class 2 level 70 on their way to shmv1371!
+Wandering bot Sallina id 82169 class 3 level 50 KILLED wandering bot Llane id 82511 class 1 level 46 on their way to GadgetzanS!
+Wandering bot Llane id 82511 class 1 level 46 WAS KILLED BY wandering bot Sallina id 82169 class 3 level 50 on their way to Gadgetzan!
+Wandering bot Tuten'arak id 82303 class 20 level 27 KILLED wandering bot Aurelon id 82400 class 2 level 25 on their way to Tower of Ilgalar!
+Wandering bot Aurelon id 82400 class 2 level 25 WAS KILLED BY wandering bot Tuten'arak id 82303 class 1 level 27 on their way to RedridgeE4!
+AuraEffect::HandlePeriodicTriggerSpellAuraTick: Spell 768 [EffectIndex: 2] does not have triggered spell.
+Wandering bot Llane id 82344 class 1 level 68 KILLED creature Stormspire Nexus-Guard id 19529 class 1 level 71 on their way to net1166!
+Bot Nephri'thos id 82313 class 20 level 6 map 0 TELEPORTING to node 1849 ('Mulgore35') map 1, X: -1427.28 Y: 82.3261 Z: 15.7467 O: 3.85023, dist 8052.933 yd!
+Wandering bot Rukua id 82489 class 2 level 64 KILLED creature Sporeggar Preserver id 18139 class 2 level 65 on their way to zangar180!
+AuraEffect::HandlePeriodicTriggerSpellAuraTick: Spell 768 [EffectIndex: 2] does not have triggered spell.
+Wandering bot Arak-arahm id 82378 class 20 level 67 WAS KILLED BY creature Caravan Defender id 22407 class 1 level 65 on their way to tero274!
+Wandering bot Amot id 82207 class 13 level 72 KILLED creature Altar of Sha'tar Vindicator id 21986 class 2 level 70 on their way to shmv1371!
+AuraEffect::HandlePeriodicTriggerSpellAuraTick: Spell 768 [EffectIndex: 2] does not have triggered spell.
+Wandering bot Eanor id 82171 class 16 level 21 KILLED wandering bot Caedmos id 82224 class 5 level 16 on their way to RatchetSpawn!
+Wandering bot Caedmos id 82224 class 5 level 16 WAS KILLED BY wandering bot Eanor id 82171 class 2 level 21 on their way to RatchetSpawn!
+AuraEffect::HandlePeriodicTriggerSpellAuraTick: Spell 768 [EffectIndex: 2] does not have triggered spell.
+Wandering bot Llane id 82289 class 1 level 60 KILLED wandering bot Llane id 82243 class 1 level 46 on their way to MoongladeMainRoad2!
+Wandering bot Llane id 82243 class 1 level 46 WAS KILLED BY wandering bot Llane id 82289 class 1 level 60 on their way to MoongladeMainRoad1!
+Bot Tannaria id 82548 class 4 level 51 can't find full path to node 1196 (res 4) from pos X: 7292.48 Y: -2160.7 Z: 621.558 O: 3.00333, falling back to default PF!
+AuraEffect::HandlePeriodicTriggerSpellAuraTick: Spell 768 [EffectIndex: 2] does not have triggered spell.
+AuraEffect::HandlePeriodicTriggerSpellAuraTick: Spell 768 [EffectIndex: 2] does not have triggered spell.
+Wandering bot Amot id 82207 class 13 level 72 KILLED creature Altar of Sha'tar Vindicator id 21986 class 2 level 70 on their way to shmv1371!
+AuraEffect::HandlePeriodicTriggerSpellAuraTick: Spell 768 [EffectIndex: 2] does not have triggered spell.
+AuraEffect::HandlePeriodicTriggerSpellAuraTick: Spell 768 [EffectIndex: 2] does not have triggered spell.
+Bot Tannaria id 82548 class 4 level 51 can't find full path to node 1196 (res 4) from pos X: 7219.47 Y: -2185.07 Z: 604.598 O: 3.77098, falling back to default PF!
+Wandering bot Thorgas id 82159 class 3 level 34 KILLED creature Samantha Swifthoof id 11748 class 1 level 40 on their way to SVExitN!
+Bot Tannaria id 82548 class 4 level 51 can't find full path to node 1196 (res 4) from pos X: 7192.27 Y: -2187.2 Z: 640.03 O: 3.49674, falling back to default PF!
+AuraEffect::HandlePeriodicTriggerSpellAuraTick: Spell 768 [EffectIndex: 2] does not have triggered spell.
+AuraEffect::HandlePeriodicTriggerSpellAuraTick: Spell 768 [EffectIndex: 2] does not have triggered spell.
+Bot Tannaria id 82548 class 4 level 51 can't find full path to node 1196 (res 4) from pos X: 7178.2 Y: -2181.99 Z: 666.278 O: 2.78679, falling back to default PF!
+Wandering bot Tuten'arak id 82303 class 20 level 27 KILLED wandering bot Llane id 82388 class 1 level 23 on their way to Tower of Ilgalar!
+Wandering bot Llane id 82388 class 1 level 23 WAS KILLED BY wandering bot Tuten'arak id 82303 class 1 level 27 on their way to RedridgeE4!
+Bot Llane id 82322 class 1 level 47 can't find full path to node 1196 (res 4) from pos X: 7219.47 Y: -2185.07 Z: 604.598 O: 3.77361, falling back to default PF!
+Bot Tannaria id 82548 class 4 level 51 can't find full path to node 1196 (res 8) from pos X: 7164.13 Y: -2176.78 Z: 695.771 O: 2.78679, falling back to default PF!
+Wandering bot Llane id 82105 class 1 level 10 KILLED wandering bot Nephri'thos id 82313 class 1 level 6 on their way to Mulgore34!
+Wandering bot Nephri'thos id 82313 class 20 level 6 WAS KILLED BY wandering bot Llane id 82105 class 1 level 10 on their way to Mulgore35!
+Bot Llane id 82322 class 1 level 47 can't find full path to node 1196 (res 4) from pos X: 7192.27 Y: -2187.2 Z: 640.03 O: 3.49674, falling back to default PF!
+Bot Llane id 82322 class 1 level 47 can't find full path to node 1196 (res 4) from pos X: 7178.2 Y: -2181.99 Z: 666.278 O: 2.78679, falling back to default PF!
+Bot Tannaria id 82548 class 4 level 51 can't find full path to node 1196 (res 4) from pos X: 7090.13 Y: -2160.27 Z: 700.996 O: 2.93408, falling back to default PF!
+Bot Llane id 82322 class 1 level 47 can't find full path to node 1196 (res 8) from pos X: 7164.13 Y: -2176.78 Z: 695.771 O: 2.78679, falling back to default PF!
+Wandering bot Mynx id 82367 class 6 level 55 KILLED wandering bot Llane id 82247 class 1 level 54 on their way to EverlookFork1!
+Wandering bot Llane id 82247 class 1 level 54 WAS KILLED BY wandering bot Mynx id 82367 class 6 level 55 on their way to EverlookFork1!
+AuraEffect::HandlePeriodicTriggerSpellAuraTick: Spell 768 [EffectIndex: 2] does not have triggered spell.
+Bot Llane id 82322 class 1 level 47 can't find full path to node 1196 (res 4) from pos X: 7090.13 Y: -2160.27 Z: 700.996 O: 2.93408, falling back to default PF!
+Wandering bot Rukua id 82489 class 2 level 64 KILLED creature Sporeggar Preserver id 18139 class 2 level 65 on their way to zangar180!
+Wandering bot Zalamon id 82330 class 15 level 63 KILLED wandering bot Llane id 82136 class 1 level 60 on their way to EPL_hubSW2!
+Wandering bot Llane id 82136 class 1 level 60 WAS KILLED BY wandering bot Zalamon id 82330 class 9 level 63 on their way to Crown Guard Tower - Alliance!

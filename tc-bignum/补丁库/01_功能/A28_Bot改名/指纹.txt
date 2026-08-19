@@ -1,0 +1,8 @@
+step43 Bot改名 指纹
+生成时间: 2026-08-04
+
+4766dfce02b6a9490435e15ce21ba93a  patches/step43_Bot改名/源文件/cs_botrename.cpp
+4b17f65ae3ad77aa98ec05223ffdea6d  patches/step43_Bot改名/sql/改名模板.sql
+
+  652 patches/step43_Bot改名/源文件/cs_botrename.cpp
+  187 patches/step43_Bot改名/sql/改名模板.sql

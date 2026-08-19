@@ -1,0 +1,13 @@
+diff --git a/LuaEngine.cpp b/LuaEngine.cpp
+index be1a87b..1a682d3 100644
+--- a/LuaEngine.cpp
++++ b/LuaEngine.cpp
+@@ -588,7 +588,7 @@ template<> long long Eluna::CHECKVAL<long long>(int narg)
+ template<> unsigned long long Eluna::CHECKVAL<unsigned long long>(int narg)
+ {
+     if (lua_isnumber(L, narg))
+-        return static_cast<unsigned long long>(CHECKVAL<uint32>(narg));
++        return static_cast<unsigned long long>(CHECKVAL<double>(narg));
+     return *(Eluna::CHECKOBJ<unsigned long long>(narg, true));
+ }
+ template<> long Eluna::CHECKVAL<long>(int narg)

@@ -1,0 +1,471 @@
+
+Administrator@LAPTOP-FEN36HKQ MINGW64 ~/Downloads
+$ bash "C:\Users\Administrator\Downloads\诊断脚本v2.sh" /d/TrinityCore/src
+===================================================================
+ 诊断 v2  目录: /d/TrinityCore/src
+===================================================================
+
+### 1. AddSC 注册次数（每个应正好 2 次）
+-------------------------------------------------------------------
+  AddSC_wp_commandscript                        4 次  [!! 异常 !!]
+
+### 2.【关键】声明是否被误写进函数体内
+-------------------------------------------------------------------
+  说明：'void AddSC_xxx();' 必须在 AddCommandsScripts() 【之前】。
+        写进函数体里 C++ 也能编译，但那是【局部声明】不是调用，
+        会导致脚本【根本没被注册】。
+
+  AddCommandsScripts() 起始行: 86
+
+  [正常] 没有声明被写进函数体
+
+### 3.【关键】函数体内是否真的有调用
+-------------------------------------------------------------------
+  AddSC_botrename_commandscript                 调用在 101 行  [正常]
+  AddSC_pbot_autoaccept                         调用在 102 行  [正常]
+  AddSC_playerbot_commandscript                 调用在 99 行  [正常]
+
+### 4.【核心】全量扫描：顶层命令名是否重复
+-------------------------------------------------------------------
+  ASSERT 'Duplicate blank sub-command' = 同一命令名注册了两次 invoker
+
+  以下命令名出现多次（子命令重名是正常的，重点看【顶层】）：
+
+    命令 "account":
+      /d/TrinityCore/src/server/scripts/Commands/cs_account.cpp:88:            { "account",            accountCommandTable },
+      /d/TrinityCore/src/server/scripts/Commands/cs_ban.cpp:53:            { "account",        HandleUnBanAccountCommand,              rbac::RBAC_PERM_COMMAND_UNBAN_ACCOUNT,          Console::Yes },
+      /d/TrinityCore/src/server/scripts/Commands/cs_ban.cpp:60:            { "account",        HandleBanListAccountCommand,            rbac::RBAC_PERM_COMMAND_BANLIST_ACCOUNT,        Console::Yes },
+      /d/TrinityCore/src/server/scripts/Commands/cs_ban.cpp:66:            { "account",        HandleBanInfoAccountCommand,            rbac::RBAC_PERM_COMMAND_BANINFO_ACCOUNT,        Console::Yes },
+
+    命令 "achievement_criteria":
+      /d/TrinityCore/src/server/scripts/Commands/cs_disable.cpp:52:            { "achievement_criteria", HandleRemoveDisableAchievementCriteriaCommand, rbac::RBAC_PERM_COMMAND_DISABLE_REMOVE_ACHIEVEMENT_CRITERIA, Console::Yes },
+      /d/TrinityCore/src/server/scripts/Commands/cs_disable.cpp:63:            { "achievement_criteria", HandleAddDisableAchievementCriteriaCommand,    rbac::RBAC_PERM_COMMAND_DISABLE_ADD_ACHIEVEMENT_CRITERIA, Console::Yes },
+
+    命令 "add":
+      /d/TrinityCore/src/server/scripts/Commands/cs_deserter.cpp:53:            { "add",      HandleDeserterInstanceAdd,    rbac::RBAC_PERM_COMMAND_DESERTER_INSTANCE_ADD,    Console::No },
+      /d/TrinityCore/src/server/scripts/Commands/cs_deserter.cpp:58:            { "add",      HandleDeserterBGAdd,    rbac::RBAC_PERM_COMMAND_DESERTER_BG_ADD,          Console::No },
+      /d/TrinityCore/src/server/scripts/Commands/cs_disable.cpp:70:            { "add",    addDisableCommandTable },
+      /d/TrinityCore/src/server/scripts/Commands/cs_gobject.cpp:72:            { "add",            HandleGameObjectAddCommand,       rbac::RBAC_PERM_COMMAND_GOBJECT_ADD,            Console::No },
+
+    命令 "addon":
+      /d/TrinityCore/src/server/scripts/Commands/cs_account.cpp:55:            { "addon",              HandleAccountSetAddonCommand,       LANG_COMMAND_ACC_SET_ADDON_HELP,        rbac::RBAC_PERM_COMMAND_ACCOUNT_SET_ADDON,          Console::Yes },
+      /d/TrinityCore/src/server/scripts/Commands/cs_account.cpp:75:            { "addon",              HandleAccountAddonCommand,          LANG_COMMAND_ACC_ADDON_HELP,            rbac::RBAC_PERM_COMMAND_ACCOUNT_ADDON,              Console::No  },
+
+    命令 "all":
+      /d/TrinityCore/src/server/scripts/Commands/cs_learn.cpp:66:            { "all",    learnAllCommandTable },
+      /d/TrinityCore/src/server/scripts/Commands/cs_modify.cpp:52:            { "all",      rbac::RBAC_PERM_COMMAND_MODIFY_SPEED_ALL,      false, &HandleModifyASpeedCommand, "" },
+      /d/TrinityCore/src/server/scripts/Commands/cs_reload.cpp:81:            { "all",                           rbac::RBAC_PERM_COMMAND_RELOAD_ALL,                              true,  nullptr,                                           "", reloadAllCommandTable },
+      /d/TrinityCore/src/server/scripts/Commands/cs_reset.cpp:57:            { "all",          rbac::RBAC_PERM_COMMAND_RESET_ALL,          true, &HandleResetAllCommand,          "" },
+
+    命令 "area":
+      /d/TrinityCore/src/server/scripts/Commands/cs_lookup.cpp:62:            { "area",     rbac::RBAC_PERM_COMMAND_LOOKUP_AREA,     true, &HandleLookupAreaCommand,     "" },
+      /d/TrinityCore/src/server/scripts/Commands/cs_reload.cpp:64:            { "area",                          rbac::RBAC_PERM_COMMAND_RELOAD_ALL_AREA,                         true,  &HandleReloadAllAreaCommand,                     "" },
+
+    命令 "battleground":
+      /d/TrinityCore/src/server/scripts/Commands/cs_disable.cpp:51:            { "battleground",         HandleRemoveDisableBattlegroundCommand,        rbac::RBAC_PERM_COMMAND_DISABLE_REMOVE_BATTLEGROUND,         Console::Yes },
+      /d/TrinityCore/src/server/scripts/Commands/cs_disable.cpp:62:            { "battleground",         HandleAddDisableBattlegroundCommand,           rbac::RBAC_PERM_COMMAND_DISABLE_ADD_BATTLEGROUND,         Console::Yes },
+
+    命令 "cancel":
+      /d/TrinityCore/src/server/scripts/Commands/cs_server.cpp:64:            { "cancel", rbac::RBAC_PERM_COMMAND_SERVER_IDLERESTART_CANCEL, true, &HandleServerShutDownCancelCommand, "" },
+      /d/TrinityCore/src/server/scripts/Commands/cs_server.cpp:70:            { "cancel", rbac::RBAC_PERM_COMMAND_SERVER_IDLESHUTDOWN_CANCEL, true, &HandleServerShutDownCancelCommand, "" },
+      /d/TrinityCore/src/server/scripts/Commands/cs_server.cpp:76:            { "cancel", rbac::RBAC_PERM_COMMAND_SERVER_RESTART_CANCEL, true, &HandleServerShutDownCancelCommand, "" },
+      /d/TrinityCore/src/server/scripts/Commands/cs_server.cpp:83:            { "cancel", rbac::RBAC_PERM_COMMAND_SERVER_SHUTDOWN_CANCEL, true, &HandleServerShutDownCancelCommand, "" },
+
+    命令 "character":
+      /d/TrinityCore/src/server/scripts/Commands/cs_ban.cpp:54:            { "character",      HandleUnBanCharacterCommand,            rbac::RBAC_PERM_COMMAND_UNBAN_CHARACTER,        Console::Yes },
+      /d/TrinityCore/src/server/scripts/Commands/cs_ban.cpp:61:            { "character",      HandleBanListCharacterCommand,          rbac::RBAC_PERM_COMMAND_BANLIST_CHARACTER,      Console::Yes },
+      /d/TrinityCore/src/server/scripts/Commands/cs_ban.cpp:67:            { "character",      HandleBanInfoCharacterCommand,          rbac::RBAC_PERM_COMMAND_BANINFO_CHARACTER,      Console::Yes },
+      /d/TrinityCore/src/server/scripts/Commands/cs_ban.cpp:73:            { "character",      HandleBanCharacterCommand,              rbac::RBAC_PERM_COMMAND_BAN_CHARACTER,          Console::Yes },
+
+    命令 "class":
+      /d/TrinityCore/src/server/game/AI/NpcBots/botcommands.cpp:607:            { "class",      HandleNPCBotSpawnedFreeClassCommand,    rbac::RBAC_PERM_COMMAND_NPCBOT_SPAWNED,            Console::Yes },
+      /d/TrinityCore/src/server/game/AI/NpcBots/botcommands.cpp:616:            { "class",      HandleNPCBotSpawnedClassCommand,        rbac::RBAC_PERM_COMMAND_NPCBOT_SPAWNED,            Console::Yes },
+
+    命令 "clean":
+      /d/TrinityCore/src/server/scripts/Commands/cs_lfg.cpp:58:            { "clean",      HandleLfgCleanCommand,          rbac::RBAC_PERM_COMMAND_LFG_CLEAN,      Console::Yes },
+      /d/TrinityCore/src/server/scripts/Commands/cs_smartadd.cpp:566:            { "clean",  rbac::RBAC_PERM_COMMAND_SMART_SPAWN, false, &HandleClean,      "" },
+
+    命令 "complete":
+      /d/TrinityCore/src/server/scripts/Commands/cs_quest.cpp:50:            { "complete", rbac::RBAC_PERM_COMMAND_QUEST_COMPLETE, false, &HandleQuestComplete, "" },
+      /d/TrinityCore/src/server/scripts/Commands/cs_ticket.cpp:61:            { "complete",      rbac::RBAC_PERM_COMMAND_TICKET_COMPLETE,      true, &HandleGMTicketCompleteCommand,          "" },
+
+    命令 "cooldown":
+      /d/TrinityCore/src/server/scripts/Commands/cs_cheat.cpp:45:            { "cooldown",       HandleCoolDownCheatCommand,  rbac::RBAC_PERM_COMMAND_CHEAT_COOLDOWN,  Console::No },
+      /d/TrinityCore/src/server/scripts/Commands/cs_misc.cpp:85:            { "cooldown",         HandleCooldownCommand,         rbac::RBAC_PERM_COMMAND_COOLDOWN,         Console::No },
+
+    命令 "create":
+      /d/TrinityCore/src/server/scripts/Commands/cs_account.cpp:76:            { "create",             HandleAccountCreateCommand,         LANG_COMMAND_ACC_CREATE_HELP,           rbac::RBAC_PERM_COMMAND_ACCOUNT_CREATE,             Console::Yes },
+      /d/TrinityCore/src/server/scripts/Commands/cs_arena.cpp:47:            { "create",         HandleArenaCreateCommand,   rbac::RBAC_PERM_COMMAND_ARENA_CREATE,  Console::Yes },
+      /d/TrinityCore/src/server/scripts/Commands/cs_guild.cpp:50:            { "create",   rbac::RBAC_PERM_COMMAND_GUILD_CREATE,   true, &HandleGuildCreateCommand,           "" },
+      /d/TrinityCore/src/server/scripts/Commands/cs_pet.cpp:56:            { "create",  HandlePetCreateCommand,  rbac::RBAC_PERM_COMMAND_PET_CREATE,  Console::No },
+
+    命令 "creature":
+      /d/TrinityCore/src/server/scripts/Commands/cs_go.cpp:50:            { "creature",           HandleGoCreatureSpawnIdCommand,         rbac::RBAC_PERM_COMMAND_GO,             Console::No },
+      /d/TrinityCore/src/server/scripts/Commands/cs_list.cpp:61:            { "creature",       HandleListCreatureCommand,      rbac::RBAC_PERM_COMMAND_LIST_CREATURE,      Console::Yes },
+      /d/TrinityCore/src/server/scripts/Commands/cs_lookup.cpp:63:            { "creature", rbac::RBAC_PERM_COMMAND_LOOKUP_CREATURE, true, &HandleLookupCreatureCommand, "" },
+
+    命令 "debug":
+      /d/TrinityCore/src/server/scripts/Commands/cs_debug.cpp:130:            { "debug",              debugCommandTable },
+      /d/TrinityCore/src/server/scripts/Commands/cs_learn.cpp:48:            { "debug",      HandleLearnDebugSpellsCommand,   LANG_COMMAND_LEARN_ALL_DEBUG_HELP,     rbac::RBAC_PERM_COMMAND_LEARN,               Console::No },
+      /d/TrinityCore/src/server/scripts/Commands/cs_server.cpp:98:            { "debug",        rbac::RBAC_PERM_COMMAND_SERVER_DEBUG,        true, &HandleServerDebugCommand,   "" },
+      /d/TrinityCore/src/server/game/AI/NpcBots/botcommands.cpp:680:            //{ "debug",      npcbotDebugCommandTable                                                                                 },
+
+    命令 "del":
+      /d/TrinityCore/src/server/scripts/Commands/cs_tele.cpp:60:            { "del",    HandleTeleDelCommand,   rbac::RBAC_PERM_COMMAND_TELE_DEL,   Console::Yes },
+      /d/TrinityCore/src/server/game/AI/NpcBots/botcommands.cpp:505:            { "del",        HandleNpcBotWPDeleteCommand,            rbac::RBAC_PERM_COMMAND_NPCBOT_SPAWN,              Console::No  },
+
+    命令 "delete":
+      /d/TrinityCore/src/server/scripts/Commands/cs_account.cpp:77:            { "delete",             HandleAccountDeleteCommand,         LANG_COMMAND_ACC_DELETE_HELP,           rbac::RBAC_PERM_COMMAND_ACCOUNT_DELETE,             Console::Yes },
+      /d/TrinityCore/src/server/scripts/Commands/cs_character.cpp:57:            { "delete",        HandleCharacterDeletedDeleteCommand,  rbac::RBAC_PERM_COMMAND_CHARACTER_DELETED_DELETE,  Console::Yes },
+      /d/TrinityCore/src/server/scripts/Commands/cs_gobject.cpp:63:            { "delete",         HandleGameObjectDeleteCommand,    rbac::RBAC_PERM_COMMAND_GOBJECT_DELETE,         Console::No },
+      /d/TrinityCore/src/server/scripts/Commands/cs_guild.cpp:51:            { "delete",   rbac::RBAC_PERM_COMMAND_GUILD_DELETE,   true, &HandleGuildDeleteCommand,           "" },
+
+    命令 "despawngroup":
+      /d/TrinityCore/src/server/scripts/Commands/cs_gobject.cpp:70:            { "despawngroup",   HandleNpcDespawnGroup,            rbac::RBAC_PERM_COMMAND_GOBJECT_DESPAWNGROUP,   Console::No },
+      /d/TrinityCore/src/server/scripts/Commands/cs_npc.cpp:101:            { "despawngroup",   HandleNpcDespawnGroup,             rbac::RBAC_PERM_COMMAND_NPC_DESPAWNGROUP,   Console::No },
+
+    命令 "disband":
+      /d/TrinityCore/src/server/scripts/Commands/cs_arena.cpp:48:            { "disband",        HandleArenaDisbandCommand,  rbac::RBAC_PERM_COMMAND_ARENA_DISBAND, Console::Yes },
+      /d/TrinityCore/src/server/scripts/Commands/cs_group.cpp:58:            { "disband", rbac::RBAC_PERM_COMMAND_GROUP_DISBAND,   false, &HandleGroupDisbandCommand, "" },
+
+    命令 "dummy":
+      /d/TrinityCore/src/server/scripts/Commands/cs_debug.cpp:120:            { "dummy",              HandleDebugDummyCommand,               rbac::RBAC_PERM_COMMAND_DEBUG,   Console::No },
+      /d/TrinityCore/src/server/scripts/Commands/cs_dummy.cpp:683:            { "dummy", rbac::RBAC_PERM_COMMAND_WORLDTOOLS, false, &HandleDummy, "" },
+
+    命令 "email":
+      /d/TrinityCore/src/server/scripts/Commands/cs_account.cpp:78:            { "email",              HandleAccountEmailCommand,          LANG_COMMAND_ACC_EMAIL_HELP,            rbac::RBAC_PERM_COMMAND_ACCOUNT_EMAIL,              Console::No  },
+      /d/TrinityCore/src/server/scripts/Commands/cs_lookup.cpp:57:            { "email",   rbac::RBAC_PERM_COMMAND_LOOKUP_PLAYER_EMAIL,   true, &HandleLookupPlayerEmailCommand,     "" },
+
+    命令 "event":
+      /d/TrinityCore/src/server/scripts/Commands/cs_event.cpp:51:            { "event", eventCommandTable },
+      /d/TrinityCore/src/server/scripts/Commands/cs_lookup.cpp:64:            { "event",    rbac::RBAC_PERM_COMMAND_LOOKUP_EVENT,    true, &HandleLookupEventCommand,    "" },
+      /d/TrinityCore/src/server/scripts/Commands/cs_wp.cpp:53:            { "event",  rbac::RBAC_PERM_COMMAND_WP_EVENT,  false, &HandleWpEventCommand,  "" },
+      /d/TrinityCore/src/server/game/AI/NpcBots/botcommands.cpp:537:            { "event",      npcbotDebugEventCommandTable                                                                            },
+
+    命令 "faction":
+      /d/TrinityCore/src/server/scripts/Commands/cs_lookup.cpp:65:            { "faction",  rbac::RBAC_PERM_COMMAND_LOOKUP_FACTION,  true, &HandleLookupFactionCommand,  "" },
+      /d/TrinityCore/src/server/scripts/Commands/cs_modify.cpp:67:            { "faction",      rbac::RBAC_PERM_COMMAND_MODIFY_FACTION,      false, &HandleModifyFactionCommand,       "" },
+      /d/TrinityCore/src/server/game/AI/NpcBots/botcommands.cpp:542:            { "faction",    HandleNpcBotSetFactionCommand,          rbac::RBAC_PERM_COMMAND_NPCBOT_SET_FACTION,        Console::No  },
+
+    命令 "fly":
+      /d/TrinityCore/src/server/scripts/Commands/cs_gm.cpp:49:            { "fly",        HandleGMFlyCommand,         rbac::RBAC_PERM_COMMAND_GM_FLY,         Console::No },
+      /d/TrinityCore/src/server/scripts/Commands/cs_modify.cpp:54:            { "fly",      rbac::RBAC_PERM_COMMAND_MODIFY_SPEED_FLY,      false, &HandleModifyFlyCommand,    "" },
+
+    命令 "force":
+      /d/TrinityCore/src/server/scripts/Commands/cs_server.cpp:77:            { "force",  rbac::RBAC_PERM_COMMAND_SERVER_RESTART_FORCE,  true, &HandleServerForceRestartCommand,   "" },
+      /d/TrinityCore/src/server/scripts/Commands/cs_server.cpp:84:            { "force",  rbac::RBAC_PERM_COMMAND_SERVER_SHUTDOWN_FORCE,  true, &HandleServerForceShutDownCommand,  "" },
+
+    命令 "free":
+      /d/TrinityCore/src/server/game/AI/NpcBots/botcommands.cpp:619:            { "free",       npcbotListSpawnedFreeCommandTable                                                                       },
+      /d/TrinityCore/src/server/game/AI/NpcBots/botcommands.cpp:631:            { "free",       HandleNpcBotDeleteFreeCommand,          rbac::RBAC_PERM_COMMAND_NPCBOT_DELETE,             Console::Yes },
+      /d/TrinityCore/src/server/game/AI/NpcBots/botcommands.cpp:685:            { "free",       HandleNpcBotFreeCommand,                rbac::RBAC_PERM_COMMAND_NPCBOT_REMOVE,             Console::No  },
+
+    命令 "go":
+      /d/TrinityCore/src/server/scripts/Commands/cs_go.cpp:68:            { "go", goCommandTable },
+      /d/TrinityCore/src/server/game/AI/NpcBots/botcommands.cpp:508:            { "go",         HandleNpcBotWPGoCommand,                rbac::RBAC_PERM_COMMAND_NPCBOT_SPAWN,              Console::No  },
+      /d/TrinityCore/src/server/game/AI/NpcBots/botcommands.cpp:703:            { "go",         HandleNpcBotGoCommand,                  rbac::RBAC_PERM_COMMAND_NPCBOT_MOVE,               Console::No  },
+
+    命令 "group":
+      /d/TrinityCore/src/server/scripts/Commands/cs_group.cpp:70:            { "group", rbac::RBAC_PERM_COMMAND_GROUP, false, nullptr, "", groupCommandTable },
+      /d/TrinityCore/src/server/scripts/Commands/cs_lfg.cpp:56:            { "group",      HandleLfgGroupInfoCommand,      rbac::RBAC_PERM_COMMAND_LFG_GROUP,      Console::No },
+      /d/TrinityCore/src/server/scripts/Commands/cs_tele.cpp:62:            { "group",  HandleTeleGroupCommand, rbac::RBAC_PERM_COMMAND_TELE_GROUP, Console::No },
+
+    命令 "guid":
+      /d/TrinityCore/src/server/scripts/Commands/cs_misc.cpp:95:            { "guid",             HandleGUIDCommand,             rbac::RBAC_PERM_COMMAND_GUID,             Console::No },
+      /d/TrinityCore/src/server/scripts/Commands/cs_tele.cpp:49:            { "guid",   HandleTeleNameNpcSpawnIdCommand,    rbac::RBAC_PERM_COMMAND_TELE_NAME,  Console::Yes },
+
+    命令 "honor":
+      /d/TrinityCore/src/server/scripts/Commands/cs_honor.cpp:55:            { "honor", honorCommandTable },
+      /d/TrinityCore/src/server/scripts/Commands/cs_modify.cpp:69:            { "honor",        rbac::RBAC_PERM_COMMAND_MODIFY_HONOR,        false, &HandleModifyHonorCommand,         "" },
+      /d/TrinityCore/src/server/scripts/Commands/cs_reset.cpp:52:            { "honor",        rbac::RBAC_PERM_COMMAND_RESET_HONOR,        true, &HandleResetHonorCommand,        "" },
+
+    命令 "id":
+      /d/TrinityCore/src/server/scripts/Commands/cs_list.cpp:55:            { "id",             HandleListAurasByIdCommand,     rbac::RBAC_PERM_COMMAND_LIST_AURAS,         Console::No  },
+      /d/TrinityCore/src/server/scripts/Commands/cs_tele.cpp:48:            { "id",     HandleTeleNameNpcIdCommand,         rbac::RBAC_PERM_COMMAND_TELE_NAME,  Console::Yes },
+      /d/TrinityCore/src/server/game/AI/NpcBots/botcommands.cpp:630:            { "id",         HandleNpcBotDeleteByIdCommand,          rbac::RBAC_PERM_COMMAND_NPCBOT_DELETE,             Console::Yes },
+
+    命令 "info":
+      /d/TrinityCore/src/server/scripts/Commands/cs_arena.cpp:51:            { "info",           HandleArenaInfoCommand,     rbac::RBAC_PERM_COMMAND_ARENA_INFO,    Console::Yes },
+      /d/TrinityCore/src/server/scripts/Commands/cs_event.cpp:47:            { "info",       HandleEventInfoCommand,       rbac::RBAC_PERM_COMMAND_EVENT_INFO,       Console::Yes },
+      /d/TrinityCore/src/server/scripts/Commands/cs_gobject.cpp:64:            { "info",           HandleGameObjectInfoCommand,      rbac::RBAC_PERM_COMMAND_GOBJECT_INFO,           Console::No },
+      /d/TrinityCore/src/server/scripts/Commands/cs_guild.cpp:56:            { "info",     rbac::RBAC_PERM_COMMAND_GUILD_INFO,     true, &HandleGuildInfoCommand,             "" },
+
+    命令 "ip":
+      /d/TrinityCore/src/server/scripts/Commands/cs_account.cpp:66:            { "ip",       HandleAccountOnlineListWithIpFilterCommand,   LANG_COMMAND_ACC_ONLINELIST_HELP,       rbac::RBAC_PERM_COMMAND_ACCOUNT_ONLINE_LIST,        Console::Yes },
+      /d/TrinityCore/src/server/scripts/Commands/cs_ban.cpp:56:            { "ip",             HandleUnBanIPCommand,                   rbac::RBAC_PERM_COMMAND_UNBAN_IP,               Console::Yes },
+      /d/TrinityCore/src/server/scripts/Commands/cs_ban.cpp:62:            { "ip",             HandleBanListIPCommand,                 rbac::RBAC_PERM_COMMAND_BANLIST_IP,             Console::Yes },
+      /d/TrinityCore/src/server/scripts/Commands/cs_ban.cpp:68:            { "ip",             HandleBanInfoIPCommand,                 rbac::RBAC_PERM_COMMAND_BANINFO_IP,             Console::Yes },
+
+    命令 "item":
+      /d/TrinityCore/src/server/scripts/Commands/cs_itemforge.cpp:545:            { "item", rbac::RBAC_PERM_COMMAND_ITEMFORGE, false, &HandleItemCommand, "" },
+      /d/TrinityCore/src/server/scripts/Commands/cs_list.cpp:62:            { "item",           HandleListItemCommand,          rbac::RBAC_PERM_COMMAND_LIST_ITEM,          Console::Yes },
+      /d/TrinityCore/src/server/scripts/Commands/cs_lookup.cpp:66:            { "item",     rbac::RBAC_PERM_COMMAND_LOOKUP_ITEM,     true, &HandleLookupItemCommand,     "" },
+      /d/TrinityCore/src/server/scripts/Commands/cs_npc.cpp:66:            { "item",           HandleNpcAddVendorItemCommand,     rbac::RBAC_PERM_COMMAND_NPC_ADD_ITEM,       Console::No },
+
+    命令 "kill":
+      /d/TrinityCore/src/server/scripts/Commands/cs_honor.cpp:43:            { "kill", HandleHonorAddKillCommand, rbac::RBAC_PERM_COMMAND_HONOR_ADD_KILL, Console::No },
+      /d/TrinityCore/src/server/game/AI/NpcBots/botcommands.cpp:700:            { "kill",       HandleNpcBotKillCommand,                rbac::RBAC_PERM_COMMAND_NPCBOT_KILL,               Console::No  },
+
+    命令 "leader":
+      /d/TrinityCore/src/server/scripts/Commands/cs_group.cpp:48:            { "leader",     rbac::RBAC_PERM_COMMAND_GROUP_LEADER,     false, &HandleGroupLeaderCommand,     "" },
+      /d/TrinityCore/src/server/scripts/Commands/cs_group.cpp:57:            { "leader",  rbac::RBAC_PERM_COMMAND_GROUP_LEADER,    false, &HandleGroupLeaderCommand,  "" },
+
+    命令 "level":
+      /d/TrinityCore/src/server/scripts/Commands/cs_character.cpp:71:            { "level",         HandleCharacterLevelCommand,          rbac::RBAC_PERM_COMMAND_CHARACTER_LEVEL,           Console::Yes },
+      /d/TrinityCore/src/server/scripts/Commands/cs_group.cpp:65:            { "level",   rbac::RBAC_PERM_COMMAND_CHARACTER_LEVEL, true,  &HandleGroupLevelCommand,   "" }
+      /d/TrinityCore/src/server/scripts/Commands/cs_npc.cpp:78:            { "level",          HandleNpcSetLevelCommand,          rbac::RBAC_PERM_COMMAND_NPC_SET_LEVEL,      Console::No },
+      /d/TrinityCore/src/server/scripts/Commands/cs_pet.cpp:59:            { "level",   HandlePetLevelCommand,   rbac::RBAC_PERM_COMMAND_PET_LEVEL,   Console::No },
+
+    命令 "list":
+      /d/TrinityCore/src/server/scripts/Commands/cs_character.cpp:58:            { "list",          HandleCharacterDeletedListCommand,    rbac::RBAC_PERM_COMMAND_CHARACTER_DELETED_LIST,    Console::Yes },
+      /d/TrinityCore/src/server/scripts/Commands/cs_gm.cpp:51:            { "list",       HandleGMListFullCommand,    rbac::RBAC_PERM_COMMAND_GM_LIST,        Console::Yes },
+      /d/TrinityCore/src/server/scripts/Commands/cs_group.cpp:61:            { "list",    rbac::RBAC_PERM_COMMAND_GROUP_LIST,      false, &HandleGroupListCommand,    "" },
+      /d/TrinityCore/src/server/scripts/Commands/cs_list.cpp:71:            { "list", listCommandTable },
+
+    命令 "load":
+      /d/TrinityCore/src/server/scripts/Commands/cs_character.cpp:52:            { "load",          HandlePDumpLoadCommand,               rbac::RBAC_PERM_COMMAND_PDUMP_LOAD,                Console::Yes },
+      /d/TrinityCore/src/server/scripts/Commands/cs_wp.cpp:54:            { "load",   rbac::RBAC_PERM_COMMAND_WP_LOAD,   false, &HandleWpLoadCommand,   "" },
+      /d/TrinityCore/src/server/game/AI/NpcBots/botcommands.cpp:592:            { "load",       HandleNpcBotDumpLoadCommand,            rbac::RBAC_PERM_COMMAND_NPCBOT_DUMP_LOAD,          Console::Yes },
+
+    命令 "lookup":
+      /d/TrinityCore/src/server/scripts/Commands/cs_arena.cpp:52:            { "lookup",         HandleArenaLookupCommand,   rbac::RBAC_PERM_COMMAND_ARENA_LOOKUP,  Console::No },
+      /d/TrinityCore/src/server/scripts/Commands/cs_lookup.cpp:85:            { "lookup", lookupCommandTable },
+      /d/TrinityCore/src/server/game/AI/NpcBots/botcommands.cpp:690:            { "lookup",     HandleNpcBotLookupCommand,              rbac::RBAC_PERM_COMMAND_NPCBOT_LOOKUP,             Console::Yes },
+
+    命令 "mail":
+      /d/TrinityCore/src/server/scripts/Commands/cs_itemforge.cpp:388:        { "锁甲",     4, 3,  0  }, { "mail",      4, 3,  0  },
+      /d/TrinityCore/src/server/scripts/Commands/cs_list.cpp:65:            { "mail",           HandleListMailCommand,          rbac::RBAC_PERM_COMMAND_LIST_MAIL,          Console::Yes },
+      /d/TrinityCore/src/server/scripts/Commands/cs_send.cpp:46:            { "mail",    HandleSendMailCommand,    rbac::RBAC_PERM_COMMAND_SEND_MAIL,    Console::Yes },
+      /d/TrinityCore/src/server/scripts/Commands/cs_worldtools.cpp:989:            { "mail",    "便携邮差",     960004, false },   // v4.0 改回 NPC
+
+    命令 "map":
+      /d/TrinityCore/src/server/scripts/Commands/cs_account.cpp:68:            { "map",      HandleAccountOnlineListWithMapFilterCommand,  LANG_COMMAND_ACC_ONLINELIST_HELP,       rbac::RBAC_PERM_COMMAND_ACCOUNT_ONLINE_LIST,        Console::Yes },
+      /d/TrinityCore/src/server/scripts/Commands/cs_disable.cpp:50:            { "map",                  HandleRemoveDisableMapCommand,                 rbac::RBAC_PERM_COMMAND_DISABLE_REMOVE_MAP,                  Console::Yes },
+      /d/TrinityCore/src/server/scripts/Commands/cs_disable.cpp:61:            { "map",                  HandleAddDisableMapCommand,                    rbac::RBAC_PERM_COMMAND_DISABLE_ADD_MAP,                  Console::Yes },
+      /d/TrinityCore/src/server/scripts/Commands/cs_lookup.cpp:79:            { "map",      rbac::RBAC_PERM_COMMAND_LOOKUP_MAP,      true, &HandleLookupMapCommand,      "" },
+
+    命令 "mmap":
+      /d/TrinityCore/src/server/scripts/Commands/cs_disable.cpp:55:            { "mmap",                 HandleRemoveDisableMMapCommand,                rbac::RBAC_PERM_COMMAND_DISABLE_REMOVE_MMAP,                 Console::Yes },
+      /d/TrinityCore/src/server/scripts/Commands/cs_disable.cpp:66:            { "mmap",                 HandleAddDisableMMapCommand,                   rbac::RBAC_PERM_COMMAND_DISABLE_ADD_MMAP,                 Console::Yes },
+      /d/TrinityCore/src/server/scripts/Commands/cs_mmaps.cpp:60:            { "mmap", rbac::RBAC_PERM_COMMAND_MMAP, true, nullptr, "", mmapCommandTable },
+
+    命令 "model":
+      /d/TrinityCore/src/server/scripts/Commands/cs_appearance.cpp:460:            { "model", rbac::RBAC_PERM_COMMAND_WORLDTOOLS, false, &HandleModel, "" },
+      /d/TrinityCore/src/server/scripts/Commands/cs_npc.cpp:80:            { "model",          HandleNpcSetModelCommand,          rbac::RBAC_PERM_COMMAND_NPC_SET_MODEL,      Console::No },
+      /d/TrinityCore/src/server/game/AI/NpcBots/botcommands.cpp:529:            { "model",      HandleNpcBotDebugModelCommand,          rbac::RBAC_PERM_COMMAND_NPCBOT_DEBUG_VISUAL,       Console::No  },
+
+    命令 "modify":
+      /d/TrinityCore/src/server/scripts/Commands/cs_modify.cpp:89:            { "modify",  rbac::RBAC_PERM_COMMAND_MODIFY,  false, nullptr,                 "", modifyCommandTable },
+      /d/TrinityCore/src/server/scripts/Commands/cs_wp.cpp:55:            { "modify", rbac::RBAC_PERM_COMMAND_WP_MODIFY, false, &HandleWpModifyCommand, "" },
+
+    命令 "money":
+      /d/TrinityCore/src/server/scripts/Commands/cs_modify.cpp:72:            { "money",        rbac::RBAC_PERM_COMMAND_MODIFY_MONEY,        false, &HandleModifyMoneyCommand,         "" },
+      /d/TrinityCore/src/server/scripts/Commands/cs_send.cpp:48:            { "money",   HandleSendMoneyCommand,   rbac::RBAC_PERM_COMMAND_SEND_MONEY,   Console::Yes },
+
+    命令 "motd":
+      /d/TrinityCore/src/server/scripts/Commands/cs_server.cpp:91:            { "motd",     rbac::RBAC_PERM_COMMAND_SERVER_SET_MOTD,     true, &HandleServerSetMotdCommand,     "" },
+      /d/TrinityCore/src/server/scripts/Commands/cs_server.cpp:103:            { "motd",         rbac::RBAC_PERM_COMMAND_SERVER_MOTD,         true, &HandleServerMotdCommand,    "" },
+
+    命令 "mount":
+      /d/TrinityCore/src/server/scripts/Commands/cs_modify.cpp:73:            { "mount",        rbac::RBAC_PERM_COMMAND_MODIFY_MOUNT,        false, &HandleModifyMountCommand,         "" },
+      /d/TrinityCore/src/server/game/AI/NpcBots/botcommands.cpp:528:            { "mount",      HandleNpcBotDebugMountCommand,          rbac::RBAC_PERM_COMMAND_NPCBOT_DEBUG_MOUNT,        Console::No  },
+
+    命令 "move":
+      /d/TrinityCore/src/server/scripts/Commands/cs_gobject.cpp:65:            { "move",           HandleGameObjectMoveCommand,      rbac::RBAC_PERM_COMMAND_GOBJECT_MOVE,           Console::No },
+      /d/TrinityCore/src/server/scripts/Commands/cs_npc.cpp:67:            { "move",           HandleNpcAddMoveCommand,           rbac::RBAC_PERM_COMMAND_NPC_ADD_MOVE,       Console::No },
+      /d/TrinityCore/src/server/scripts/Commands/cs_npc.cpp:93:            { "move",           HandleNpcMoveCommand,              rbac::RBAC_PERM_COMMAND_NPC_MOVE,           Console::No },
+      /d/TrinityCore/src/server/game/AI/NpcBots/botcommands.cpp:503:            { "move",       HandleNpcBotWPMoveCommand,              rbac::RBAC_PERM_COMMAND_NPCBOT_SPAWN,              Console::No  },
+
+    命令 "name":
+      /d/TrinityCore/src/server/scripts/Commands/cs_list.cpp:56:            { "name",           HandleListAurasByNameCommand,   rbac::RBAC_PERM_COMMAND_LIST_AURAS,         Console::No  },
+      /d/TrinityCore/src/server/scripts/Commands/cs_tele.cpp:50:            { "name",   HandleTeleNameNpcNameCommand,       rbac::RBAC_PERM_COMMAND_TELE_NAME,  Console::Yes },
+      /d/TrinityCore/src/server/scripts/Commands/cs_tele.cpp:61:            { "name",   teleNameCommandTable },
+
+    命令 "near":
+      /d/TrinityCore/src/server/scripts/Commands/cs_gobject.cpp:66:            { "near",           HandleGameObjectNearCommand,      rbac::RBAC_PERM_COMMAND_GOBJECT_NEAR,           Console::No },
+      /d/TrinityCore/src/server/scripts/Commands/cs_npc.cpp:92:            { "near",           HandleNpcNearCommand,              rbac::RBAC_PERM_COMMAND_NPC_NEAR,           Console::No },
+
+    命令 "object":
+      /d/TrinityCore/src/server/scripts/Commands/cs_list.cpp:63:            { "object",         HandleListObjectCommand,        rbac::RBAC_PERM_COMMAND_LIST_OBJECT,        Console::Yes },
+      /d/TrinityCore/src/server/scripts/Commands/cs_lookup.cpp:69:            { "object",   rbac::RBAC_PERM_COMMAND_LOOKUP_OBJECT,   true, &HandleLookupObjectCommand,   "" },
+
+    命令 "outdoorpvp":
+      /d/TrinityCore/src/server/scripts/Commands/cs_disable.cpp:53:            { "outdoorpvp",           HandleRemoveDisableOutdoorPvPCommand,          rbac::RBAC_PERM_COMMAND_DISABLE_REMOVE_OUTDOORPVP,           Console::Yes },
+      /d/TrinityCore/src/server/scripts/Commands/cs_disable.cpp:64:            { "outdoorpvp",           HandleAddDisableOutdoorPvPCommand,             rbac::RBAC_PERM_COMMAND_DISABLE_ADD_OUTDOORPVP,           Console::Yes },
+
+    命令 "password":
+      /d/TrinityCore/src/server/scripts/Commands/cs_account.cpp:60:            { "password",           HandleAccountSetPasswordCommand,    LANG_COMMAND_ACC_SET_PASSWORD_HELP,     rbac::RBAC_PERM_COMMAND_ACCOUNT_SET_PASSWORD,       Console::Yes },
+      /d/TrinityCore/src/server/scripts/Commands/cs_account.cpp:83:            { "password",           HandleAccountPasswordCommand,       LANG_COMMAND_ACC_PASSWORD_HELP,         rbac::RBAC_PERM_COMMAND_ACCOUNT_PASSWORD,           Console::No  },
+
+    命令 "phase":
+      /d/TrinityCore/src/server/scripts/Commands/cs_modify.cpp:74:            { "phase",        rbac::RBAC_PERM_COMMAND_MODIFY_PHASE,        false, &HandleModifyPhaseCommand,         "" },
+      /d/TrinityCore/src/server/scripts/Commands/cs_npc.cpp:82:            { "phase",          HandleNpcSetPhaseCommand,          rbac::RBAC_PERM_COMMAND_NPC_SET_PHASE,      Console::No },
+
+    命令 "playeraccount":
+      /d/TrinityCore/src/server/scripts/Commands/cs_ban.cpp:55:            { "playeraccount",  HandleUnBanAccountByCharCommand,        rbac::RBAC_PERM_COMMAND_UNBAN_PLAYERACCOUNT,    Console::Yes },
+      /d/TrinityCore/src/server/scripts/Commands/cs_ban.cpp:74:            { "playeraccount",  HandleBanAccountByCharCommand,          rbac::RBAC_PERM_COMMAND_BAN_PLAYERACCOUNT,      Console::Yes },
+
+    命令 "quest":
+      /d/TrinityCore/src/server/scripts/Commands/cs_disable.cpp:49:            { "quest",                HandleRemoveDisableQuestCommand,               rbac::RBAC_PERM_COMMAND_DISABLE_REMOVE_QUEST,                Console::Yes },
+      /d/TrinityCore/src/server/scripts/Commands/cs_disable.cpp:60:            { "quest",                HandleAddDisableQuestCommand,                  rbac::RBAC_PERM_COMMAND_DISABLE_ADD_QUEST,                Console::Yes },
+      /d/TrinityCore/src/server/scripts/Commands/cs_lookup.cpp:70:            { "quest",    rbac::RBAC_PERM_COMMAND_LOOKUP_QUEST,    true, &HandleLookupQuestCommand,    "" },
+      /d/TrinityCore/src/server/scripts/Commands/cs_quest.cpp:56:            { "quest", rbac::RBAC_PERM_COMMAND_QUEST,  false, nullptr, "", questCommandTable },
+
+    命令 "reload":
+      /d/TrinityCore/src/server/scripts/Commands/cs_ahbot.cpp:69:            { "reload",     HandleAHBotReloadCommand,   rbac::RBAC_PERM_COMMAND_AHBOT_RELOAD,   Console::Yes },
+      /d/TrinityCore/src/server/scripts/Commands/cs_reload.cpp:171:            { "reload",                        rbac::RBAC_PERM_COMMAND_RELOAD,                                  true,  nullptr,                                           "", reloadCommandTable },
+      /d/TrinityCore/src/server/scripts/Commands/cs_wp.cpp:57:            { "reload", rbac::RBAC_PERM_COMMAND_WP_RELOAD, false, &HandleWpReloadCommand, "" },
+
+    命令 "remove":
+      /d/TrinityCore/src/server/scripts/Commands/cs_deserter.cpp:54:            { "remove",   HandleDeserterInstanceRemove, rbac::RBAC_PERM_COMMAND_DESERTER_INSTANCE_REMOVE, Console::No },
+      /d/TrinityCore/src/server/scripts/Commands/cs_deserter.cpp:59:            { "remove",   HandleDeserterBGRemove, rbac::RBAC_PERM_COMMAND_DESERTER_BG_REMOVE,       Console::No },
+      /d/TrinityCore/src/server/scripts/Commands/cs_disable.cpp:71:            { "remove", removeDisableCommandTable },
+      /d/TrinityCore/src/server/scripts/Commands/cs_group.cpp:59:            { "remove",  rbac::RBAC_PERM_COMMAND_GROUP_REMOVE,    false, &HandleGroupRemoveCommand,  "" },
+
+    命令 "rename":
+      /d/TrinityCore/src/server/scripts/Commands/cs_arena.cpp:49:            { "rename",         HandleArenaRenameCommand,   rbac::RBAC_PERM_COMMAND_ARENA_RENAME,  Console::Yes },
+      /d/TrinityCore/src/server/scripts/Commands/cs_character.cpp:72:            { "rename",        HandleCharacterRenameCommand,         rbac::RBAC_PERM_COMMAND_CHARACTER_RENAME,          Console::Yes },
+      /d/TrinityCore/src/server/scripts/Commands/cs_guild.cpp:55:            { "rename",   rbac::RBAC_PERM_COMMAND_GUILD_RENAME,   true, &HandleGuildRenameCommand,           "" },
+
+    命令 "reputation":
+      /d/TrinityCore/src/server/scripts/Commands/cs_character.cpp:73:            { "reputation",    HandleCharacterReputationCommand,     rbac::RBAC_PERM_COMMAND_CHARACTER_REPUTATION,      Console::Yes },
+      /d/TrinityCore/src/server/scripts/Commands/cs_modify.cpp:76:            { "reputation",   rbac::RBAC_PERM_COMMAND_MODIFY_REPUTATION,   false, &HandleModifyRepCommand,           "" },
+
+    命令 "reset":
+      /d/TrinityCore/src/server/scripts/Commands/cs_reset.cpp:61:            { "reset", rbac::RBAC_PERM_COMMAND_RESET, true, nullptr, "", resetCommandTable },
+      /d/TrinityCore/src/server/scripts/Commands/cs_ticket.cpp:67:            { "reset",         rbac::RBAC_PERM_COMMAND_TICKET_RESET,         true, &HandleGMTicketResetCommand,             "" },
+
+    命令 "revive":
+      /d/TrinityCore/src/server/scripts/Commands/cs_group.cpp:63:            { "revive",  rbac::RBAC_PERM_COMMAND_REVIVE,          true,  &HandleGroupReviveCommand,  "" },
+      /d/TrinityCore/src/server/scripts/Commands/cs_misc.cpp:114:            { "revive",           HandleReviveCommand,           rbac::RBAC_PERM_COMMAND_REVIVE,           Console::Yes },
+      /d/TrinityCore/src/server/game/AI/NpcBots/botcommands.cpp:692:            { "revive",     HandleNpcBotReviveCommand,              rbac::RBAC_PERM_COMMAND_NPCBOT_REVIVE,             Console::No  },
+
+    命令 "say":
+      /d/TrinityCore/src/server/scripts/Commands/cs_npc.cpp:95:            { "say",            HandleNpcSayCommand,               rbac::RBAC_PERM_COMMAND_NPC_SAY,            Console::No },
+      /d/TrinityCore/src/server/scripts/Commands/cs_say.cpp:311:            { "say", rbac::RBAC_PERM_COMMAND_WORLDTOOLS, false, &HandleSay, "" },
+
+    命令 "set":
+      /d/TrinityCore/src/server/scripts/Commands/cs_account.cpp:82:            { "set",                accountSetCommandTable },
+      /d/TrinityCore/src/server/scripts/Commands/cs_combathelper.cpp:934:            { "set",   rbac::RBAC_PERM_COMMAND_COMBATHELPER, false, &HandleSetCommand,   "" },
+      /d/TrinityCore/src/server/scripts/Commands/cs_group.cpp:56:            { "set",     rbac::RBAC_PERM_COMMAND_GROUP_SET,       false, nullptr,                    "", groupSetCommandTable },
+      /d/TrinityCore/src/server/scripts/Commands/cs_npc.cpp:90:            { "set", npcSetCommandTable },
+
+    命令 "show":
+      /d/TrinityCore/src/server/scripts/Commands/cs_wp.cpp:58:            { "show",   rbac::RBAC_PERM_COMMAND_WP_SHOW,   false, &HandleWpShowCommand,   "" },
+      /d/TrinityCore/src/server/game/AI/NpcBots/botcommands.cpp:698:            { "show",       HandleNpcBotUnhideCommand,              rbac::RBAC_PERM_COMMAND_NPCBOT_UNHIDE,             Console::No  },
+
+    命令 "spawn":
+      /d/TrinityCore/src/server/scripts/Commands/cs_smartadd.cpp:564:            { "spawn",  rbac::RBAC_PERM_COMMAND_SMART_SPAWN, false, &HandleSpawn,      "" },
+      /d/TrinityCore/src/server/game/AI/NpcBots/botcommands.cpp:687:            { "spawn",      HandleNpcBotSpawnCommand,               rbac::RBAC_PERM_COMMAND_NPCBOT_SPAWN,              Console::No  },
+
+    命令 "spawngroup":
+      /d/TrinityCore/src/server/scripts/Commands/cs_gobject.cpp:69:            { "spawngroup",     HandleNpcSpawnGroup,              rbac::RBAC_PERM_COMMAND_GOBJECT_SPAWNGROUP,     Console::No },
+      /d/TrinityCore/src/server/scripts/Commands/cs_npc.cpp:100:            { "spawngroup",     HandleNpcSpawnGroup,               rbac::RBAC_PERM_COMMAND_NPC_SPAWNGROUP,     Console::No },
+
+    命令 "spell":
+      /d/TrinityCore/src/server/scripts/Commands/cs_disable.cpp:48:            { "spell",                HandleRemoveDisableSpellCommand,               rbac::RBAC_PERM_COMMAND_DISABLE_REMOVE_SPELL,                Console::Yes },
+      /d/TrinityCore/src/server/scripts/Commands/cs_disable.cpp:59:            { "spell",                HandleAddDisableSpellCommand,                  rbac::RBAC_PERM_COMMAND_DISABLE_ADD_SPELL,                Console::Yes },
+      /d/TrinityCore/src/server/scripts/Commands/cs_lookup.cpp:74:            { "spell",    rbac::RBAC_PERM_COMMAND_LOOKUP_SPELL,    true, &HandleLookupSpellCommand,    "" },
+      /d/TrinityCore/src/server/scripts/Commands/cs_modify.cpp:80:            { "spell",        rbac::RBAC_PERM_COMMAND_MODIFY_SPELL,        false, &HandleModifySpellCommand,         "" },
+
+    命令 "spells":
+      /d/TrinityCore/src/server/scripts/Commands/cs_reset.cpp:54:            { "spells",       rbac::RBAC_PERM_COMMAND_RESET_SPELLS,       true, &HandleResetSpellsCommand,       "" },
+      /d/TrinityCore/src/server/game/AI/NpcBots/botcommands.cpp:533:            { "spells",     HandleNpcBotDebugSpellsCommand,         rbac::RBAC_PERM_COMMAND_NPCBOT_DEBUG_STATES,       Console::No  },
+
+    命令 "start":
+      /d/TrinityCore/src/server/scripts/Commands/cs_bf.cpp:41:            { "start",      HandleBattlefieldStart,  rbac::RBAC_PERM_COMMAND_BF_START,  Console::No },
+      /d/TrinityCore/src/server/scripts/Commands/cs_event.cpp:45:            { "start",      HandleEventStartCommand,      rbac::RBAC_PERM_COMMAND_EVENT_START,      Console::Yes },
+
+    命令 "stats":
+      /d/TrinityCore/src/server/scripts/Commands/cs_instance.cpp:52:            { "stats",        HandleInstanceStatsCommand,        rbac::RBAC_PERM_COMMAND_INSTANCE_STATS,          Console::Yes },
+      /d/TrinityCore/src/server/scripts/Commands/cs_mmaps.cpp:54:            { "stats",       rbac::RBAC_PERM_COMMAND_MMAP_STATS,       false, &HandleMmapStatsCommand,       "" },
+      /d/TrinityCore/src/server/scripts/Commands/cs_reset.cpp:55:            { "stats",        rbac::RBAC_PERM_COMMAND_RESET_STATS,        true, &HandleResetStatsCommand,        "" },
+      /d/TrinityCore/src/server/game/AI/NpcBots/botcommands.cpp:609:            { "stats",      HandleNpcBotSpawnedFreeStatsCommand,    rbac::RBAC_PERM_COMMAND_NPCBOT_SPAWNED,            Console::Yes },
+
+    命令 "status":
+      /d/TrinityCore/src/server/scripts/Commands/cs_ahbot.cpp:70:            { "status",     HandleAHBotStatusCommand,   rbac::RBAC_PERM_COMMAND_AHBOT_STATUS,   Console::Yes },
+      /d/TrinityCore/src/server/scripts/Commands/cs_cheat.cpp:48:            { "status",         HandleCheatStatusCommand,    rbac::RBAC_PERM_COMMAND_CHEAT_STATUS,    Console::No },
+
+    命令 "stop":
+      /d/TrinityCore/src/server/scripts/Commands/cs_bf.cpp:42:            { "stop",       HandleBattlefieldEnd,    rbac::RBAC_PERM_COMMAND_BF_STOP,   Console::No },
+      /d/TrinityCore/src/server/scripts/Commands/cs_event.cpp:46:            { "stop",       HandleEventStopCommand,       rbac::RBAC_PERM_COMMAND_EVENT_STOP,       Console::Yes },
+
+    命令 "summon":
+      /d/TrinityCore/src/server/scripts/Commands/cs_group.cpp:62:            { "summon",  rbac::RBAC_PERM_COMMAND_GROUP_SUMMON,    false, &HandleGroupSummonCommand,  "" },
+      /d/TrinityCore/src/server/scripts/Commands/cs_misc.cpp:119:            { "summon",           HandleSummonCommand,           rbac::RBAC_PERM_COMMAND_SUMMON,           Console::No },
+
+    命令 "talents":
+      /d/TrinityCore/src/server/scripts/Commands/cs_learn.cpp:53:            { "talents",    HandleLearnAllTalentsCommand,    LANG_COMMAND_LEARN_ALL_TALENTS_HELP,   rbac::RBAC_PERM_COMMAND_LEARN_ALL_TALENTS,   Console::No },
+      /d/TrinityCore/src/server/scripts/Commands/cs_reset.cpp:56:            { "talents",      rbac::RBAC_PERM_COMMAND_RESET_TALENTS,      true, &HandleResetTalentsCommand,      "" },
+
+    命令 "target":
+      /d/TrinityCore/src/server/scripts/Commands/cs_cast.cpp:49:            { "target", HandleCastTargetCommad, rbac::RBAC_PERM_COMMAND_CAST_TARGET, Console::No },
+      /d/TrinityCore/src/server/scripts/Commands/cs_gobject.cpp:67:            { "target",         HandleGameObjectTargetCommand,    rbac::RBAC_PERM_COMMAND_GOBJECT_TARGET,         Console::No },
+
+    命令 "taxinode":
+      /d/TrinityCore/src/server/scripts/Commands/cs_go.cpp:56:            { "taxinode",           HandleGoTaxinodeCommand,                rbac::RBAC_PERM_COMMAND_GO,             Console::No },
+      /d/TrinityCore/src/server/scripts/Commands/cs_lookup.cpp:76:            { "taxinode", rbac::RBAC_PERM_COMMAND_LOOKUP_TAXINODE, true, &HandleLookupTaxiNodeCommand, "" },
+
+    命令 "ticket":
+      /d/TrinityCore/src/server/scripts/Commands/cs_go.cpp:60:            { "ticket",             HandleGoTicketCommand,                  rbac::RBAC_PERM_COMMAND_GO,             Console::No },
+      /d/TrinityCore/src/server/scripts/Commands/cs_ticket.cpp:76:            { "ticket", rbac::RBAC_PERM_COMMAND_TICKET, false, nullptr, "", ticketCommandTable },
+
+    命令 "trainer":
+      /d/TrinityCore/src/server/scripts/Commands/cs_learn.cpp:59:            { "trainer", HandleLearnMySpellsCommand,         LANG_COMMAND_LEARN_MY_TRAINER_HELP,    rbac::RBAC_PERM_COMMAND_LEARN_ALL_MY_SPELLS, Console::No },
+      /d/TrinityCore/src/server/scripts/Commands/cs_reload.cpp:161:            { "trainer",                       rbac::RBAC_PERM_COMMAND_RELOAD_TRAINER,                          true,  &HandleReloadTrainerCommand,                    "" },
+
+    命令 "unbind":
+      /d/TrinityCore/src/server/scripts/Commands/cs_instance.cpp:51:            { "unbind",       HandleInstanceUnbindCommand,       rbac::RBAC_PERM_COMMAND_INSTANCE_UNBIND,         Console::No },
+      /d/TrinityCore/src/server/game/AI/NpcBots/botcommands.cpp:560:            { "unbind",     HandleNpcBotCommandUnBindCommand,       rbac::RBAC_PERM_COMMAND_NPCBOT_COMMAND_MISC,       Console::No  },
+
+    命令 "unlearn":
+      /d/TrinityCore/src/server/scripts/Commands/cs_learn.cpp:73:            { "unlearn", HandleUnLearnCommand,               LANG_COMMAND_UNLEARN_HELP,             rbac::RBAC_PERM_COMMAND_UNLEARN,             Console::No },
+      /d/TrinityCore/src/server/scripts/Commands/cs_pet.cpp:58:            { "unlearn", HandlePetUnlearnCommand, rbac::RBAC_PERM_COMMAND_PET_UNLEARN, Console::No },
+
+    命令 "update":
+      /d/TrinityCore/src/server/scripts/Commands/cs_debug.cpp:109:            { "update",             HandleDebugUpdateCommand,              rbac::RBAC_PERM_COMMAND_DEBUG,   Console::No },
+      /d/TrinityCore/src/server/scripts/Commands/cs_honor.cpp:50:            { "update", HandleHonorUpdateCommand, rbac::RBAC_PERM_COMMAND_HONOR_UPDATE, Console::No },
+
+    命令 "vmap":
+      /d/TrinityCore/src/server/scripts/Commands/cs_disable.cpp:54:            { "vmap",                 HandleRemoveDisableVmapCommand,                rbac::RBAC_PERM_COMMAND_DISABLE_REMOVE_VMAP,                 Console::Yes },
+      /d/TrinityCore/src/server/scripts/Commands/cs_disable.cpp:65:            { "vmap",                 HandleAddDisableVmapCommand,                   rbac::RBAC_PERM_COMMAND_DISABLE_ADD_VMAP,                 Console::Yes },
+
+    命令 "walk":
+      /d/TrinityCore/src/server/scripts/Commands/cs_modify.cpp:55:            { "walk",     rbac::RBAC_PERM_COMMAND_MODIFY_SPEED_WALK,     false, &HandleModifySpeedCommand,  "" },
+      /d/TrinityCore/src/server/game/AI/NpcBots/botcommands.cpp:558:            { "walk",       HandleNpcBotCommandWalkCommand,         rbac::RBAC_PERM_COMMAND_NPCBOT_COMMAND_MISC,       Console::No  },
+
+    命令 "write":
+      /d/TrinityCore/src/server/scripts/Commands/cs_character.cpp:53:            { "write",         HandlePDumpWriteCommand,              rbac::RBAC_PERM_COMMAND_PDUMP_WRITE,               Console::Yes },
+      /d/TrinityCore/src/server/game/AI/NpcBots/botcommands.cpp:593:            { "write",      HandleNpcBotDumpWriteCommand,           rbac::RBAC_PERM_COMMAND_NPCBOT_DUMP_WRITE,         Console::Yes },
+
+    命令 "zone":
+      /d/TrinityCore/src/server/scripts/Commands/cs_account.cpp:69:            { "zone",     HandleAccountOnlineListWithZoneFilterCommand, LANG_COMMAND_ACC_ONLINELIST_HELP,       rbac::RBAC_PERM_COMMAND_ACCOUNT_ONLINE_LIST,        Console::Yes },
+      /d/TrinityCore/src/server/game/AI/NpcBots/botcommands.cpp:606:            { "zone",       HandleNPCBotSpawnedFreeZoneCommand,     rbac::RBAC_PERM_COMMAND_NPCBOT_SPAWNED,            Console::Yes },
+      /d/TrinityCore/src/server/game/AI/NpcBots/botcommands.cpp:615:            { "zone",       HandleNPCBotSpawnedZoneCommand,         rbac::RBAC_PERM_COMMAND_NPCBOT_SPAWNED,            Console::Yes },
+
+### 5. 同一个脚本类是否被定义/new 了两次
+-------------------------------------------------------------------
+  new botrename_commandscript()              出现在 1 个文件  [正常]
+  new playerbot_commandscript()              出现在 1 个文件  [正常]
+  new pbot_autoaccept_worldscript()          出现在 1 个文件  [正常]
+
+### 6. 源文件是否被复制成多份
+-------------------------------------------------------------------
+  cs_botrename.cpp           1 个  [正常]
+  cs_playerbot.cpp           1 个  [正常]
+  pbot_autoaccept.cpp        1 个  [正常]
+  pbot_autoaccept.h          1 个  [正常]
+
+### 7. 编码检查（中文别名相关）
+-------------------------------------------------------------------
+  botcommands.cpp        中文行数=0
+0   无BOM      [!! 中文可能乱码/别名失效 !!]
+  cs_botrename.cpp       中文行数=180   无BOM      [!! 中文可能乱码/别名失效 !!]
+  cs_playerbot.cpp       中文行数=245   无BOM      [!! 中文可能乱码/别名失效 !!]
+
+===================================================================
+ 诊断完成
+===================================================================
+
+Administrator@LAPTOP-FEN36HKQ MINGW64 ~/Downloads
+$
