@@ -1,0 +1,40 @@
+G17B0_SOURCE_PREFLIGHT_BEGIN
+SOURCE_ROOT=D:\TrinityCore
+
+===== INSTALLER_SELF_TEST =====
+[OK] loader state=ready sha256=2a4895a32532f3c6c2c6dc3096fced4bff6d53c39dd3787bd81a76653d42f3f7
+[OK] target state=ready sha256=ABSENT
+[OK] locked_context_files=7
+[OK] G17B0_SOURCE_STATE=READY_TO_APPLY
+[OK] G17B0_CHECK_SOURCE_EDITS=0
+[OK] applied loader sha256=5502e5b4e22535957f3db81083530b048ec33f6852f4697fbe55795628cee5cc
+[OK] created cs_dragonriding.cpp sha256=c9535dca3390ece6735e6ff6b7418ed99ff206628b5e8febd7b78b05cba999bd
+[OK] loader_backup=C:\Users\ADMINI~1\AppData\Local\Temp\g17b0_installer_uxxpfj_l\src\server\scripts\Commands\cs_script_loader.cpp.before_g17b0.bak
+[OK] G17B0_APPLY_CHANGED_FILES=2
+[OK] G17B0_SOURCE_APPLY_PASS=True
+[OK] loader state=applied sha256=5502e5b4e22535957f3db81083530b048ec33f6852f4697fbe55795628cee5cc
+[OK] target state=applied sha256=c9535dca3390ece6735e6ff6b7418ed99ff206628b5e8febd7b78b05cba999bd
+[OK] locked_context_files=7
+[OK] G17B0_SOURCE_STATE=ALREADY_APPLIED
+[OK] G17B0_CHECK_SOURCE_EDITS=0
+[OK] restored loader sha256=2a4895a32532f3c6c2c6dc3096fced4bff6d53c39dd3787bd81a76653d42f3f7
+[OK] removed target state=ABSENT
+[OK] G17B0_ROLLBACK_CHANGED_FILES=2
+[OK] G17B0_SOURCE_ROLLBACK_PASS=True
+[OK] loader state=ready sha256=2a4895a32532f3c6c2c6dc3096fced4bff6d53c39dd3787bd81a76653d42f3f7
+[OK] target state=ready sha256=ABSENT
+[OK] locked_context_files=7
+[OK] G17B0_SOURCE_STATE=READY_TO_APPLY
+[OK] G17B0_CHECK_SOURCE_EDITS=0
+[OK] G17B0_INSTALLER_SELF_TEST_PASS=True
+[OK] G17B0_NEGATIVE_FIXTURES=2
+G17B0_SELFTEST_RC=0
+
+===== WINDOWS_SOURCE_CHECK_READ_ONLY =====
+[OK] loader state=ready sha256=2a4895a32532f3c6c2c6dc3096fced4bff6d53c39dd3787bd81a76653d42f3f7
+[OK] target state=ready sha256=ABSENT
+[OK] locked_context_files=7
+[OK] G17B0_SOURCE_STATE=READY_TO_APPLY
+[OK] G17B0_CHECK_SOURCE_EDITS=0
+G17B0_CHECK_RC=0
+G17B0_SOURCE_PREFLIGHT_END
