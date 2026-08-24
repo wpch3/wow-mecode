@@ -1,0 +1,406 @@
+G17R1_CLIENT_SPELL_DBC_PATCH=PASS
+INPUT=D:\TC-Build\bin\RelWithDebInfo\dbc\Spell.dbc
+OUTPUT=C:\Users\Administrator\Downloads\workspace\uploads\G17R1_Client_Patch_Staging\DBFilesClient\Spell.dbc
+INPUT_SIZE=48956359
+INPUT_SHA256=df44e75ef1730e363dc06f1bc5ae064299b08d2d0047e663c0a1782ed4c8d10f
+OUTPUT_SIZE=48956359
+OUTPUT_SHA256=dd25091167f671764735ce88c78b66485c6d661fadf05d322574c261f6e464ea
+RECORD_COUNT=49839
+FIELD_COUNT=234
+RECORD_SIZE=936
+PATCHED_ROWS=110
+PROTO_DRAKE_HITS=59569,59961,59976,59996,60002,60021,60024,61294,63956,63963
+SERVER_DBC_MUST_REMAIN_ORIGINAL=True
+CLIENT_ONLY_CAST_GATE_REMOVED=True
+SERVER_G17A_LOCATION_POLICY_REMAINS_AUTHORITATIVE=True
+PATCHED_SPELLS_BEGIN
+3363	虚空幼龙
+32235	金色狮鹫
+32239	黑色狮鹫
+32240	雪色狮鹫
+32242	迅捷蓝色狮鹫
+32243	茶色驭风者
+32244	蓝色驭风者
+32245	绿色驭风者
+32246	迅捷红色驭风者
+32289	迅捷红色狮鹫
+32290	迅捷绿色狮鹫
+32292	迅捷紫色狮鹫
+32295	迅捷绿色驭风者
+32296	迅捷黄色驭风者
+32297	迅捷紫色驭风者
+32345	召唤凤凰
+33943	飞行形态
+37015	迅捷虚空幼龙
+39798	绿色骑乘虚空鳐
+39800	红色骑乘虚空鳐
+39801	紫色骑乘虚空鳐
+39802	银色骑乘虚空鳐
+39803	蓝色骑乘虚空鳐
+39949	Mount (Test Anim)
+40120	迅捷飞行形态
+40192	奥的灰烬
+40212	龙喉虚空幼龙
+41513	黑色灵翼幼龙
+41514	青色灵翼幼龙
+41515	蓝色灵翼幼龙
+41516	紫色灵翼幼龙
+41517	绿色灵翼幼龙
+41518	红色灵翼幼龙
+42667	飞行扫帚
+42668	迅捷飞行扫帚
+43927	塞纳里奥作战角鹰兽
+44151	涡轮加速飞行器
+44153	飞行器
+44317	残酷角斗士的虚空幼龙
+44655	飞行驯鹿
+44744	残酷角斗士的虚空幼龙
+44824	飞行驯鹿
+44825	飞行驯鹿
+44827	飞行驯鹿
+46197	X-51虚空火箭
+46199	X-51虚空火箭特别加强版
+48023	无头骑士的坐骑
+49193	复仇角斗士的虚空幼龙
+51617	无头骑士的坐骑
+51960	冰霜巨龙坐骑
+54726	黑锋骸骨狮鹫
+54727	黑锋骸骨狮鹫
+54729	黑锋骸骨狮鹫
+58615	野蛮角斗士的虚空幼龙
+59567	碧蓝幼龙
+59568	蓝色幼龙
+59569	青铜幼龙
+59570	红色幼龙
+59571	暮光幼龙
+59650	黑色幼龙
+59961	红色始祖幼龙
+59976	黑色始祖幼龙
+59996	蓝色始祖幼龙
+60002	迷失始祖幼龙
+60021	被感染的始祖幼龙
+60024	紫色始祖幼龙
+60025	白色幼龙
+60120	召唤出租驭风者
+61229	装甲雪色狮鹫
+61230	装甲蓝色驭风者
+61294	绿色始祖幼龙
+61309	华丽的飞毯
+61442	迅捷月布飞毯
+61444	迅捷乌纹飞毯
+61446	迅捷魔焰飞毯
+61451	飞毯
+61996	蓝色龙鹰
+61997	红色龙鹰
+62048	黑色龙鹰坐骑
+63796	米米尔隆的头部
+63844	银色角鹰兽
+63956	铁箍始祖幼龙
+63963	铁锈始祖幼龙
+64681	出租狮鹫
+64761	出租驭风者
+64927	致命角斗士的冰霜巨龙
+65439	狂怒角斗士的冰霜巨龙
+66087	银色盟约角鹰兽
+66088	夺日者龙鹰
+67336	无情角斗士的冰霜巨龙
+67795	引力腰带
+69395	奥妮克希亚座龙
+71346	爱情火箭
+71347	爱情火箭
+71810	暴怒角斗士的冰霜巨龙
+72283	无敌
+72284	无敌
+72807	缚寒冰霜征服者
+72808	浴血冰霜征服者
+74854	炽焰角鹰兽
+74855	炽焰角鹰兽
+74856	炽焰角鹰兽
+75596	凝霜飞毯
+75617	星骓
+75618	星骓
+75957	X-53型观光火箭
+75972	X-53型观光火箭
+75973	X-53型观光火箭
+76153	星骓
+76154	X-53型观光火箭
+PATCHED_SPELLS_END
+
+G17R1_CLIENT_PREPARE_START
+INPUT_SPELL_DBC=D:\TC-Build\bin\RelWithDebInfo\dbc\Spell.dbc
+STAGE_OUTPUT=C:\Users\Administrator\Downloads\workspace\uploads\G17R1_Client_Patch_Staging\DBFilesClient\Spell.dbc
+PATCH_SLOT=Z
+PYTHON=C:\Users\Administrator\AppData\Local\Programs\Python\Python312\python.exe
+DBC_PATCH|G17R1_CLIENT_SPELL_DBC_PATCH=PASS
+DBC_PATCH|INPUT=D:\TC-Build\bin\RelWithDebInfo\dbc\Spell.dbc
+DBC_PATCH|OUTPUT=C:\Users\Administrator\Downloads\workspace\uploads\G17R1_Client_Patch_Staging\DBFilesClient\Spell.dbc
+DBC_PATCH|INPUT_SIZE=48956359
+DBC_PATCH|INPUT_SHA256=df44e75ef1730e363dc06f1bc5ae064299b08d2d0047e663c0a1782ed4c8d10f
+DBC_PATCH|OUTPUT_SIZE=48956359
+DBC_PATCH|OUTPUT_SHA256=dd25091167f671764735ce88c78b66485c6d661fadf05d322574c261f6e464ea
+DBC_PATCH|RECORD_COUNT=49839
+DBC_PATCH|FIELD_COUNT=234
+DBC_PATCH|RECORD_SIZE=936
+DBC_PATCH|PATCHED_ROWS=110
+DBC_PATCH|PROTO_DRAKE_HITS=59569,59961,59976,59996,60002,60021,60024,61294,63956,63963
+DBC_PATCH|SERVER_DBC_MUST_REMAIN_ORIGINAL=True
+DBC_PATCH|CLIENT_ONLY_CAST_GATE_REMOVED=True
+DBC_PATCH|SERVER_G17A_LOCATION_POLICY_REMAINS_AUTHORITATIVE=True
+DBC_PATCH|PATCHED_SPELLS_BEGIN
+DBC_PATCH|3363	虚空幼龙
+DBC_PATCH|32235	金色狮鹫
+DBC_PATCH|32239	黑色狮鹫
+DBC_PATCH|32240	雪色狮鹫
+DBC_PATCH|32242	迅捷蓝色狮鹫
+DBC_PATCH|32243	茶色驭风者
+DBC_PATCH|32244	蓝色驭风者
+DBC_PATCH|32245	绿色驭风者
+DBC_PATCH|32246	迅捷红色驭风者
+DBC_PATCH|32289	迅捷红色狮鹫
+DBC_PATCH|32290	迅捷绿色狮鹫
+DBC_PATCH|32292	迅捷紫色狮鹫
+DBC_PATCH|32295	迅捷绿色驭风者
+DBC_PATCH|32296	迅捷黄色驭风者
+DBC_PATCH|32297	迅捷紫色驭风者
+DBC_PATCH|32345	召唤凤凰
+DBC_PATCH|33943	飞行形态
+DBC_PATCH|37015	迅捷虚空幼龙
+DBC_PATCH|39798	绿色骑乘虚空鳐
+DBC_PATCH|39800	红色骑乘虚空鳐
+DBC_PATCH|39801	紫色骑乘虚空鳐
+DBC_PATCH|39802	银色骑乘虚空鳐
+DBC_PATCH|39803	蓝色骑乘虚空鳐
+DBC_PATCH|39949	Mount (Test Anim)
+DBC_PATCH|40120	迅捷飞行形态
+DBC_PATCH|40192	奥的灰烬
+DBC_PATCH|40212	龙喉虚空幼龙
+DBC_PATCH|41513	黑色灵翼幼龙
+DBC_PATCH|41514	青色灵翼幼龙
+DBC_PATCH|41515	蓝色灵翼幼龙
+DBC_PATCH|41516	紫色灵翼幼龙
+DBC_PATCH|41517	绿色灵翼幼龙
+DBC_PATCH|41518	红色灵翼幼龙
+DBC_PATCH|42667	飞行扫帚
+DBC_PATCH|42668	迅捷飞行扫帚
+DBC_PATCH|43927	塞纳里奥作战角鹰兽
+DBC_PATCH|44151	涡轮加速飞行器
+DBC_PATCH|44153	飞行器
+DBC_PATCH|44317	残酷角斗士的虚空幼龙
+DBC_PATCH|44655	飞行驯鹿
+DBC_PATCH|44744	残酷角斗士的虚空幼龙
+DBC_PATCH|44824	飞行驯鹿
+DBC_PATCH|44825	飞行驯鹿
+DBC_PATCH|44827	飞行驯鹿
+DBC_PATCH|46197	X-51虚空火箭
+DBC_PATCH|46199	X-51虚空火箭特别加强版
+DBC_PATCH|48023	无头骑士的坐骑
+DBC_PATCH|49193	复仇角斗士的虚空幼龙
+DBC_PATCH|51617	无头骑士的坐骑
+DBC_PATCH|51960	冰霜巨龙坐骑
+DBC_PATCH|54726	黑锋骸骨狮鹫
+DBC_PATCH|54727	黑锋骸骨狮鹫
+DBC_PATCH|54729	黑锋骸骨狮鹫
+DBC_PATCH|58615	野蛮角斗士的虚空幼龙
+DBC_PATCH|59567	碧蓝幼龙
+DBC_PATCH|59568	蓝色幼龙
+DBC_PATCH|59569	青铜幼龙
+DBC_PATCH|59570	红色幼龙
+DBC_PATCH|59571	暮光幼龙
+DBC_PATCH|59650	黑色幼龙
+DBC_PATCH|59961	红色始祖幼龙
+DBC_PATCH|59976	黑色始祖幼龙
+DBC_PATCH|59996	蓝色始祖幼龙
+DBC_PATCH|60002	迷失始祖幼龙
+DBC_PATCH|60021	被感染的始祖幼龙
+DBC_PATCH|60024	紫色始祖幼龙
+DBC_PATCH|60025	白色幼龙
+DBC_PATCH|60120	召唤出租驭风者
+DBC_PATCH|61229	装甲雪色狮鹫
+DBC_PATCH|61230	装甲蓝色驭风者
+DBC_PATCH|61294	绿色始祖幼龙
+DBC_PATCH|61309	华丽的飞毯
+DBC_PATCH|61442	迅捷月布飞毯
+DBC_PATCH|61444	迅捷乌纹飞毯
+DBC_PATCH|61446	迅捷魔焰飞毯
+DBC_PATCH|61451	飞毯
+DBC_PATCH|61996	蓝色龙鹰
+DBC_PATCH|61997	红色龙鹰
+DBC_PATCH|62048	黑色龙鹰坐骑
+DBC_PATCH|63796	米米尔隆的头部
+DBC_PATCH|63844	银色角鹰兽
+DBC_PATCH|63956	铁箍始祖幼龙
+DBC_PATCH|63963	铁锈始祖幼龙
+DBC_PATCH|64681	出租狮鹫
+DBC_PATCH|64761	出租驭风者
+DBC_PATCH|64927	致命角斗士的冰霜巨龙
+DBC_PATCH|65439	狂怒角斗士的冰霜巨龙
+DBC_PATCH|66087	银色盟约角鹰兽
+DBC_PATCH|66088	夺日者龙鹰
+DBC_PATCH|67336	无情角斗士的冰霜巨龙
+DBC_PATCH|67795	引力腰带
+DBC_PATCH|69395	奥妮克希亚座龙
+DBC_PATCH|71346	爱情火箭
+DBC_PATCH|71347	爱情火箭
+DBC_PATCH|71810	暴怒角斗士的冰霜巨龙
+DBC_PATCH|72283	无敌
+DBC_PATCH|72284	无敌
+DBC_PATCH|72807	缚寒冰霜征服者
+DBC_PATCH|72808	浴血冰霜征服者
+DBC_PATCH|74854	炽焰角鹰兽
+DBC_PATCH|74855	炽焰角鹰兽
+DBC_PATCH|74856	炽焰角鹰兽
+DBC_PATCH|75596	凝霜飞毯
+DBC_PATCH|75617	星骓
+DBC_PATCH|75618	星骓
+DBC_PATCH|75957	X-53型观光火箭
+DBC_PATCH|75972	X-53型观光火箭
+DBC_PATCH|75973	X-53型观光火箭
+DBC_PATCH|76153	星骓
+DBC_PATCH|76154	X-53型观光火箭
+DBC_PATCH|PATCHED_SPELLS_END
+DBC_PATCH_EXIT=0
+DBC_VERIFY|G17R1_CLIENT_SPELL_DBC_VERIFY=PASS
+DBC_VERIFY|ORIGINAL_SHA256=df44e75ef1730e363dc06f1bc5ae064299b08d2d0047e663c0a1782ed4c8d10f
+DBC_VERIFY|PATCHED_SHA256=dd25091167f671764735ce88c78b66485c6d661fadf05d322574c261f6e464ea
+DBC_VERIFY|PATCHED_ROWS=110
+DBC_VERIFY_EXIT=0
+INPUT_SHA256=df44e75ef1730e363dc06f1bc5ae064299b08d2d0047e663c0a1782ed4c8d10f
+OUTPUT_SHA256=dd25091167f671764735ce88c78b66485c6d661fadf05d322574c261f6e464ea
+SERVER_DBC_MODIFIED=False
+G17R1_CLIENT_DBC_STAGE=PASS
+G17R1_CLIENT_LOOSE_PATCH=NOT_INSTALLED_NO_CLIENT_ROOT
+G17R1_CLIENT_PREPARE_RESULT=PASS
+RESULT_FILE=C:\Users\Administrator\Downloads\workspace\uploads\G17R1_CLIENT_PREPARE_RESULT.txt
+
+
+G17R1_WINDOWS_FIX_START
+SOURCE_ROOT=D:\TrinityCore
+BUILD_ROOT=D:\TC-Build
+CONFIGURATION=RelWithDebInfo
+PLATFORM=x64
+LOADER_SHA256=5502e5b4e22535957f3db81083530b048ec33f6852f4697fbe55795628cee5cc
+PAYLOAD_SHA256_BEFORE_APPLY=c9535dca3390ece6735e6ff6b7418ed99ff206628b5e8febd7b78b05cba999bd
+G17R1_PRE_APPLY_SOURCE_GATE=PASS
+NATIVE_SELFTEST|G17R1_NATIVE_STDOUT
+NATIVE_SELFTEST|G17R1_NATIVE_STDERR 
+NATIVE_RUNNER_SELFTEST_EXIT=0
+G17R1_NATIVE_RUNNER_SELFTEST=PASS
+PYTHON=C:\Users\Administrator\AppData\Local\Programs\Python\Python312\python.exe
+SOURCE_APPLY|TARGET=D:\TrinityCore\src\server\scripts\Commands\cs_dragonriding.cpp
+SOURCE_APPLY|PRE_APPLY_SHA256=c9535dca3390ece6735e6ff6b7418ed99ff206628b5e8febd7b78b05cba999bd
+SOURCE_APPLY|BACKUP=D:\TrinityCore\src\server\scripts\Commands\cs_dragonriding.cpp.g17r1_before_20260822.bak
+SOURCE_APPLY|BACKUP_SHA256=c9535dca3390ece6735e6ff6b7418ed99ff206628b5e8febd7b78b05cba999bd
+SOURCE_APPLY|POST_APPLY_SHA256=10a7002db4c173e441836870da01dd3009a7ba470369ca1a89bdb399ee9b2f45
+SOURCE_APPLY|G17R1_SOURCE_APPLY=PASS
+SOURCE_APPLY_EXIT=0
+PAYLOAD_SHA256_AFTER_APPLY=10a7002db4c173e441836870da01dd3009a7ba470369ca1a89bdb399ee9b2f45
+G17R1_SOURCE_APPLY_GATE=PASS
+CMAKE=C:\Program Files\CMake\bin\cmake.exe
+MSBUILD=D:\vs\MSBuild\Current\Bin\MSBuild.exe
+BEFORE_EXE_SIZE=36759040
+BEFORE_EXE_UTC=2026-08-22T08:33:46.5536889Z
+BEFORE_EXE_SHA256=59491e97426dc059e2f440b6ca17f28ffdc6eb296e3f8d04fc428b59099b5881
+BEFORE_PDB_SIZE=433442816
+BEFORE_PDB_UTC=2026-08-22T08:33:46.5850805Z
+G17R1_CMAKE_RECONFIGURE_START
+CMAKE|-- Detected 64-bit platform
+CMAKE|-- Detected amd64 processor architecture
+CMAKE|-- MSVC: Minimum version required is 19.32, found 19.44.35228.0 - ok!
+CMAKE|-- MSVC: Enabled increased number of sections in object files
+CMAKE|-- MSVC: Overloaded standard names
+CMAKE|-- MSVC: Disabled NON-SECURE warnings
+CMAKE|-- MSVC: Disabled POSIX warnings
+CMAKE|-- MSVC: Disabled generic compiletime warnings
+CMAKE|-- Found MySQL:   found components: binary
+CMAKE|-- Found MySQL executable: C:/Program Files/MySQL/MySQL Server 8.0/bin/mysql.exe
+CMAKE|System.Management.Automation.RemoteException
+CMAKE|* TrinityCore revision   : ae60f5b6f6ff+ 2026-07-29 23:54:13 +0800 (bignum-mod branch)
+CMAKE|System.Management.Automation.RemoteException
+CMAKE|* Install core to        : C:/Program Files/TrinityCore
+CMAKE|* Install configs to     : C:/Program Files/TrinityCore
+CMAKE|System.Management.Automation.RemoteException
+CMAKE|* Build world/auth       : Yes (default)
+CMAKE|* Build with scripts     : Yes (static)
+CMAKE|* Build Eluna LuaEngine  : Yes (default)
+CMAKE|* Build map/vmap tools   : Yes (default)
+CMAKE|* Build unit tests       : No (default)
+CMAKE|* Build core w/PCH       : Yes (default)
+CMAKE|* Build scripts w/PCH    : Yes (default)
+CMAKE|* Show all warnings      : No  (default)
+CMAKE|* Stop build on warning  : No  (default)
+CMAKE|* Use coreside debug     : No  (default)
+CMAKE|* Show source tree       : Yes (hierarchical)
+CMAKE|* Use GIT revision hash  : Yes (default)
+CMAKE|System.Management.Automation.RemoteException
+CMAKE|-- Boost toolset is unknown (compiler MSVC 19.44.35228.0)
+CMAKE|-- Boost toolset is unknown (compiler MSVC 19.44.35228.0)
+CMAKE|-- Boost toolset is unknown (compiler MSVC 19.44.35228.0)
+CMAKE|-- Boost toolset is unknown (compiler MSVC 19.44.35228.0)
+CMAKE|-- Boost toolset is unknown (compiler MSVC 19.44.35228.0)
+CMAKE|-- Found MySQL: C:/Program Files/MySQL/MySQL Server 8.0/lib/libmysql.lib  found components: lib
+CMAKE|-- Found MySQL version: "8.0.46", minimum required is "8.0.34"
+CMAKE|-- Found MySQL library: C:/Program Files/MySQL/MySQL Server 8.0/lib/libmysql.lib
+CMAKE|-- Found MySQL headers: C:/Program Files/MySQL/MySQL Server 8.0/include
+CMAKE|-- Lua version: lua52
+CMAKE|-- Lua linking: dynamic
+CMAKE|System.Management.Automation.RemoteException
+CMAKE|* Script configuration (static):
+CMAKE|    |
+CMAKE|    +- worldserver
+CMAKE|    |   +- Battlefield
+CMAKE|    |   +- Commands
+CMAKE|    |   +- Custom
+CMAKE|    |   +- EasternKingdoms
+CMAKE|    |   +- Events
+CMAKE|    |   +- Kalimdor
+CMAKE|    |   +- Northrend
+CMAKE|    |   +- OutdoorPvP
+CMAKE|    |   +- Outland
+CMAKE|    |   +- Pet
+CMAKE|    |   +- Spells
+CMAKE|    |   +- World
+CMAKE|    |
+CMAKE|System.Management.Automation.RemoteException
+CMAKE|-- Configuring done (5.4s)
+CMAKE|-- Generating done (2.2s)
+CMAKE|-- Build files have been written to: D:/TC-Build
+CMAKE_EXIT=0
+DRAGONRIDING_VCXPROJ_HITS=1
+VCXPROJ_HIT=D:\TC-Build\src\server\scripts\scripts.vcxproj
+G17R1_CMAKE_SOURCE_MEMBERSHIP=PASS
+G17R1_MSBUILD_START_UTC=2026-08-22T10:31:06.1921913Z
+MSBUILD|閫傜敤浜?.NET Framework MSBuild 鐗堟湰 18.8.2+ce25c0108
+MSBUILD|
+MSBUILD|  gsoap.vcxproj -> D:\TC-Build\dep\gsoap\RelWithDebInfo\gsoap.lib
+MSBUILD|  efsw.vcxproj -> D:\TC-Build\dep\efsw\RelWithDebInfo\efsw.lib
+MSBUILD|  sfmt.vcxproj -> D:\TC-Build\dep\SFMT\RelWithDebInfo\sfmt.lib
+MSBUILD|  fmt.vcxproj -> D:\TC-Build\dep\fmt\RelWithDebInfo\fmt.lib
+MSBUILD|  lualib.vcxproj -> D:\TC-Build\bin\RelWithDebInfo\lua52.dll
+MSBUILD|  zlib.vcxproj -> D:\TC-Build\dep\zlib\RelWithDebInfo\zlib.lib
+MSBUILD|  argon2.vcxproj -> D:\TC-Build\dep\argon2\RelWithDebInfo\argon2.lib
+MSBUILD|  Detour.vcxproj -> D:\TC-Build\dep\recastnavigation\Detour\RelWithDebInfo\Detour.lib
+MSBUILD|  g3dlib.vcxproj -> D:\TC-Build\dep\g3dlite\RelWithDebInfo\g3dlib.lib
+MSBUILD|  common.vcxproj -> D:\TC-Build\src\common\RelWithDebInfo\common.lib
+MSBUILD|  database.vcxproj -> D:\TC-Build\src\server\database\RelWithDebInfo\database.lib
+MSBUILD|  shared.vcxproj -> D:\TC-Build\src\server\shared\RelWithDebInfo\shared.lib
+MSBUILD|  game.vcxproj -> D:\TC-Build\src\server\game\RelWithDebInfo\game.lib
+MSBUILD|  cs_dragonriding.cpp
+MSBUILD|  scripts.vcxproj -> D:\TC-Build\src\server\scripts\RelWithDebInfo\scripts.lib
+MSBUILD|    姝ｅ湪鍒涘缓搴?D:/TC-Build/src/server/worldserver/RelWithDebInfo/worldserver.lib 鍜屽璞?D:/TC-Build/src/server/worldserver/RelWithDebInfo/worldserver.exp
+MSBUILD|  worldserver.vcxproj -> D:\TC-Build\bin\RelWithDebInfo\worldserver.exe
+MSBUILD_EXIT=0
+DRAGONRIDING_FRESH_OBJECTS=1
+DRAGONRIDING_OBJECT=D:\TC-Build\src\server\scripts\scripts.dir\RelWithDebInfo\cs_dragonriding.obj;size=1085511;utc=2026-08-22T10:31:16.2080471Z
+AFTER_EXE_SIZE=36778496
+AFTER_EXE_UTC=2026-08-22T10:31:29.4356614Z
+AFTER_EXE_SHA256=e74d9304476b3935fd5ae1316f8f913eb4edbd6821ade7aedc20d031a7d08148
+AFTER_PDB_SIZE=433614848
+AFTER_PDB_UTC=2026-08-22T10:31:29.4697515Z
+DRAGONRIDING_C4018_HITS=0
+G17R1_C4018_FIX_GATE=PASS
+G17R1_BUILD_SOURCE_GATE=PASS
+G17R1_WINDOWS_BUILD_PASS=True
+G17R1_WINDOWS_BUILD_RESULT=PASS
+G17R1_WINDOWS_BUILD_COMPLETE
+STOP_DO_NOT_START_WORLDSERVER
+RESULT_FILE=C:\Users\Administrator\Downloads\workspace\uploads\G17R1_WINDOWS_FIX_RESULT.txt

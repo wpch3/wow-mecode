@@ -1,0 +1,708 @@
+﻿G17 read-only source probe v1
+Root=D:\TrinityCore
+Source/config/database edits=0
+
+=== 1. GIT IDENTITY ===
+BRANCH_EXIT=0
+BRANCH bignum-mod
+HEAD_EXIT=0
+HEAD ae60f5b6f6ffe9a0426dfeb6e227712de7d6c8b7
+STATUS_EXIT=0
+STATUS M src/server/game/AI/NpcBots/bot_ai.cpp
+STATUS  M src/server/game/AI/NpcBots/bot_ai.h
+STATUS  M src/server/game/AI/NpcBots/botcommands.cpp
+STATUS  M src/server/game/AI/NpcBots/botcommon.h
+STATUS  M src/server/game/AI/NpcBots/botconfig.cpp
+STATUS  M src/server/game/AI/NpcBots/botconfig.h
+STATUS  M src/server/game/AI/NpcBots/botdatamgr.cpp
+STATUS  M src/server/game/AI/NpcBots/botgossip.h
+STATUS  M src/server/game/AI/NpcBots/botmgr.cpp
+STATUS  M src/server/game/AI/NpcBots/bottext.h
+STATUS  M src/server/game/AI/NpcBots/bpet_ai.cpp
+STATUS  M src/server/game/AI/NpcBots/bpet_ai.h
+STATUS  M src/server/game/Accounts/RBAC.h
+STATUS  M src/server/game/Chat/ChatCommands/ChatCommand.cpp
+STATUS  M src/server/game/Entities/Player/Player.cpp
+STATUS  M src/server/game/Entities/Unit/Unit.cpp
+STATUS  M src/server/game/Entities/Unit/Unit.h
+STATUS  M src/server/game/Globals/ObjectMgr.cpp
+STATUS  M src/server/game/Groups/Group.cpp
+STATUS  M src/server/game/Handlers/GroupHandler.cpp
+STATUS  M src/server/game/Handlers/LootHandler.cpp
+STATUS  M src/server/game/Handlers/PetitionsHandler.cpp
+STATUS  M src/server/game/Handlers/TradeHandler.cpp
+STATUS  M src/server/game/Maps/Map.cpp
+STATUS  M src/server/game/Server/WorldSession.cpp
+STATUS  M src/server/game/Server/WorldSession.h
+STATUS  M src/server/game/Spells/SpellEffects.cpp
+STATUS  M src/server/game/World/World.cpp
+STATUS  M src/server/game/World/World.h
+STATUS  M src/server/scripts/Commands/cs_gearset.cpp
+STATUS  M src/server/scripts/Commands/cs_modify.cpp
+STATUS  M src/server/scripts/Commands/cs_script_loader.cpp
+STATUS  M src/server/scripts/ScriptLoader.h
+STATUS ?? src/server/game/AI/NpcBots/bot_companion.cpp
+STATUS ?? src/server/game/AI/NpcBots/bot_companion.h
+STATUS ?? src/server/game/Custom/
+STATUS ?? src/server/game/Entities/Player/CustomStatPersist.cpp
+STATUS ?? src/server/game/Entities/Player/CustomStatPersist.h
+STATUS ?? src/server/game/Spells/CustomSpellTweak.cpp
+STATUS ?? src/server/game/Spells/CustomSpellTweak.h
+STATUS ?? src/server/scripts/Commands/CombatSpecData.cpp
+STATUS ?? src/server/scripts/Commands/CombatSpecData.h
+STATUS ?? src/server/scripts/Commands/cs_appearance.cpp
+STATUS ?? src/server/scripts/Commands/cs_botdiag.cpp
+STATUS ?? src/server/scripts/Commands/cs_botfind.cpp
+STATUS ?? src/server/scripts/Commands/cs_botpersist.cpp
+STATUS ?? src/server/scripts/Commands/cs_botrename.cpp
+STATUS ?? src/server/scripts/Commands/cs_combathelper.cpp
+STATUS ?? src/server/scripts/Commands/cs_dummy.cpp
+STATUS ?? src/server/scripts/Commands/cs_emote.cpp
+STATUS ?? src/server/scripts/Commands/cs_gmhelper.cpp
+STATUS ?? src/server/scripts/Commands/cs_itemforge.cpp
+STATUS ?? src/server/scripts/Commands/cs_modelfind.cpp
+STATUS ?? src/server/scripts/Commands/cs_npcstate.cpp
+STATUS ?? src/server/scripts/Commands/cs_playerbot.cpp
+STATUS ?? src/server/scripts/Commands/cs_reloaditem.cpp
+STATUS ?? src/server/scripts/Commands/cs_say.cpp
+STATUS ?? src/server/scripts/Commands/cs_scene.cpp
+STATUS ?? src/server/scripts/Commands/cs_spellclean.cpp
+STATUS ?? src/server/scripts/Commands/cs_worldtools.cpp
+STATUS ?? src/server/scripts/Commands/pbot_autoaccept.cpp
+STATUS ?? src/server/scripts/Commands/pbot_autoaccept.h
+STATUS ?? src/server/scripts/Custom/statpersist_hook.cpp
+
+=== 2. REQUIRED AND OPTIONAL FILES ===
+EXISTS=True REQUIRED=True LABEL=SpellInfo.cpp PATH=D:\TrinityCore\src\server\game\Spells\SpellInfo.cpp SIZE=180195 LINES=4058 SHA256=78dbc810f8afa080275d7fabcb2bc75ff52652295a25677b447cbe5f3ca89753
+EXISTS=True REQUIRED=True LABEL=Player.cpp PATH=D:\TrinityCore\src\server\game\Entities\Player\Player.cpp SIZE=1018229 LINES=26820 SHA256=5a7b6ed778aebb81e3a49db2dae05675b35a7cc85de070a7d3304f527fd711dd
+EXISTS=True REQUIRED=True LABEL=DBCStructure.h PATH=D:\TrinityCore\src\server\shared\DataStores\DBCStructure.h SIZE=95559 LINES=2000 SHA256=226a4ca33d1200575c9ee023edaa958f62d8a93970024584525a4f2e24fcb5e3
+EXISTS=False REQUIRED=True LABEL=SharedDefines.h PATH=D:\TrinityCore\src\server\game\Miscellaneous\SharedDefines.h
+EXISTS=True REQUIRED=False LABEL=DBCEnums.h PATH=D:\TrinityCore\src\server\shared\DataStores\DBCEnums.h SIZE=28934 LINES=517 SHA256=218b05dfec7134a58fd60a12e823490115ae197f33116c184b7ef7bab8928ea5
+EXISTS=True REQUIRED=False LABEL=Map.h PATH=D:\TrinityCore\src\server\game\Maps\Map.h SIZE=44138 LINES=984 SHA256=e5a731410d2b21fb614aed6a79b4bce29449ac1608593e68de102ff8c58bd65b
+EXISTS=True REQUIRED=False LABEL=World.cpp PATH=D:\TrinityCore\src\server\game\World\World.cpp SIZE=170992 LINES=3673 SHA256=3a7ee49b9123a10051f80a7e6834460071b61f91adf2c1f6fa69a202d176b9dd
+EXISTS=True REQUIRED=False LABEL=World.h PATH=D:\TrinityCore\src\server\game\World\World.h SIZE=34223 LINES=915 SHA256=5c55ba371a3f84b43e830d9028239ad8504af7e7bc066e34e51af224b4f8b0a0
+EXISTS=True REQUIRED=False LABEL=worldserver.conf.dist PATH=D:\TrinityCore\src\server\worldserver\worldserver.conf.dist SIZE=190386 LINES=5134 SHA256=cccb036ff2107a1c656a6f0e46ff8b94227e715c1a15021f16d2aac8c866a44b
+EXISTS=True REQUIRED=False LABEL=Vehicle.cpp PATH=D:\TrinityCore\src\server\game\Entities\Vehicle\Vehicle.cpp SIZE=36573 LINES=1041 SHA256=3041c4f518c531bf2c99aa17903b863059e21fcecaade9f2c428e096e9d48e6d
+EXISTS=True REQUIRED=False LABEL=Vehicle.h PATH=D:\TrinityCore\src\server\game\Entities\Vehicle\Vehicle.h SIZE=5423 LINES=136 SHA256=939ba59748e734a367ddbdbd4174bd093ae160758e324dea3906b009223a10f3
+EXISTS=True REQUIRED=False LABEL=Unit.cpp PATH=D:\TrinityCore\src\server\game\Entities\Unit\Unit.cpp SIZE=557693 LINES=14941 SHA256=84d7077bc978b97161759f2c397e44f5595675cd7a9ed19043e5ed4169b41f72
+EXISTS=True REQUIRED=False LABEL=bot_ai.cpp PATH=D:\TrinityCore\src\server\game\AI\NpcBots\bot_ai.cpp SIZE=950222 LINES=22387 SHA256=d34ad76b1fcfdbacfe0099fb791119993309d2030db0940feddc5b7bdb75e2cf
+
+=== 3. EXACT ANCHOR COUNTS ===
+COUNT=1 FILE=SpellInfo.cpp NEEDLE=SpellInfo::CheckLocation
+COUNT=1 FILE=SpellInfo.cpp NEEDLE=SPELL_ATTR4_CAST_ONLY_IN_OUTLAND
+COUNT=1 FILE=SpellInfo.cpp NEEDLE=IsFlyable()
+COUNT=1 FILE=SpellInfo.cpp NEEDLE=CanFlyInZone
+COUNT=1 FILE=Player.cpp NEEDLE=Player::CanFlyInZone
+COUNT=2 FILE=Player.cpp NEEDLE=54197
+COUNT=1 FILE=DBCStructure.h NEEDLE=bool IsFlyable() const
+COUNT=1 FILE=DBCStructure.h NEEDLE=struct MapEntry
+COUNT=1 FILE=DBCStructure.h NEEDLE=struct VehicleSeatEntry
+COUNT=0 FILE=SharedDefines.h NEEDLE=SPELL_ATTR4_CAST_ONLY_IN_OUTLAND
+COUNT=1 FILE=DBCEnums.h NEEDLE=AREA_FLAG_CAPITAL
+COUNT=1 FILE=DBCEnums.h NEEDLE=AREA_FLAG_NO_FLY_ZONE
+COUNT=3 FILE=Map.h NEEDLE=IsBattlegroundOrArena
+COUNT=3 FILE=Map.h NEEDLE=IsDungeon
+COUNT=2 FILE=World.cpp NEEDLE=LoadConfigSettings
+COUNT=0 FILE=World.cpp NEEDLE=GetOption<
+COUNT=12 FILE=worldserver.conf.dist NEEDLE=AllowTwoSide
+COUNT=171 FILE=worldserver.conf.dist NEEDLE=Rate.
+COUNT=4 FILE=Vehicle.cpp NEEDLE=VEHICLE_SEAT_FLAG_CAN_CONTROL
+COUNT=2 FILE=Unit.cpp NEEDLE=SetCanFly
+COUNT=1 FILE=Unit.cpp NEEDLE=SetDisableGravity
+COUNT=10 FILE=Unit.cpp NEEDLE=MOVE_FLIGHT
+COUNT=1 FILE=bot_ai.cpp NEEDLE=OnBotEnterVehicle
+COUNT=6 FILE=bot_ai.cpp NEEDLE=VEHICLE_SEAT_FLAG_CAN_CONTROL
+COUNT=3 FILE=bot_ai.cpp NEEDLE=SetCanFly
+COUNT=11 FILE=bot_ai.cpp NEEDLE=POWER_ENERGY
+SPELL_ATTR4_CAST_ONLY_IN_OUTLAND_MASK=<not-found>
+
+=== 4. EXACT SOURCE CONTEXTS ===
+--- FILE=src\server\game\Spells\SpellInfo.cpp NEEDLE=SpellInfo::CheckLocation FIRST_LINE=1562 ---
+001554:     {
+001555:         if (!(stanceMask & Stances))
+001556:             return SPELL_FAILED_ONLY_SHAPESHIFT;
+001557:     }
+001558: 
+001559:     return SPELL_CAST_OK;
+001560: }
+001561: 
+001562: SpellCastResult SpellInfo::CheckLocation(uint32 map_id, uint32 zone_id, uint32 area_id, Player const* player /*= nullptr*/, bool strict /*= true*/) const
+001563: {
+001564:     // normal case
+001565:     if (RequiredAreasID > 0)
+001566:     {
+001567:         bool found = false;
+001568:         AreaGroupEntry const* groupEntry = sAreaGroupStore.LookupEntry(RequiredAreasID);
+001569:         while (groupEntry)
+001570:         {
+--- FILE=src\server\game\Spells\SpellInfo.cpp NEEDLE=SPELL_ATTR4_CAST_ONLY_IN_OUTLAND FIRST_LINE=1585 ---
+001577:             groupEntry = sAreaGroupStore.LookupEntry(groupEntry->NextAreaID);
+001578:         }
+001579: 
+001580:         if (!found)
+001581:             return SPELL_FAILED_INCORRECT_AREA;
+001582:     }
+001583: 
+001584:     // continent limitation (virtual continent)
+001585:     if (HasAttribute(SPELL_ATTR4_CAST_ONLY_IN_OUTLAND))
+001586:     {
+001587:         if (strict)
+001588:         {
+001589:             AreaTableEntry const* areaEntry = sAreaTableStore.LookupEntry(area_id);
+001590:             if (!areaEntry)
+001591:                 areaEntry = sAreaTableStore.LookupEntry(zone_id);
+001592: 
+001593:             if (!areaEntry || !areaEntry->IsFlyable() || !player->CanFlyInZone(map_id, zone_id, this))
+--- FILE=src\server\game\Spells\SpellInfo.cpp NEEDLE=IsFlyable() FIRST_LINE=1593 ---
+001585:     if (HasAttribute(SPELL_ATTR4_CAST_ONLY_IN_OUTLAND))
+001586:     {
+001587:         if (strict)
+001588:         {
+001589:             AreaTableEntry const* areaEntry = sAreaTableStore.LookupEntry(area_id);
+001590:             if (!areaEntry)
+001591:                 areaEntry = sAreaTableStore.LookupEntry(zone_id);
+001592: 
+001593:             if (!areaEntry || !areaEntry->IsFlyable() || !player->CanFlyInZone(map_id, zone_id, this))
+001594:                 return SPELL_FAILED_INCORRECT_AREA;
+001595:         }
+001596:         else
+001597:         {
+001598:             uint32 const v_map = GetVirtualMapForMapAndZone(map_id, zone_id);
+001599:             MapEntry const* mapEntry = sMapStore.LookupEntry(v_map);
+001600:             if (!mapEntry || mapEntry->Expansion() < 1 || !mapEntry->IsContinent())
+001601:                 return SPELL_FAILED_INCORRECT_AREA;
+--- FILE=src\server\game\Spells\SpellInfo.cpp NEEDLE=CanFlyInZone FIRST_LINE=1593 ---
+001585:     if (HasAttribute(SPELL_ATTR4_CAST_ONLY_IN_OUTLAND))
+001586:     {
+001587:         if (strict)
+001588:         {
+001589:             AreaTableEntry const* areaEntry = sAreaTableStore.LookupEntry(area_id);
+001590:             if (!areaEntry)
+001591:                 areaEntry = sAreaTableStore.LookupEntry(zone_id);
+001592: 
+001593:             if (!areaEntry || !areaEntry->IsFlyable() || !player->CanFlyInZone(map_id, zone_id, this))
+001594:                 return SPELL_FAILED_INCORRECT_AREA;
+001595:         }
+001596:         else
+001597:         {
+001598:             uint32 const v_map = GetVirtualMapForMapAndZone(map_id, zone_id);
+001599:             MapEntry const* mapEntry = sMapStore.LookupEntry(v_map);
+001600:             if (!mapEntry || mapEntry->Expansion() < 1 || !mapEntry->IsContinent())
+001601:                 return SPELL_FAILED_INCORRECT_AREA;
+--- FILE=src\server\game\Entities\Player\Player.cpp NEEDLE=Player::CanFlyInZone FIRST_LINE=24970 ---
+024962:     talentPointsForLevel += GetQuestRewardedTalentCount();
+024963: 
+024964:     if (talentPointsForLevel > baseForLevel)
+024965:         talentPointsForLevel = baseForLevel;
+024966: 
+024967:     return uint32(talentPointsForLevel * sWorld->getRate(RATE_TALENT));
+024968: }
+024969: 
+024970: bool Player::CanFlyInZone(uint32 mapid, uint32 zone, SpellInfo const* bySpell) const
+024971: {
+024972:     // continent checked in SpellInfo::CheckLocation at cast and area update
+024973:     uint32 v_map = GetVirtualMapForMapAndZone(mapid, zone);
+024974:     if (v_map == 571 && !bySpell->HasAttribute(SPELL_ATTR7_IGNORE_COLD_WEATHER_FLYING))
+024975:         if (!HasSpell(54197)) // 54197 = Cold Weather Flying
+024976:             return false;
+024977: 
+024978:     return true;
+--- FILE=src\server\game\Entities\Player\Player.cpp NEEDLE=54197 FIRST_LINE=24975 ---
+024967:     return uint32(talentPointsForLevel * sWorld->getRate(RATE_TALENT));
+024968: }
+024969: 
+024970: bool Player::CanFlyInZone(uint32 mapid, uint32 zone, SpellInfo const* bySpell) const
+024971: {
+024972:     // continent checked in SpellInfo::CheckLocation at cast and area update
+024973:     uint32 v_map = GetVirtualMapForMapAndZone(mapid, zone);
+024974:     if (v_map == 571 && !bySpell->HasAttribute(SPELL_ATTR7_IGNORE_COLD_WEATHER_FLYING))
+024975:         if (!HasSpell(54197)) // 54197 = Cold Weather Flying
+024976:             return false;
+024977: 
+024978:     return true;
+024979: }
+024980: 
+024981: void Player::_LoadSkills(PreparedQueryResult result)
+024982: {
+024983:     //                                                           0      1      2
+--- FILE=src\server\shared\DataStores\DBCStructure.h NEEDLE=bool IsFlyable() const FIRST_LINE=205 ---
+000197:     // helpers
+000198:     bool IsSanctuary() const
+000199:     {
+000200:         if (ContinentID == 609)
+000201:             return true;
+000202:         return (Flags & AREA_FLAG_SANCTUARY) != 0;
+000203:     }
+000204: 
+000205:     bool IsFlyable() const
+000206:     {
+000207:         if (Flags & AREA_FLAG_OUTLAND)
+000208:         {
+000209:             if (!(Flags & AREA_FLAG_NO_FLY_ZONE))
+000210:                 return true;
+000211:         }
+000212: 
+000213:         return false;
+--- FILE=src\server\shared\DataStores\DBCStructure.h NEEDLE=struct MapEntry FIRST_LINE=1064 ---
+001056: {
+001057:     uint32 ID;                                              // 0
+001058:     //char const* Subject[16];                              // 1-16
+001059:     //uint32 Subject_lang_mask;                             // 17
+001060:     char const* Body[16];                                   // 18-33
+001061:     //uint32 Body_lang_mask;                                // 34
+001062: };
+001063: 
+001064: struct MapEntry
+001065: {
+001066:     uint32 ID;                                              // 0
+001067:     //char const* Directory;                                // 1
+001068:     uint32 InstanceType;                                    // 2
+001069:     uint32 Flags;                                           // 3
+001070:     //uint32 MapType;                                       // 4 0 or 1 for battlegrounds (not arenas)
+001071:     char const* MapName[16];                                // 5-20
+001072:     //uint32 MapName_lang_mask;                             // 21
+--- FILE=src\server\shared\DataStores\DBCStructure.h NEEDLE=struct VehicleSeatEntry FIRST_LINE=1797 ---
+001789:     float CameraYawOffset;                                  // 33
+001790:     uint32 UiLocomotionType;                                // 34
+001791:     float MsslTrgtImpactTexRadius;                          // 35
+001792:     uint32 VehicleUIIndicatorID;                            // 36
+001793:     uint32 PowerDisplayID;                                  // 37
+001794:     //uint32 PowerDisplayIDUnused[2];                       // 38-39
+001795: };
+001796: 
+001797: struct VehicleSeatEntry
+001798: {
+001799:     uint32 ID;                                              // 0
+001800:     uint32 Flags;                                           // 1
+001801:     int32 AttachmentID;                                     // 2
+001802:     DBCPosition3D AttachmentOffset;                         // 3-5
+001803:     float EnterPreDelay;                                    // 6
+001804:     float EnterSpeed;                                       // 7
+001805:     float EnterGravity;                                     // 8
+--- FILE=src\server\shared\DataStores\DBCEnums.h NEEDLE=AREA_FLAG_CAPITAL FIRST_LINE=255 ---
+000247:     AREA_FLAG_UNK0               = 0x00000001,                // Unknown
+000248:     AREA_FLAG_UNK1               = 0x00000002,                // Razorfen Downs, Naxxramas and Acherus: The Ebon Hold (3.3.5a)
+000249:     AREA_FLAG_UNK2               = 0x00000004,                // Only used for areas on map 571 (development before)
+000250:     AREA_FLAG_SLAVE_CAPITAL      = 0x00000008,                // city and city subzones
+000251:     AREA_FLAG_UNK3               = 0x00000010,                // can't find common meaning
+000252:     AREA_FLAG_SLAVE_CAPITAL2     = 0x00000020,                // slave capital city flag?
+000253:     AREA_FLAG_ALLOW_DUELS        = 0x00000040,                // allow to duel here
+000254:     AREA_FLAG_ARENA              = 0x00000080,                // arena, both instanced and world arenas
+000255:     AREA_FLAG_CAPITAL            = 0x00000100,                // main capital city flag
+000256:     AREA_FLAG_CITY               = 0x00000200,                // only for one zone named "City" (where it located?)
+000257:     AREA_FLAG_OUTLAND            = 0x00000400,                // expansion zones? (only Eye of the Storm not have this flag, but have 0x00004000 flag)
+000258:     AREA_FLAG_SANCTUARY          = 0x00000800,                // sanctuary area (PvP disabled)
+000259:     AREA_FLAG_NEED_FLY           = 0x00001000,                // Respawn alive at the graveyard without corpse
+000260:     AREA_FLAG_UNUSED1            = 0x00002000,                // Unused in 3.3.5a
+000261:     AREA_FLAG_OUTLAND2           = 0x00004000,                // expansion zones? (only Circle of Blood Arena not have this flag, but have 0x00000400 flag)
+000262:     AREA_FLAG_OUTDOOR_PVP        = 0x00008000,                // pvp objective area? (Death's Door also has this flag although it's no pvp object area)
+000263:     AREA_FLAG_ARENA_INSTANCE     = 0x00010000,                // used by instanced arenas only
+--- FILE=src\server\shared\DataStores\DBCEnums.h NEEDLE=AREA_FLAG_NO_FLY_ZONE FIRST_LINE=275 ---
+000267:     AREA_FLAG_LOWLEVEL           = 0x00100000,                // used for some starting areas with ExplorationLevel <= 15
+000268:     AREA_FLAG_TOWN               = 0x00200000,                // small towns with Inn
+000269:     AREA_FLAG_REST_ZONE_HORDE    = 0x00400000,                // Instead of using areatriggers, the zone will act as one for Horde players (Warsong Hold, Acherus: The Ebon Hold, New Agamand Inn, Vengeance Landing Inn, Sunreaver Pavilion, etc)
+000270:     AREA_FLAG_REST_ZONE_ALLIANCE = 0x00800000,                // Instead of using areatriggers, the zone will act as one for Alliance players (Valgarde, Acherus: The Ebon Hold, Westguard Inn, Silver Covenant Pavilion, etc)
+000271:     AREA_FLAG_WINTERGRASP        = 0x01000000,                // Wintergrasp and it's subzones
+000272:     AREA_FLAG_INSIDE             = 0x02000000,                // used for determinating spell related inside/outside questions in Map::IsOutdoors
+000273:     AREA_FLAG_OUTSIDE            = 0x04000000,                // used for determinating spell related inside/outside questions in Map::IsOutdoors
+000274:     AREA_FLAG_WINTERGRASP_2      = 0x08000000,                // Can Hearth And Resurrect From Area
+000275:     AREA_FLAG_NO_FLY_ZONE        = 0x20000000                 // Marks zones where you cannot fly
+000276: };
+000277: 
+000278: enum Difficulty : uint8
+000279: {
+000280:     REGULAR_DIFFICULTY           = 0,
+000281: 
+000282:     DUNGEON_DIFFICULTY_NORMAL    = 0,
+000283:     DUNGEON_DIFFICULTY_HEROIC    = 1,
+--- FILE=src\server\game\Maps\Map.h NEEDLE=IsBattlegroundOrArena FIRST_LINE=454 ---
+000446:         bool IsDungeon() const;
+000447:         bool IsNonRaidDungeon() const;
+000448:         bool IsRaid() const;
+000449:         bool IsRaidOrHeroicDungeon() const;
+000450:         bool IsHeroic() const;
+000451:         bool Is25ManRaid() const;
+000452:         bool IsBattleground() const;
+000453:         bool IsBattleArena() const;
+000454:         bool IsBattlegroundOrArena() const;
+000455:         bool GetEntrancePos(int32& mapid, float& x, float& y) const;
+000456: 
+000457:         void AddObjectToRemoveList(WorldObject* obj);
+000458:         void AddObjectToSwitchList(WorldObject* obj, bool on);
+000459:         virtual void DelayedUpdate(uint32 diff);
+000460: 
+000461:         void resetMarkedCells() { marked_cells.reset(); }
+000462:         bool isCellMarked(uint32 pCellId) { return marked_cells.test(pCellId); }
+--- FILE=src\server\game\Maps\Map.h NEEDLE=IsDungeon FIRST_LINE=446 ---
+000438: 
+000439:         // have meaning only for instanced map (that have set real difficulty)
+000440:         Difficulty GetDifficulty() const { return Difficulty(GetSpawnMode()); }
+000441:         bool IsRegularDifficulty() const;
+000442:         MapDifficulty const* GetMapDifficulty() const;
+000443: 
+000444:         bool Instanceable() const;
+000445:         bool IsWorldMap() const;
+000446:         bool IsDungeon() const;
+000447:         bool IsNonRaidDungeon() const;
+000448:         bool IsRaid() const;
+000449:         bool IsRaidOrHeroicDungeon() const;
+000450:         bool IsHeroic() const;
+000451:         bool Is25ManRaid() const;
+000452:         bool IsBattleground() const;
+000453:         bool IsBattleArena() const;
+000454:         bool IsBattlegroundOrArena() const;
+--- FILE=src\server\game\World\World.cpp NEEDLE=LoadConfigSettings FIRST_LINE=501 ---
+000493:     // iter point to first not updated socket, position store new position
+000494:     for (; iter != m_QueuedPlayer.end(); ++iter, ++position)
+000495:         (*iter)->SendAuthWaitQueue(position);
+000496: 
+000497:     return found;
+000498: }
+000499: 
+000500: /// Initialize config values
+000501: void World::LoadConfigSettings(bool reload)
+000502: {
+000503:     if (reload)
+000504:     {
+000505:         std::vector<std::string> configErrors;
+000506:         if (!sConfigMgr->Reload(configErrors))
+000507:         {
+000508:             for (std::string const& configError : configErrors)
+000509:                 TC_LOG_ERROR("misc", "World settings reload fail: {}.", configError);
+--- FILE=src\server\worldserver\worldserver.conf.dist NEEDLE=AllowTwoSide FIRST_LINE=1573 ---
+001565: Warden.BanDuration = 86400
+001566: 
+001567: #
+001568: ###################################################################################################
+001569: 
+001570: ###################################################################################################
+001571: # PLAYER INTERACTION玩家互动
+001572: #
+001573: #    AllowTwoSide.Interaction.Calendar
+001574: #        Description: Allow calendar invites between factions.
+001575: #        Default:     0 - (Disabled)
+001576: #                     1 - (Enabled)
+001577: 
+001578: AllowTwoSide.Interaction.Calendar = 1
+001579: 
+001580: #
+001581: #    AllowTwoSide.Interaction.Channel
+--- FILE=src\server\worldserver\worldserver.conf.dist NEEDLE=Rate. FIRST_LINE=1654 ---
+001646: #        Description: Distance for creatures to evade after being pulled away from the combat
+001647: #                     starting point. If ThreatRadius is less than creature aggro radius then aggro
+001648: #                     radius will be used.
+001649: #        Default:     60
+001650: 
+001651: ThreatRadius = 60
+001652: 
+001653: #
+001654: #    Rate.Creature.Aggro
+001655: #        Description: Aggro radius percentage.
+001656: #        Default:     1   - (Enabled, 100%)
+001657: #                     1.5 - (Enabled, 150%)
+001658: #                     0   - (Disabled, 0%)
+001659: 
+001660: Rate.Creature.Aggro = 1
+001661: 
+001662: #
+--- FILE=src\server\game\Entities\Vehicle\Vehicle.cpp NEEDLE=VEHICLE_SEAT_FLAG_CAN_CONTROL FIRST_LINE=526 ---
+000518: 
+000519:     //npcbot
+000520:     if (unit->GetTypeId() == TYPEID_UNIT && unit->ToCreature()->GetBotAI())
+000521:         BotMgr::OnBotExitVehicle(unit->ToCreature(), this);
+000522:     //end npcbot
+000523: 
+000524:     seat->second.Passenger.Reset();
+000525: 
+000526:     if (_me->GetTypeId() == TYPEID_UNIT && unit->GetTypeId() == TYPEID_PLAYER && seat->second.SeatInfo->Flags & VEHICLE_SEAT_FLAG_CAN_CONTROL)
+000527:     {
+000528:         //npcbot
+000529:         if (unit->ToPlayer()->HaveBot())
+000530:             BotMgr::OnBotOwnerExitVehicle(unit->ToPlayer(), this);
+000531:         //end npcbot
+000532:         _me->RemoveCharmedBy(unit);
+000533:     }
+000534: 
+--- FILE=src\server\game\Entities\Unit\Unit.cpp NEEDLE=SetCanFly FIRST_LINE=12957 ---
+012949:     }
+012950:     else
+012951:     {
+012952:         float vcos, vsin;
+012953:         GetSinCos(x, y, vsin, vcos);
+012954:         SendMoveKnockBack(GetGameClientMovingMe()->GetBasePlayer(), speedXY, -speedZ, vcos, vsin);
+012955: 
+012956:         if (HasAuraType(SPELL_AURA_MOD_INCREASE_MOUNTED_FLIGHT_SPEED) || HasAuraType(SPELL_AURA_FLY))
+012957:             SetCanFly(true, true);
+012958:     }
+012959: }
+012960: 
+012961: float Unit::GetCombatRatingReduction(CombatRating cr) const
+012962: {
+012963:     if (Player const* player = ToPlayer())
+012964:         return player->GetRatingBonusValue(cr);
+012965:     //npcbot: get bot resilience
+--- FILE=src\server\game\Entities\Unit\Unit.cpp NEEDLE=SetDisableGravity FIRST_LINE=14230 ---
+014222:     static OpcodeServer const walkModeTable[2] = { SMSG_SPLINE_MOVE_SET_RUN_MODE, SMSG_SPLINE_MOVE_SET_WALK_MODE };
+014223: 
+014224:     WorldPackets::Movement::MoveSplineSetFlag packet(walkModeTable[enable]);
+014225:     packet.MoverGUID = GetGUID();
+014226:     SendMessageToSet(packet.Write(), true);
+014227:     return true;
+014228: }
+014229: 
+014230: bool Unit::SetDisableGravity(bool disable, bool updateAnimTier /*= true*/)
+014231: {
+014232:     if (disable == IsGravityDisabled())
+014233:         return false;
+014234: 
+014235:     if (disable)
+014236:     {
+014237:         AddUnitMovementFlag(MOVEMENTFLAG_DISABLE_GRAVITY);
+014238:         RemoveUnitMovementFlag(MOVEMENTFLAG_FALLING);
+--- FILE=src\server\game\Entities\Unit\Unit.cpp NEEDLE=MOVE_FLIGHT FIRST_LINE=101 ---
+000093: float baseMoveSpeed[MAX_MOVE_TYPE] =
+000094: {
+000095:     2.5f,                  // MOVE_WALK
+000096:     7.0f,                  // MOVE_RUN
+000097:     4.5f,                  // MOVE_RUN_BACK
+000098:     4.722222f,             // MOVE_SWIM
+000099:     2.5f,                  // MOVE_SWIM_BACK
+000100:     3.141594f,             // MOVE_TURN_RATE
+000101:     7.0f,                  // MOVE_FLIGHT
+000102:     4.5f,                  // MOVE_FLIGHT_BACK
+000103:     3.14f                  // MOVE_PITCH_RATE
+000104: };
+000105: 
+000106: float playerBaseMoveSpeed[MAX_MOVE_TYPE] =
+000107: {
+000108:     2.5f,                  // MOVE_WALK
+000109:     7.0f,                  // MOVE_RUN
+--- FILE=src\server\game\AI\NpcBots\bot_ai.cpp NEEDLE=OnBotEnterVehicle FIRST_LINE=21326 ---
+021318:         botPet->GetBotPetAI()->UnsetWanderer();
+021319: }
+021320: 
+021321: void bot_ai::KillEvents(bool force)
+021322: {
+021323:     Events.KillAllEvents(force);
+021324: }
+021325: 
+021326: void bot_ai::OnBotEnterVehicle(Vehicle const* vehicle)
+021327: {
+021328:     if (VehicleSeatEntry const* seat = vehicle->GetSeatForPassenger(me))
+021329:     {
+021330:         if (seat->Flags & VEHICLE_SEAT_FLAG_CAN_CONTROL)
+021331:         {
+021332:             vehicle->GetBase()->SetFaction(master->GetFaction());
+021333:             //vehicle->GetBase()->SetOwnerGUID(master->GetGUID());
+021334:             vehicle->GetBase()->SetCreator(master);
+--- FILE=src\server\game\AI\NpcBots\bot_ai.cpp NEEDLE=VEHICLE_SEAT_FLAG_CAN_CONTROL FIRST_LINE=1037 ---
+001029: }
+001030: // Movement set
+001031: // Uses MovePoint() for following instead of MoveFollow()
+001032: // This helps bots overcome a bug with fanthom walls on grid borders blocking pathing
+001033: void bot_ai::BotMovement(BotMovementType type, Position const* pos, Unit* target, bool generatePath, float speed) const
+001034: {
+001035:     Vehicle* veh = me->GetVehicle();
+001036:     VehicleSeatEntry const* seat = veh ? veh->GetSeatForPassenger(me) : nullptr;
+001037:     bool canControl = seat ? (seat->Flags & VEHICLE_SEAT_FLAG_CAN_CONTROL) : false;
+001038:     Unit* mover = canControl ? veh->GetBase() : !veh ? me : nullptr;
+001039:     if (!mover)
+001040:         return;
+001041: 
+001042:     switch (type)
+001043:     {
+001044:         case BOT_MOVE_CHASE:
+001045:             ASSERT(target);
+--- FILE=src\server\game\AI\NpcBots\bot_ai.cpp NEEDLE=SetCanFly FIRST_LINE=7492 ---
+007484:         {
+007485:             //BOT_LOG_ERROR("entities.unit", "OnSpellHit: mount on {}", me->GetName());
+007486:             if (master->HasAuraType(SPELL_AURA_MOD_INCREASE_VEHICLE_FLIGHT_SPEED) ||
+007487:                 master->HasAuraType(SPELL_AURA_MOD_INCREASE_MOUNTED_FLIGHT_SPEED))
+007488:             {
+007489:                 //BOT_LOG_ERROR("entities.unit", "OnSpellHit: modding flight speed");
+007490:                 UnsummonAll(false);
+007491:                 const_cast<CreatureTemplate*>(me->GetCreatureTemplate())->Movement.Flight = CreatureFlightMovementType::DisableGravity;
+007492:                 me->SetCanFly(true);
+007493:                 me->SetDisableGravity(true);
+007494:                 if (Aura* mount = me->GetAura(spell->Id))
+007495:                 {
+007496:                     //BOT_LOG_ERROR("entities.unit", "OnSpellHit: found aura");
+007497:                     for (uint8 j = 0; j != MAX_SPELL_EFFECTS; ++j)
+007498:                     {
+007499:                         if (spell->_effects[j].ApplyAuraName != SPELL_AURA_MOD_INCREASE_VEHICLE_FLIGHT_SPEED &&
+007500:                             spell->_effects[j].ApplyAuraName != SPELL_AURA_MOD_INCREASE_MOUNTED_FLIGHT_SPEED &&
+--- FILE=src\server\game\AI\NpcBots\bot_ai.cpp NEEDLE=POWER_ENERGY FIRST_LINE=6141 ---
+006133: }
+006134: //Health and Powers regeneration
+006135: //Rage regen is handled inside class AI UpdateAI()
+006136: void bot_ai::Regenerate()
+006137: {
+006138:     regenTimer += lastdiff;
+006139: 
+006140:     //every tick
+006141:     if (me->GetPowerType() == POWER_ENERGY)
+006142:         RegenerateEnergy();
+006143: 
+006144:     if (regenTimer >= REGEN_CD)
+006145:     {
+006146:         regenTimer -= REGEN_CD;
+006147:         // Regen Health
+006148:         int32 baseRegen = int32(_getTotalBotStat(BOT_STAT_MOD_HEALTH_REGEN));
+006149:         if ((!me->IsInCombat() || me->IsPolymorphed() || CanRegenInCombat() || baseRegen > 0 ||
+
+=== 5. TREE-WIDE CONFLICT AND CAPABILITY SEARCH ===
+TREE_HITS=0 NEEDLE=G17
+TREE_HITS=0 NEEDLE=WorldFlight.
+TREE_HITS=5 NEEDLE=SPELL_ATTR4_CAST_ONLY_IN_OUTLAND
+TREE src\server\game\Spells\SpellInfo.cpp:1585: if (HasAttribute(SPELL_ATTR4_CAST_ONLY_IN_OUTLAND))
+TREE src\server\shared\enuminfo_SharedDefines.cpp:813: case SPELL_ATTR4_CAST_ONLY_IN_OUTLAND: return { "SPELL_ATTR4_CAST_ONLY_IN_OUTLAND", "Only in Outland/Northrend", "" };
+TREE src\server\shared\enuminfo_SharedDefines.cpp:857: case 26: return SPELL_ATTR4_CAST_ONLY_IN_OUTLAND;
+TREE src\server\shared\enuminfo_SharedDefines.cpp:898: case SPELL_ATTR4_CAST_ONLY_IN_OUTLAND: return 26;
+TREE src\server\shared\SharedDefines.h:602: SPELL_ATTR4_CAST_ONLY_IN_OUTLAND             = 0x04000000, // TITLE Only in Outland/Northrend
+TREE_HITS=13 NEEDLE=VEHICLE_SEAT_FLAG_CAN_CONTROL
+TREE src\server\game\AI\NpcBots\bot_ai.cpp:1037: bool canControl = seat ? (seat->Flags & VEHICLE_SEAT_FLAG_CAN_CONTROL) : false;
+TREE src\server\game\AI\NpcBots\bot_ai.cpp:1063: return seat->Flags & VEHICLE_SEAT_FLAG_CAN_CONTROL;
+TREE src\server\game\AI\NpcBots\bot_ai.cpp:1135: bool canControl = seat ? (seat->Flags & VEHICLE_SEAT_FLAG_CAN_CONTROL) : false;
+TREE src\server\game\AI\NpcBots\bot_ai.cpp:21330: if (seat->Flags & VEHICLE_SEAT_FLAG_CAN_CONTROL)
+TREE src\server\game\AI\NpcBots\bot_ai.cpp:21397: if (seat->Flags & VEHICLE_SEAT_FLAG_CAN_CONTROL)
+TREE src\server\game\AI\NpcBots\bot_ai.cpp:21640: if (seat->Flags & VEHICLE_SEAT_FLAG_CAN_CONTROL)
+TREE src\server\game\Entities\Vehicle\Vehicle.cpp:526: if (_me->GetTypeId() == TYPEID_UNIT && unit->GetTypeId() == TYPEID_PLAYER && seat->second.SeatInfo->Flags & VEHICLE_SEAT_FLAG_CAN_CONTROL)
+TREE src\server\game\Entities\Vehicle\Vehicle.cpp:617: if (itr->second.SeatInfo->HasFlag(VEHICLE_SEAT_FLAG_CAN_CONTROL))
+TREE src\server\game\Entities\Vehicle\Vehicle.cpp:851: (Seat->second.SeatInfo->m_flags & VEHICLE_SEAT_FLAG_CAN_CONTROL)*/)
+TREE src\server\game\Entities\Vehicle\Vehicle.cpp:912: veSeat->HasFlag(VEHICLE_SEAT_FLAG_CAN_CONTROL))
+TREE src\server\game\Spells\SpellInfo.cpp:1918: if (vehicleSeat->Flags & (VEHICLE_SEAT_FLAG_CAN_CONTROL | VEHICLE_SEAT_FLAG_UNK2))
+TREE src\server\shared\DataStores\DBCEnums.h:480: VEHICLE_SEAT_FLAG_CAN_CONTROL                                      = 0x00000800, // Lua_UnitInVehicleControlSeat
+TREE src\server\shared\DataStores\DBCStructure.h:1857: inline bool CanEnterOrExit() const { return HasFlag(VehicleSeatFlags(VEHICLE_SEAT_FLAG_CAN_ENTER_OR_EXIT | VEHICLE_SEAT_FLAG_CAN_CONTROL | VEHICLE_SEAT_FLAG_SHOULD_USE_VEH_SEAT_EXIT_ANIM_ON_VOLUNTARY_EXIT)); }
+TREE_HITS=51 NEEDLE=SetCanFly(
+TREE src\server\game\AI\NpcBots\bot_ai.cpp:7492: me->SetCanFly(true);
+TREE src\server\game\AI\NpcBots\bot_ai.cpp:21352: vehicle->GetBase()->SetCanFly(true);
+TREE src\server\game\AI\NpcBots\bot_ai.cpp:21712: me->SetCanFly(false);
+TREE src\server\game\Entities\Creature\Creature.cpp:2865: SetCanFly(true);
+TREE src\server\game\Entities\Creature\Creature.cpp:2874: SetCanFly(false);
+TREE src\server\game\Entities\Unit\Unit.cpp:12957: SetCanFly(true, true);
+TREE src\server\game\Entities\Unit\Unit.cpp:14317: bool Unit::SetCanFly(bool enable, bool packetOnly /*= false */)
+TREE src\server\game\Entities\Unit\Unit.h:1228: bool SetCanFly(bool enable, bool packetOnly = false);
+TREE src\server\game\LuaEngine\methods\AzerothCore\UnitMethods.h:1733: int SetCanFly(Eluna* E, Unit* unit)
+TREE src\server\game\LuaEngine\methods\AzerothCore\UnitMethods.h:1737: unit->SetCanFly(apply);
+TREE src\server\game\LuaEngine\methods\TrinityCore\UnitMethods.h:1763: int SetCanFly(Eluna* E, Unit* unit)
+TREE src\server\game\LuaEngine\methods\TrinityCore\UnitMethods.h:1767: unit->SetCanFly(apply);
+TREE src\server\game\LuaEngine\methods\VMangos\UnitMethods.h:1594: /*int SetCanFly(Eluna* E, Unit* unit)
+TREE src\server\game\LuaEngine\methods\VMangos\UnitMethods.h:1597: unit->SetCanFly(apply);
+TREE src\server\game\Spells\Auras\SpellAuraEffects.cpp:2668: if (target->SetCanFly(apply))
+TREE src\server\game\Spells\Auras\SpellAuraEffects.cpp:3071: if (target->SetCanFly(apply))
+TREE src\server\scripts\Commands\cs_debug.cpp:1306: target->SetCanFly((*moveFlags & MOVEMENTFLAG_CAN_FLY) != 0);
+TREE src\server\scripts\EasternKingdoms\BlackrockMountain\BlackwingLair\boss_nefarian.cpp:389: nefarian->SetCanFly(true);
+TREE src\server\scripts\EasternKingdoms\BlackrockMountain\BlackwingLair\boss_nefarian.cpp:484: me->SetCanFly(false);
+TREE src\server\scripts\EasternKingdoms\ScarletEnclave\zone_the_scarlet_enclave.cpp:74: me->SetCanFly(true);
+TREE src\server\scripts\Kalimdor\OnyxiasLair\boss_onyxia.cpp:225: me->SetCanFly(false);
+TREE src\server\scripts\Kalimdor\OnyxiasLair\boss_onyxia.cpp:242: me->SetCanFly(true);
+TREE src\server\scripts\Northrend\ChamberOfAspects\RubySanctum\boss_saviana_ragefire.cpp:82: me->SetCanFly(false);
+TREE src\server\scripts\Northrend\ChamberOfAspects\RubySanctum\boss_saviana_ragefire.cpp:117: me->SetCanFly(false);
+TREE src\server\scripts\Northrend\ChamberOfAspects\RubySanctum\boss_saviana_ragefire.cpp:159: me->SetCanFly(true);
+TREE src\server\scripts\Northrend\CrusadersColiseum\TrialOfTheCrusader\boss_twin_valkyr.cpp:561: me->SetCanFly(true);
+TREE src\server\scripts\Northrend\FrozenHalls\PitOfSaron\boss_krickandick.cpp:350: newTyrannus->SetCanFly(true);
+TREE src\server\scripts\Northrend\FrozenHalls\PitOfSaron\boss_scourgelord_tyrannus.cpp:301: me->SetCanFly(true);
+TREE src\server\scripts\Northrend\IcecrownCitadel\boss_blood_queen_lana_thel.cpp:216: minchar->SetCanFly(false);
+TREE src\server\scripts\Northrend\IcecrownCitadel\boss_sindragosa.cpp:257: me->SetCanFly(true);
+TREE src\server\scripts\Northrend\IcecrownCitadel\boss_sindragosa.cpp:302: me->SetCanFly(false);
+TREE src\server\scripts\Northrend\IcecrownCitadel\boss_sindragosa.cpp:327: me->SetCanFly(true);
+TREE src\server\scripts\Northrend\IcecrownCitadel\boss_sindragosa.cpp:361: me->SetCanFly(false);
+TREE src\server\scripts\Northrend\IcecrownCitadel\boss_sindragosa.cpp:392: me->SetCanFly(false);
+TREE src\server\scripts\Northrend\IcecrownCitadel\boss_sindragosa.cpp:505: me->SetCanFly(true);
+TREE src\server\scripts\Northrend\IcecrownCitadel\boss_sindragosa.cpp:708: me->SetCanFly(true);
+TREE src\server\scripts\Northrend\IcecrownCitadel\boss_sindragosa.cpp:756: me->SetCanFly(false);
+TREE src\server\scripts\Northrend\IcecrownCitadel\boss_sindragosa.cpp:836: me->SetCanFly(true);
+TREE src\server\scripts\Northrend\IcecrownCitadel\boss_sindragosa.cpp:884: me->SetCanFly(false);
+TREE src\server\scripts\Northrend\IcecrownCitadel\boss_sindragosa.cpp:920: me->SetCanFly(true);
+TREE_HITS=100 NEEDLE=SetDisableGravity(
+TREE src\server\game\AI\NpcBots\bot_ai.cpp:7493: me->SetDisableGravity(true);
+TREE src\server\game\AI\NpcBots\bot_ai.cpp:21353: vehicle->GetBase()->SetDisableGravity(true);
+TREE src\server\game\AI\NpcBots\bot_ai.cpp:21714: me->SetDisableGravity(false);
+TREE src\server\game\AI\SmartScripts\SmartAI.cpp:755: void SmartAI::SetDisableGravity(bool fly)
+TREE src\server\game\AI\SmartScripts\SmartAI.cpp:757: me->SetDisableGravity(fly);
+TREE src\server\game\AI\SmartScripts\SmartAI.h:202: void SetDisableGravity(bool disable = true);
+TREE src\server\game\AI\SmartScripts\SmartScript.cpp:1328: ENSURE_AI(SmartAI, me->AI())->SetDisableGravity(e.action.setDisableGravity.disable != 0);
+TREE src\server\game\Entities\Creature\Creature.cpp:2172: SetDisableGravity(false);
+TREE src\server\game\Entities\Creature\Creature.cpp:2867: SetDisableGravity(true);
+TREE src\server\game\Entities\Creature\Creature.cpp:2875: SetDisableGravity(false);
+TREE src\server\game\Entities\Unit\Unit.cpp:14230: bool Unit::SetDisableGravity(bool disable, bool updateAnimTier /*= true*/)
+TREE src\server\game\Entities\Unit\Unit.h:1225: bool SetDisableGravity(bool disable, bool updateAnimTier = true);
+TREE src\server\game\LuaEngine\methods\AzerothCore\CreatureMethods.h:957: int SetDisableGravity(Eluna* E, Creature* creature)
+TREE src\server\game\LuaEngine\methods\AzerothCore\CreatureMethods.h:961: creature->SetDisableGravity(disable);
+TREE src\server\game\LuaEngine\methods\CMangos\CreatureMethods.h:761: int SetDisableGravity(Eluna* E, Creature* creature)
+TREE src\server\game\LuaEngine\methods\Mangos\CreatureMethods.h:749: int SetDisableGravity(Eluna* E, Creature* creature)
+TREE src\server\game\LuaEngine\methods\TrinityCore\CreatureMethods.h:972: int SetDisableGravity(Eluna* E, Creature* creature)
+TREE src\server\game\LuaEngine\methods\TrinityCore\CreatureMethods.h:976: creature->SetDisableGravity(disable);
+TREE src\server\game\LuaEngine\methods\VMangos\CreatureMethods.h:756: int SetDisableGravity(Eluna* E, Creature* creature)
+TREE src\server\scripts\Commands\cs_debug.cpp:1304: target->SetDisableGravity((*moveFlags & MOVEMENTFLAG_DISABLE_GRAVITY) != 0);
+TREE src\server\scripts\EasternKingdoms\BlackrockMountain\BlackwingLair\boss_nefarian.cpp:390: nefarian->SetDisableGravity(true);
+TREE src\server\scripts\EasternKingdoms\BlackrockMountain\BlackwingLair\boss_nefarian.cpp:485: me->SetDisableGravity(false);
+TREE src\server\scripts\EasternKingdoms\Karazhan\boss_nightbane.cpp:130: me->SetDisableGravity(true);
+TREE src\server\scripts\EasternKingdoms\Karazhan\boss_nightbane.cpp:138: me->SetDisableGravity(true);
+TREE src\server\scripts\EasternKingdoms\Karazhan\boss_nightbane.cpp:221: me->SetDisableGravity(false);
+TREE src\server\scripts\EasternKingdoms\Karazhan\boss_nightbane.cpp:227: me->SetDisableGravity(false);
+TREE src\server\scripts\EasternKingdoms\Karazhan\boss_nightbane.cpp:259: me->SetDisableGravity(true);
+TREE src\server\scripts\EasternKingdoms\Karazhan\boss_nightbane.cpp:307: me->SetDisableGravity(true);
+TREE src\server\scripts\EasternKingdoms\Karazhan\karazhan.cpp:507: Arcanagos->SetDisableGravity(true);
+TREE src\server\scripts\EasternKingdoms\MagistersTerrace\magisters_terrace.cpp:66: me->SetDisableGravity(false);
+TREE src\server\scripts\EasternKingdoms\ScarletMonastery\boss_headless_horseman.cpp:347: me->SetDisableGravity(true);
+TREE src\server\scripts\EasternKingdoms\ScarletMonastery\boss_headless_horseman.cpp:525: me->SetDisableGravity(false);
+TREE src\server\scripts\EasternKingdoms\ScarletMonastery\boss_headless_horseman.cpp:627: me->SetDisableGravity(true);
+TREE src\server\scripts\EasternKingdoms\ScarletMonastery\boss_headless_horseman.cpp:648: me->SetDisableGravity(false);
+TREE src\server\scripts\EasternKingdoms\Scholomance\boss_kirtonos_the_herald.cpp:91: me->SetDisableGravity(true);
+TREE src\server\scripts\EasternKingdoms\Scholomance\boss_kirtonos_the_herald.cpp:152: me->SetDisableGravity(false);
+TREE src\server\scripts\EasternKingdoms\SunwellPlateau\boss_brutallus.cpp:344: me->SetDisableGravity(false);
+TREE src\server\scripts\EasternKingdoms\SunwellPlateau\boss_brutallus.cpp:371: me->SetDisableGravity(true);
+TREE src\server\scripts\EasternKingdoms\SunwellPlateau\boss_brutallus.cpp:376: brutallus->SetDisableGravity(true);
+TREE src\server\scripts\EasternKingdoms\SunwellPlateau\boss_brutallus.cpp:433: brutallus->SetDisableGravity(false);
+TREE_HITS=100 NEEDLE=POWER_ENERGY
+TREE src\server\game\AI\NpcBots\bot_ai.cpp:6141: if (me->GetPowerType() == POWER_ENERGY)
+TREE src\server\game\AI\NpcBots\bot_ai.cpp:6209: uint32 curValue = me->GetPower(POWER_ENERGY);
+TREE src\server\game\AI\NpcBots\bot_ai.cpp:6210: uint32 maxValue = me->GetMaxPower(POWER_ENERGY);
+TREE src\server\game\AI\NpcBots\bot_ai.cpp:6214: float addvalue = 0.01f * lastdiff * sWorld->getRate(RATE_POWER_ENERGY); //10 per sec
+TREE src\server\game\AI\NpcBots\bot_ai.cpp:6216: if (Powers(aeff->GetMiscValue()) == POWER_ENERGY)
+TREE src\server\game\AI\NpcBots\bot_ai.cpp:6220: //addvalue += me->GetTotalAuraModifierByMiscValue(SPELL_AURA_MOD_POWER_REGEN, POWER_ENERGY) * lastdiff / 5000;
+TREE src\server\game\AI\NpcBots\bot_ai.cpp:6221: //me->ModifyPower(POWER_ENERGY, int32(addvalue));
+TREE src\server\game\AI\NpcBots\bot_ai.cpp:6241: me->SetPower(POWER_ENERGY, curValue);
+TREE src\server\game\AI\NpcBots\bot_ai.cpp:6243: me->UpdateUInt32Value(UNIT_FIELD_POWER1 + uint16(POWER_ENERGY), curValue);
+TREE src\server\game\AI\NpcBots\bot_ai.cpp:15336: me->SetPower(POWER_ENERGY, 0);
+TREE src\server\game\AI\NpcBots\bot_ai.cpp:17026: uint32 drakePower = drake->GetPower(POWER_ENERGY);
+TREE src\server\game\AI\NpcBots\bot_death_knight_ai.cpp:1800: if (botPet && botPet->GetPowerType() != POWER_ENERGY)
+TREE src\server\game\AI\NpcBots\bot_death_knight_ai.cpp:1801: botPet->SetByteValue(UNIT_FIELD_BYTES_0, 3, POWER_ENERGY);
+TREE src\server\game\AI\NpcBots\bot_druid_ai.cpp:434: energy = me->GetPower(POWER_ENERGY);
+TREE src\server\game\AI\NpcBots\bot_druid_ai.cpp:528: else if (me->GetPowerType() == POWER_ENERGY)
+TREE src\server\game\AI\NpcBots\bot_druid_ai.cpp:851: if (me->GetPowerType() != POWER_ENERGY || me->GetShapeshiftForm() != FORM_CAT)
+TREE src\server\game\AI\NpcBots\bot_druid_ai.cpp:1619: if (me->GetPowerType() != POWER_ENERGY)
+TREE src\server\game\AI\NpcBots\bot_druid_ai.cpp:1621: //BOT_LOG_ERROR("entities.player", "druid_bot::setStats(): has to set powerType to POWER_ENERGY");
+TREE src\server\game\AI\NpcBots\bot_druid_ai.cpp:1622: me->SetPowerType(POWER_ENERGY);
+TREE src\server\game\AI\NpcBots\bot_druid_ai.cpp:2670: me->SetMaxPower(POWER_ENERGY, 100); //for regeneration
+TREE src\server\game\AI\NpcBots\bot_druid_ai.cpp:2695: me->SetPowerType(POWER_ENERGY);
+TREE src\server\game\AI\NpcBots\bot_rogue_ai.cpp:249: energy = me->GetPower(POWER_ENERGY);
+TREE src\server\game\AI\NpcBots\bot_rogue_ai.cpp:543: energy <= std::max<int32>(me->GetMaxPower(POWER_ENERGY) - 110, 10))
+TREE src\server\game\AI\NpcBots\bot_rogue_ai.cpp:593: if (!hasnormalstun && duration > 300 && uint32(energy) < me->GetMaxPower(POWER_ENERGY))
+TREE src\server\game\AI\NpcBots\bot_rogue_ai.cpp:1837: me->SetPowerType(POWER_ENERGY);
+TREE src\server\game\AI\NpcBots\bot_rogue_ai.cpp:1840: me->SetPower(POWER_ENERGY, energy);
+TREE src\server\game\AI\NpcBots\bot_rogue_ai.cpp:1842: me->SetPower(POWER_ENERGY, me->GetMaxPower(POWER_ENERGY));
+TREE src\server\game\AI\NpcBots\bpet_ai.cpp:609: if (me->GetPowerType() != POWER_ENERGY)
+TREE src\server\game\AI\NpcBots\bpet_ai.cpp:611: me->SetMaxPower(POWER_ENERGY, 100);
+TREE src\server\game\AI\NpcBots\bpet_ai.cpp:612: me->SetByteValue(UNIT_FIELD_BYTES_0, 3, POWER_ENERGY);
+TREE src\server\game\AI\NpcBots\bpet_ai.cpp:1705: else if (me->GetPowerType() == POWER_ENERGY)
+TREE src\server\game\AI\NpcBots\bpet_ai.cpp:1797: uint32 curValue = me->GetPower(POWER_ENERGY);
+TREE src\server\game\AI\NpcBots\bpet_ai.cpp:1798: uint32 maxValue = me->GetMaxPower(POWER_ENERGY);
+TREE src\server\game\AI\NpcBots\bpet_ai.cpp:1802: float addvalue = 0.01f * lastdiff * sWorld->getRate(RATE_POWER_ENERGY); //10 per sec
+TREE src\server\game\AI\NpcBots\bpet_ai.cpp:1822: me->SetPower(POWER_ENERGY, curValue);
+TREE src\server\game\AI\NpcBots\bpet_ai.cpp:1824: me->UpdateUInt32Value(UNIT_FIELD_POWER1 + uint16(POWER_ENERGY), curValue);
+TREE src\server\game\AI\NpcBots\bpet_death_knight.cpp:95: uint32 const energy = me->GetPower(POWER_ENERGY);
+TREE src\server\game\Entities\Creature\Creature.cpp:937: if (GetPowerType() == POWER_ENERGY)
+TREE src\server\game\Entities\Creature\Creature.cpp:938: Regenerate(POWER_ENERGY);
+TREE src\server\game\Entities\Creature\Creature.cpp:980: case POWER_ENERGY:
+
+=== 6. VERDICT ===
+MISSING_REQUIRED_COUNT=1
+MISSING_REQUIRED=src\server\game\Miscellaneous\SharedDefines.h
+MISSING_OPTIONAL_COUNT=0
+G17_EXISTING_CONFLICT_COUNT=0
+G17_A_WORLD_FLIGHT_PROBE_READY=False
+G17_B_VEHICLE_PROBE_READY=True
+NEXT=Do not patch; resolve missing anchors/files or existing G17 conflicts first.
+[OK] Read-only source probe complete; only the report file will be written.

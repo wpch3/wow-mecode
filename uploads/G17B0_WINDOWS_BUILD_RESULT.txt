@@ -1,0 +1,122 @@
+G17B0_WINDOWS_BUILD_V3_NATIVE_SAFE_START
+SOURCE_ROOT=D:\TrinityCore
+BUILD_ROOT=D:\TC-Build
+CONFIGURATION=RelWithDebInfo
+PLATFORM=x64
+LOADER_SHA256=5502e5b4e22535957f3db81083530b048ec33f6852f4697fbe55795628cee5cc
+PAYLOAD_SHA256=c9535dca3390ece6735e6ff6b7418ed99ff206628b5e8febd7b78b05cba999bd
+G17B0_BUILD_SOURCE_GATE=PASS
+NATIVE_SELFTEST|G17B0_NATIVE_STDOUT
+NATIVE_SELFTEST|G17B0_NATIVE_STDERR 
+NATIVE_RUNNER_SELFTEST_EXIT=0
+G17B0_NATIVE_RUNNER_SELFTEST=PASS
+CMAKE=C:\Program Files\CMake\bin\cmake.exe
+MSBUILD=D:\vs\MSBuild\Current\Bin\MSBuild.exe
+BEFORE_EXE_SIZE=36739072
+BEFORE_EXE_UTC=2026-08-21T17:40:03.3149646Z
+BEFORE_EXE_SHA256=a43fcf10567db83ef8b96ed9b47567860fd786dd40f6aeb0841e6d643583cb80
+BEFORE_PDB_SIZE=433344512
+BEFORE_PDB_UTC=2026-08-21T17:40:03.3534431Z
+G17B0_CMAKE_RECONFIGURE_START
+CMAKE|-- Detected 64-bit platform
+CMAKE|-- Detected amd64 processor architecture
+CMAKE|-- MSVC: Minimum version required is 19.32, found 19.44.35228.0 - ok!
+CMAKE|-- MSVC: Enabled increased number of sections in object files
+CMAKE|-- MSVC: Overloaded standard names
+CMAKE|-- MSVC: Disabled NON-SECURE warnings
+CMAKE|-- MSVC: Disabled POSIX warnings
+CMAKE|-- MSVC: Disabled generic compiletime warnings
+CMAKE|-- Found MySQL:   found components: binary
+CMAKE|-- Found MySQL executable: C:/Program Files/MySQL/MySQL Server 8.0/bin/mysql.exe
+CMAKE|System.Management.Automation.RemoteException
+CMAKE|* TrinityCore revision   : ae60f5b6f6ff+ 2026-07-29 23:54:13 +0800 (bignum-mod branch)
+CMAKE|System.Management.Automation.RemoteException
+CMAKE|* Install core to        : C:/Program Files/TrinityCore
+CMAKE|* Install configs to     : C:/Program Files/TrinityCore
+CMAKE|System.Management.Automation.RemoteException
+CMAKE|* Build world/auth       : Yes (default)
+CMAKE|* Build with scripts     : Yes (static)
+CMAKE|* Build Eluna LuaEngine  : Yes (default)
+CMAKE|* Build map/vmap tools   : Yes (default)
+CMAKE|* Build unit tests       : No (default)
+CMAKE|* Build core w/PCH       : Yes (default)
+CMAKE|* Build scripts w/PCH    : Yes (default)
+CMAKE|* Show all warnings      : No  (default)
+CMAKE|* Stop build on warning  : No  (default)
+CMAKE|* Use coreside debug     : No  (default)
+CMAKE|* Show source tree       : Yes (hierarchical)
+CMAKE|* Use GIT revision hash  : Yes (default)
+CMAKE|System.Management.Automation.RemoteException
+CMAKE|-- Boost toolset is unknown (compiler MSVC 19.44.35228.0)
+CMAKE|-- Boost toolset is unknown (compiler MSVC 19.44.35228.0)
+CMAKE|-- Boost toolset is unknown (compiler MSVC 19.44.35228.0)
+CMAKE|-- Boost toolset is unknown (compiler MSVC 19.44.35228.0)
+CMAKE|-- Boost toolset is unknown (compiler MSVC 19.44.35228.0)
+CMAKE|-- Found MySQL: C:/Program Files/MySQL/MySQL Server 8.0/lib/libmysql.lib  found components: lib
+CMAKE|-- Found MySQL version: "8.0.46", minimum required is "8.0.34"
+CMAKE|-- Found MySQL library: C:/Program Files/MySQL/MySQL Server 8.0/lib/libmysql.lib
+CMAKE|-- Found MySQL headers: C:/Program Files/MySQL/MySQL Server 8.0/include
+CMAKE|-- Lua version: lua52
+CMAKE|-- Lua linking: dynamic
+CMAKE|System.Management.Automation.RemoteException
+CMAKE|* Script configuration (static):
+CMAKE|    |
+CMAKE|    +- worldserver
+CMAKE|    |   +- Battlefield
+CMAKE|    |   +- Commands
+CMAKE|    |   +- Custom
+CMAKE|    |   +- EasternKingdoms
+CMAKE|    |   +- Events
+CMAKE|    |   +- Kalimdor
+CMAKE|    |   +- Northrend
+CMAKE|    |   +- OutdoorPvP
+CMAKE|    |   +- Outland
+CMAKE|    |   +- Pet
+CMAKE|    |   +- Spells
+CMAKE|    |   +- World
+CMAKE|    |
+CMAKE|System.Management.Automation.RemoteException
+CMAKE|-- Configuring done (5.8s)
+CMAKE|-- Generating done (2.3s)
+CMAKE|-- Build files have been written to: D:/TC-Build
+CMAKE_EXIT=0
+DRAGONRIDING_VCXPROJ_HITS=1
+VCXPROJ_HIT=D:\TC-Build\src\server\scripts\scripts.vcxproj
+G17B0_CMAKE_SOURCE_MEMBERSHIP=PASS
+G17B0_MSBUILD_START_UTC=2026-08-22T08:33:19.8418174Z
+MSBUILD|閫傜敤浜?.NET Framework MSBuild 鐗堟湰 18.8.2+ce25c0108
+MSBUILD|
+MSBUILD|  gsoap.vcxproj -> D:\TC-Build\dep\gsoap\RelWithDebInfo\gsoap.lib
+MSBUILD|  efsw.vcxproj -> D:\TC-Build\dep\efsw\RelWithDebInfo\efsw.lib
+MSBUILD|  sfmt.vcxproj -> D:\TC-Build\dep\SFMT\RelWithDebInfo\sfmt.lib
+MSBUILD|  fmt.vcxproj -> D:\TC-Build\dep\fmt\RelWithDebInfo\fmt.lib
+MSBUILD|  lualib.vcxproj -> D:\TC-Build\bin\RelWithDebInfo\lua52.dll
+MSBUILD|  zlib.vcxproj -> D:\TC-Build\dep\zlib\RelWithDebInfo\zlib.lib
+MSBUILD|  argon2.vcxproj -> D:\TC-Build\dep\argon2\RelWithDebInfo\argon2.lib
+MSBUILD|  Detour.vcxproj -> D:\TC-Build\dep\recastnavigation\Detour\RelWithDebInfo\Detour.lib
+MSBUILD|  g3dlib.vcxproj -> D:\TC-Build\dep\g3dlite\RelWithDebInfo\g3dlib.lib
+MSBUILD|  common.vcxproj -> D:\TC-Build\src\common\RelWithDebInfo\common.lib
+MSBUILD|  database.vcxproj -> D:\TC-Build\src\server\database\RelWithDebInfo\database.lib
+MSBUILD|  shared.vcxproj -> D:\TC-Build\src\server\shared\RelWithDebInfo\shared.lib
+MSBUILD|  game.vcxproj -> D:\TC-Build\src\server\game\RelWithDebInfo\game.lib
+MSBUILD|  cs_dragonriding.cpp
+MSBUILD|  cs_script_loader.cpp
+MSBUILD|D:\TrinityCore\src\server\scripts\Commands\cs_dragonriding.cpp(119,40): warning C4018: 鈥?鈥? 鏈夌鍙?鏃犵鍙蜂笉鍖归厤 [D:\TC-Build\src\server\scripts\scripts.vcxproj]
+MSBUILD|  (缂栬瘧婧愭枃浠垛€?./../../../TrinityCore/src/server/scripts/Commands/cs_dragonriding.cpp鈥?
+MSBUILD|  
+MSBUILD|  scripts.vcxproj -> D:\TC-Build\src\server\scripts\RelWithDebInfo\scripts.lib
+MSBUILD|    姝ｅ湪鍒涘缓搴?D:/TC-Build/src/server/worldserver/RelWithDebInfo/worldserver.lib 鍜屽璞?D:/TC-Build/src/server/worldserver/RelWithDebInfo/worldserver.exp
+MSBUILD|  worldserver.vcxproj -> D:\TC-Build\bin\RelWithDebInfo\worldserver.exe
+MSBUILD_EXIT=0
+DRAGONRIDING_FRESH_OBJECTS=1
+DRAGONRIDING_OBJECT=D:\TC-Build\src\server\scripts\scripts.dir\RelWithDebInfo\cs_dragonriding.obj;size=807675;utc=2026-08-22T08:33:33.9984727Z
+AFTER_EXE_SIZE=36759040
+AFTER_EXE_UTC=2026-08-22T08:33:46.5536889Z
+AFTER_EXE_SHA256=59491e97426dc059e2f440b6ca17f28ffdc6eb296e3f8d04fc428b59099b5881
+AFTER_PDB_SIZE=433442816
+AFTER_PDB_UTC=2026-08-22T08:33:46.5850805Z
+G17B0_WINDOWS_BUILD_PASS=True
+G17B0_WINDOWS_BUILD_RESULT=PASS
+G17B0_WINDOWS_BUILD_COMPLETE
+STOP_DO_NOT_START_WORLDSERVER
+RESULT_FILE=C:\Users\Administrator\Downloads\workspace\uploads\G17B0_WINDOWS_BUILD_RESULT.txt

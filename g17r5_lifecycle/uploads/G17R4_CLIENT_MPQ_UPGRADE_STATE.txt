@@ -1,0 +1,5 @@
+STATE_FORMAT=1
+INSTALL_STATUS=PASS
+CLIENT_ROOT=/home/user/g17r5_lifecycle/client
+INSTALLED_MPQ=/home/user/g17r5_lifecycle/client/Data/patch-Z.MPQ
+NEW_MPQ_SHA256=3b9868091ba2dbc361d727d56929e5951ba269913e1066b3ef1ac2f4059cdceb

@@ -1,0 +1,69 @@
+﻿G11 runtime read-only diagnostic
+Generated: 2026-08-20 21:32:31 +08:00
+RunDir: D:\TC-Build\bin\RelWithDebInfo
+Edits performed: 0
+
+=== 1. REQUIRED PATHS ===
+
+Path                                                                  Exists
+----                                                                  ------
+D:\TC-Build\bin\RelWithDebInfo\worldserver.conf.d\g11_perception.conf   True
+D:\TC-Build\bin\RelWithDebInfo\worldserver.exe                          True
+D:\TC-Build\bin\RelWithDebInfo\worldserver.conf                         True
+
+=== 2. G11 CONFIG VALUES AND DUPLICATE COUNTS ===
+                                                                            
+                                                                            
+                                                                            
+                                                                            
+                                                                            
+                                                                            
+
+=== 3. ACTIVE WORLDSERVER PROCESS ===
+D:\TC-Build\bin\RelWithDebInfo\worldserver.exe                              
+
+=== 4. EXE METADATA AND SHA256 ===
+                                                                            
+D:\TC-Build\bin\RelWithDebInfo\worldserver.exe                              
+
+=== 5. G11 ASCII MARKER INSIDE EXE ===
+Python: C:\Users\Administrator\AppData\Local\Programs\Python\Python312\python.exe
+[OK] G11 marker exists in exe
+
+=== 6. NPCBOTS LOGGER CONFIG ===
+D:\TC-Build\bin\RelWithDebInfo\worldserver.conf                             
+
+=== 7. G11 MARKER IN RUNTIME LOG FILES ===
+Log files scanned: 5
+D:\TC-Build\bin\RelWithDebInfo\Server.log                                   
+D:\TC-Build\bin\RelWithDebInfo\Server.log                                   
+D:\TC-Build\bin\RelWithDebInfo\Server.log                                   
+D:\TC-Build\bin\RelWithDebInfo\Server.log                                   
+D:\TC-Build\bin\RelWithDebInfo\Server.log                                   
+D:\TC-Build\bin\RelWithDebInfo\Server.log                                   
+D:\TC-Build\bin\RelWithDebInfo\Server.log                                   
+D:\TC-Build\bin\RelWithDebInfo\Server.log                                   
+D:\TC-Build\bin\RelWithDebInfo\Server.log                                   
+D:\TC-Build\bin\RelWithDebInfo\Server.log                                   
+D:\TC-Build\bin\RelWithDebInfo\Server.log                                   
+D:\TC-Build\bin\RelWithDebInfo\Server.log                                   
+D:\TC-Build\bin\RelWithDebInfo\Server.log                                   
+D:\TC-Build\bin\RelWithDebInfo\Server.log                                   
+D:\TC-Build\bin\RelWithDebInfo\Server.log                                   
+D:\TC-Build\bin\RelWithDebInfo\Server.log                                   
+D:\TC-Build\bin\RelWithDebInfo\Server.log                                   
+D:\TC-Build\bin\RelWithDebInfo\Server.log                                   
+D:\TC-Build\bin\RelWithDebInfo\Server.log                                   
+D:\TC-Build\bin\RelWithDebInfo\Server.log                                   
+
+=== 8. MANUAL FACTS STILL REQUIRED ===
+State whether the tested bot was:
+- free wandering and unrecruited
+- fixed NPCBot
+- follower/recruited NPCBot
+- unknown
+Also state whether the human player stayed within 60 yards for 30 seconds after worldserver was ready.
+
+[OK] Read-only diagnostic finished. Source/config/database edits: 0
+
+

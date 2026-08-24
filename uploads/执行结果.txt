@@ -1,0 +1,3638 @@
+1：拍卖行诊断(而且我说的是每个物品都要有很多存货，还有除了坐骑和宠物以外传说装备不能上架拍卖行）
+
+结果1
+
+#	total_rows	unique_auctions	unique_items	active_rows	expired_waiting_cleanup	earliest_expire	latest_expire
+
+1	"39,498"	"39,498"	"39,498"	"37,307"	"2,191"	"2026-08-19 19:21:11"	"2026-08-22 18:51:11"
+
+结果2
+
+#	houseid	house_name	all_rows	ahbot_rows	player_rows	active_rows	expired_rows
+
+1	"2"	"Alliance/联盟"	"16,498"	"16,498"	"0"	"15,514"	"984"
+
+2	"6"	"Horde/部落"	"11,500"	"11,500"	"0"	"10,901"	"599"
+
+3	"7"	"Neutral/中立"	"11,500"	"11,500"	"0"	"10,892"	"608"
+
+结果3
+
+#	ahbot_rows	player_rows	all_rows	active_ahbot_rows	expired_ahbot_rows
+
+1	"39,498"	"0"	"39,498"	"37,307"	"2,191"
+
+结果4
+
+#	item_class	class_name	active_ahbot_rows	distinct_item_entries	total_stack_units
+
+1	"7"	"Trade Goods/材料"	"7,374"	"714"	"67,872"
+
+2	"2"	"Weapon/武器"	"5,914"	"1,337"	"5,914"
+
+3	"4"	"Armor/护甲"	"5,759"	"3,012"	"5,759"
+
+4	"0"	"Consumable/消耗品"	"4,308"	"872"	"27,829"
+
+5	"9"	"Recipe/配方"	"4,297"	"1,042"	"4,297"
+
+6	"1"	"Container/容器"	"2,683"	"81"	"2,683"
+
+7	"3"	"Gem/宝石"	"2,005"	"496"	"3,948"
+
+8	"15"	"Miscellaneous/杂项"	"1,501"	"426"	"3,537"
+
+9	"6"	"Projectile/弹药"	"1,329"	"28"	"621,653"
+
+10	"5"	"Reagent/施法材料"	"972"	"1"	"5,296"
+
+11	"11"	"Quiver/箭袋"	"572"	"18"	"572"
+
+12	"16"	"Glyph/雕文"	"400"	"239"	"400"
+
+13	"8"	"Generic/通用"	"193"	"1"	"1,091"
+
+结果5
+
+#	quality_id	quality_name	active_ahbot_rows	distinct_item_entries
+
+1	"0"	"Gray/灰"	"1,886"	"412"
+
+2	"1"	"White/白"	"11,319"	"2,462"
+
+3	"2"	"Green/绿"	"11,366"	"2,995"
+
+4	"3"	"Blue/蓝"	"7,542"	"1,542"
+
+5	"4"	"Purple/紫"	"4,726"	"853"
+
+6	"5"	"Orange/橙"	"468"	"3"
+
+结果6
+
+#	itemowner	seller_name	account	seller_kind	auction_rows	active_rows
+
+1	"5"	"鲤鱼"	"2"	"AHBot"	"39,498"	"37,307"
+
+2：然后G16的conf装好了
+
+3：G11第二步的同步制作吧，我已经把conf做好了，记得把conf也存进去，总共的文件不能少
+
+4：
+
+sql3.1结果
+
+1：拍卖行诊断
+
+结果1
+
+#	total_rows	unique_auctions	unique_items	active_rows	expired_waiting_cleanup	earliest_expire	latest_expire
+
+1	"39,498"	"39,498"	"39,498"	"37,307"	"2,191"	"2026-08-19 19:21:11"	"2026-08-22 18:51:11"
+
+结果2
+
+#	houseid	house_name	all_rows	ahbot_rows	player_rows	active_rows	expired_rows
+
+1	"2"	"Alliance/联盟"	"16,498"	"16,498"	"0"	"15,514"	"984"
+
+2	"6"	"Horde/部落"	"11,500"	"11,500"	"0"	"10,901"	"599"
+
+3	"7"	"Neutral/中立"	"11,500"	"11,500"	"0"	"10,892"	"608"
+
+结果3
+
+#	ahbot_rows	player_rows	all_rows	active_ahbot_rows	expired_ahbot_rows
+
+1	"39,498"	"0"	"39,498"	"37,307"	"2,191"
+
+结果4
+
+#	item_class	class_name	active_ahbot_rows	distinct_item_entries	total_stack_units
+
+1	"7"	"Trade Goods/材料"	"7,374"	"714"	"67,872"
+
+2	"2"	"Weapon/武器"	"5,914"	"1,337"	"5,914"
+
+3	"4"	"Armor/护甲"	"5,759"	"3,012"	"5,759"
+
+4	"0"	"Consumable/消耗品"	"4,308"	"872"	"27,829"
+
+5	"9"	"Recipe/配方"	"4,297"	"1,042"	"4,297"
+
+6	"1"	"Container/容器"	"2,683"	"81"	"2,683"
+
+7	"3"	"Gem/宝石"	"2,005"	"496"	"3,948"
+
+8	"15"	"Miscellaneous/杂项"	"1,501"	"426"	"3,537"
+
+9	"6"	"Projectile/弹药"	"1,329"	"28"	"621,653"
+
+10	"5"	"Reagent/施法材料"	"972"	"1"	"5,296"
+
+11	"11"	"Quiver/箭袋"	"572"	"18"	"572"
+
+12	"16"	"Glyph/雕文"	"400"	"239"	"400"
+
+13	"8"	"Generic/通用"	"193"	"1"	"1,091"
+
+结果5
+
+#	quality_id	quality_name	active_ahbot_rows	distinct_item_entries
+
+1	"0"	"Gray/灰"	"1,886"	"412"
+
+2	"1"	"White/白"	"11,319"	"2,462"
+
+3	"2"	"Green/绿"	"11,366"	"2,995"
+
+4	"3"	"Blue/蓝"	"7,542"	"1,542"
+
+5	"4"	"Purple/紫"	"4,726"	"853"
+
+6	"5"	"Orange/橙"	"468"	"3"
+
+结果6
+
+#	itemowner	seller_name	account	seller_kind	auction_rows	active_rows
+
+1	"5"	"鲤鱼"	"2"	"AHBot"	"39,498"	"37,307"
+
+2：然后G16的conf装好了
+
+3：G11第二步的同步制作吧，我已经把conf做好了，记得把conf也存进去，总共的文件不能少
+
+4：
+
+sql 3.1
+
+#	COLUMN_NAME	COLUMN_TYPE	COLUMN_DEFAULT
+
+1	"scene"	"tinyint unsigned"	"0"
+
+2	"zone_id"	"int unsigned"	"0"
+
+3	"map_id"	"int unsigned"	"0"
+
+4	"cooldown"	"int unsigned"	"900"
+
+sql3.2
+
+#	total_texts	scene_tagged	zone_specific	map_specific	g19_scene_texts	min_cooldown	max_cooldown
+
+1	"179"	"54"	"0"	"0"	"14"	"900"	"900"
+
+sql3.3
+
+#	scene	rows_in_scene	ids
+
+1	"1"	"3"	"1110,1111,1112"
+
+2	"2"	"2"	"1120,1121"
+
+3	"3"	"4"	"1100,1101,1102,1103"
+
+4	"4"	"2"	"1130,1131"
+
+5	"6"	"2"	"1150,1151"
+
+6	"7"	"1"	"1140"
+
+G11第二步探针结果
+
+G11 STEP2 PERCEPTION PRE-INSTALL PROBE
+root=D:\TrinityCore
+readonly=1
+
+===== GIT STATE =====
+-- rev-parse --
+D:/TrinityCore
+bignum-mod
+ae60f5b6f6ffe9a0426dfeb6e227712de7d6c8b7
+-- status --
+## bignum-mod
+ M src/server/game/AI/NpcBots/bot_ai.cpp
+ M src/server/game/AI/NpcBots/bot_ai.h
+ M src/server/game/AI/NpcBots/botcommands.cpp
+ M src/server/game/AI/NpcBots/botcommon.h
+ M src/server/game/AI/NpcBots/botconfig.cpp
+ M src/server/game/AI/NpcBots/botconfig.h
+ M src/server/game/AI/NpcBots/botdatamgr.cpp
+ M src/server/game/AI/NpcBots/botgossip.h
+ M src/server/game/AI/NpcBots/botmgr.cpp
+ M src/server/game/AI/NpcBots/bottext.h
+ M src/server/game/AI/NpcBots/bpet_ai.cpp
+ M src/server/game/AI/NpcBots/bpet_ai.h
+ M src/server/game/Accounts/RBAC.h
+ M src/server/game/Chat/ChatCommands/ChatCommand.cpp
+ M src/server/game/Entities/Player/Player.cpp
+ M src/server/game/Entities/Unit/Unit.cpp
+ M src/server/game/Entities/Unit/Unit.h
+ M src/server/game/Globals/ObjectMgr.cpp
+ M src/server/game/Groups/Group.cpp
+ M src/server/game/Handlers/GroupHandler.cpp
+ M src/server/game/Handlers/LootHandler.cpp
+ M src/server/game/Handlers/PetitionsHandler.cpp
+ M src/server/game/Handlers/TradeHandler.cpp
+ M src/server/game/Maps/Map.cpp
+ M src/server/game/Server/WorldSession.cpp
+ M src/server/game/Server/WorldSession.h
+ M src/server/game/Spells/SpellEffects.cpp
+ M src/server/game/World/World.cpp
+ M src/server/game/World/World.h
+ M src/server/scripts/Commands/cs_gearset.cpp
+ M src/server/scripts/Commands/cs_modify.cpp
+ M src/server/scripts/Commands/cs_script_loader.cpp
+ M src/server/scripts/ScriptLoader.h
+?? src/server/game/AI/NpcBots/bot_companion.cpp
+?? src/server/game/AI/NpcBots/bot_companion.h
+?? src/server/game/Custom/
+?? src/server/game/Entities/Player/CustomStatPersist.cpp
+?? src/server/game/Entities/Player/CustomStatPersist.h
+?? src/server/game/Spells/CustomSpellTweak.cpp
+?? src/server/game/Spells/CustomSpellTweak.h
+?? src/server/scripts/Commands/CombatSpecData.cpp
+?? src/server/scripts/Commands/CombatSpecData.h
+?? src/server/scripts/Commands/cs_appearance.cpp
+?? src/server/scripts/Commands/cs_botdiag.cpp
+?? src/server/scripts/Commands/cs_botfind.cpp
+?? src/server/scripts/Commands/cs_botpersist.cpp
+?? src/server/scripts/Commands/cs_botrename.cpp
+?? src/server/scripts/Commands/cs_combathelper.cpp
+?? src/server/scripts/Commands/cs_dummy.cpp
+?? src/server/scripts/Commands/cs_emote.cpp
+?? src/server/scripts/Commands/cs_gmhelper.cpp
+?? src/server/scripts/Commands/cs_itemforge.cpp
+?? src/server/scripts/Commands/cs_modelfind.cpp
+?? src/server/scripts/Commands/cs_npcstate.cpp
+?? src/server/scripts/Commands/cs_playerbot.cpp
+?? src/server/scripts/Commands/cs_reloaditem.cpp
+?? src/server/scripts/Commands/cs_say.cpp
+?? src/server/scripts/Commands/cs_scene.cpp
+?? src/server/scripts/Commands/cs_spellclean.cpp
+?? src/server/scripts/Commands/cs_worldtools.cpp
+?? src/server/scripts/Commands/pbot_autoaccept.cpp
+?? src/server/scripts/Commands/pbot_autoaccept.h
+?? src/server/scripts/Custom/statpersist_hook.cpp
+
+===== FILE META =====
+src/server/game/AI/NpcBots/bot_ai.h	bytes=42837	encoding=utf-8-sig	sha256=69e338dd4c1afe8e43cef67ccd6838444b9de993d77281a230cd81f89fe97b2e
+src/server/game/AI/NpcBots/bot_ai.cpp	bytes=946719	encoding=utf-8-sig	sha256=fc006114e7ea20207044c053fb0cd7b87633a1b2452a69058d24bab36d544302
+src/server/game/AI/NpcBots/botconfig.h	bytes=6337	encoding=utf-8	sha256=69c3eea543268ecff33d844e2a1f5408efddeab117cb5369c4e8edff681156fc
+src/server/game/AI/NpcBots/botconfig.cpp	bytes=62967	encoding=utf-8	sha256=49bc1f21bbe1c9fbe43ec19bc7ae27839dcf831c4a74ba82be922615c62f4a71
+src/server/game/Entities/Object/Object.h	bytes=33658	encoding=utf-8	sha256=5f516e3ba48cbdf70b373f1382cf8f1a30241f9a8e9a400120dc2f8cbd8b7f63
+src/server/game/Entities/Object/Object.cpp	bytes=138904	encoding=utf-8	sha256=75326968ca679a70cbdecc93be748cad6e4c5e0dfce7b42abadf8b1508df6c88
+src/server/game/Server/WorldSession.h	bytes=61904	encoding=utf-8	sha256=d96a9aa16c808421b47d30e2ba0122a42116ca29688b19236e7d7e55dcc6faa5
+src/server/game/Groups/Group.h	bytes=17602	encoding=utf-8	sha256=991bf404c3c456f037a903f4f276731f215f0e9e0c117e259e60a24089cffa98
+
+===== bot_ai.h anchors :: src/server/game/AI/NpcBots/bot_ai.h =====
+
+--- class and constructor / matches=4 ---
+[match 1 at line 53]
+    43: class Group;
+    44: class Item;
+    45: class Spell;
+    46: class SpellCastTargets;
+    47: class Unit;
+    48: class Vehicle;
+    49: class WanderNode;
+    50: 
+    51: using AoeSafeSpotsVec = std::vector<Position>;
+    52: 
+    53: class bot_ai : public CreatureAI
+    54: {
+    55: public:
+    56:     virtual ~bot_ai();
+    57: 
+    58:     bool canUpdate{true};
+    59: 
+    60:     void InitializeAI() override;
+    61:     //void Reset() override { }
+    62: 
+    63:     NpcBotData const* GetBotData() const { return _botData; }
+    64:     NpcBotExtras const* GetBotExtras() const { return _botExtras; }
+    65: 
+    66:     void JustDied(Unit*) override;
+    67:     void KilledUnit(Unit* u) override;
+    68:     void AttackStart(Unit* u) override;
+    69:     void JustEnteredCombat(Unit* u) override;
+    70:     void JustExitedCombat() override;
+    71:     void MoveInLineOfSight(Unit* u) override;
+    72:     void DamageDealt(Unit* victim, uint32& damage, DamageEffectType damageType) override;
+    73:     //void DamageTaken(Unit* /*attacker*/, uint32& /*damage*/, DamageEffectType /*damageType*/, SpellInfo const* /*spellInfo*/) override { }
+[match 2 at line 56]
+    46: class SpellCastTargets;
+    47: class Unit;
+    48: class Vehicle;
+    49: class WanderNode;
+    50: 
+    51: using AoeSafeSpotsVec = std::vector<Position>;
+    52: 
+    53: class bot_ai : public CreatureAI
+    54: {
+    55: public:
+    56:     virtual ~bot_ai();
+    57: 
+    58:     bool canUpdate{true};
+    59: 
+    60:     void InitializeAI() override;
+    61:     //void Reset() override { }
+    62: 
+    63:     NpcBotData const* GetBotData() const { return _botData; }
+    64:     NpcBotExtras const* GetBotExtras() const { return _botExtras; }
+    65: 
+    66:     void JustDied(Unit*) override;
+    67:     void KilledUnit(Unit* u) override;
+    68:     void AttackStart(Unit* u) override;
+    69:     void JustEnteredCombat(Unit* u) override;
+    70:     void JustExitedCombat() override;
+    71:     void MoveInLineOfSight(Unit* u) override;
+    72:     void DamageDealt(Unit* victim, uint32& damage, DamageEffectType damageType) override;
+    73:     //void DamageTaken(Unit* /*attacker*/, uint32& /*damage*/, DamageEffectType /*damageType*/, SpellInfo const* /*spellInfo*/) override { }
+    74:     void ReceiveEmote(Player* player, uint32 emote) override;
+    75:     void EnterEvadeMode(EvadeReason/* why*/ = EVADE_REASON_OTHER) override { }
+    76:     //void LeavingWorld() override { }
+[match 3 at line 407]
+   397:     bool IsImmunedToMySpellEffect(Unit const* unit, SpellInfo const* spellInfo, SpellEffIndex index) const;
+   398: 
+   399:     bool IsContestedPvP() const;
+   400:     void SetContestedPvP();
+   401:     void ResetContestedPvP();
+   402:     void UpdateContestedPvP();
+   403: 
+   404:     static bool IsFlagCarrier(Unit const* unit, BattlegroundTypeId bgTypeId = BATTLEGROUND_TYPE_NONE);
+   405: 
+   406: protected:
+   407:     explicit bot_ai(Creature* creature);
+   408: 
+   409:     virtual void ReduceCD(uint32 /*diff*/) {}
+   410:     bool GlobalUpdate(uint32 diff);
+   411: 
+   412:     virtual bool HealTarget(Unit* /*target*/, uint32 /*diff*/) { return false; }
+   413:     virtual bool BuffTarget(Unit* /*target*/, uint32 /*diff*/) { return false; }
+   414: 
+   415:     void BuffAndHealGroup(uint32 diff);
+   416:     void ResurrectGroup(uint32 REZZ);
+   417:     void CureGroup(uint32 cureSpell, uint32 diff);
+   418:     void SetStats(bool force);
+   419:     void DefaultInit();
+   420:     void InitUnitFlags(); // call only in constructor
+   421: 
+   422:     void OnOwnerDamagedBy(Unit* attacker);
+   423: 
+   424:     static uint32 InitSpell(Unit const* caster, uint32 spell);
+   425:     void InitSpellMap(uint32 basespell, bool forceadd = false, bool forwardRank = true);
+   426:     uint32 GetSpell(uint32 basespell) const;
+   427:     void ResetSpellCooldown(uint32 basespell) { SetSpellCooldown(basespell, 0); }
+[match 4 at line 851]
+   841: protected:
+   842:     BotSpellMap& GetSpellMap() { return _spells; }
+   843: 
+   844: private:
+   845:     BotSpellMap _spells;
+   846: 
+   847: public:
+   848:     //much simplier than SmartAI I guess...
+   849:     struct BotAction
+   850:     {
+   851:         friend class bot_ai;
+   852: 
+   853:         explicit BotAction(BotActionTypes action_type, Milliseconds delay = 0s, Milliseconds timeout = 1s);
+   854:         BotAction(BotAction&&) noexcept = default;
+   855:         BotAction& operator=(BotAction&&) = default;
+   856: 
+   857:         BotAction(BotAction const&) = delete;
+   858:         BotAction& operator=(BotAction const&) = delete;
+   859: 
+   860:         inline constexpr TimePoint GetTimeout() const noexcept { return _exec_point + Milliseconds{ _exec_window }; }
+   861: 
+   862:         inline constexpr bool operator==(BotAction const& other) const noexcept { return _exec_point == other._exec_point; }
+   863:         inline constexpr std::strong_ordering operator<=>(BotAction const& other) const noexcept { return _exec_point <=> other._exec_point; }
+   864: 
+   865:         BotActionTypes _type;
+   866:         uint32 _exec_window;
+   867:         TimePoint _exec_point;
+   868: 
+   869:         union
+   870:         {
+   871:             struct
+
+--- GlobalUpdate declaration / matches=1 ---
+[match 1 at line 410]
+   400:     void SetContestedPvP();
+   401:     void ResetContestedPvP();
+   402:     void UpdateContestedPvP();
+   403: 
+   404:     static bool IsFlagCarrier(Unit const* unit, BattlegroundTypeId bgTypeId = BATTLEGROUND_TYPE_NONE);
+   405: 
+   406: protected:
+   407:     explicit bot_ai(Creature* creature);
+   408: 
+   409:     virtual void ReduceCD(uint32 /*diff*/) {}
+   410:     bool GlobalUpdate(uint32 diff);
+   411: 
+   412:     virtual bool HealTarget(Unit* /*target*/, uint32 /*diff*/) { return false; }
+   413:     virtual bool BuffTarget(Unit* /*target*/, uint32 /*diff*/) { return false; }
+   414: 
+   415:     void BuffAndHealGroup(uint32 diff);
+   416:     void ResurrectGroup(uint32 REZZ);
+   417:     void CureGroup(uint32 cureSpell, uint32 diff);
+   418:     void SetStats(bool force);
+   419:     void DefaultInit();
+   420:     void InitUnitFlags(); // call only in constructor
+   421: 
+   422:     void OnOwnerDamagedBy(Unit* attacker);
+   423: 
+   424:     static uint32 InitSpell(Unit const* caster, uint32 spell);
+   425:     void InitSpellMap(uint32 basespell, bool forceadd = false, bool forwardRank = true);
+   426:     uint32 GetSpell(uint32 basespell) const;
+   427:     void ResetSpellCooldown(uint32 basespell) { SetSpellCooldown(basespell, 0); }
+   428:     void RemoveSpell(uint32 basespell);
+   429:     //void RemoveAllSpells();
+   430:     void EnableAllSpells(bool save);
+
+--- CommonTimers declaration / matches=1 ---
+[match 1 at line 142]
+   132:     bool HasOwner(ObjectGuid::LowType guid_low) const;
+   133:     Player* GetBotOwner() const { return master; }
+   134:     bool SetBotOwner(Player* newowner);
+   135:     void CheckOwnerExpiry();
+   136:     uint8 GetBotClass() const { return _botclass; }
+   137:     uint32 GetBotClassMask0() const { return 1ul << (_botclass - 1u); }
+   138:     uint32 GetBotClassMask1() const { return 1ul << _botclass; }
+   139:     uint32 GetLastDiff() const { return lastdiff; }
+   140:     virtual void UpdateDeadAI(uint32 diff);
+   141:     void ReturnHome() { _atHome = false; }
+   142:     void CommonTimers(uint32 diff);
+   143:     void UpdateCompanionCare(uint32 diff);
+   144:     bool TryGiveItemToMaster(uint32 itemId, uint32 count, uint8 careType, std::string const& from);
+   145:     void ResetBotAI(uint8 resetType);
+   146:     void KillEvents(bool force);
+   147:     void BotMovement(BotMovementType type, Position const* pos, Unit* target = nullptr, bool generatePath = true, float speed = 0.0f) const;
+   148:     bool CanBotMoveVehicle() const;
+   149:     void MoveToSendPosition(uint32 point_id);
+   150:     void MoveToSendPosition(Position const& mpos);
+   151:     void MoveToLastSendPosition() { MoveToSendPosition(sendlastpos); }
+   152:     void MarkSendPosition(uint32 point_id);
+   153:     void SetBotCommandState(uint32 st, bool force = false, Position* newpos = nullptr, float* speed = nullptr);
+   154:     void RemoveBotCommandState(uint32 st);
+   155:     bool HasBotCommandState(uint32 st) const { return (_botCommandState & st); }
+   156:     void SetBotAwaitState(uint8 state);
+   157:     inline void RemoveBotAwaitState(uint8 state) { _botAwaitState &= ~state; }
+   158:     inline bool HasBotAwaitState(uint8 state) const { return !!(_botAwaitState & state); }
+   159:     void EventRemoveBotAwaitState(uint8 state);
+   160:     void AbortAwaitStateRemoval();
+   161:     uint32 GetBotCommandState() const { return _botCommandState; }
+   162:     bool IsInBotParty(Unit const* unit) const;
+
+--- GetCurrentScene from G19 / matches=1 ---
+[match 1 at line 209]
+   199:     //  直接调 master->任何虚函数都会崩。必须先比地址。
+   200:     bool HasRealMaster() const
+   201:     {
+   202:         return reinterpret_cast<void const*>(master) != reinterpret_cast<void const*>(me)
+   203:             && master->IsPlayer();
+   204:     }
+   205: 
+   206:        //wandering bots
+   207:     bool IsWanderer() const { return _wanderer; }
+   208:     void SetWanderer();
+   209:     uint8 GetCurrentScene() const;      // G19第3步：算出当前场景类别
+   210:     uint8 CheckGiftItem(Item const* item) const;
+   211:     uint8 ClassifyGiftItem(Item const* item) const;
+   212:     uint32 GetGiftRejectText(uint8 reason) const;
+   213:     uint8 GetGiftNeedState(uint8 itemKind) const;
+   214:     uint8 GetBondTierWith(Player const* player) const;
+   215:     void UpdateBotRequest(uint32 diff);
+   216:     uint8 DecideRequestType() const;
+   217:     bool HasAnchor() const;
+   218:     float GetAnchorRadius() const;
+   219:     uint32 GetAnchorMapId() const;
+   220:     void GetAnchorPos(Position& pos) const;
+   221:     void SetAnchor(uint32 mapId, Position const& pos, float radius);
+   222:     void ClearAnchor();
+   223:     bool IsNodeWithinAnchor(WanderNode const* wp) const;
+   224:     void UnsetWanderer();       // step44: 被招募时退出游荡状态，防止空指针崩服
+   225:     static bool IsWanderNodeAvailableForBotFaction(WanderNode const* wp, uint32 factionTemplateId, bool teleport, bool spawn = false);
+   226:     WanderNode const* GetClosestWanderNode() const;
+   227:     bool ResetWanderHomeToCurrent();
+   228:     WanderNode const* GetNextWanderNode(Position const* fromPos, uint8 lvl, bool random) const;
+   229:     WanderNode const* GetNextTravelNode(Position const* from, bool random) const;
+
+--- SetWanderer anchor / matches=1 ---
+[match 1 at line 208]
+   198:     //  无主bot的 master 指向自己（bot_ai.cpp:459），
+   199:     //  直接调 master->任何虚函数都会崩。必须先比地址。
+   200:     bool HasRealMaster() const
+   201:     {
+   202:         return reinterpret_cast<void const*>(master) != reinterpret_cast<void const*>(me)
+   203:             && master->IsPlayer();
+   204:     }
+   205: 
+   206:        //wandering bots
+   207:     bool IsWanderer() const { return _wanderer; }
+   208:     void SetWanderer();
+   209:     uint8 GetCurrentScene() const;      // G19第3步：算出当前场景类别
+   210:     uint8 CheckGiftItem(Item const* item) const;
+   211:     uint8 ClassifyGiftItem(Item const* item) const;
+   212:     uint32 GetGiftRejectText(uint8 reason) const;
+   213:     uint8 GetGiftNeedState(uint8 itemKind) const;
+   214:     uint8 GetBondTierWith(Player const* player) const;
+   215:     void UpdateBotRequest(uint32 diff);
+   216:     uint8 DecideRequestType() const;
+   217:     bool HasAnchor() const;
+   218:     float GetAnchorRadius() const;
+   219:     uint32 GetAnchorMapId() const;
+   220:     void GetAnchorPos(Position& pos) const;
+   221:     void SetAnchor(uint32 mapId, Position const& pos, float radius);
+   222:     void ClearAnchor();
+   223:     bool IsNodeWithinAnchor(WanderNode const* wp) const;
+   224:     void UnsetWanderer();       // step44: 被招募时退出游荡状态，防止空指针崩服
+   225:     static bool IsWanderNodeAvailableForBotFaction(WanderNode const* wp, uint32 factionTemplateId, bool teleport, bool spawn = false);
+   226:     WanderNode const* GetClosestWanderNode() const;
+   227:     bool ResetWanderHomeToCurrent();
+   228:     WanderNode const* GetNextWanderNode(Position const* fromPos, uint8 lvl, bool random) const;
+
+--- timer/member neighborhood / matches=2 ---
+[match 1 at line 553]
+   543:     virtual void InitPowers() {}
+   544:     virtual void InitSpells() = 0;
+   545:     virtual void ApplyClassPassives() const = 0;
+   546:     virtual void InitHeals() {}
+   547: 
+   548:     void Regenerate();
+   549:     void RegenerateEnergy();
+   550:     uint32 _careTimer;          // step34 
+   551:     uint32 _requestTimer;       // A37第5步 主动索要冷却
+   552:     uint8 _lastRequestType;     // A37第5步 上次要的是什么，避免连续重复
+   553:     uint32 _careChatTimer;      // step34 
+   554:     uint8  _lastMasterLevel;    // step34 
+   555:     bool   _masterWasDead;      // step34 
+   556:     bool   _careStocked;         // step34
+   557:     uint32 _careRestockTimer;    // step34
+   558:     bool Feasting() const;
+   559:     uint32 GetRation(bool drink) const;
+   560: 
+   561:     bool Wait();
+   562:     uint16 Rand() const { return _rand; }
+   563:     void GenerateRand();
+   564: 
+   565:     static uint32 GetLostHP(Unit const* unit);
+   566:     static uint8 GetHealthPCT(Unit const* u);
+   567:     static uint8 GetManaPCT(Unit const* u);
+   568: 
+   569:     virtual MeleeHitOutcome GetNextAttackMeleeOutCome() const;
+   570: 
+   571:     //event helpers
+   572:     void BotJumpInPlaceInFrontOf(Position const* pos, float speedXY, float maxHeight);
+   573:     void DismountBot();
+[match 2 at line 753]
+   743:     //stats
+   744:     float hit{}, parry{}, dodge{}, block{}, crit{}, armor_pen{}, resilience{};
+   745:     float dmg_taken_phy{1.f}, dmg_taken_mag{1.f};
+   746:     uint32 expertise{}, spellpower{}, spellpen{}, defense{};
+   747:     uint32 blockvalue{1};
+   748:     int32 haste{};
+   749:     int32 resistbonus[MAX_SPELL_SCHOOL - 1]{};
+   750: 
+   751:     //timers
+   752:     uint32 _reviveTimer{}, _powersTimer{}, _chaseTimer{}, _engageTimer{}, _potionTimer{};
+   753:     uint32 lastdiff{}, checkAurasTimer{}, roleTimer{}, actionsTimer{}, regenTimer{}, _updateTimerLong{}, _updateTimerMedium{}, _updateTimerEx1{}, _updateTimerEx2{};
+   754:     uint32 _checkOwershipTimer{}, _checkMasterTimer{};
+   755:     uint32 _moveBehindTimer{};
+   756:     uint32 _rentTimer{};
+   757:     uint32 _wmoAreaUpdateTimer{};
+   758:     uint32 waitTimer{};
+   759:     uint32 itemsAutouseTimer{};
+   760:     uint32 evadeDelayTimer{};
+   761:     uint32 indoorsTimer{};
+   762:     uint32 outdoorsTimer{};
+   763:     uint32 _nonCombatActionsTimer{};
+   764:     uint32 _contestedPvPTimer{};
+   765:     uint32 _groupUpdateTimer{BOT_GROUP_UPDATE_TIMER};
+   766:     //save timers
+   767:     uint32 _saveDisabledSpellsTimer{};
+   768:     uint32 _saveMiscValuesTimer{};
+   769: 
+   770:     uint32 _lastZoneId{}, _lastAreaId{}, _lastWMOAreaId{};
+   771:     uint32 _selfrez_spell_id{};
+   772: 
+   773:     uint8 _unreachableCount{};
+
+--- access labels / matches=8 ---
+[match 1 at line 55]
+    45: class Spell;
+    46: class SpellCastTargets;
+    47: class Unit;
+    48: class Vehicle;
+    49: class WanderNode;
+    50: 
+    51: using AoeSafeSpotsVec = std::vector<Position>;
+    52: 
+    53: class bot_ai : public CreatureAI
+    54: {
+    55: public:
+    56:     virtual ~bot_ai();
+    57: 
+    58:     bool canUpdate{true};
+    59: 
+    60:     void InitializeAI() override;
+    61:     //void Reset() override { }
+    62: 
+    63:     NpcBotData const* GetBotData() const { return _botData; }
+    64:     NpcBotExtras const* GetBotExtras() const { return _botExtras; }
+    65: 
+    66:     void JustDied(Unit*) override;
+    67:     void KilledUnit(Unit* u) override;
+    68:     void AttackStart(Unit* u) override;
+    69:     void JustEnteredCombat(Unit* u) override;
+    70:     void JustExitedCombat() override;
+    71:     void MoveInLineOfSight(Unit* u) override;
+    72:     void DamageDealt(Unit* victim, uint32& damage, DamageEffectType damageType) override;
+    73:     //void DamageTaken(Unit* /*attacker*/, uint32& /*damage*/, DamageEffectType /*damageType*/, SpellInfo const* /*spellInfo*/) override { }
+    74:     void ReceiveEmote(Player* player, uint32 emote) override;
+    75:     void EnterEvadeMode(EvadeReason/* why*/ = EVADE_REASON_OTHER) override { }
+[match 2 at line 406]
+   396: 
+   397:     bool IsImmunedToMySpellEffect(Unit const* unit, SpellInfo const* spellInfo, SpellEffIndex index) const;
+   398: 
+   399:     bool IsContestedPvP() const;
+   400:     void SetContestedPvP();
+   401:     void ResetContestedPvP();
+   402:     void UpdateContestedPvP();
+   403: 
+   404:     static bool IsFlagCarrier(Unit const* unit, BattlegroundTypeId bgTypeId = BATTLEGROUND_TYPE_NONE);
+   405: 
+   406: protected:
+   407:     explicit bot_ai(Creature* creature);
+   408: 
+   409:     virtual void ReduceCD(uint32 /*diff*/) {}
+   410:     bool GlobalUpdate(uint32 diff);
+   411: 
+   412:     virtual bool HealTarget(Unit* /*target*/, uint32 /*diff*/) { return false; }
+   413:     virtual bool BuffTarget(Unit* /*target*/, uint32 /*diff*/) { return false; }
+   414: 
+   415:     void BuffAndHealGroup(uint32 diff);
+   416:     void ResurrectGroup(uint32 REZZ);
+   417:     void CureGroup(uint32 cureSpell, uint32 diff);
+   418:     void SetStats(bool force);
+   419:     void DefaultInit();
+   420:     void InitUnitFlags(); // call only in constructor
+   421: 
+   422:     void OnOwnerDamagedBy(Unit* attacker);
+   423: 
+   424:     static uint32 InitSpell(Unit const* caster, uint32 spell);
+   425:     void InitSpellMap(uint32 basespell, bool forceadd = false, bool forwardRank = true);
+   426:     uint32 GetSpell(uint32 basespell) const;
+[match 3 at line 627]
+   617: 
+   618:     Player* master{};
+   619:     Player* _prevRRobin{};
+   620:     Unit* opponent{};
+   621:     Unit* disttarget{};
+   622:     Creature* botPet{};
+   623:     EventProcessor Events;
+   624:     ObjectGuid aftercastTargetGuid;
+   625:     uint32 GC_Timer{};
+   626: 
+   627: private:
+   628:     void FindMaster();
+   629:     uint32 CalculateOwnershipCheckTime();
+   630: 
+   631:     void _OnHealthUpdate() const;
+   632:     void _OnManaUpdate() const;
+   633:     void _OnManaRegenUpdate() const;
+   634: 
+   635:     void _UpdateWMOArea();
+   636:     void _OnZoneUpdate(uint32 zoneId, uint32 areaId);
+   637:     void _OnAreaUpdate(uint32 areaId);
+   638: 
+   639:     void RemoveItemBonuses(uint8 slot);
+   640:     void RemoveItemEnchantments(Item const* item);
+   641:     void RemoveItemEnchantment(Item const* item, EnchantmentSlot eslot);
+   642:     void RemoveItemClassEnchantments();
+   643:     void ApplyItemBonuses(uint8 slot);
+   644:     void ApplyItemEnchantments(Item* item, uint8 slot);
+   645:     void ApplyItemEquipSpells(Item* item, bool apply);
+   646:     void ApplyItemEquipEnchantmentSpells(Item* item);
+   647:     void ApplyItemSetBonuses(Item* item, bool apply);
+[match 4 at line 837]
+   827:         BotSpell& operator=(BotSpell const&) = delete;
+   828:         BotSpell& operator=(BotSpell&&) = delete;
+   829:         uint32 spellId = 0;
+   830:         uint32 cooldown = 0;
+   831:         bool enabled = true;
+   832:     };
+   833: 
+   834:     int32 _stats[BOT_INVENTORY_SIZE][MAX_BOT_ITEM_MOD]{};
+   835:     std::array<Item*, BOT_INVENTORY_SIZE> _equips{};
+   836: 
+   837: public:
+   838:     using BotSpellMap = std::unordered_map<uint32 /*firstrankspellid*/, BotSpell /*spell*/>;
+   839:     BotSpellMap const& GetSpellMap() const { return _spells; }
+   840: 
+   841: protected:
+   842:     BotSpellMap& GetSpellMap() { return _spells; }
+   843: 
+   844: private:
+   845:     BotSpellMap _spells;
+   846: 
+   847: public:
+   848:     //much simplier than SmartAI I guess...
+   849:     struct BotAction
+   850:     {
+   851:         friend class bot_ai;
+   852: 
+   853:         explicit BotAction(BotActionTypes action_type, Milliseconds delay = 0s, Milliseconds timeout = 1s);
+   854:         BotAction(BotAction&&) noexcept = default;
+   855:         BotAction& operator=(BotAction&&) = default;
+   856: 
+   857:         BotAction(BotAction const&) = delete;
+[match 5 at line 841]
+   831:         bool enabled = true;
+   832:     };
+   833: 
+   834:     int32 _stats[BOT_INVENTORY_SIZE][MAX_BOT_ITEM_MOD]{};
+   835:     std::array<Item*, BOT_INVENTORY_SIZE> _equips{};
+   836: 
+   837: public:
+   838:     using BotSpellMap = std::unordered_map<uint32 /*firstrankspellid*/, BotSpell /*spell*/>;
+   839:     BotSpellMap const& GetSpellMap() const { return _spells; }
+   840: 
+   841: protected:
+   842:     BotSpellMap& GetSpellMap() { return _spells; }
+   843: 
+   844: private:
+   845:     BotSpellMap _spells;
+   846: 
+   847: public:
+   848:     //much simplier than SmartAI I guess...
+   849:     struct BotAction
+   850:     {
+   851:         friend class bot_ai;
+   852: 
+   853:         explicit BotAction(BotActionTypes action_type, Milliseconds delay = 0s, Milliseconds timeout = 1s);
+   854:         BotAction(BotAction&&) noexcept = default;
+   855:         BotAction& operator=(BotAction&&) = default;
+   856: 
+   857:         BotAction(BotAction const&) = delete;
+   858:         BotAction& operator=(BotAction const&) = delete;
+   859: 
+   860:         inline constexpr TimePoint GetTimeout() const noexcept { return _exec_point + Milliseconds{ _exec_window }; }
+   861: 
+[match 6 at line 844]
+   834:     int32 _stats[BOT_INVENTORY_SIZE][MAX_BOT_ITEM_MOD]{};
+   835:     std::array<Item*, BOT_INVENTORY_SIZE> _equips{};
+   836: 
+   837: public:
+   838:     using BotSpellMap = std::unordered_map<uint32 /*firstrankspellid*/, BotSpell /*spell*/>;
+   839:     BotSpellMap const& GetSpellMap() const { return _spells; }
+   840: 
+   841: protected:
+   842:     BotSpellMap& GetSpellMap() { return _spells; }
+   843: 
+   844: private:
+   845:     BotSpellMap _spells;
+   846: 
+   847: public:
+   848:     //much simplier than SmartAI I guess...
+   849:     struct BotAction
+   850:     {
+   851:         friend class bot_ai;
+   852: 
+   853:         explicit BotAction(BotActionTypes action_type, Milliseconds delay = 0s, Milliseconds timeout = 1s);
+   854:         BotAction(BotAction&&) noexcept = default;
+   855:         BotAction& operator=(BotAction&&) = default;
+   856: 
+   857:         BotAction(BotAction const&) = delete;
+   858:         BotAction& operator=(BotAction const&) = delete;
+   859: 
+   860:         inline constexpr TimePoint GetTimeout() const noexcept { return _exec_point + Milliseconds{ _exec_window }; }
+   861: 
+   862:         inline constexpr bool operator==(BotAction const& other) const noexcept { return _exec_point == other._exec_point; }
+   863:         inline constexpr std::strong_ordering operator<=>(BotAction const& other) const noexcept { return _exec_point <=> other._exec_point; }
+   864: 
+[match 7 at line 847]
+   837: public:
+   838:     using BotSpellMap = std::unordered_map<uint32 /*firstrankspellid*/, BotSpell /*spell*/>;
+   839:     BotSpellMap const& GetSpellMap() const { return _spells; }
+   840: 
+   841: protected:
+   842:     BotSpellMap& GetSpellMap() { return _spells; }
+   843: 
+   844: private:
+   845:     BotSpellMap _spells;
+   846: 
+   847: public:
+   848:     //much simplier than SmartAI I guess...
+   849:     struct BotAction
+   850:     {
+   851:         friend class bot_ai;
+   852: 
+   853:         explicit BotAction(BotActionTypes action_type, Milliseconds delay = 0s, Milliseconds timeout = 1s);
+   854:         BotAction(BotAction&&) noexcept = default;
+   855:         BotAction& operator=(BotAction&&) = default;
+   856: 
+   857:         BotAction(BotAction const&) = delete;
+   858:         BotAction& operator=(BotAction const&) = delete;
+   859: 
+   860:         inline constexpr TimePoint GetTimeout() const noexcept { return _exec_point + Milliseconds{ _exec_window }; }
+   861: 
+   862:         inline constexpr bool operator==(BotAction const& other) const noexcept { return _exec_point == other._exec_point; }
+   863:         inline constexpr std::strong_ordering operator<=>(BotAction const& other) const noexcept { return _exec_point <=> other._exec_point; }
+   864: 
+   865:         BotActionTypes _type;
+   866:         uint32 _exec_window;
+   867:         TimePoint _exec_point;
+[match 8 at line 899]
+   889:     bool IsActionNext(BotActionTypes action_type, uint32 param1 = 0, ObjectGuid guidparam1 = ObjectGuid::Empty) const;
+   890:     BotAction const& GetFirstActionInQueue() const { ASSERT(HasQueuedActions()); return *_action_queue.cbegin(); }
+   891:     std::size_t GetActionsQueueSize() const { return _action_queue.size(); }
+   892:     bool EnqueueAction(BotAction&& action, bool is_order);
+   893:     void CancelAction(BotAction const& action);
+   894:     void CompleteAction(BotAction const& action);
+   895:     void CancelAllActions();
+   896:     //Utils
+   897:     bool EnqueueCounterSpellAction(ObjectGuid target_guid, uint32 base_spell, bool interrupt_self_cast);
+   898: 
+   899: private:
+   900:     void _processQueuedActions();
+   901: 
+   902:     using ActionsQueue = std::set<BotAction>;
+   903:     ActionsQueue _action_queue;
+   904: };
+   905: 
+   906: #endif
+
+===== bot_ai.cpp anchors :: src/server/game/AI/NpcBots/bot_ai.cpp =====
+
+--- includes / matches=56 ---
+[match 1 at line 3]
+     1: 
+     2: 
+     3: #include "Battleground.h"
+     4: #include "BattlegroundAB.h"
+     5: #include "BattlegroundAV.h"
+     6: #include "BattlegroundEY.h"
+     7: #include "BattlegroundWS.h"
+     8: #include "bot_ai.h"
+     9: #include "bot_Events.h"
+    10: #include "bot_InstanceEvents.h"
+    11: #include "bot_GridNotifiers.h"
+    12: #include "botconfig.h"
+    13: #include "botdatamgr.h"
+    14: #include "botlog.h"
+    15: #include "botmgr.h"
+    16: #include "botgearscore.h"
+    17: #include "botgossip.h"
+    18: #include "botspell.h"
+    19: #include "bottext.h"
+    20: #include "botwanderful.h"
+    21: #include "bot_companion.h"
+    22: #include "bpet_ai.h"
+    23: #include "Bag.h"
+    24: #include "BattlegroundMgr.h"
+    25: #include "CellImpl.h"
+    26: #include "CharacterCache.h"
+    27: #include "Config.h"
+[match 2 at line 4]
+     1: 
+     2: 
+     3: #include "Battleground.h"
+     4: #include "BattlegroundAB.h"
+     5: #include "BattlegroundAV.h"
+     6: #include "BattlegroundEY.h"
+     7: #include "BattlegroundWS.h"
+     8: #include "bot_ai.h"
+     9: #include "bot_Events.h"
+    10: #include "bot_InstanceEvents.h"
+    11: #include "bot_GridNotifiers.h"
+    12: #include "botconfig.h"
+    13: #include "botdatamgr.h"
+    14: #include "botlog.h"
+    15: #include "botmgr.h"
+    16: #include "botgearscore.h"
+    17: #include "botgossip.h"
+    18: #include "botspell.h"
+    19: #include "bottext.h"
+    20: #include "botwanderful.h"
+    21: #include "bot_companion.h"
+    22: #include "bpet_ai.h"
+    23: #include "Bag.h"
+    24: #include "BattlegroundMgr.h"
+    25: #include "CellImpl.h"
+    26: #include "CharacterCache.h"
+    27: #include "Config.h"
+    28: #include "CharacterDatabase.h"
+[match 3 at line 5]
+     1: 
+     2: 
+     3: #include "Battleground.h"
+     4: #include "BattlegroundAB.h"
+     5: #include "BattlegroundAV.h"
+     6: #include "BattlegroundEY.h"
+     7: #include "BattlegroundWS.h"
+     8: #include "bot_ai.h"
+     9: #include "bot_Events.h"
+    10: #include "bot_InstanceEvents.h"
+    11: #include "bot_GridNotifiers.h"
+    12: #include "botconfig.h"
+    13: #include "botdatamgr.h"
+    14: #include "botlog.h"
+    15: #include "botmgr.h"
+    16: #include "botgearscore.h"
+    17: #include "botgossip.h"
+    18: #include "botspell.h"
+    19: #include "bottext.h"
+    20: #include "botwanderful.h"
+    21: #include "bot_companion.h"
+    22: #include "bpet_ai.h"
+    23: #include "Bag.h"
+    24: #include "BattlegroundMgr.h"
+    25: #include "CellImpl.h"
+    26: #include "CharacterCache.h"
+    27: #include "Config.h"
+    28: #include "CharacterDatabase.h"
+    29: #include "Chat.h"
+[match 4 at line 6]
+     1: 
+     2: 
+     3: #include "Battleground.h"
+     4: #include "BattlegroundAB.h"
+     5: #include "BattlegroundAV.h"
+     6: #include "BattlegroundEY.h"
+     7: #include "BattlegroundWS.h"
+     8: #include "bot_ai.h"
+     9: #include "bot_Events.h"
+    10: #include "bot_InstanceEvents.h"
+    11: #include "bot_GridNotifiers.h"
+    12: #include "botconfig.h"
+    13: #include "botdatamgr.h"
+    14: #include "botlog.h"
+    15: #include "botmgr.h"
+    16: #include "botgearscore.h"
+    17: #include "botgossip.h"
+    18: #include "botspell.h"
+    19: #include "bottext.h"
+    20: #include "botwanderful.h"
+    21: #include "bot_companion.h"
+    22: #include "bpet_ai.h"
+    23: #include "Bag.h"
+    24: #include "BattlegroundMgr.h"
+    25: #include "CellImpl.h"
+    26: #include "CharacterCache.h"
+    27: #include "Config.h"
+    28: #include "CharacterDatabase.h"
+    29: #include "Chat.h"
+    30: #include "CommonHelpers.h"
+[match 5 at line 7]
+     1: 
+     2: 
+     3: #include "Battleground.h"
+     4: #include "BattlegroundAB.h"
+     5: #include "BattlegroundAV.h"
+     6: #include "BattlegroundEY.h"
+     7: #include "BattlegroundWS.h"
+     8: #include "bot_ai.h"
+     9: #include "bot_Events.h"
+    10: #include "bot_InstanceEvents.h"
+    11: #include "bot_GridNotifiers.h"
+    12: #include "botconfig.h"
+    13: #include "botdatamgr.h"
+    14: #include "botlog.h"
+    15: #include "botmgr.h"
+    16: #include "botgearscore.h"
+    17: #include "botgossip.h"
+    18: #include "botspell.h"
+    19: #include "bottext.h"
+    20: #include "botwanderful.h"
+    21: #include "bot_companion.h"
+    22: #include "bpet_ai.h"
+    23: #include "Bag.h"
+    24: #include "BattlegroundMgr.h"
+    25: #include "CellImpl.h"
+    26: #include "CharacterCache.h"
+    27: #include "Config.h"
+    28: #include "CharacterDatabase.h"
+    29: #include "Chat.h"
+    30: #include "CommonHelpers.h"
+    31: #include "Containers.h"
+[match 6 at line 8]
+     1: 
+     2: 
+     3: #include "Battleground.h"
+     4: #include "BattlegroundAB.h"
+     5: #include "BattlegroundAV.h"
+     6: #include "BattlegroundEY.h"
+     7: #include "BattlegroundWS.h"
+     8: #include "bot_ai.h"
+     9: #include "bot_Events.h"
+    10: #include "bot_InstanceEvents.h"
+    11: #include "bot_GridNotifiers.h"
+    12: #include "botconfig.h"
+    13: #include "botdatamgr.h"
+    14: #include "botlog.h"
+    15: #include "botmgr.h"
+    16: #include "botgearscore.h"
+    17: #include "botgossip.h"
+    18: #include "botspell.h"
+    19: #include "bottext.h"
+    20: #include "botwanderful.h"
+    21: #include "bot_companion.h"
+    22: #include "bpet_ai.h"
+    23: #include "Bag.h"
+    24: #include "BattlegroundMgr.h"
+    25: #include "CellImpl.h"
+    26: #include "CharacterCache.h"
+    27: #include "Config.h"
+    28: #include "CharacterDatabase.h"
+    29: #include "Chat.h"
+    30: #include "CommonHelpers.h"
+    31: #include "Containers.h"
+    32: #include "DatabaseEnv.h"
+[match 7 at line 9]
+     1: 
+     2: 
+     3: #include "Battleground.h"
+     4: #include "BattlegroundAB.h"
+     5: #include "BattlegroundAV.h"
+     6: #include "BattlegroundEY.h"
+     7: #include "BattlegroundWS.h"
+     8: #include "bot_ai.h"
+     9: #include "bot_Events.h"
+    10: #include "bot_InstanceEvents.h"
+    11: #include "bot_GridNotifiers.h"
+    12: #include "botconfig.h"
+    13: #include "botdatamgr.h"
+    14: #include "botlog.h"
+    15: #include "botmgr.h"
+    16: #include "botgearscore.h"
+    17: #include "botgossip.h"
+    18: #include "botspell.h"
+    19: #include "bottext.h"
+    20: #include "botwanderful.h"
+    21: #include "bot_companion.h"
+    22: #include "bpet_ai.h"
+    23: #include "Bag.h"
+    24: #include "BattlegroundMgr.h"
+    25: #include "CellImpl.h"
+    26: #include "CharacterCache.h"
+    27: #include "Config.h"
+    28: #include "CharacterDatabase.h"
+    29: #include "Chat.h"
+    30: #include "CommonHelpers.h"
+    31: #include "Containers.h"
+    32: #include "DatabaseEnv.h"
+    33: #include "DBCStores.h"
+[match 8 at line 10]
+     1: 
+     2: 
+     3: #include "Battleground.h"
+     4: #include "BattlegroundAB.h"
+     5: #include "BattlegroundAV.h"
+     6: #include "BattlegroundEY.h"
+     7: #include "BattlegroundWS.h"
+     8: #include "bot_ai.h"
+     9: #include "bot_Events.h"
+    10: #include "bot_InstanceEvents.h"
+    11: #include "bot_GridNotifiers.h"
+    12: #include "botconfig.h"
+    13: #include "botdatamgr.h"
+    14: #include "botlog.h"
+    15: #include "botmgr.h"
+    16: #include "botgearscore.h"
+    17: #include "botgossip.h"
+    18: #include "botspell.h"
+    19: #include "bottext.h"
+    20: #include "botwanderful.h"
+    21: #include "bot_companion.h"
+    22: #include "bpet_ai.h"
+    23: #include "Bag.h"
+    24: #include "BattlegroundMgr.h"
+    25: #include "CellImpl.h"
+    26: #include "CharacterCache.h"
+    27: #include "Config.h"
+    28: #include "CharacterDatabase.h"
+    29: #include "Chat.h"
+    30: #include "CommonHelpers.h"
+    31: #include "Containers.h"
+    32: #include "DatabaseEnv.h"
+    33: #include "DBCStores.h"
+    34: #include "GameEventMgr.h"
+[only first 8 of 56 matches shown]
+
+--- constructor definitions / matches=1 ---
+[match 1 at line 167]
+   157: 
+   158: //Timeout point = NOW() + delay + timeout
+   159: bot_ai::BotAction::BotAction(BotActionTypes action_type, Milliseconds delay, Milliseconds timeout):
+   160:     _type(action_type), _exec_window(timeout.count()), _exec_point(GameTime::Now() + delay), params{} { }
+   161: 
+   162: static void ApplyBotPercentModFloatVar(float &var, float val, bool apply)
+   163: {
+   164:     var *= (apply ? ((100.f + val) / 100.f) : (100.f / (100.f + val)));
+   165: }
+   166: 
+   167: bot_ai::bot_ai(Creature* creature) : CreatureAI(creature),
+   168:     _botData(const_cast<NpcBotData*>(BotDataMgr::SelectNpcBotData(IsTempBot() ? creature->ToTempSummon()->GetSummonerGUID().GetEntry() : creature->GetEntry()))),
+   169:     _botExtras(BotDataMgr::SelectNpcBotExtras(creature->GetEntry()))
+   170: {
+   171:     _checkMasterTimer = me->IsSummon() ? 0 : urand(5000, 15000);
+   172:     _updateTimerLong = urand(15000, 25000);
+   173:     _updateTimerEx1 = urand(12000, 15000);
+   174:         // step34 伙伴关怀
+   175:     _careTimer        = urand(20000, 40000);   // 出生后先安静一会儿
+   176:     _requestTimer     = urand(60000, 120000);  // A37第5步 上线后1-2分钟才可能索要
+   177:     _lastRequestType  = 0;
+   178:     _careChatTimer    = urand(60000, 120000);
+   179:     _lastMasterLevel  = 0;
+   180:     _masterWasDead    = false;
+   181:     _careStocked      = false;
+   182:     _careRestockTimer = 0;
+   183:     _updateTimerEx2 = urand(8000, 12000);
+   184: 
+   185:     ResetBotAI(BOTAI_RESET_INIT);
+   186: 
+   187:     if (!IsTempBot())
+   188:         BotDataMgr::RegisterBot(me);
+   189: }
+   190: bot_ai::~bot_ai()
+   191: {
+
+--- GlobalUpdate definition / matches=1 ---
+[match 1 at line 17859]
+ 17849: {
+ 17850:     // group update
+ 17851:     if (_groupUpdateTimer <= diff)
+ 17852:         SendUpdateToOutOfRangeBotGroupMembers();
+ 17853: 
+ 17854:     // soulstone
+ 17855:     if (GetSelfRezSpell() && !GetBG() && (IAmFree() || !master->GetBotMgr()->IsPartyInCombat(false)) && Rand() < 15)
+ 17856:         me->CastSpell(me, GetSelfRezSpell());
+ 17857: }
+ 17858: //opponent unsafe
+ 17859: bool bot_ai::GlobalUpdate(uint32 diff)
+ 17860: {
+ 17861:     if (!BotCfg::IsNpcBotModEnabled() || !BotDataMgr::AllBotsLoaded())
+ 17862:         return false;
+ 17863: 
+ 17864:     if (IsWanderer())
+ 17865:     {
+ 17866:         if (Battleground* bg = GetBG())
+ 17867:         {
+ 17868:             if (bg->GetStatus() == STATUS_WAIT_LEAVE)
+ 17869:             {
+ 17870:                 if (std::ranges::find_if(bg->GetPlayers(), [](auto const& kv) { return kv.first.IsPlayer(); }) == bg->GetPlayers().cend())
+ 17871:                     bg->RemoveBotAtLeave(me->GetGUID());
+ 17872:                 return false;
+ 17873:             }
+ 17874:         }
+ 17875:     }
+ 17876:     else
+ 17877:     {
+ 17878:         if (_checkOwershipTimer && _checkOwershipTimer <= diff)
+ 17879:         {
+ 17880:             if (IAmFree())
+ 17881:             {
+ 17882:                 if (_botData->owner != 0)
+ 17883:                 {
+
+--- FindMaster call / matches=2 ---
+[match 1 at line 15586]
+ 15576:     {
+ 15577:         if (_equips[slot] && IsUsableItem(_equips[slot]))
+ 15578:         {
+ 15579:             uint32 slotMask = 1ul << slot;
+ 15580:             ASSERT(!(_usableItemSlotsMask & slotMask));
+ 15581:             _usableItemSlotsMask |= slotMask;
+ 15582:         }
+ 15583:     }
+ 15584: }
+ 15585: 
+ 15586: void bot_ai::FindMaster()
+ 15587: {
+ 15588:     //totally free
+ 15589:     if (!_botData->owner)
+ 15590:         return;
+ 15591:     if (me->IsInWorld() && (!_atHome || _evadeMode))
+ 15592:         return;
+ 15593:     if (!BotCfg::IsClassEnabled(_botclass))
+ 15594:         return;
+ 15595: 
+ 15596:     //delay
+ 15597:     if (_checkMasterTimer > lastdiff)
+ 15598:         return;
+ 15599: 
+ 15600:     _checkMasterTimer = urand(1000, 3000);
+ 15601: 
+ 15602:     //already have master
+ 15603:     if (!IAmFree())
+ 15604:         return;
+ 15605:     if (HasBotCommandState(BOT_COMMAND_UNBIND))
+ 15606:         return;
+ 15607: 
+ 15608:     for (auto const& container : { {_botData->owner}, _botData->shared_owners })
+ 15609:     {
+ 15610:         for (uint32 guid_low : container)
+[match 2 at line 17971]
+ 17961:         else
+ 17962:             _canAppearInWorld = true;
+ 17963:     }
+ 17964: 
+ 17965:     ReduceCD(diff);
+ 17966: 
+ 17967:     UpdateContestedPvP();
+ 17968: 
+ 17969:     lastdiff = diff;
+ 17970: 
+ 17971:     FindMaster();
+ 17972: 
+ 17973:     if (IsDuringTeleport())
+ 17974:         return false;
+ 17975: 
+ 17976:     if (_updateTimerLong <= diff)
+ 17977:     {
+ 17978:         _updateTimerLong = urand(15000, 25000);
+ 17979: 
+ 17980:         //Long-timed updates
+ 17981: 
+ 17982:         if (me->IsInWorld() && me->IsAlive() && me->IsInCombat() && !me->GetMap()->IsDungeon() && (IAmFree() || !master->IsInCombat()))
+ 17983:             me->GetCombatManager().EndCombatBeyondRange(me->GetMap()->GetVisibilityRange(), true);
+ 17984:     }
+ 17985:     
+ 17986:     UpdateCompanionCare(diff);
+ 17987:     UpdateBotRequest(diff);
+ 17988:     if (_updateTimerMedium <= diff)
+ 17989:     {
+ 17990:         _updateTimerMedium = 500;
+ 17991: 
+ 17992:         //Medium-timed updates
+ 17993: 
+ 17994:         //send stats update for group frames
+ 17995:         if (me->IsInWorld() && !IAmFree())
+
+--- teleport guard / matches=6 ---
+[match 1 at line 3449]
+  3439:             {
+  3440:                 report << "\n  feared but no aura";
+  3441:                 me->ClearUnitState(UNIT_STATE_FLEEING);
+  3442:                 me->RemoveUnitFlag(UNIT_FLAG_FLEEING);
+  3443:             }
+  3444:             if (me->IsInCombat() && !me->GetVictim())
+  3445:             {
+  3446:                 report << "\n  in combat but no target: attackers=" << uint32(me->getAttackers().size());
+  3447:                 me->CombatStop(true);
+  3448:             }
+  3449:             if (IsDuringTeleport() && me->IsInWorld() && me->FindMap())
+  3450:             {
+  3451:                 report << "\n  being teleported but in world & in map: home=" << uint32(!!teleHomeEvent) << ", finish=" << uint32(!!teleFinishEvent);
+  3452:                 AbortTeleport();
+  3453:             }
+  3454:             if (HasBotCommandState(BOT_COMMAND_ISSUED_ORDER))
+  3455:             {
+  3456:                 report << "\n  pending actions that may have got stuck";
+  3457:                 CancelAllActions();
+  3458:             }
+  3459:             if (HasBotCommandState(BOT_COMMAND_NOGOSSIP))
+  3460:             {
+  3461:                 report << "\n  forgotten NOGOSSIP command state";
+  3462:                 RemoveBotCommandState(BOT_COMMAND_NOGOSSIP);
+  3463:             }
+  3464:             if (waitTimer > 10000)
+  3465:             {
+  3466:                 report << "\n  wait timer overflow: " << waitTimer;
+  3467:                 waitTimer = 0;
+  3468:             }
+  3469: 
+  3470:             me->BotStopMovement();
+  3471:             me->TextEmote(LocalizedNpcText(player, BOT_TEXT_BOT_TICKLED));
+  3472:             ChatHandler(player->GetSession()).SendSysMessage(report.view());
+  3473:             break;
+[match 2 at line 4587]
+  4577:     //if (t)
+  4578:     //    BOT_LOG_ERROR("entities.player", "bot {} has found new target {}", me->GetName(), t->GetName());
+  4579: 
+  4580:     return { t1, t2 };
+  4581: }
+  4582: //'CanAttack' function
+  4583: //Only called in class ai UpdateAI function
+  4584: //Side effects: opponent, disttarget
+  4585: bool bot_ai::CheckAttackTarget()
+  4586: {
+  4587:     if (IsDuringTeleport()/* || _evadeMode*/)
+  4588:     {
+  4589:         //me->AttackStop(); //already in CombatStop()
+  4590:         me->CombatStop(true);
+  4591:         return false;
+  4592:     }
+  4593: 
+  4594:     if (IAmFree() && Feasting())
+  4595:         return false;
+  4596: 
+  4597:     bool ranged = HasRole(BOT_ROLE_RANGED);
+  4598:     bool byspell = false;
+  4599:     bool reset = false;
+  4600: 
+  4601:     switch (_botclass)
+  4602:     {
+  4603:         case BOT_CLASS_DRUID:
+  4604:             switch (GetBotStance())
+  4605:             {
+  4606:                 case DRUID_CAT_FORM:
+  4607:                 case DRUID_BEAR_FORM:
+  4608:                     break;
+  4609:                 case DRUID_TREE_FORM:
+  4610:                 case DRUID_TRAVEL_FORM:
+  4611:                 case DRUID_AQUATIC_FORM:
+[match 3 at line 7770]
+  7760:     ApplyClassSpellRangeMods(spellInfo, maxRange);
+  7761:     return maxRange;
+  7762: }
+  7763: //////////
+  7764: //GOSSIP//
+  7765: //////////
+  7766: //GossipHello
+  7767: bool bot_ai::OnGossipHello(Player* player, uint32 /*option*/)
+  7768: {
+  7769:     if (!BotCfg::IsNpcBotModEnabled() || !(IsWanderer() ? BotCfg::IsWanderingClassEnabled(_botclass) : BotCfg::IsClassEnabled(_botclass)) ||
+  7770:         IsTempBot() || me->IsInCombat() || CCed(me) || IsCasting() || IsDuringTeleport() ||
+  7771:         HasBotCommandState(BOT_COMMAND_ISSUED_ORDER | BOT_COMMAND_NOGOSSIP) ||
+  7772:         (me->GetVehicle() && me->GetVehicle()->GetBase()->IsInCombat()) ||
+  7773:         (!player->IsGameMaster() && ((IsWanderer() && !BotCfg::IsWanderingBotHireEnabled()) || me->IsSummon())))
+  7774:     {
+  7775:         player->PlayerTalkClass->SendCloseGossip();
+  7776:         return true;
+  7777:     }
+  7778: 
+  7779:     if (me->isMoving())
+  7780:         me->BotStopMovement();
+  7781: 
+  7782:     evadeDelayTimer = std::max<decltype(evadeDelayTimer)>(evadeDelayTimer, 10000);
+  7783: 
+  7784:     uint32 gossipTextId;
+  7785:     if (!IAmFree())
+  7786:     {
+  7787:         if (_botclass == BOT_CLASS_SPHYNX)
+  7788:             gossipTextId = GOSSIP_NORMAL_CUSTOM_SPHYNX;
+  7789:         else if (_botclass == BOT_CLASS_DREADLORD)
+  7790:             gossipTextId = GOSSIP_NORMAL_CUSTOM_DREADLORD;
+  7791:         else if (_botclass == BOT_CLASS_DARK_RANGER)
+  7792:             gossipTextId = GOSSIP_NORMAL_CUSTOM_DARKRANGER;
+  7793:         else if (_botclass == BOT_CLASS_SEA_WITCH)
+  7794:             gossipTextId = GOSSIP_NORMAL_CUSTOM_SEAWITCH;
+[match 4 at line 11439]
+ 11429: 
+ 11430:     return true;
+ 11431: }
+ 11432: 
+ 11433: //GossipSelectCode
+ 11434: bool bot_ai::OnGossipSelectCode(Player* player, Creature* creature/* == me*/, uint32 sender, uint32 action, char const* code)
+ 11435: {
+ 11436:     if (!*code)
+ 11437:         return true;
+ 11438: 
+ 11439:     if (!BotCfg::IsNpcBotModEnabled() || me->HasUnitState(UNIT_STATE_CASTING) || CCed(me) || IsDuringTeleport() ||
+ 11440:         HasBotCommandState(BOT_COMMAND_ISSUED_ORDER) ||
+ 11441:         (me->GetVehicle() && me->GetVehicle()->GetBase()->IsInCombat()))
+ 11442:     {
+ 11443:         player->PlayerTalkClass->SendCloseGossip();
+ 11444:         return true;
+ 11445:     }
+ 11446: 
+ 11447:     uint32 gossipTextId;
+ 11448:     if (player->GetGUID().GetCounter() == _botData->owner || !IAmFree())
+ 11449:     {
+ 11450:         if (_botclass == BOT_CLASS_SPHYNX)
+ 11451:             gossipTextId = GOSSIP_NORMAL_CUSTOM_SPHYNX;
+ 11452:         else if (_botclass == BOT_CLASS_DREADLORD)
+ 11453:             gossipTextId = GOSSIP_NORMAL_CUSTOM_DREADLORD;
+ 11454:         else if (_botclass == BOT_CLASS_DARK_RANGER)
+ 11455:             gossipTextId = GOSSIP_NORMAL_CUSTOM_DARKRANGER;
+ 11456:         else if (_botclass == BOT_CLASS_SEA_WITCH)
+ 11457:             gossipTextId = GOSSIP_NORMAL_CUSTOM_SEAWITCH;
+ 11458:         else if (_botclass == BOT_CLASS_CRYPT_LORD)
+ 11459:             gossipTextId = GOSSIP_NORMAL_CUSTOM_CRYPTLORD;
+ 11460:         else
+ 11461:             gossipTextId = GOSSIP_NORMAL_SERVE_MASTER;
+ 11462:     }
+ 11463:     else
+[match 5 at line 17952]
+ 17942:         {
+ 17943:             // !!bot may be out of world!!
+ 17944:             Map* mymap = me->FindMap();
+ 17945:             if (mymap)
+ 17946:             {
+ 17947:                 std::list<Player*> plist;
+ 17948:                 Bcore::AnyPlayerInPositionRangeCheck pcheck(me, 15.0f, false);
+ 17949:                 Bcore::PlayerListSearcher<decltype(pcheck)> searcher(me, plist, pcheck);
+ 17950:                 Cell::VisitWorldObjects(me, searcher, 20.f);
+ 17951:                 _canAppearInWorld = std::ranges::any_of(plist, [](Player const* pl) { return pl->GetSession()->GetSecurity() > SEC_PLAYER; });
+ 17952:                 if (!CanAppearInWorld() && !IsDuringTeleport())
+ 17953:                     BotMgr::TeleportBot(me, mymap, me, true);
+ 17954:             }
+ 17955:             else
+ 17956:             {
+ 17957:                 _canAppearInWorld = false;
+ 17958:                 BOT_LOG_ERROR("npcbots", "Bot {} tried to check hide status but doesn't have a valid map set", me->GetEntry());
+ 17959:             }
+ 17960:         }
+ 17961:         else
+ 17962:             _canAppearInWorld = true;
+ 17963:     }
+ 17964: 
+ 17965:     ReduceCD(diff);
+ 17966: 
+ 17967:     UpdateContestedPvP();
+ 17968: 
+ 17969:     lastdiff = diff;
+ 17970: 
+ 17971:     FindMaster();
+ 17972: 
+ 17973:     if (IsDuringTeleport())
+ 17974:         return false;
+ 17975: 
+ 17976:     if (_updateTimerLong <= diff)
+[match 6 at line 17973]
+ 17963:     }
+ 17964: 
+ 17965:     ReduceCD(diff);
+ 17966: 
+ 17967:     UpdateContestedPvP();
+ 17968: 
+ 17969:     lastdiff = diff;
+ 17970: 
+ 17971:     FindMaster();
+ 17972: 
+ 17973:     if (IsDuringTeleport())
+ 17974:         return false;
+ 17975: 
+ 17976:     if (_updateTimerLong <= diff)
+ 17977:     {
+ 17978:         _updateTimerLong = urand(15000, 25000);
+ 17979: 
+ 17980:         //Long-timed updates
+ 17981: 
+ 17982:         if (me->IsInWorld() && me->IsAlive() && me->IsInCombat() && !me->GetMap()->IsDungeon() && (IAmFree() || !master->IsInCombat()))
+ 17983:             me->GetCombatManager().EndCombatBeyondRange(me->GetMap()->GetVisibilityRange(), true);
+ 17984:     }
+ 17985:     
+ 17986:     UpdateCompanionCare(diff);
+ 17987:     UpdateBotRequest(diff);
+ 17988:     if (_updateTimerMedium <= diff)
+ 17989:     {
+ 17990:         _updateTimerMedium = 500;
+ 17991: 
+ 17992:         //Medium-timed updates
+ 17993: 
+ 17994:         //send stats update for group frames
+ 17995:         if (me->IsInWorld() && !IAmFree())
+ 17996:         {
+ 17997:             //update pvp state
+
+--- alive/world guards / matches=6 ---
+[match 1 at line 1094]
+  1084: void bot_ai::MarkSendPosition(uint32 point_id)
+  1085: {
+  1086:     sendpos[point_id].Relocate(me);
+  1087: }
+  1088: 
+  1089: void bot_ai::SetBotAwaitState(uint8 state)
+  1090: {
+  1091:     if (HasBotAwaitState(state))
+  1092:         return;
+  1093: 
+  1094:     if (!me->IsAlive())
+  1095:         return;
+  1096: 
+  1097:     _botAwaitState |= state;
+  1098: 
+  1099:     AbortAwaitStateRemoval();
+  1100:     awaitStateRemEvent = new AwaitStateRemovalEvent(this, state);
+  1101:     Events.AddEvent(awaitStateRemEvent, Events.CalculateTime(30s));
+  1102: }
+  1103: 
+  1104: void bot_ai::EventRemoveBotAwaitState(uint8 state)
+  1105: {
+  1106:     AbortAwaitStateRemoval();
+  1107:     RemoveBotAwaitState(state);
+  1108: }
+  1109: 
+  1110: void bot_ai::AbortAwaitStateRemoval()
+  1111: {
+  1112:     if (awaitStateRemEvent)
+  1113:     {
+  1114:         if (awaitStateRemEvent->IsActive())
+  1115:             awaitStateRemEvent->ScheduleAbort();
+  1116:         awaitStateRemEvent = nullptr;
+  1117:     }
+  1118: }
+[match 2 at line 7532]
+  7522:             auraname == SPELL_AURA_230 ||//SPELL_AURA_MOD_INCREASE_HEALTH_2 blood pact, commanding shout
+  7523:             auraname == SPELL_AURA_MOD_INCREASE_HEALTH_PERCENT)
+  7524:             UpdateHealth();
+  7525:         else if (auraname == SPELL_AURA_MOD_INCREASE_ENERGY || auraname == SPELL_AURA_MOD_INCREASE_ENERGY_PERCENT)
+  7526:             UpdateMana(); //Divine Hymn - max mana increase
+  7527: 
+  7528:         uint32 const effect = spell->_effects[i].Effect;
+  7529:         if (effect == SPELL_EFFECT_RESURRECT || effect == SPELL_EFFECT_RESURRECT_NEW || effect == SPELL_EFFECT_SELF_RESURRECT)
+  7530:         {
+  7531:             //resurrect effects are not handled for creatures
+  7532:             if (!me->IsAlive())
+  7533:             {
+  7534:                 uint32 health = 0;
+  7535:                 uint32 mana = 0;
+  7536:                 int32 damage = spell->_effects[i].BasePoints;
+  7537: 
+  7538:                 if (effect == SPELL_EFFECT_RESURRECT_NEW)
+  7539:                 {
+  7540:                     //Glyph of Rebirth: resurrect with 100% health
+  7541:                     if (spell->IsRankOf(sSpellMgr->GetSpellInfo(20484)))
+  7542:                         health = me->GetMaxHealth();
+  7543:                     else
+  7544:                         health = damage;
+  7545:                     mana = spell->_effects[i].MiscValue;
+  7546:                 }
+  7547:                 else if (damage < 0)
+  7548:                 {
+  7549:                     health = uint32(-damage);
+  7550:                     mana = spell->_effects[i].MiscValue;
+  7551:                 }
+  7552:                 else
+  7553:                 {
+  7554:                     health = me->CountPctFromMaxHealth(damage);
+  7555:                     if (me->GetMaxPower(POWER_MANA) > 1)
+  7556:                         mana = CalculatePct(me->GetMaxPower(POWER_MANA), damage);
+[match 3 at line 18021]
+ 18011:                 me->RemoveNpcFlag(UNIT_NPC_FLAG_GOSSIP);
+ 18012:         }
+ 18013: 
+ 18014:         if (me->IsInWorld() && me->IsAlive() && IAmFree())
+ 18015:         {
+ 18016:             if (me->HasAuraType(SPELL_AURA_MOUNTED) && IsIndoors() && sWorld->getBoolConfig(CONFIG_VMAP_INDOOR_CHECK))
+ 18017:                 me->RemoveAurasWithAttribute(SPELL_ATTR0_OUTDOORS_ONLY);
+ 18018:         }
+ 18019:     }
+ 18020: 
+ 18021:     if (!me->IsAlive())
+ 18022:         return false;
+ 18023: 
+ 18024:     if (!me->IsInWorld())
+ 18025:     {
+ 18026:         if (IAmFree())
+ 18027:             BOT_LOG_ERROR("scripts", "bot_ai::GlobalUpdate is called for free bot not in world: {} ({}) class {} level {}",
+ 18028:                 me->GetName(), me->GetEntry(), uint32(_botclass), uint32(me->GetLevel()));
+ 18029:         return false;
+ 18030:     }
+ 18031: 
+ 18032:     if (doHealth)
+ 18033:     {
+ 18034:         doHealth = false;
+ 18035:         _OnHealthUpdate();
+ 18036:     }
+ 18037:     if (doMana)
+ 18038:     {
+ 18039:         doMana = false;
+ 18040:         _OnManaUpdate();
+ 18041:     }
+ 18042: 
+ 18043:     if (actionsTimer <= diff)
+ 18044:     {
+ 18045:         _processQueuedActions();
+[match 4 at line 18024]
+ 18014:         if (me->IsInWorld() && me->IsAlive() && IAmFree())
+ 18015:         {
+ 18016:             if (me->HasAuraType(SPELL_AURA_MOUNTED) && IsIndoors() && sWorld->getBoolConfig(CONFIG_VMAP_INDOOR_CHECK))
+ 18017:                 me->RemoveAurasWithAttribute(SPELL_ATTR0_OUTDOORS_ONLY);
+ 18018:         }
+ 18019:     }
+ 18020: 
+ 18021:     if (!me->IsAlive())
+ 18022:         return false;
+ 18023: 
+ 18024:     if (!me->IsInWorld())
+ 18025:     {
+ 18026:         if (IAmFree())
+ 18027:             BOT_LOG_ERROR("scripts", "bot_ai::GlobalUpdate is called for free bot not in world: {} ({}) class {} level {}",
+ 18028:                 me->GetName(), me->GetEntry(), uint32(_botclass), uint32(me->GetLevel()));
+ 18029:         return false;
+ 18030:     }
+ 18031: 
+ 18032:     if (doHealth)
+ 18033:     {
+ 18034:         doHealth = false;
+ 18035:         _OnHealthUpdate();
+ 18036:     }
+ 18037:     if (doMana)
+ 18038:     {
+ 18039:         doMana = false;
+ 18040:         _OnManaUpdate();
+ 18041:     }
+ 18042: 
+ 18043:     if (actionsTimer <= diff)
+ 18044:     {
+ 18045:         _processQueuedActions();
+ 18046: 
+ 18047:         //performing queued action could kill the bot
+ 18048:         if (!me->IsAlive())
+[match 5 at line 18048]
+ 18038:     {
+ 18039:         doMana = false;
+ 18040:         _OnManaUpdate();
+ 18041:     }
+ 18042: 
+ 18043:     if (actionsTimer <= diff)
+ 18044:     {
+ 18045:         _processQueuedActions();
+ 18046: 
+ 18047:         //performing queued action could kill the bot
+ 18048:         if (!me->IsAlive())
+ 18049:             return false;
+ 18050:     }
+ 18051: 
+ 18052:     // group update
+ 18053:     if (_groupUpdateTimer <= diff)
+ 18054:         SendUpdateToOutOfRangeBotGroupMembers();
+ 18055: 
+ 18056:     //if (me->HasInvisibilityAura() || me->HasStealthAura())
+ 18057:     //    return false;
+ 18058: 
+ 18059:     //Check current cast state: interrupt casts that became pointless
+ 18060:     if (me->HasUnitState(UNIT_STATE_CASTING) && !HasBotCommandState(BOT_COMMAND_ISSUED_ORDER) && urand(1,100) <= 75)
+ 18061:     {
+ 18062:         for (uint8 i = CURRENT_FIRST_NON_MELEE_SPELL; i != CURRENT_MAX_SPELL; ++i)
+ 18063:         {
+ 18064:             bool interrupt = false;
+ 18065:             Unit const* target = nullptr;
+ 18066:             Spell* spell = me->GetCurrentSpell(CurrentSpellTypes(i));
+ 18067:             if (!spell)
+ 18068:                 continue;
+ 18069: 
+ 18070:             SpellInfo const* info = spell->GetSpellInfo();
+ 18071:             if (!info->CastTimeEntry)
+ 18072:                 continue;
+[match 6 at line 18775]
+ 18765: 
+ 18766:     // ---- 前置：必须是有主人的 bot ----
+ 18767:     if (IAmFree() || !master || !master->IsInWorld())
+ 18768:         return;
+ 18769: 
+ 18770:     // ---- 临时召唤的bot不参与 ----
+ 18771:     if (IsTempBot())
+ 18772:         return;
+ 18773: 
+ 18774:     // ---- 死了的bot不说话 ----
+ 18775:     if (!me->IsAlive())
+ 18776:         return;
+ 18777: 
+ 18778:     // ============================================================
+ 18779:     //  修复1：补货。原来只在"玩家升级"时补，导致背包一直是空的。
+ 18780:     //  改成：首次见面就补 + 每10分钟补一次。
+ 18781:     // ============================================================
+ 18782:     if (!_careStocked || _careRestockTimer == 0)
+ 18783:     {
+ 18784:         _careStocked = true;
+ 18785:         _careRestockTimer = 600000;   // 10分钟
+ 18786:         sBotCompanionMgr->RestockBot(me->GetGUID().GetCounter(), master->GetLevel());
+ 18787:     }
+ 18788:     
+ 18789:     // ---- 主人死亡检测 ----
+ 18790:     if (!master->IsAlive())
+ 18791:     {
+ 18792:         _masterWasDead = true;
+ 18793:         return;                     // 主人死着的时候不打扰
+ 18794:     }
+ 18795:     else if (_masterWasDead)
+ 18796:     {
+ 18797:         _masterWasDead = false;
+ 18798:         std::string txt = sBotCompanionMgr->PickText(CARE_TYPE_REVIVE, _botclass, BotMgr::GetBotPlayerRace(me));
+ 18799:         if (!txt.empty())
+
+--- CommonTimers definition / matches=1 ---
+[match 1 at line 18992]
+ 18982:         if (pos != std::string::npos)
+ 18983:             txt.replace(pos, 6, from.empty() ? "路上" : from);
+ 18984: 
+ 18985:         BotWhisper(txt);
+ 18986:     }
+ 18987: 
+ 18988:     _careTimer = BotCfg::GetCompanionCareCooldown();
+ 18989:     return true;
+ 18990: }
+ 18991: 
+ 18992: void bot_ai::CommonTimers(uint32 diff)
+ 18993: {
+ 18994:     Events.Update(diff);
+ 18995:     SpellTimers(diff);
+ 18996: 
+ 18997:     if (GC_Timer > diff)            GC_Timer -= diff;
+ 18998:     if (checkAurasTimer > diff)     checkAurasTimer -= diff;
+ 18999:     if (waitTimer > diff)           waitTimer -= diff;
+ 19000:     if (_moveBehindTimer > diff)    _moveBehindTimer -= diff;
+ 19001:     if (itemsAutouseTimer > diff)   itemsAutouseTimer -= diff;
+ 19002:     if (evadeDelayTimer > diff)     evadeDelayTimer -= diff;
+ 19003:     if (roleTimer > diff)           roleTimer -= diff;
+ 19004:     if (actionsTimer > diff)        actionsTimer -= diff;
+ 19005:     if (_checkMasterTimer > diff)   _checkMasterTimer -= diff;
+ 19006:     if (_checkOwershipTimer > diff) _checkOwershipTimer -= diff;
+ 19007: 
+ 19008:     if (_powersTimer > diff)        _powersTimer -= diff;
+ 19009:     if (_chaseTimer > diff)         _chaseTimer -= diff;
+ 19010:     if (_engageTimer > diff)        _engageTimer -= diff;
+ 19011: 
+ 19012:     if (_potionTimer > diff && (_potionTimer < POTION_CD || !me->IsInCombat())) _potionTimer -= diff;
+ 19013: 
+ 19014:     if (IAmFree())
+ 19015:         UpdateReviveTimer(diff);
+ 19016:     else
+
+--- existing player grid scans / matches=2 ---
+[match 1 at line 17948]
+ 17938:             master->ModifyMoney(-int32(rent_money));
+ 17939:         }
+ 17940: 
+ 17941:         if (BotCfg::HideBotSpawns() && IAmFree() && !IsWanderer())
+ 17942:         {
+ 17943:             // !!bot may be out of world!!
+ 17944:             Map* mymap = me->FindMap();
+ 17945:             if (mymap)
+ 17946:             {
+ 17947:                 std::list<Player*> plist;
+ 17948:                 Bcore::AnyPlayerInPositionRangeCheck pcheck(me, 15.0f, false);
+ 17949:                 Bcore::PlayerListSearcher<decltype(pcheck)> searcher(me, plist, pcheck);
+ 17950:                 Cell::VisitWorldObjects(me, searcher, 20.f);
+ 17951:                 _canAppearInWorld = std::ranges::any_of(plist, [](Player const* pl) { return pl->GetSession()->GetSecurity() > SEC_PLAYER; });
+ 17952:                 if (!CanAppearInWorld() && !IsDuringTeleport())
+ 17953:                     BotMgr::TeleportBot(me, mymap, me, true);
+ 17954:             }
+ 17955:             else
+ 17956:             {
+ 17957:                 _canAppearInWorld = false;
+ 17958:                 BOT_LOG_ERROR("npcbots", "Bot {} tried to check hide status but doesn't have a valid map set", me->GetEntry());
+ 17959:             }
+ 17960:         }
+ 17961:         else
+ 17962:             _canAppearInWorld = true;
+ 17963:     }
+ 17964: 
+ 17965:     ReduceCD(diff);
+ 17966: 
+ 17967:     UpdateContestedPvP();
+ 17968: 
+ 17969:     lastdiff = diff;
+ 17970: 
+ 17971:     FindMaster();
+ 17972: 
+[match 2 at line 17949]
+ 17939:         }
+ 17940: 
+ 17941:         if (BotCfg::HideBotSpawns() && IAmFree() && !IsWanderer())
+ 17942:         {
+ 17943:             // !!bot may be out of world!!
+ 17944:             Map* mymap = me->FindMap();
+ 17945:             if (mymap)
+ 17946:             {
+ 17947:                 std::list<Player*> plist;
+ 17948:                 Bcore::AnyPlayerInPositionRangeCheck pcheck(me, 15.0f, false);
+ 17949:                 Bcore::PlayerListSearcher<decltype(pcheck)> searcher(me, plist, pcheck);
+ 17950:                 Cell::VisitWorldObjects(me, searcher, 20.f);
+ 17951:                 _canAppearInWorld = std::ranges::any_of(plist, [](Player const* pl) { return pl->GetSession()->GetSecurity() > SEC_PLAYER; });
+ 17952:                 if (!CanAppearInWorld() && !IsDuringTeleport())
+ 17953:                     BotMgr::TeleportBot(me, mymap, me, true);
+ 17954:             }
+ 17955:             else
+ 17956:             {
+ 17957:                 _canAppearInWorld = false;
+ 17958:                 BOT_LOG_ERROR("npcbots", "Bot {} tried to check hide status but doesn't have a valid map set", me->GetEntry());
+ 17959:             }
+ 17960:         }
+ 17961:         else
+ 17962:             _canAppearInWorld = true;
+ 17963:     }
+ 17964: 
+ 17965:     ReduceCD(diff);
+ 17966: 
+ 17967:     UpdateContestedPvP();
+ 17968: 
+ 17969:     lastdiff = diff;
+ 17970: 
+ 17971:     FindMaster();
+ 17972: 
+ 17973:     if (IsDuringTeleport())
+
+--- G19 scene definition/calls / matches=5 ---
+[match 1 at line 18824]
+ 18814:     // ---- 修复3：战斗中距离放宽（打起来容易拉开）----
+ 18815:     if (me->GetDistance(master) > (inCombat ? 60.0f : 30.0f))
+ 18816:         return;
+ 18817: 
+ 18818:     // ---- 升级祝贺 ----
+ 18819:     uint8 curLevel = master->GetLevel();
+ 18820:     if (_lastMasterLevel && curLevel > _lastMasterLevel)
+ 18821:     {
+ 18822:         _lastMasterLevel = curLevel;
+ 18823:         std::string txt = sBotCompanionMgr->PickText(CARE_TYPE_LEVELUP, _botclass, BotMgr::GetBotPlayerRace(me),
+ 18824:                                                      GetCurrentScene(), me->GetZoneId(), me->GetMapId(),
+ 18825:                                                      me->GetGUID().GetCounter());
+ 18826:                                                      
+ 18827:         if (!txt.empty())
+ 18828:         {
+ 18829:             BotWhisper(txt);
+ 18830:             _careTimer = urand(20000, 40000);
+ 18831:         }
+ 18832:         // 升级了顺便补货，按新等级给
+ 18833:         sBotCompanionMgr->RestockBot(me->GetGUID().GetCounter(), curLevel);
+ 18834:         return;
+ 18835:     }
+ 18836:     _lastMasterLevel = curLevel;
+ 18837: 
+ 18838:     // ---- 冷却没到就不往下走 ----
+ 18839:     if (_careTimer)
+ 18840:         return;
+ 18841: 
+ 18842:     uint32 botGuid = me->GetGUID().GetCounter();
+ 18843: 
+ 18844:     // ---- 优先级 1：你饿了 ----
+ 18845:     if (GetHealthPCT(master) < BotCfg::GetCompanionCareHealthPct())
+ 18846:     {
+ 18847:         std::string from;
+ 18848:         uint32 itemId = sBotCompanionMgr->FindInInventory(botGuid, CARE_TYPE_FOOD, curLevel, from);
+[match 2 at line 18875]
+ 18865:     {
+ 18866:         uint32 moneyThreshold = BotCfg::GetCompanionCareMoneyThreshold();
+ 18867:         if (moneyThreshold && master->GetMoney() < moneyThreshold)
+ 18868:         {
+ 18869:             uint32 give = BotCfg::GetCompanionCareMoneyGive();
+ 18870:             if (give)
+ 18871:             {
+ 18872:                 master->ModifyMoney(int32(give));
+ 18873: 
+ 18874:                 std::string txt = sBotCompanionMgr->PickText(CARE_TYPE_MONEY, _botclass, BotMgr::GetBotPlayerRace(me),
+ 18875:                                                      GetCurrentScene(), me->GetZoneId(), me->GetMapId(),
+ 18876:                                                      me->GetGUID().GetCounter());
+ 18877: 
+ 18878:                 if (!txt.empty())
+ 18879:                 {
+ 18880:                     char goldbuf[32];
+ 18881:                     snprintf(goldbuf, sizeof(goldbuf), "%u", give / 10000);
+ 18882:                     size_t pos = txt.find("{gold}");
+ 18883:                     if (pos != std::string::npos)
+ 18884:                         txt.replace(pos, 6, goldbuf);
+ 18885:                     BotWhisper(txt);
+ 18886:                 }
+ 18887:                 _careTimer = BotCfg::GetCompanionCareCooldown();
+ 18888:                 return;
+ 18889:             }
+ 18890:         }
+ 18891:     }
+ 18892: 
+ 18893:     // ---- 优先级 4：闲聊（只在脱战）----
+ 18894:     if (!inCombat && !_careChatTimer)
+ 18895:     {
+ 18896:         std::string txt = sBotCompanionMgr->PickText(CARE_TYPE_CHAT, _botclass, BotMgr::GetBotPlayerRace(me),
+ 18897:                                                      GetCurrentScene(), me->GetZoneId(), me->GetMapId(),
+ 18898:                                                      me->GetGUID().GetCounter());
+ 18899:                                                      
+[match 3 at line 18897]
+ 18887:                 _careTimer = BotCfg::GetCompanionCareCooldown();
+ 18888:                 return;
+ 18889:             }
+ 18890:         }
+ 18891:     }
+ 18892: 
+ 18893:     // ---- 优先级 4：闲聊（只在脱战）----
+ 18894:     if (!inCombat && !_careChatTimer)
+ 18895:     {
+ 18896:         std::string txt = sBotCompanionMgr->PickText(CARE_TYPE_CHAT, _botclass, BotMgr::GetBotPlayerRace(me),
+ 18897:                                                      GetCurrentScene(), me->GetZoneId(), me->GetMapId(),
+ 18898:                                                      me->GetGUID().GetCounter());
+ 18899:                                                      
+ 18900:         if (!txt.empty())
+ 18901:         {
+ 18902:             BotWhisper(txt);
+ 18903:             _careChatTimer = BotCfg::GetCompanionChatCooldown();
+ 18904:             _careTimer     = BotCfg::GetCompanionCareCooldown() / 2;
+ 18905:         }
+ 18906:     }
+ 18907: }
+ 18908: 
+ 18909: // G19第3步：算出 bot 当前所处的场景类别
+ 18910: //   0=未知 1=副本 2=团本 3=主城 4=小镇 5=野外 6=战场 7=圣所
+ 18911: //   用 FindMap()(Object.h:468 无断言) 而不是 GetMap()(Object.h:467 有 ASSERT)
+ 18912: uint8 bot_ai::GetCurrentScene() const
+ 18913: {
+ 18914:     Map const* map = me->FindMap();
+ 18915:     if (!map)
+ 18916:         return 0;
+ 18917: 
+ 18918:     if (map->IsBattlegroundOrArena())
+ 18919:         return 6;
+ 18920:     if (map->IsRaid())
+ 18921:         return 2;
+[match 4 at line 18912]
+ 18902:             BotWhisper(txt);
+ 18903:             _careChatTimer = BotCfg::GetCompanionChatCooldown();
+ 18904:             _careTimer     = BotCfg::GetCompanionCareCooldown() / 2;
+ 18905:         }
+ 18906:     }
+ 18907: }
+ 18908: 
+ 18909: // G19第3步：算出 bot 当前所处的场景类别
+ 18910: //   0=未知 1=副本 2=团本 3=主城 4=小镇 5=野外 6=战场 7=圣所
+ 18911: //   用 FindMap()(Object.h:468 无断言) 而不是 GetMap()(Object.h:467 有 ASSERT)
+ 18912: uint8 bot_ai::GetCurrentScene() const
+ 18913: {
+ 18914:     Map const* map = me->FindMap();
+ 18915:     if (!map)
+ 18916:         return 0;
+ 18917: 
+ 18918:     if (map->IsBattlegroundOrArena())
+ 18919:         return 6;
+ 18920:     if (map->IsRaid())
+ 18921:         return 2;
+ 18922:     if (map->IsDungeon())
+ 18923:         return 1;
+ 18924: 
+ 18925:     // 非副本：看区域标志
+ 18926:     if (AreaTableEntry const* area = sAreaTableStore.LookupEntry(me->GetAreaId()))
+ 18927:     {
+ 18928:         if (area->Flags & AREA_FLAG_CAPITAL)    return 3;   // DBCEnums.h:255
+ 18929:         if (area->Flags & AREA_FLAG_SANCTUARY)  return 7;   // DBCEnums.h:258
+ 18930:         if (area->Flags & AREA_FLAG_TOWN)       return 4;   // DBCEnums.h:268
+ 18931:     }
+ 18932:     return 5;   // 野外
+ 18933: }
+ 18934: 
+ 18935: // ----------------------------------------------------------------------------
+ 18936: //  真正把一件物品给 bot 的主人
+[match 5 at line 18969]
+ 18959:     {
+ 18960:         // 创建失败：把物品还回 bot 的虚拟背包，不能凭空消失
+ 18961:         sBotCompanionMgr->AddToInventory(me->GetGUID().GetCounter(), itemId, count, from);
+ 18962:         return false;
+ 18963:     }
+ 18964: 
+ 18965:     master->SendNewItem(item, count, true, false, true);
+ 18966: 
+ 18967:     // 说句话。{item} 替换成物品名，{from} 替换成来源
+ 18968:     std::string txt = sBotCompanionMgr->PickText(careType, _botclass, BotMgr::GetBotPlayerRace(me),
+ 18969:                                                      GetCurrentScene(), me->GetZoneId(), me->GetMapId(),
+ 18970:                                                      me->GetGUID().GetCounter());
+ 18971:                                                      
+ 18972:     if (!txt.empty())
+ 18973:     {
+ 18974:         std::string itemName = proto->Name1;
+ 18975:         _LocalizeItem(master, itemName, itemId);
+ 18976: 
+ 18977:         size_t pos = txt.find("{item}");
+ 18978:         if (pos != std::string::npos)
+ 18979:             txt.replace(pos, 6, itemName);
+ 18980: 
+ 18981:         pos = txt.find("{from}");
+ 18982:         if (pos != std::string::npos)
+ 18983:             txt.replace(pos, 6, from.empty() ? "路上" : from);
+ 18984: 
+ 18985:         BotWhisper(txt);
+ 18986:     }
+ 18987: 
+ 18988:     _careTimer = BotCfg::GetCompanionCareCooldown();
+ 18989:     return true;
+ 18990: }
+ 18991: 
+ 18992: void bot_ai::CommonTimers(uint32 diff)
+ 18993: {
+
+--- existing autonomy/social symbols / matches=1 ---
+[match 1 at line 15187]
+ 15177: 
+ 15178: void bot_ai::ApplyRacials()
+ 15179: {
+ 15180:     uint8 myrace = me->GetRace();
+ 15181:     switch (myrace)
+ 15182:     {
+ 15183:         case RACE_HUMAN:
+ 15184:             RefreshAura(20598); //Human Spirit
+ 15185:             RefreshAura(20864); //Mace Specialization
+ 15186:             RefreshAura(20597); //Sword Specialization
+ 15187:             //RefreshAura(58985); //Perception pointless
+ 15188:             if (firstspawn)
+ 15189:                 InitSpellMap(RACIAL_EVERY_MAN_FOR_HIMSELF, true, false);
+ 15190:             break;
+ 15191:         case RACE_ORC:
+ 15192:             RefreshAura(20573); //Hardiness
+ 15193:             RefreshAura(20574); //Axe Specialization
+ 15194:             //Blood Fury
+ 15195:             if (firstspawn)
+ 15196:                 InitSpellMap(RaceSpellForClass(myrace, _botclass), true, false);
+ 15197:             break;
+ 15198:         case RACE_DWARF:
+ 15199:             RefreshAura(20595); //Gun Specialization
+ 15200:             RefreshAura(59224); //Mace Specialization
+ 15201:             RefreshAura(20596); //Frost Resistance
+ 15202:             if (firstspawn)
+ 15203:                 InitSpellMap(RACIAL_STONEFORM, true, false);
+ 15204:             break;
+ 15205:         case RACE_NIGHTELF:
+ 15206:             RefreshAura(20583); //Nature Resistance
+ 15207:             RefreshAura(20582); //Quickness
+ 15208:             InitSpellMap(RACIAL_SHADOWMELD, true, false);
+ 15209:             break;
+ 15210:         case RACE_UNDEAD_PLAYER:
+ 15211:             RefreshAura(20579); //Shadow Resistance
+
+===== botconfig.h anchors :: src/server/game/AI/NpcBots/botconfig.h =====
+
+--- class start / matches=0 ---
+[NOT FOUND]
+
+--- companion custom accessors / matches=7 ---
+[match 1 at line 58]
+    50:     static bool IsGearBankEnabled();
+    51:     static bool IsTransmogEnabled();
+    52:     static bool MixArmorClasses();
+    53:     static bool MixWeaponClasses();
+    54:     static bool MixWeaponInventoryTypes();
+    55:     static bool TransmogUseEquipmentSlots();
+    56:     static bool IsClassEnabled(uint8 m_class);
+    57:     static bool IsWanderingClassEnabled(uint8 m_class);
+    58:     static bool   IsCompanionCareEnabled();
+    59:     static uint32 GetCompanionCareCooldown();
+    60:     static uint32 GetCompanionChatCooldown();
+    61:     static uint8  GetCompanionCareHealthPct();
+    62:     static uint8  GetCompanionCareManaPct();
+    63:     static uint32 GetCompanionCareMoneyThreshold();
+    64:     static uint32 GetCompanionCareMoneyGive();
+    65:     static bool IsWanderingBotHireEnabled();
+    66:     static bool EnableWanderingUntargetNpcQuestgiver();
+    67:     static bool EnableWanderingUntargetNpcFlightmaster();
+    68:     static bool HideBotSpawns();
+    69:     static bool IsEnrageOnDimissEnabled();
+    70:     static bool IsBotStatsLimitsEnabled();
+    71:     static bool IsPvPEnabled();
+    72:     static bool IsFoodInterruptedByMovement();
+    73:     static bool FilterRaces();
+    74:     static bool IsBotGenerationEnabledBGs();
+    75:     static bool IsBotLevelCappedByConfigBG();
+    76:     static bool IsBotLevelCappedByConfigBGFirstPlayer();
+[match 2 at line 59]
+    51:     static bool IsTransmogEnabled();
+    52:     static bool MixArmorClasses();
+    53:     static bool MixWeaponClasses();
+    54:     static bool MixWeaponInventoryTypes();
+    55:     static bool TransmogUseEquipmentSlots();
+    56:     static bool IsClassEnabled(uint8 m_class);
+    57:     static bool IsWanderingClassEnabled(uint8 m_class);
+    58:     static bool   IsCompanionCareEnabled();
+    59:     static uint32 GetCompanionCareCooldown();
+    60:     static uint32 GetCompanionChatCooldown();
+    61:     static uint8  GetCompanionCareHealthPct();
+    62:     static uint8  GetCompanionCareManaPct();
+    63:     static uint32 GetCompanionCareMoneyThreshold();
+    64:     static uint32 GetCompanionCareMoneyGive();
+    65:     static bool IsWanderingBotHireEnabled();
+    66:     static bool EnableWanderingUntargetNpcQuestgiver();
+    67:     static bool EnableWanderingUntargetNpcFlightmaster();
+    68:     static bool HideBotSpawns();
+    69:     static bool IsEnrageOnDimissEnabled();
+    70:     static bool IsBotStatsLimitsEnabled();
+    71:     static bool IsPvPEnabled();
+    72:     static bool IsFoodInterruptedByMovement();
+    73:     static bool FilterRaces();
+    74:     static bool IsBotGenerationEnabledBGs();
+    75:     static bool IsBotLevelCappedByConfigBG();
+    76:     static bool IsBotLevelCappedByConfigBGFirstPlayer();
+    77:     static bool IsBotGenerationEnabledWorldMapId(uint32 mapId);
+[match 3 at line 60]
+    52:     static bool MixArmorClasses();
+    53:     static bool MixWeaponClasses();
+    54:     static bool MixWeaponInventoryTypes();
+    55:     static bool TransmogUseEquipmentSlots();
+    56:     static bool IsClassEnabled(uint8 m_class);
+    57:     static bool IsWanderingClassEnabled(uint8 m_class);
+    58:     static bool   IsCompanionCareEnabled();
+    59:     static uint32 GetCompanionCareCooldown();
+    60:     static uint32 GetCompanionChatCooldown();
+    61:     static uint8  GetCompanionCareHealthPct();
+    62:     static uint8  GetCompanionCareManaPct();
+    63:     static uint32 GetCompanionCareMoneyThreshold();
+    64:     static uint32 GetCompanionCareMoneyGive();
+    65:     static bool IsWanderingBotHireEnabled();
+    66:     static bool EnableWanderingUntargetNpcQuestgiver();
+    67:     static bool EnableWanderingUntargetNpcFlightmaster();
+    68:     static bool HideBotSpawns();
+    69:     static bool IsEnrageOnDimissEnabled();
+    70:     static bool IsBotStatsLimitsEnabled();
+    71:     static bool IsPvPEnabled();
+    72:     static bool IsFoodInterruptedByMovement();
+    73:     static bool FilterRaces();
+    74:     static bool IsBotGenerationEnabledBGs();
+    75:     static bool IsBotLevelCappedByConfigBG();
+    76:     static bool IsBotLevelCappedByConfigBGFirstPlayer();
+    77:     static bool IsBotGenerationEnabledWorldMapId(uint32 mapId);
+    78:     static bool IsBotHKEnabled();
+[match 4 at line 61]
+    53:     static bool MixWeaponClasses();
+    54:     static bool MixWeaponInventoryTypes();
+    55:     static bool TransmogUseEquipmentSlots();
+    56:     static bool IsClassEnabled(uint8 m_class);
+    57:     static bool IsWanderingClassEnabled(uint8 m_class);
+    58:     static bool   IsCompanionCareEnabled();
+    59:     static uint32 GetCompanionCareCooldown();
+    60:     static uint32 GetCompanionChatCooldown();
+    61:     static uint8  GetCompanionCareHealthPct();
+    62:     static uint8  GetCompanionCareManaPct();
+    63:     static uint32 GetCompanionCareMoneyThreshold();
+    64:     static uint32 GetCompanionCareMoneyGive();
+    65:     static bool IsWanderingBotHireEnabled();
+    66:     static bool EnableWanderingUntargetNpcQuestgiver();
+    67:     static bool EnableWanderingUntargetNpcFlightmaster();
+    68:     static bool HideBotSpawns();
+    69:     static bool IsEnrageOnDimissEnabled();
+    70:     static bool IsBotStatsLimitsEnabled();
+    71:     static bool IsPvPEnabled();
+    72:     static bool IsFoodInterruptedByMovement();
+    73:     static bool FilterRaces();
+    74:     static bool IsBotGenerationEnabledBGs();
+    75:     static bool IsBotLevelCappedByConfigBG();
+    76:     static bool IsBotLevelCappedByConfigBGFirstPlayer();
+    77:     static bool IsBotGenerationEnabledWorldMapId(uint32 mapId);
+    78:     static bool IsBotHKEnabled();
+    79:     static bool IsBotHKMessageEnabled();
+[match 5 at line 62]
+    54:     static bool MixWeaponInventoryTypes();
+    55:     static bool TransmogUseEquipmentSlots();
+    56:     static bool IsClassEnabled(uint8 m_class);
+    57:     static bool IsWanderingClassEnabled(uint8 m_class);
+    58:     static bool   IsCompanionCareEnabled();
+    59:     static uint32 GetCompanionCareCooldown();
+    60:     static uint32 GetCompanionChatCooldown();
+    61:     static uint8  GetCompanionCareHealthPct();
+    62:     static uint8  GetCompanionCareManaPct();
+    63:     static uint32 GetCompanionCareMoneyThreshold();
+    64:     static uint32 GetCompanionCareMoneyGive();
+    65:     static bool IsWanderingBotHireEnabled();
+    66:     static bool EnableWanderingUntargetNpcQuestgiver();
+    67:     static bool EnableWanderingUntargetNpcFlightmaster();
+    68:     static bool HideBotSpawns();
+    69:     static bool IsEnrageOnDimissEnabled();
+    70:     static bool IsBotStatsLimitsEnabled();
+    71:     static bool IsPvPEnabled();
+    72:     static bool IsFoodInterruptedByMovement();
+    73:     static bool FilterRaces();
+    74:     static bool IsBotGenerationEnabledBGs();
+    75:     static bool IsBotLevelCappedByConfigBG();
+    76:     static bool IsBotLevelCappedByConfigBGFirstPlayer();
+    77:     static bool IsBotGenerationEnabledWorldMapId(uint32 mapId);
+    78:     static bool IsBotHKEnabled();
+    79:     static bool IsBotHKMessageEnabled();
+    80:     static bool IsBotHKAchievementsEnabled();
+[match 6 at line 63]
+    55:     static bool TransmogUseEquipmentSlots();
+    56:     static bool IsClassEnabled(uint8 m_class);
+    57:     static bool IsWanderingClassEnabled(uint8 m_class);
+    58:     static bool   IsCompanionCareEnabled();
+    59:     static uint32 GetCompanionCareCooldown();
+    60:     static uint32 GetCompanionChatCooldown();
+    61:     static uint8  GetCompanionCareHealthPct();
+    62:     static uint8  GetCompanionCareManaPct();
+    63:     static uint32 GetCompanionCareMoneyThreshold();
+    64:     static uint32 GetCompanionCareMoneyGive();
+    65:     static bool IsWanderingBotHireEnabled();
+    66:     static bool EnableWanderingUntargetNpcQuestgiver();
+    67:     static bool EnableWanderingUntargetNpcFlightmaster();
+    68:     static bool HideBotSpawns();
+    69:     static bool IsEnrageOnDimissEnabled();
+    70:     static bool IsBotStatsLimitsEnabled();
+    71:     static bool IsPvPEnabled();
+    72:     static bool IsFoodInterruptedByMovement();
+    73:     static bool FilterRaces();
+    74:     static bool IsBotGenerationEnabledBGs();
+    75:     static bool IsBotLevelCappedByConfigBG();
+    76:     static bool IsBotLevelCappedByConfigBGFirstPlayer();
+    77:     static bool IsBotGenerationEnabledWorldMapId(uint32 mapId);
+    78:     static bool IsBotHKEnabled();
+    79:     static bool IsBotHKMessageEnabled();
+    80:     static bool IsBotHKAchievementsEnabled();
+    81:     static bool IsSharedOwnerOptionEnabled(SharedOwnerOptionMask options);
+[match 7 at line 64]
+    56:     static bool IsClassEnabled(uint8 m_class);
+    57:     static bool IsWanderingClassEnabled(uint8 m_class);
+    58:     static bool   IsCompanionCareEnabled();
+    59:     static uint32 GetCompanionCareCooldown();
+    60:     static uint32 GetCompanionChatCooldown();
+    61:     static uint8  GetCompanionCareHealthPct();
+    62:     static uint8  GetCompanionCareManaPct();
+    63:     static uint32 GetCompanionCareMoneyThreshold();
+    64:     static uint32 GetCompanionCareMoneyGive();
+    65:     static bool IsWanderingBotHireEnabled();
+    66:     static bool EnableWanderingUntargetNpcQuestgiver();
+    67:     static bool EnableWanderingUntargetNpcFlightmaster();
+    68:     static bool HideBotSpawns();
+    69:     static bool IsEnrageOnDimissEnabled();
+    70:     static bool IsBotStatsLimitsEnabled();
+    71:     static bool IsPvPEnabled();
+    72:     static bool IsFoodInterruptedByMovement();
+    73:     static bool FilterRaces();
+    74:     static bool IsBotGenerationEnabledBGs();
+    75:     static bool IsBotLevelCappedByConfigBG();
+    76:     static bool IsBotLevelCappedByConfigBGFirstPlayer();
+    77:     static bool IsBotGenerationEnabledWorldMapId(uint32 mapId);
+    78:     static bool IsBotHKEnabled();
+    79:     static bool IsBotHKMessageEnabled();
+    80:     static bool IsBotHKAchievementsEnabled();
+    81:     static bool IsSharedOwnerOptionEnabled(SharedOwnerOptionMask options);
+    82:     static uint8 GetMaxClassBots();
+
+--- wanderer accessors / matches=16 ---
+[match 1 at line 57]
+    49:     static bool SendEquipListItems();
+    50:     static bool IsGearBankEnabled();
+    51:     static bool IsTransmogEnabled();
+    52:     static bool MixArmorClasses();
+    53:     static bool MixWeaponClasses();
+    54:     static bool MixWeaponInventoryTypes();
+    55:     static bool TransmogUseEquipmentSlots();
+    56:     static bool IsClassEnabled(uint8 m_class);
+    57:     static bool IsWanderingClassEnabled(uint8 m_class);
+    58:     static bool   IsCompanionCareEnabled();
+    59:     static uint32 GetCompanionCareCooldown();
+    60:     static uint32 GetCompanionChatCooldown();
+    61:     static uint8  GetCompanionCareHealthPct();
+    62:     static uint8  GetCompanionCareManaPct();
+    63:     static uint32 GetCompanionCareMoneyThreshold();
+    64:     static uint32 GetCompanionCareMoneyGive();
+    65:     static bool IsWanderingBotHireEnabled();
+    66:     static bool EnableWanderingUntargetNpcQuestgiver();
+    67:     static bool EnableWanderingUntargetNpcFlightmaster();
+    68:     static bool HideBotSpawns();
+    69:     static bool IsEnrageOnDimissEnabled();
+    70:     static bool IsBotStatsLimitsEnabled();
+    71:     static bool IsPvPEnabled();
+    72:     static bool IsFoodInterruptedByMovement();
+    73:     static bool FilterRaces();
+    74:     static bool IsBotGenerationEnabledBGs();
+    75:     static bool IsBotLevelCappedByConfigBG();
+[match 2 at line 65]
+    57:     static bool IsWanderingClassEnabled(uint8 m_class);
+    58:     static bool   IsCompanionCareEnabled();
+    59:     static uint32 GetCompanionCareCooldown();
+    60:     static uint32 GetCompanionChatCooldown();
+    61:     static uint8  GetCompanionCareHealthPct();
+    62:     static uint8  GetCompanionCareManaPct();
+    63:     static uint32 GetCompanionCareMoneyThreshold();
+    64:     static uint32 GetCompanionCareMoneyGive();
+    65:     static bool IsWanderingBotHireEnabled();
+    66:     static bool EnableWanderingUntargetNpcQuestgiver();
+    67:     static bool EnableWanderingUntargetNpcFlightmaster();
+    68:     static bool HideBotSpawns();
+    69:     static bool IsEnrageOnDimissEnabled();
+    70:     static bool IsBotStatsLimitsEnabled();
+    71:     static bool IsPvPEnabled();
+    72:     static bool IsFoodInterruptedByMovement();
+    73:     static bool FilterRaces();
+    74:     static bool IsBotGenerationEnabledBGs();
+    75:     static bool IsBotLevelCappedByConfigBG();
+    76:     static bool IsBotLevelCappedByConfigBGFirstPlayer();
+    77:     static bool IsBotGenerationEnabledWorldMapId(uint32 mapId);
+    78:     static bool IsBotHKEnabled();
+    79:     static bool IsBotHKMessageEnabled();
+    80:     static bool IsBotHKAchievementsEnabled();
+    81:     static bool IsSharedOwnerOptionEnabled(SharedOwnerOptionMask options);
+    82:     static uint8 GetMaxClassBots();
+    83:     static uint8 GetMaxAccountBots();
+[match 3 at line 66]
+    58:     static bool   IsCompanionCareEnabled();
+    59:     static uint32 GetCompanionCareCooldown();
+    60:     static uint32 GetCompanionChatCooldown();
+    61:     static uint8  GetCompanionCareHealthPct();
+    62:     static uint8  GetCompanionCareManaPct();
+    63:     static uint32 GetCompanionCareMoneyThreshold();
+    64:     static uint32 GetCompanionCareMoneyGive();
+    65:     static bool IsWanderingBotHireEnabled();
+    66:     static bool EnableWanderingUntargetNpcQuestgiver();
+    67:     static bool EnableWanderingUntargetNpcFlightmaster();
+    68:     static bool HideBotSpawns();
+    69:     static bool IsEnrageOnDimissEnabled();
+    70:     static bool IsBotStatsLimitsEnabled();
+    71:     static bool IsPvPEnabled();
+    72:     static bool IsFoodInterruptedByMovement();
+    73:     static bool FilterRaces();
+    74:     static bool IsBotGenerationEnabledBGs();
+    75:     static bool IsBotLevelCappedByConfigBG();
+    76:     static bool IsBotLevelCappedByConfigBGFirstPlayer();
+    77:     static bool IsBotGenerationEnabledWorldMapId(uint32 mapId);
+    78:     static bool IsBotHKEnabled();
+    79:     static bool IsBotHKMessageEnabled();
+    80:     static bool IsBotHKAchievementsEnabled();
+    81:     static bool IsSharedOwnerOptionEnabled(SharedOwnerOptionMask options);
+    82:     static uint8 GetMaxClassBots();
+    83:     static uint8 GetMaxAccountBots();
+    84:     static uint8 GetMaxSharedOwners();
+[match 4 at line 67]
+    59:     static uint32 GetCompanionCareCooldown();
+    60:     static uint32 GetCompanionChatCooldown();
+    61:     static uint8  GetCompanionCareHealthPct();
+    62:     static uint8  GetCompanionCareManaPct();
+    63:     static uint32 GetCompanionCareMoneyThreshold();
+    64:     static uint32 GetCompanionCareMoneyGive();
+    65:     static bool IsWanderingBotHireEnabled();
+    66:     static bool EnableWanderingUntargetNpcQuestgiver();
+    67:     static bool EnableWanderingUntargetNpcFlightmaster();
+    68:     static bool HideBotSpawns();
+    69:     static bool IsEnrageOnDimissEnabled();
+    70:     static bool IsBotStatsLimitsEnabled();
+    71:     static bool IsPvPEnabled();
+    72:     static bool IsFoodInterruptedByMovement();
+    73:     static bool FilterRaces();
+    74:     static bool IsBotGenerationEnabledBGs();
+    75:     static bool IsBotLevelCappedByConfigBG();
+    76:     static bool IsBotLevelCappedByConfigBGFirstPlayer();
+    77:     static bool IsBotGenerationEnabledWorldMapId(uint32 mapId);
+    78:     static bool IsBotHKEnabled();
+    79:     static bool IsBotHKMessageEnabled();
+    80:     static bool IsBotHKAchievementsEnabled();
+    81:     static bool IsSharedOwnerOptionEnabled(SharedOwnerOptionMask options);
+    82:     static uint8 GetMaxClassBots();
+    83:     static uint8 GetMaxAccountBots();
+    84:     static uint8 GetMaxSharedOwners();
+    85:     static uint32 GetGearBankCapacity();
+[match 5 at line 96]
+    88:     static uint8 GetTankTargetIconFlags();
+    89:     static uint8 GetOffTankTargetIconFlags();
+    90:     static uint8 GetDPSTargetIconFlags();
+    91:     static uint8 GetRangedDPSTargetIconFlags();
+    92:     static uint8 GetNoDPSTargetIconFlags();
+    93:     static uint32 GetBaseUpdateDelay();
+    94:     static uint32 GetOwnershipExpireTime();
+    95:     static uint8 GetOwnershipExpireMode();
+    96:     static uint32 GetDesiredWanderingBotsCount();
+    97:     static uint32 GetBGTargetTeamPlayersCount(BattlegroundTypeId bgTypeId);
+    98:     static float GetBotHKHonorRate();
+    99:     static float GetBotStatLimitDodge();
+   100:     static float GetBotStatLimitParry();
+   101:     static float GetBotStatLimitBlock();
+   102:     static float GetBotStatLimitCrit();
+   103:     static float GetBotDamageModPhysical();
+   104:     static float GetBotDamageModSpell();
+   105:     static float GetBotHealingMod();
+   106:     static float GetBotHPMod();
+   107:     static float GetBotWandererDamageMod();
+   108:     static float GetBotWandererHealingMod();
+   109:     static float GetBotWandererHPMod();
+   110:     static float GetBotWandererSpeedMod();
+   111:     static float GetBotWandererXPGainMod();
+   112:     static PctBrackets GetBotWandererLevelBrackets();
+   113:     static uint32 GetBotWandererMaxItemLevel(uint8 level);
+   114:     static uint32 GetBotWandererKillRewardMoney();
+[match 6 at line 107]
+    99:     static float GetBotStatLimitDodge();
+   100:     static float GetBotStatLimitParry();
+   101:     static float GetBotStatLimitBlock();
+   102:     static float GetBotStatLimitCrit();
+   103:     static float GetBotDamageModPhysical();
+   104:     static float GetBotDamageModSpell();
+   105:     static float GetBotHealingMod();
+   106:     static float GetBotHPMod();
+   107:     static float GetBotWandererDamageMod();
+   108:     static float GetBotWandererHealingMod();
+   109:     static float GetBotWandererHPMod();
+   110:     static float GetBotWandererSpeedMod();
+   111:     static float GetBotWandererXPGainMod();
+   112:     static PctBrackets GetBotWandererLevelBrackets();
+   113:     static uint32 GetBotWandererMaxItemLevel(uint8 level);
+   114:     static uint32 GetBotWandererKillRewardMoney();
+   115:     static uint32 GetBotWandererKillRewardItemMaxCount();
+   116:     static uint32 GetBotWandererKillRewardItemMaxQuality();
+   117:     static bool EnableWandererFreeLootSkinning();
+   118:     static uint32 GetBotDungeonMaxItemLevel(uint8 level, uint16 map_id, Difficulty map_difficulty);
+   119:     static float GetBotDamageModByClass(uint8 botclass);
+   120:     static float GetBotDamageModByLevel(uint8 botlevel);
+   121:     static float GetBotHealingModByLevel(uint8 botlevel);
+   122:     static float GetBotHPModByLevel(uint8 botlevel);
+   123:     static float GetBotMPModByLevel(uint8 botlevel);
+   124: 
+   125:     static uint8 GetFollowDistDefault();
+[match 7 at line 108]
+   100:     static float GetBotStatLimitParry();
+   101:     static float GetBotStatLimitBlock();
+   102:     static float GetBotStatLimitCrit();
+   103:     static float GetBotDamageModPhysical();
+   104:     static float GetBotDamageModSpell();
+   105:     static float GetBotHealingMod();
+   106:     static float GetBotHPMod();
+   107:     static float GetBotWandererDamageMod();
+   108:     static float GetBotWandererHealingMod();
+   109:     static float GetBotWandererHPMod();
+   110:     static float GetBotWandererSpeedMod();
+   111:     static float GetBotWandererXPGainMod();
+   112:     static PctBrackets GetBotWandererLevelBrackets();
+   113:     static uint32 GetBotWandererMaxItemLevel(uint8 level);
+   114:     static uint32 GetBotWandererKillRewardMoney();
+   115:     static uint32 GetBotWandererKillRewardItemMaxCount();
+   116:     static uint32 GetBotWandererKillRewardItemMaxQuality();
+   117:     static bool EnableWandererFreeLootSkinning();
+   118:     static uint32 GetBotDungeonMaxItemLevel(uint8 level, uint16 map_id, Difficulty map_difficulty);
+   119:     static float GetBotDamageModByClass(uint8 botclass);
+   120:     static float GetBotDamageModByLevel(uint8 botlevel);
+   121:     static float GetBotHealingModByLevel(uint8 botlevel);
+   122:     static float GetBotHPModByLevel(uint8 botlevel);
+   123:     static float GetBotMPModByLevel(uint8 botlevel);
+   124: 
+   125:     static uint8 GetFollowDistDefault();
+   126:     static uint32 GetEngageDelayDPSDefault();
+[match 8 at line 109]
+   101:     static float GetBotStatLimitBlock();
+   102:     static float GetBotStatLimitCrit();
+   103:     static float GetBotDamageModPhysical();
+   104:     static float GetBotDamageModSpell();
+   105:     static float GetBotHealingMod();
+   106:     static float GetBotHPMod();
+   107:     static float GetBotWandererDamageMod();
+   108:     static float GetBotWandererHealingMod();
+   109:     static float GetBotWandererHPMod();
+   110:     static float GetBotWandererSpeedMod();
+   111:     static float GetBotWandererXPGainMod();
+   112:     static PctBrackets GetBotWandererLevelBrackets();
+   113:     static uint32 GetBotWandererMaxItemLevel(uint8 level);
+   114:     static uint32 GetBotWandererKillRewardMoney();
+   115:     static uint32 GetBotWandererKillRewardItemMaxCount();
+   116:     static uint32 GetBotWandererKillRewardItemMaxQuality();
+   117:     static bool EnableWandererFreeLootSkinning();
+   118:     static uint32 GetBotDungeonMaxItemLevel(uint8 level, uint16 map_id, Difficulty map_difficulty);
+   119:     static float GetBotDamageModByClass(uint8 botclass);
+   120:     static float GetBotDamageModByLevel(uint8 botlevel);
+   121:     static float GetBotHealingModByLevel(uint8 botlevel);
+   122:     static float GetBotHPModByLevel(uint8 botlevel);
+   123:     static float GetBotMPModByLevel(uint8 botlevel);
+   124: 
+   125:     static uint8 GetFollowDistDefault();
+   126:     static uint32 GetEngageDelayDPSDefault();
+   127:     static uint32 GetEngageDelayHealDefault();
+[only first 8 of 16 matches shown]
+
+--- private static members / matches=4 ---
+[match 1 at line 56]
+    48:     static bool ShowEquippedHelm();
+    49:     static bool SendEquipListItems();
+    50:     static bool IsGearBankEnabled();
+    51:     static bool IsTransmogEnabled();
+    52:     static bool MixArmorClasses();
+    53:     static bool MixWeaponClasses();
+    54:     static bool MixWeaponInventoryTypes();
+    55:     static bool TransmogUseEquipmentSlots();
+    56:     static bool IsClassEnabled(uint8 m_class);
+    57:     static bool IsWanderingClassEnabled(uint8 m_class);
+    58:     static bool   IsCompanionCareEnabled();
+    59:     static uint32 GetCompanionCareCooldown();
+    60:     static uint32 GetCompanionChatCooldown();
+    61:     static uint8  GetCompanionCareHealthPct();
+    62:     static uint8  GetCompanionCareManaPct();
+    63:     static uint32 GetCompanionCareMoneyThreshold();
+    64:     static uint32 GetCompanionCareMoneyGive();
+    65:     static bool IsWanderingBotHireEnabled();
+    66:     static bool EnableWanderingUntargetNpcQuestgiver();
+    67:     static bool EnableWanderingUntargetNpcFlightmaster();
+    68:     static bool HideBotSpawns();
+    69:     static bool IsEnrageOnDimissEnabled();
+    70:     static bool IsBotStatsLimitsEnabled();
+    71:     static bool IsPvPEnabled();
+    72:     static bool IsFoodInterruptedByMovement();
+    73:     static bool FilterRaces();
+    74:     static bool IsBotGenerationEnabledBGs();
+[match 2 at line 57]
+    49:     static bool SendEquipListItems();
+    50:     static bool IsGearBankEnabled();
+    51:     static bool IsTransmogEnabled();
+    52:     static bool MixArmorClasses();
+    53:     static bool MixWeaponClasses();
+    54:     static bool MixWeaponInventoryTypes();
+    55:     static bool TransmogUseEquipmentSlots();
+    56:     static bool IsClassEnabled(uint8 m_class);
+    57:     static bool IsWanderingClassEnabled(uint8 m_class);
+    58:     static bool   IsCompanionCareEnabled();
+    59:     static uint32 GetCompanionCareCooldown();
+    60:     static uint32 GetCompanionChatCooldown();
+    61:     static uint8  GetCompanionCareHealthPct();
+    62:     static uint8  GetCompanionCareManaPct();
+    63:     static uint32 GetCompanionCareMoneyThreshold();
+    64:     static uint32 GetCompanionCareMoneyGive();
+    65:     static bool IsWanderingBotHireEnabled();
+    66:     static bool EnableWanderingUntargetNpcQuestgiver();
+    67:     static bool EnableWanderingUntargetNpcFlightmaster();
+    68:     static bool HideBotSpawns();
+    69:     static bool IsEnrageOnDimissEnabled();
+    70:     static bool IsBotStatsLimitsEnabled();
+    71:     static bool IsPvPEnabled();
+    72:     static bool IsFoodInterruptedByMovement();
+    73:     static bool FilterRaces();
+    74:     static bool IsBotGenerationEnabledBGs();
+    75:     static bool IsBotLevelCappedByConfigBG();
+[match 3 at line 118]
+   110:     static float GetBotWandererSpeedMod();
+   111:     static float GetBotWandererXPGainMod();
+   112:     static PctBrackets GetBotWandererLevelBrackets();
+   113:     static uint32 GetBotWandererMaxItemLevel(uint8 level);
+   114:     static uint32 GetBotWandererKillRewardMoney();
+   115:     static uint32 GetBotWandererKillRewardItemMaxCount();
+   116:     static uint32 GetBotWandererKillRewardItemMaxQuality();
+   117:     static bool EnableWandererFreeLootSkinning();
+   118:     static uint32 GetBotDungeonMaxItemLevel(uint8 level, uint16 map_id, Difficulty map_difficulty);
+   119:     static float GetBotDamageModByClass(uint8 botclass);
+   120:     static float GetBotDamageModByLevel(uint8 botlevel);
+   121:     static float GetBotHealingModByLevel(uint8 botlevel);
+   122:     static float GetBotHPModByLevel(uint8 botlevel);
+   123:     static float GetBotMPModByLevel(uint8 botlevel);
+   124: 
+   125:     static uint8 GetFollowDistDefault();
+   126:     static uint32 GetEngageDelayDPSDefault();
+   127:     static uint32 GetEngageDelayHealDefault();
+   128: 
+   129:     static uint8 GetMaxNpcBots(uint8 level);
+   130:     static bool IsNpcBotXpReductionEnabled();
+   131:     static bool IsNpcBotXpReductionGroupOnly();
+   132:     static uint8 GetNpcBotXpReductionExtraAmount();
+   133:     static uint8 GetNpcBotXpReductionExtraStartingNumber();
+   134:     static bool IsNpcBotHonorReductionEnabled();
+   135:     static bool IsNpcBotHonorReductionGroupOnly();
+   136:     static bool GetNpcBotMoneyShareEnabled();
+[match 4 at line 148]
+   140:     static int32 GetBotInfoPacketsLimit();
+   141: 
+   142:     static uint32 GetNpcBotCostRent(uint8 level, uint8 botclass);
+   143:     static uint32 GetNpcBotCostHire(uint8 level, uint8 botclass);
+   144:     static std::string GetNpcBotCostStr(uint8 level, uint8 botclass);
+   145: 
+   146:     static bool IsMapAllowedForBots(Map const* map);
+   147: private:
+   148:     static uint32 _normalizedCostForLevel(uint32 cost_base, uint8 bot_class, uint8 level);
+   149: };
+   150: 
+   151: void AddNpcBotScripts();
+   152: 
+   153: #endif
+
+--- access labels / matches=2 ---
+[match 1 at line 36]
+    28: template<typename U>
+    29: using BotBrackets = std::array<U, BRACKETS_COUNT>;
+    30: using LvlBrackets = BotBrackets<uint8>;
+    31: using PctBrackets = BotBrackets<uint32>;
+    32: using ItemLvlBrackets = BotBrackets<uint32>;
+    33: 
+    34: class TC_GAME_API BotCfg
+    35: {
+    36: public:
+    37:     static void ReloadConfig();
+    38: 
+    39:     static bool IsNpcBotModEnabled();
+    40:     static bool IsNpcBotLogEnabled();
+    41:     static bool IsNpcBotDungeonFinderEnabled();
+    42:     static bool IsNpcBotDungeonFinderBotGenerationEnabled();
+    43:     static bool LimitNpcBotsInDungeons();
+    44:     static bool LimitNpcBotsInRaids();
+    45:     static bool IsNpcBotsPremadeEnabled();
+    46:     static bool DisplayEquipment();
+    47:     static bool ShowEquippedCloak();
+    48:     static bool ShowEquippedHelm();
+    49:     static bool SendEquipListItems();
+    50:     static bool IsGearBankEnabled();
+    51:     static bool IsTransmogEnabled();
+    52:     static bool MixArmorClasses();
+    53:     static bool MixWeaponClasses();
+    54:     static bool MixWeaponInventoryTypes();
+[match 2 at line 147]
+   139:     static uint8 GetNpcBotMountLevel100();
+   140:     static int32 GetBotInfoPacketsLimit();
+   141: 
+   142:     static uint32 GetNpcBotCostRent(uint8 level, uint8 botclass);
+   143:     static uint32 GetNpcBotCostHire(uint8 level, uint8 botclass);
+   144:     static std::string GetNpcBotCostStr(uint8 level, uint8 botclass);
+   145: 
+   146:     static bool IsMapAllowedForBots(Map const* map);
+   147: private:
+   148:     static uint32 _normalizedCostForLevel(uint32 cost_base, uint8 bot_class, uint8 level);
+   149: };
+   150: 
+   151: void AddNpcBotScripts();
+   152: 
+   153: #endif
+
+===== botconfig.cpp anchors :: src/server/game/AI/NpcBots/botconfig.cpp =====
+
+--- config load function / matches=2 ---
+[match 1 at line 313]
+   305:         sWorld->LoadConfigSettings(true);
+   306:         sMapMgr->InitializeVisibilityDistanceInfo();
+   307:         BOT_LOG_INFO("misc", "World config settings reloaded.");
+   308:     }
+   309: 
+   310: private:
+   311:     static void _initNpcbotsConfig(bool reload)
+   312:     {
+   313:         _loadConfig(reload);
+   314: 
+   315:         BOT_LOG_INFO("server.loading", ">> NPCBots config {}.", reload ? "re-loaded" : "loaded");
+   316: 
+   317:         if (_enableNpcBots)
+   318:             BOT_LOG_INFO("server.loading", ">> NPCBots system enabled");
+   319:     }
+   320: 
+   321:     static void _loadConfig(bool reload)
+   322:     {
+   323:         _enableNpcBots                  = sConfigMgr->GetBoolDefault("NpcBot.Enable", true);
+   324:         _companionCareEnable            = sConfigMgr->GetBoolDefault("NpcBot.Companion.Enable", true);
+   325:         _companionCareCooldown          = sConfigMgr->GetIntDefault("NpcBot.Companion.Cooldown", 120000);
+   326:         _companionChatCooldown          = sConfigMgr->GetIntDefault("NpcBot.Companion.ChatCooldown", 600000);
+   327:         _companionCareHealthPct         = sConfigMgr->GetIntDefault("NpcBot.Companion.HealthPct", 50);
+   328:         _companionCareManaPct           = sConfigMgr->GetIntDefault("NpcBot.Companion.ManaPct", 40);
+   329:         _companionCareMoneyThreshold    = sConfigMgr->GetIntDefault("NpcBot.Companion.MoneyThreshold", 100000);
+   330:         _companionCareMoneyGive         = sConfigMgr->GetIntDefault("NpcBot.Companion.MoneyGive", 50000);
+   331:         _enableWanderingBotHire         = sConfigMgr->GetBoolDefault("NpcBot.WanderingBot.AllowHire", false);
+[match 2 at line 321]
+   313:         _loadConfig(reload);
+   314: 
+   315:         BOT_LOG_INFO("server.loading", ">> NPCBots config {}.", reload ? "re-loaded" : "loaded");
+   316: 
+   317:         if (_enableNpcBots)
+   318:             BOT_LOG_INFO("server.loading", ">> NPCBots system enabled");
+   319:     }
+   320: 
+   321:     static void _loadConfig(bool reload)
+   322:     {
+   323:         _enableNpcBots                  = sConfigMgr->GetBoolDefault("NpcBot.Enable", true);
+   324:         _companionCareEnable            = sConfigMgr->GetBoolDefault("NpcBot.Companion.Enable", true);
+   325:         _companionCareCooldown          = sConfigMgr->GetIntDefault("NpcBot.Companion.Cooldown", 120000);
+   326:         _companionChatCooldown          = sConfigMgr->GetIntDefault("NpcBot.Companion.ChatCooldown", 600000);
+   327:         _companionCareHealthPct         = sConfigMgr->GetIntDefault("NpcBot.Companion.HealthPct", 50);
+   328:         _companionCareManaPct           = sConfigMgr->GetIntDefault("NpcBot.Companion.ManaPct", 40);
+   329:         _companionCareMoneyThreshold    = sConfigMgr->GetIntDefault("NpcBot.Companion.MoneyThreshold", 100000);
+   330:         _companionCareMoneyGive         = sConfigMgr->GetIntDefault("NpcBot.Companion.MoneyGive", 50000);
+   331:         _enableWanderingBotHire         = sConfigMgr->GetBoolDefault("NpcBot.WanderingBot.AllowHire", false);
+   332:         _logToDB                        = sConfigMgr->GetBoolDefault("NpcBot.LogToDB", true);
+   333:         _maxClassNpcBots                = sConfigMgr->GetIntDefault("NpcBot.MaxBotsPerClass", 1);
+   334:         _maxAccountNpcBots              = sConfigMgr->GetIntDefault("NpcBot.MaxBotsPerAccount", 0);
+   335:         _filterRaces                    = sConfigMgr->GetBoolDefault("NpcBot.Botgiver.FilterRaces", false);
+   336:         _shared_ownership_options       = sConfigMgr->GetIntDefault("NpcBot.SharedOwnership.Options", 0);
+   337:         _maxSharedOwners                = sConfigMgr->GetIntDefault("NpcBot.SharedOwnership.MaxOwners", 0);
+   338:         _basefollowdist                 = sConfigMgr->GetIntDefault("NpcBot.BaseFollowDistance", 30);
+   339:         _xpReductionEnable              = sConfigMgr->GetBoolDefault("NpcBot.XpReduction.Enable", false);
+
+--- companion custom config / matches=21 ---
+[match 1 at line 64]
+    56: static uint32 _targetBGPlayersPerTeamCount_AV;
+    57: static uint32 _targetBGPlayersPerTeamCount_WS;
+    58: static uint32 _targetBGPlayersPerTeamCount_AB;
+    59: static uint32 _targetBGPlayersPerTeamCount_EY;
+    60: static uint32 _targetBGPlayersPerTeamCount_SA;
+    61: static uint32 _targetBGPlayersPerTeamCount_IC;
+    62: static uint32 _shared_ownership_options;
+    63: static bool _enableNpcBots;
+    64: static bool   _companionCareEnable;
+    65: static uint32 _companionCareCooldown;
+    66: static uint32 _companionChatCooldown;
+    67: static uint8  _companionCareHealthPct;
+    68: static uint8  _companionCareManaPct;
+    69: static uint32 _companionCareMoneyThreshold;
+    70: static uint32 _companionCareMoneyGive;
+    71: static bool _enableWanderingBotHire;
+    72: static bool _logToDB;
+    73: static bool _xpReductionEnable;
+    74: static bool _xpReductionGroupOnly;
+    75: static bool _honorReductionEnable;
+    76: static bool _honorReductionGroupOnly;
+    77: static bool _moneyLootShareEnable;
+    78: static bool _moneyLootShareGroupOnly;
+    79: static bool _enableNpcBotsDungeons;
+    80: static bool _enableNpcBotsRaids;
+    81: static bool _enableNpcBotsBGs;
+    82: static bool _enableNpcBotsArenas;
+[match 2 at line 65]
+    57: static uint32 _targetBGPlayersPerTeamCount_WS;
+    58: static uint32 _targetBGPlayersPerTeamCount_AB;
+    59: static uint32 _targetBGPlayersPerTeamCount_EY;
+    60: static uint32 _targetBGPlayersPerTeamCount_SA;
+    61: static uint32 _targetBGPlayersPerTeamCount_IC;
+    62: static uint32 _shared_ownership_options;
+    63: static bool _enableNpcBots;
+    64: static bool   _companionCareEnable;
+    65: static uint32 _companionCareCooldown;
+    66: static uint32 _companionChatCooldown;
+    67: static uint8  _companionCareHealthPct;
+    68: static uint8  _companionCareManaPct;
+    69: static uint32 _companionCareMoneyThreshold;
+    70: static uint32 _companionCareMoneyGive;
+    71: static bool _enableWanderingBotHire;
+    72: static bool _logToDB;
+    73: static bool _xpReductionEnable;
+    74: static bool _xpReductionGroupOnly;
+    75: static bool _honorReductionEnable;
+    76: static bool _honorReductionGroupOnly;
+    77: static bool _moneyLootShareEnable;
+    78: static bool _moneyLootShareGroupOnly;
+    79: static bool _enableNpcBotsDungeons;
+    80: static bool _enableNpcBotsRaids;
+    81: static bool _enableNpcBotsBGs;
+    82: static bool _enableNpcBotsArenas;
+    83: static bool _enableDungeonFinder;
+[match 3 at line 66]
+    58: static uint32 _targetBGPlayersPerTeamCount_AB;
+    59: static uint32 _targetBGPlayersPerTeamCount_EY;
+    60: static uint32 _targetBGPlayersPerTeamCount_SA;
+    61: static uint32 _targetBGPlayersPerTeamCount_IC;
+    62: static uint32 _shared_ownership_options;
+    63: static bool _enableNpcBots;
+    64: static bool   _companionCareEnable;
+    65: static uint32 _companionCareCooldown;
+    66: static uint32 _companionChatCooldown;
+    67: static uint8  _companionCareHealthPct;
+    68: static uint8  _companionCareManaPct;
+    69: static uint32 _companionCareMoneyThreshold;
+    70: static uint32 _companionCareMoneyGive;
+    71: static bool _enableWanderingBotHire;
+    72: static bool _logToDB;
+    73: static bool _xpReductionEnable;
+    74: static bool _xpReductionGroupOnly;
+    75: static bool _honorReductionEnable;
+    76: static bool _honorReductionGroupOnly;
+    77: static bool _moneyLootShareEnable;
+    78: static bool _moneyLootShareGroupOnly;
+    79: static bool _enableNpcBotsDungeons;
+    80: static bool _enableNpcBotsRaids;
+    81: static bool _enableNpcBotsBGs;
+    82: static bool _enableNpcBotsArenas;
+    83: static bool _enableDungeonFinder;
+    84: static bool _enableDungeonFinderBotsGen;
+[match 4 at line 67]
+    59: static uint32 _targetBGPlayersPerTeamCount_EY;
+    60: static uint32 _targetBGPlayersPerTeamCount_SA;
+    61: static uint32 _targetBGPlayersPerTeamCount_IC;
+    62: static uint32 _shared_ownership_options;
+    63: static bool _enableNpcBots;
+    64: static bool   _companionCareEnable;
+    65: static uint32 _companionCareCooldown;
+    66: static uint32 _companionChatCooldown;
+    67: static uint8  _companionCareHealthPct;
+    68: static uint8  _companionCareManaPct;
+    69: static uint32 _companionCareMoneyThreshold;
+    70: static uint32 _companionCareMoneyGive;
+    71: static bool _enableWanderingBotHire;
+    72: static bool _logToDB;
+    73: static bool _xpReductionEnable;
+    74: static bool _xpReductionGroupOnly;
+    75: static bool _honorReductionEnable;
+    76: static bool _honorReductionGroupOnly;
+    77: static bool _moneyLootShareEnable;
+    78: static bool _moneyLootShareGroupOnly;
+    79: static bool _enableNpcBotsDungeons;
+    80: static bool _enableNpcBotsRaids;
+    81: static bool _enableNpcBotsBGs;
+    82: static bool _enableNpcBotsArenas;
+    83: static bool _enableDungeonFinder;
+    84: static bool _enableDungeonFinderBotsGen;
+    85: static bool _enableNpcBotsPremade;
+[match 5 at line 68]
+    60: static uint32 _targetBGPlayersPerTeamCount_SA;
+    61: static uint32 _targetBGPlayersPerTeamCount_IC;
+    62: static uint32 _shared_ownership_options;
+    63: static bool _enableNpcBots;
+    64: static bool   _companionCareEnable;
+    65: static uint32 _companionCareCooldown;
+    66: static uint32 _companionChatCooldown;
+    67: static uint8  _companionCareHealthPct;
+    68: static uint8  _companionCareManaPct;
+    69: static uint32 _companionCareMoneyThreshold;
+    70: static uint32 _companionCareMoneyGive;
+    71: static bool _enableWanderingBotHire;
+    72: static bool _logToDB;
+    73: static bool _xpReductionEnable;
+    74: static bool _xpReductionGroupOnly;
+    75: static bool _honorReductionEnable;
+    76: static bool _honorReductionGroupOnly;
+    77: static bool _moneyLootShareEnable;
+    78: static bool _moneyLootShareGroupOnly;
+    79: static bool _enableNpcBotsDungeons;
+    80: static bool _enableNpcBotsRaids;
+    81: static bool _enableNpcBotsBGs;
+    82: static bool _enableNpcBotsArenas;
+    83: static bool _enableDungeonFinder;
+    84: static bool _enableDungeonFinderBotsGen;
+    85: static bool _enableNpcBotsPremade;
+    86: static bool _limitNpcBotsDungeons;
+[match 6 at line 69]
+    61: static uint32 _targetBGPlayersPerTeamCount_IC;
+    62: static uint32 _shared_ownership_options;
+    63: static bool _enableNpcBots;
+    64: static bool   _companionCareEnable;
+    65: static uint32 _companionCareCooldown;
+    66: static uint32 _companionChatCooldown;
+    67: static uint8  _companionCareHealthPct;
+    68: static uint8  _companionCareManaPct;
+    69: static uint32 _companionCareMoneyThreshold;
+    70: static uint32 _companionCareMoneyGive;
+    71: static bool _enableWanderingBotHire;
+    72: static bool _logToDB;
+    73: static bool _xpReductionEnable;
+    74: static bool _xpReductionGroupOnly;
+    75: static bool _honorReductionEnable;
+    76: static bool _honorReductionGroupOnly;
+    77: static bool _moneyLootShareEnable;
+    78: static bool _moneyLootShareGroupOnly;
+    79: static bool _enableNpcBotsDungeons;
+    80: static bool _enableNpcBotsRaids;
+    81: static bool _enableNpcBotsBGs;
+    82: static bool _enableNpcBotsArenas;
+    83: static bool _enableDungeonFinder;
+    84: static bool _enableDungeonFinderBotsGen;
+    85: static bool _enableNpcBotsPremade;
+    86: static bool _limitNpcBotsDungeons;
+    87: static bool _limitNpcBotsRaids;
+[match 7 at line 70]
+    62: static uint32 _shared_ownership_options;
+    63: static bool _enableNpcBots;
+    64: static bool   _companionCareEnable;
+    65: static uint32 _companionCareCooldown;
+    66: static uint32 _companionChatCooldown;
+    67: static uint8  _companionCareHealthPct;
+    68: static uint8  _companionCareManaPct;
+    69: static uint32 _companionCareMoneyThreshold;
+    70: static uint32 _companionCareMoneyGive;
+    71: static bool _enableWanderingBotHire;
+    72: static bool _logToDB;
+    73: static bool _xpReductionEnable;
+    74: static bool _xpReductionGroupOnly;
+    75: static bool _honorReductionEnable;
+    76: static bool _honorReductionGroupOnly;
+    77: static bool _moneyLootShareEnable;
+    78: static bool _moneyLootShareGroupOnly;
+    79: static bool _enableNpcBotsDungeons;
+    80: static bool _enableNpcBotsRaids;
+    81: static bool _enableNpcBotsBGs;
+    82: static bool _enableNpcBotsArenas;
+    83: static bool _enableDungeonFinder;
+    84: static bool _enableDungeonFinderBotsGen;
+    85: static bool _enableNpcBotsPremade;
+    86: static bool _limitNpcBotsDungeons;
+    87: static bool _limitNpcBotsRaids;
+    88: static bool _hideSpawns;
+[match 8 at line 324]
+   316: 
+   317:         if (_enableNpcBots)
+   318:             BOT_LOG_INFO("server.loading", ">> NPCBots system enabled");
+   319:     }
+   320: 
+   321:     static void _loadConfig(bool reload)
+   322:     {
+   323:         _enableNpcBots                  = sConfigMgr->GetBoolDefault("NpcBot.Enable", true);
+   324:         _companionCareEnable            = sConfigMgr->GetBoolDefault("NpcBot.Companion.Enable", true);
+   325:         _companionCareCooldown          = sConfigMgr->GetIntDefault("NpcBot.Companion.Cooldown", 120000);
+   326:         _companionChatCooldown          = sConfigMgr->GetIntDefault("NpcBot.Companion.ChatCooldown", 600000);
+   327:         _companionCareHealthPct         = sConfigMgr->GetIntDefault("NpcBot.Companion.HealthPct", 50);
+   328:         _companionCareManaPct           = sConfigMgr->GetIntDefault("NpcBot.Companion.ManaPct", 40);
+   329:         _companionCareMoneyThreshold    = sConfigMgr->GetIntDefault("NpcBot.Companion.MoneyThreshold", 100000);
+   330:         _companionCareMoneyGive         = sConfigMgr->GetIntDefault("NpcBot.Companion.MoneyGive", 50000);
+   331:         _enableWanderingBotHire         = sConfigMgr->GetBoolDefault("NpcBot.WanderingBot.AllowHire", false);
+   332:         _logToDB                        = sConfigMgr->GetBoolDefault("NpcBot.LogToDB", true);
+   333:         _maxClassNpcBots                = sConfigMgr->GetIntDefault("NpcBot.MaxBotsPerClass", 1);
+   334:         _maxAccountNpcBots              = sConfigMgr->GetIntDefault("NpcBot.MaxBotsPerAccount", 0);
+   335:         _filterRaces                    = sConfigMgr->GetBoolDefault("NpcBot.Botgiver.FilterRaces", false);
+   336:         _shared_ownership_options       = sConfigMgr->GetIntDefault("NpcBot.SharedOwnership.Options", 0);
+   337:         _maxSharedOwners                = sConfigMgr->GetIntDefault("NpcBot.SharedOwnership.MaxOwners", 0);
+   338:         _basefollowdist                 = sConfigMgr->GetIntDefault("NpcBot.BaseFollowDistance", 30);
+   339:         _xpReductionEnable              = sConfigMgr->GetBoolDefault("NpcBot.XpReduction.Enable", false);
+   340:         _xpReductionGroupOnly           = sConfigMgr->GetBoolDefault("NpcBot.XpReduction.GroupOnly", false);
+   341:         _xpReductionExtraAmount         = sConfigMgr->GetIntDefault("NpcBot.XpReduction.Extra.Amount", 0);
+   342:         _xpReductionExtraStartingNumber = sConfigMgr->GetIntDefault("NpcBot.XpReduction.Extra.StartingNumber", 2);
+[only first 8 of 21 matches shown]
+
+--- wandering config / matches=49 ---
+[match 1 at line 433]
+   425:         _enableclass_sphynx             = sConfigMgr->GetBoolDefault("NpcBot.Classes.ObsidianDestroyer.Enable", true);
+   426:         _enableclass_archmage           = sConfigMgr->GetBoolDefault("NpcBot.Classes.Archmage.Enable", true);
+   427:         _enableclass_dreadlord          = sConfigMgr->GetBoolDefault("NpcBot.Classes.Dreadlord.Enable", true);
+   428:         _enableclass_spellbreaker       = sConfigMgr->GetBoolDefault("NpcBot.Classes.SpellBreaker.Enable", true);
+   429:         _enableclass_darkranger         = sConfigMgr->GetBoolDefault("NpcBot.Classes.DarkRanger.Enable", true);
+   430:         _enableclass_necromancer        = sConfigMgr->GetBoolDefault("NpcBot.Classes.Necromancer.Enable", true);
+   431:         _enableclass_seawitch           = sConfigMgr->GetBoolDefault("NpcBot.Classes.SeaWitch.Enable", true);
+   432:         _enableclass_cryptlord          = sConfigMgr->GetBoolDefault("NpcBot.Classes.CryptLord.Enable", true);
+   433:         _enableclass_wander_warrior     = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.Warrior.Enable", true);
+   434:         _enableclass_wander_paladin     = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.Paladin.Enable", true);
+   435:         _enableclass_wander_hunter      = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.Hunter.Enable", true);
+   436:         _enableclass_wander_rogue       = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.Rogue.Enable", true);
+   437:         _enableclass_wander_priest      = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.Priest.Enable", true);
+   438:         _enableclass_wander_deathknight = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.DeathKnight.Enable", true);
+   439:         _enableclass_wander_shaman      = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.Shaman.Enable", true);
+   440:         _enableclass_wander_mage        = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.Mage.Enable", true);
+   441:         _enableclass_wander_warlock     = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.Warlock.Enable", true);
+   442:         _enableclass_wander_druid       = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.Druid.Enable", true);
+   443:         _enableclass_wander_blademaster = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.Blademaster.Enable", false);
+   444:         _enableclass_wander_sphynx      = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.ObsidianDestroyer.Enable", true);
+   445:         _enableclass_wander_archmage    = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.Archmage.Enable", true);
+   446:         _enableclass_wander_dreadlord   = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.Dreadlord.Enable", true);
+   447:         _enableclass_wander_spellbreaker= sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.SpellBreaker.Enable", true);
+   448:         _enableclass_wander_darkranger  = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.DarkRanger.Enable", true);
+   449:         _enableclass_wander_necromancer = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.Necromancer.Enable", true);
+   450:         _enableclass_wander_seawitch    = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.SeaWitch.Enable", true);
+   451:         _enableclass_wander_cryptlord   = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.CryptLord.Enable", true);
+[match 2 at line 434]
+   426:         _enableclass_archmage           = sConfigMgr->GetBoolDefault("NpcBot.Classes.Archmage.Enable", true);
+   427:         _enableclass_dreadlord          = sConfigMgr->GetBoolDefault("NpcBot.Classes.Dreadlord.Enable", true);
+   428:         _enableclass_spellbreaker       = sConfigMgr->GetBoolDefault("NpcBot.Classes.SpellBreaker.Enable", true);
+   429:         _enableclass_darkranger         = sConfigMgr->GetBoolDefault("NpcBot.Classes.DarkRanger.Enable", true);
+   430:         _enableclass_necromancer        = sConfigMgr->GetBoolDefault("NpcBot.Classes.Necromancer.Enable", true);
+   431:         _enableclass_seawitch           = sConfigMgr->GetBoolDefault("NpcBot.Classes.SeaWitch.Enable", true);
+   432:         _enableclass_cryptlord          = sConfigMgr->GetBoolDefault("NpcBot.Classes.CryptLord.Enable", true);
+   433:         _enableclass_wander_warrior     = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.Warrior.Enable", true);
+   434:         _enableclass_wander_paladin     = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.Paladin.Enable", true);
+   435:         _enableclass_wander_hunter      = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.Hunter.Enable", true);
+   436:         _enableclass_wander_rogue       = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.Rogue.Enable", true);
+   437:         _enableclass_wander_priest      = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.Priest.Enable", true);
+   438:         _enableclass_wander_deathknight = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.DeathKnight.Enable", true);
+   439:         _enableclass_wander_shaman      = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.Shaman.Enable", true);
+   440:         _enableclass_wander_mage        = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.Mage.Enable", true);
+   441:         _enableclass_wander_warlock     = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.Warlock.Enable", true);
+   442:         _enableclass_wander_druid       = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.Druid.Enable", true);
+   443:         _enableclass_wander_blademaster = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.Blademaster.Enable", false);
+   444:         _enableclass_wander_sphynx      = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.ObsidianDestroyer.Enable", true);
+   445:         _enableclass_wander_archmage    = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.Archmage.Enable", true);
+   446:         _enableclass_wander_dreadlord   = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.Dreadlord.Enable", true);
+   447:         _enableclass_wander_spellbreaker= sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.SpellBreaker.Enable", true);
+   448:         _enableclass_wander_darkranger  = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.DarkRanger.Enable", true);
+   449:         _enableclass_wander_necromancer = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.Necromancer.Enable", true);
+   450:         _enableclass_wander_seawitch    = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.SeaWitch.Enable", true);
+   451:         _enableclass_wander_cryptlord   = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.CryptLord.Enable", true);
+   452:         _untarget_wnpc_questgiver       = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.SkipTarget.Questgiver", false);
+[match 3 at line 435]
+   427:         _enableclass_dreadlord          = sConfigMgr->GetBoolDefault("NpcBot.Classes.Dreadlord.Enable", true);
+   428:         _enableclass_spellbreaker       = sConfigMgr->GetBoolDefault("NpcBot.Classes.SpellBreaker.Enable", true);
+   429:         _enableclass_darkranger         = sConfigMgr->GetBoolDefault("NpcBot.Classes.DarkRanger.Enable", true);
+   430:         _enableclass_necromancer        = sConfigMgr->GetBoolDefault("NpcBot.Classes.Necromancer.Enable", true);
+   431:         _enableclass_seawitch           = sConfigMgr->GetBoolDefault("NpcBot.Classes.SeaWitch.Enable", true);
+   432:         _enableclass_cryptlord          = sConfigMgr->GetBoolDefault("NpcBot.Classes.CryptLord.Enable", true);
+   433:         _enableclass_wander_warrior     = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.Warrior.Enable", true);
+   434:         _enableclass_wander_paladin     = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.Paladin.Enable", true);
+   435:         _enableclass_wander_hunter      = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.Hunter.Enable", true);
+   436:         _enableclass_wander_rogue       = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.Rogue.Enable", true);
+   437:         _enableclass_wander_priest      = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.Priest.Enable", true);
+   438:         _enableclass_wander_deathknight = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.DeathKnight.Enable", true);
+   439:         _enableclass_wander_shaman      = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.Shaman.Enable", true);
+   440:         _enableclass_wander_mage        = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.Mage.Enable", true);
+   441:         _enableclass_wander_warlock     = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.Warlock.Enable", true);
+   442:         _enableclass_wander_druid       = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.Druid.Enable", true);
+   443:         _enableclass_wander_blademaster = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.Blademaster.Enable", false);
+   444:         _enableclass_wander_sphynx      = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.ObsidianDestroyer.Enable", true);
+   445:         _enableclass_wander_archmage    = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.Archmage.Enable", true);
+   446:         _enableclass_wander_dreadlord   = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.Dreadlord.Enable", true);
+   447:         _enableclass_wander_spellbreaker= sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.SpellBreaker.Enable", true);
+   448:         _enableclass_wander_darkranger  = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.DarkRanger.Enable", true);
+   449:         _enableclass_wander_necromancer = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.Necromancer.Enable", true);
+   450:         _enableclass_wander_seawitch    = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.SeaWitch.Enable", true);
+   451:         _enableclass_wander_cryptlord   = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.CryptLord.Enable", true);
+   452:         _untarget_wnpc_questgiver       = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.SkipTarget.Questgiver", false);
+   453:         _untarget_wnpc_flightmaster     = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.SkipTarget.Flightmaster", false);
+[match 4 at line 436]
+   428:         _enableclass_spellbreaker       = sConfigMgr->GetBoolDefault("NpcBot.Classes.SpellBreaker.Enable", true);
+   429:         _enableclass_darkranger         = sConfigMgr->GetBoolDefault("NpcBot.Classes.DarkRanger.Enable", true);
+   430:         _enableclass_necromancer        = sConfigMgr->GetBoolDefault("NpcBot.Classes.Necromancer.Enable", true);
+   431:         _enableclass_seawitch           = sConfigMgr->GetBoolDefault("NpcBot.Classes.SeaWitch.Enable", true);
+   432:         _enableclass_cryptlord          = sConfigMgr->GetBoolDefault("NpcBot.Classes.CryptLord.Enable", true);
+   433:         _enableclass_wander_warrior     = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.Warrior.Enable", true);
+   434:         _enableclass_wander_paladin     = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.Paladin.Enable", true);
+   435:         _enableclass_wander_hunter      = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.Hunter.Enable", true);
+   436:         _enableclass_wander_rogue       = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.Rogue.Enable", true);
+   437:         _enableclass_wander_priest      = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.Priest.Enable", true);
+   438:         _enableclass_wander_deathknight = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.DeathKnight.Enable", true);
+   439:         _enableclass_wander_shaman      = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.Shaman.Enable", true);
+   440:         _enableclass_wander_mage        = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.Mage.Enable", true);
+   441:         _enableclass_wander_warlock     = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.Warlock.Enable", true);
+   442:         _enableclass_wander_druid       = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.Druid.Enable", true);
+   443:         _enableclass_wander_blademaster = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.Blademaster.Enable", false);
+   444:         _enableclass_wander_sphynx      = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.ObsidianDestroyer.Enable", true);
+   445:         _enableclass_wander_archmage    = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.Archmage.Enable", true);
+   446:         _enableclass_wander_dreadlord   = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.Dreadlord.Enable", true);
+   447:         _enableclass_wander_spellbreaker= sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.SpellBreaker.Enable", true);
+   448:         _enableclass_wander_darkranger  = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.DarkRanger.Enable", true);
+   449:         _enableclass_wander_necromancer = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.Necromancer.Enable", true);
+   450:         _enableclass_wander_seawitch    = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.SeaWitch.Enable", true);
+   451:         _enableclass_wander_cryptlord   = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.CryptLord.Enable", true);
+   452:         _untarget_wnpc_questgiver       = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.SkipTarget.Questgiver", false);
+   453:         _untarget_wnpc_flightmaster     = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.SkipTarget.Flightmaster", false);
+   454:         _enrageOnDismiss                = sConfigMgr->GetBoolDefault("NpcBot.EnrageOnDismiss", true);
+[match 5 at line 437]
+   429:         _enableclass_darkranger         = sConfigMgr->GetBoolDefault("NpcBot.Classes.DarkRanger.Enable", true);
+   430:         _enableclass_necromancer        = sConfigMgr->GetBoolDefault("NpcBot.Classes.Necromancer.Enable", true);
+   431:         _enableclass_seawitch           = sConfigMgr->GetBoolDefault("NpcBot.Classes.SeaWitch.Enable", true);
+   432:         _enableclass_cryptlord          = sConfigMgr->GetBoolDefault("NpcBot.Classes.CryptLord.Enable", true);
+   433:         _enableclass_wander_warrior     = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.Warrior.Enable", true);
+   434:         _enableclass_wander_paladin     = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.Paladin.Enable", true);
+   435:         _enableclass_wander_hunter      = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.Hunter.Enable", true);
+   436:         _enableclass_wander_rogue       = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.Rogue.Enable", true);
+   437:         _enableclass_wander_priest      = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.Priest.Enable", true);
+   438:         _enableclass_wander_deathknight = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.DeathKnight.Enable", true);
+   439:         _enableclass_wander_shaman      = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.Shaman.Enable", true);
+   440:         _enableclass_wander_mage        = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.Mage.Enable", true);
+   441:         _enableclass_wander_warlock     = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.Warlock.Enable", true);
+   442:         _enableclass_wander_druid       = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.Druid.Enable", true);
+   443:         _enableclass_wander_blademaster = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.Blademaster.Enable", false);
+   444:         _enableclass_wander_sphynx      = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.ObsidianDestroyer.Enable", true);
+   445:         _enableclass_wander_archmage    = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.Archmage.Enable", true);
+   446:         _enableclass_wander_dreadlord   = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.Dreadlord.Enable", true);
+   447:         _enableclass_wander_spellbreaker= sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.SpellBreaker.Enable", true);
+   448:         _enableclass_wander_darkranger  = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.DarkRanger.Enable", true);
+   449:         _enableclass_wander_necromancer = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.Necromancer.Enable", true);
+   450:         _enableclass_wander_seawitch    = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.SeaWitch.Enable", true);
+   451:         _enableclass_wander_cryptlord   = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.CryptLord.Enable", true);
+   452:         _untarget_wnpc_questgiver       = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.SkipTarget.Questgiver", false);
+   453:         _untarget_wnpc_flightmaster     = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.SkipTarget.Flightmaster", false);
+   454:         _enrageOnDismiss                = sConfigMgr->GetBoolDefault("NpcBot.EnrageOnDismiss", true);
+   455:         _botStatLimits                  = sConfigMgr->GetBoolDefault("NpcBot.Stats.Limits.Enable", false);
+[match 6 at line 438]
+   430:         _enableclass_necromancer        = sConfigMgr->GetBoolDefault("NpcBot.Classes.Necromancer.Enable", true);
+   431:         _enableclass_seawitch           = sConfigMgr->GetBoolDefault("NpcBot.Classes.SeaWitch.Enable", true);
+   432:         _enableclass_cryptlord          = sConfigMgr->GetBoolDefault("NpcBot.Classes.CryptLord.Enable", true);
+   433:         _enableclass_wander_warrior     = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.Warrior.Enable", true);
+   434:         _enableclass_wander_paladin     = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.Paladin.Enable", true);
+   435:         _enableclass_wander_hunter      = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.Hunter.Enable", true);
+   436:         _enableclass_wander_rogue       = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.Rogue.Enable", true);
+   437:         _enableclass_wander_priest      = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.Priest.Enable", true);
+   438:         _enableclass_wander_deathknight = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.DeathKnight.Enable", true);
+   439:         _enableclass_wander_shaman      = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.Shaman.Enable", true);
+   440:         _enableclass_wander_mage        = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.Mage.Enable", true);
+   441:         _enableclass_wander_warlock     = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.Warlock.Enable", true);
+   442:         _enableclass_wander_druid       = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.Druid.Enable", true);
+   443:         _enableclass_wander_blademaster = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.Blademaster.Enable", false);
+   444:         _enableclass_wander_sphynx      = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.ObsidianDestroyer.Enable", true);
+   445:         _enableclass_wander_archmage    = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.Archmage.Enable", true);
+   446:         _enableclass_wander_dreadlord   = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.Dreadlord.Enable", true);
+   447:         _enableclass_wander_spellbreaker= sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.SpellBreaker.Enable", true);
+   448:         _enableclass_wander_darkranger  = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.DarkRanger.Enable", true);
+   449:         _enableclass_wander_necromancer = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.Necromancer.Enable", true);
+   450:         _enableclass_wander_seawitch    = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.SeaWitch.Enable", true);
+   451:         _enableclass_wander_cryptlord   = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.CryptLord.Enable", true);
+   452:         _untarget_wnpc_questgiver       = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.SkipTarget.Questgiver", false);
+   453:         _untarget_wnpc_flightmaster     = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.SkipTarget.Flightmaster", false);
+   454:         _enrageOnDismiss                = sConfigMgr->GetBoolDefault("NpcBot.EnrageOnDismiss", true);
+   455:         _botStatLimits                  = sConfigMgr->GetBoolDefault("NpcBot.Stats.Limits.Enable", false);
+   456:         _botStatLimits_dodge            = sConfigMgr->GetFloatDefault("NpcBot.Stats.Limits.Dodge", 95.0f);
+[match 7 at line 439]
+   431:         _enableclass_seawitch           = sConfigMgr->GetBoolDefault("NpcBot.Classes.SeaWitch.Enable", true);
+   432:         _enableclass_cryptlord          = sConfigMgr->GetBoolDefault("NpcBot.Classes.CryptLord.Enable", true);
+   433:         _enableclass_wander_warrior     = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.Warrior.Enable", true);
+   434:         _enableclass_wander_paladin     = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.Paladin.Enable", true);
+   435:         _enableclass_wander_hunter      = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.Hunter.Enable", true);
+   436:         _enableclass_wander_rogue       = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.Rogue.Enable", true);
+   437:         _enableclass_wander_priest      = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.Priest.Enable", true);
+   438:         _enableclass_wander_deathknight = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.DeathKnight.Enable", true);
+   439:         _enableclass_wander_shaman      = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.Shaman.Enable", true);
+   440:         _enableclass_wander_mage        = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.Mage.Enable", true);
+   441:         _enableclass_wander_warlock     = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.Warlock.Enable", true);
+   442:         _enableclass_wander_druid       = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.Druid.Enable", true);
+   443:         _enableclass_wander_blademaster = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.Blademaster.Enable", false);
+   444:         _enableclass_wander_sphynx      = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.ObsidianDestroyer.Enable", true);
+   445:         _enableclass_wander_archmage    = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.Archmage.Enable", true);
+   446:         _enableclass_wander_dreadlord   = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.Dreadlord.Enable", true);
+   447:         _enableclass_wander_spellbreaker= sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.SpellBreaker.Enable", true);
+   448:         _enableclass_wander_darkranger  = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.DarkRanger.Enable", true);
+   449:         _enableclass_wander_necromancer = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.Necromancer.Enable", true);
+   450:         _enableclass_wander_seawitch    = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.SeaWitch.Enable", true);
+   451:         _enableclass_wander_cryptlord   = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.CryptLord.Enable", true);
+   452:         _untarget_wnpc_questgiver       = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.SkipTarget.Questgiver", false);
+   453:         _untarget_wnpc_flightmaster     = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.SkipTarget.Flightmaster", false);
+   454:         _enrageOnDismiss                = sConfigMgr->GetBoolDefault("NpcBot.EnrageOnDismiss", true);
+   455:         _botStatLimits                  = sConfigMgr->GetBoolDefault("NpcBot.Stats.Limits.Enable", false);
+   456:         _botStatLimits_dodge            = sConfigMgr->GetFloatDefault("NpcBot.Stats.Limits.Dodge", 95.0f);
+   457:         _botStatLimits_parry            = sConfigMgr->GetFloatDefault("NpcBot.Stats.Limits.Parry", 95.0f);
+[match 8 at line 440]
+   432:         _enableclass_cryptlord          = sConfigMgr->GetBoolDefault("NpcBot.Classes.CryptLord.Enable", true);
+   433:         _enableclass_wander_warrior     = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.Warrior.Enable", true);
+   434:         _enableclass_wander_paladin     = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.Paladin.Enable", true);
+   435:         _enableclass_wander_hunter      = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.Hunter.Enable", true);
+   436:         _enableclass_wander_rogue       = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.Rogue.Enable", true);
+   437:         _enableclass_wander_priest      = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.Priest.Enable", true);
+   438:         _enableclass_wander_deathknight = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.DeathKnight.Enable", true);
+   439:         _enableclass_wander_shaman      = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.Shaman.Enable", true);
+   440:         _enableclass_wander_mage        = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.Mage.Enable", true);
+   441:         _enableclass_wander_warlock     = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.Warlock.Enable", true);
+   442:         _enableclass_wander_druid       = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.Druid.Enable", true);
+   443:         _enableclass_wander_blademaster = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.Blademaster.Enable", false);
+   444:         _enableclass_wander_sphynx      = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.ObsidianDestroyer.Enable", true);
+   445:         _enableclass_wander_archmage    = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.Archmage.Enable", true);
+   446:         _enableclass_wander_dreadlord   = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.Dreadlord.Enable", true);
+   447:         _enableclass_wander_spellbreaker= sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.SpellBreaker.Enable", true);
+   448:         _enableclass_wander_darkranger  = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.DarkRanger.Enable", true);
+   449:         _enableclass_wander_necromancer = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.Necromancer.Enable", true);
+   450:         _enableclass_wander_seawitch    = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.SeaWitch.Enable", true);
+   451:         _enableclass_wander_cryptlord   = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.Classes.CryptLord.Enable", true);
+   452:         _untarget_wnpc_questgiver       = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.SkipTarget.Questgiver", false);
+   453:         _untarget_wnpc_flightmaster     = sConfigMgr->GetBoolDefault("NpcBot.WanderingBots.SkipTarget.Flightmaster", false);
+   454:         _enrageOnDismiss                = sConfigMgr->GetBoolDefault("NpcBot.EnrageOnDismiss", true);
+   455:         _botStatLimits                  = sConfigMgr->GetBoolDefault("NpcBot.Stats.Limits.Enable", false);
+   456:         _botStatLimits_dodge            = sConfigMgr->GetFloatDefault("NpcBot.Stats.Limits.Dodge", 95.0f);
+   457:         _botStatLimits_parry            = sConfigMgr->GetFloatDefault("NpcBot.Stats.Limits.Parry", 95.0f);
+   458:         _botStatLimits_block            = sConfigMgr->GetFloatDefault("NpcBot.Stats.Limits.Block", 95.0f);
+[only first 8 of 49 matches shown]
+
+--- static member definitions / matches=1 ---
+[match 1 at line 1392]
+  1384:         return false;
+  1385: 
+  1386:     if (map->IsDungeon() && !_disabled_instance_maps.empty() && std::ranges::find(_disabled_instance_maps, map->GetId()) != _disabled_instance_maps.cend())
+  1387:         return false;
+  1388: 
+  1389:     return true;
+  1390: }
+  1391: 
+  1392: uint32 BotCfg::_normalizedCostForLevel(uint32 cost_base, uint8 bot_class, uint8 level)
+  1393: {
+  1394:     //assuming default 1000000
+  1395:     //level 1: 500  //5  silver
+  1396:     //10 : 10000    //1  gold
+  1397:     //20 : 50000    //5  gold
+  1398:     //30 : 200000   //20 gold
+  1399:     //40 : 500000   //50 gold
+  1400:     //rest is linear
+  1401:     //rare / rareelite bots have their cost adjusted
+  1402:     uint32 cost =
+  1403:         level < 10 ? cost_base / 2000 : //5 silver
+  1404:         level < 20 ? cost_base / 100 :  //1 gold
+  1405:         level < 30 ? cost_base / 20 :   //5 gold
+  1406:         level < 40 ? cost_base / 5 :    //20 gold
+  1407:         (cost_base * (level - (level % 10))) / DEFAULT_MAX_LEVEL; //50 - 100 gold
+  1408: 
+  1409:     switch (bot_class)
+  1410:     {
+
+--- accessor definitions / matches=92 ---
+[match 1 at line 763]
+   755:     }
+   756: };
+   757: 
+   758: void BotCfg::ReloadConfig()
+   759: {
+   760:     NPCBotsConfigScript::ReloadConfig();
+   761: }
+   762: 
+   763: bool BotCfg::IsNpcBotModEnabled()
+   764: {
+   765:     return _enableNpcBots;
+   766: }
+   767: 
+   768: bool BotCfg::IsCompanionCareEnabled()          { return _companionCareEnable; }
+   769: uint32 BotCfg::GetCompanionCareCooldown()      { return _companionCareCooldown; }
+   770: uint32 BotCfg::GetCompanionChatCooldown()      { return _companionChatCooldown; }
+   771: uint8 BotCfg::GetCompanionCareHealthPct()      { return _companionCareHealthPct; }
+   772: uint8 BotCfg::GetCompanionCareManaPct()        { return _companionCareManaPct; }
+   773: uint32 BotCfg::GetCompanionCareMoneyThreshold(){ return _companionCareMoneyThreshold; }
+   774: uint32 BotCfg::GetCompanionCareMoneyGive()     { return _companionCareMoneyGive; }
+   775: 
+   776: bool BotCfg::IsWanderingBotHireEnabled()
+   777: {
+   778:     return _enableWanderingBotHire;
+   779: }
+   780: 
+   781: bool BotCfg::IsNpcBotLogEnabled()
+[match 2 at line 768]
+   760:     NPCBotsConfigScript::ReloadConfig();
+   761: }
+   762: 
+   763: bool BotCfg::IsNpcBotModEnabled()
+   764: {
+   765:     return _enableNpcBots;
+   766: }
+   767: 
+   768: bool BotCfg::IsCompanionCareEnabled()          { return _companionCareEnable; }
+   769: uint32 BotCfg::GetCompanionCareCooldown()      { return _companionCareCooldown; }
+   770: uint32 BotCfg::GetCompanionChatCooldown()      { return _companionChatCooldown; }
+   771: uint8 BotCfg::GetCompanionCareHealthPct()      { return _companionCareHealthPct; }
+   772: uint8 BotCfg::GetCompanionCareManaPct()        { return _companionCareManaPct; }
+   773: uint32 BotCfg::GetCompanionCareMoneyThreshold(){ return _companionCareMoneyThreshold; }
+   774: uint32 BotCfg::GetCompanionCareMoneyGive()     { return _companionCareMoneyGive; }
+   775: 
+   776: bool BotCfg::IsWanderingBotHireEnabled()
+   777: {
+   778:     return _enableWanderingBotHire;
+   779: }
+   780: 
+   781: bool BotCfg::IsNpcBotLogEnabled()
+   782: {
+   783:     return _logToDB;
+   784: }
+   785: 
+   786: bool BotCfg::IsNpcBotDungeonFinderEnabled()
+[match 3 at line 769]
+   761: }
+   762: 
+   763: bool BotCfg::IsNpcBotModEnabled()
+   764: {
+   765:     return _enableNpcBots;
+   766: }
+   767: 
+   768: bool BotCfg::IsCompanionCareEnabled()          { return _companionCareEnable; }
+   769: uint32 BotCfg::GetCompanionCareCooldown()      { return _companionCareCooldown; }
+   770: uint32 BotCfg::GetCompanionChatCooldown()      { return _companionChatCooldown; }
+   771: uint8 BotCfg::GetCompanionCareHealthPct()      { return _companionCareHealthPct; }
+   772: uint8 BotCfg::GetCompanionCareManaPct()        { return _companionCareManaPct; }
+   773: uint32 BotCfg::GetCompanionCareMoneyThreshold(){ return _companionCareMoneyThreshold; }
+   774: uint32 BotCfg::GetCompanionCareMoneyGive()     { return _companionCareMoneyGive; }
+   775: 
+   776: bool BotCfg::IsWanderingBotHireEnabled()
+   777: {
+   778:     return _enableWanderingBotHire;
+   779: }
+   780: 
+   781: bool BotCfg::IsNpcBotLogEnabled()
+   782: {
+   783:     return _logToDB;
+   784: }
+   785: 
+   786: bool BotCfg::IsNpcBotDungeonFinderEnabled()
+   787: {
+[match 4 at line 770]
+   762: 
+   763: bool BotCfg::IsNpcBotModEnabled()
+   764: {
+   765:     return _enableNpcBots;
+   766: }
+   767: 
+   768: bool BotCfg::IsCompanionCareEnabled()          { return _companionCareEnable; }
+   769: uint32 BotCfg::GetCompanionCareCooldown()      { return _companionCareCooldown; }
+   770: uint32 BotCfg::GetCompanionChatCooldown()      { return _companionChatCooldown; }
+   771: uint8 BotCfg::GetCompanionCareHealthPct()      { return _companionCareHealthPct; }
+   772: uint8 BotCfg::GetCompanionCareManaPct()        { return _companionCareManaPct; }
+   773: uint32 BotCfg::GetCompanionCareMoneyThreshold(){ return _companionCareMoneyThreshold; }
+   774: uint32 BotCfg::GetCompanionCareMoneyGive()     { return _companionCareMoneyGive; }
+   775: 
+   776: bool BotCfg::IsWanderingBotHireEnabled()
+   777: {
+   778:     return _enableWanderingBotHire;
+   779: }
+   780: 
+   781: bool BotCfg::IsNpcBotLogEnabled()
+   782: {
+   783:     return _logToDB;
+   784: }
+   785: 
+   786: bool BotCfg::IsNpcBotDungeonFinderEnabled()
+   787: {
+   788:     return _enableDungeonFinder;
+[match 5 at line 771]
+   763: bool BotCfg::IsNpcBotModEnabled()
+   764: {
+   765:     return _enableNpcBots;
+   766: }
+   767: 
+   768: bool BotCfg::IsCompanionCareEnabled()          { return _companionCareEnable; }
+   769: uint32 BotCfg::GetCompanionCareCooldown()      { return _companionCareCooldown; }
+   770: uint32 BotCfg::GetCompanionChatCooldown()      { return _companionChatCooldown; }
+   771: uint8 BotCfg::GetCompanionCareHealthPct()      { return _companionCareHealthPct; }
+   772: uint8 BotCfg::GetCompanionCareManaPct()        { return _companionCareManaPct; }
+   773: uint32 BotCfg::GetCompanionCareMoneyThreshold(){ return _companionCareMoneyThreshold; }
+   774: uint32 BotCfg::GetCompanionCareMoneyGive()     { return _companionCareMoneyGive; }
+   775: 
+   776: bool BotCfg::IsWanderingBotHireEnabled()
+   777: {
+   778:     return _enableWanderingBotHire;
+   779: }
+   780: 
+   781: bool BotCfg::IsNpcBotLogEnabled()
+   782: {
+   783:     return _logToDB;
+   784: }
+   785: 
+   786: bool BotCfg::IsNpcBotDungeonFinderEnabled()
+   787: {
+   788:     return _enableDungeonFinder;
+   789: }
+[match 6 at line 772]
+   764: {
+   765:     return _enableNpcBots;
+   766: }
+   767: 
+   768: bool BotCfg::IsCompanionCareEnabled()          { return _companionCareEnable; }
+   769: uint32 BotCfg::GetCompanionCareCooldown()      { return _companionCareCooldown; }
+   770: uint32 BotCfg::GetCompanionChatCooldown()      { return _companionChatCooldown; }
+   771: uint8 BotCfg::GetCompanionCareHealthPct()      { return _companionCareHealthPct; }
+   772: uint8 BotCfg::GetCompanionCareManaPct()        { return _companionCareManaPct; }
+   773: uint32 BotCfg::GetCompanionCareMoneyThreshold(){ return _companionCareMoneyThreshold; }
+   774: uint32 BotCfg::GetCompanionCareMoneyGive()     { return _companionCareMoneyGive; }
+   775: 
+   776: bool BotCfg::IsWanderingBotHireEnabled()
+   777: {
+   778:     return _enableWanderingBotHire;
+   779: }
+   780: 
+   781: bool BotCfg::IsNpcBotLogEnabled()
+   782: {
+   783:     return _logToDB;
+   784: }
+   785: 
+   786: bool BotCfg::IsNpcBotDungeonFinderEnabled()
+   787: {
+   788:     return _enableDungeonFinder;
+   789: }
+   790: 
+[match 7 at line 773]
+   765:     return _enableNpcBots;
+   766: }
+   767: 
+   768: bool BotCfg::IsCompanionCareEnabled()          { return _companionCareEnable; }
+   769: uint32 BotCfg::GetCompanionCareCooldown()      { return _companionCareCooldown; }
+   770: uint32 BotCfg::GetCompanionChatCooldown()      { return _companionChatCooldown; }
+   771: uint8 BotCfg::GetCompanionCareHealthPct()      { return _companionCareHealthPct; }
+   772: uint8 BotCfg::GetCompanionCareManaPct()        { return _companionCareManaPct; }
+   773: uint32 BotCfg::GetCompanionCareMoneyThreshold(){ return _companionCareMoneyThreshold; }
+   774: uint32 BotCfg::GetCompanionCareMoneyGive()     { return _companionCareMoneyGive; }
+   775: 
+   776: bool BotCfg::IsWanderingBotHireEnabled()
+   777: {
+   778:     return _enableWanderingBotHire;
+   779: }
+   780: 
+   781: bool BotCfg::IsNpcBotLogEnabled()
+   782: {
+   783:     return _logToDB;
+   784: }
+   785: 
+   786: bool BotCfg::IsNpcBotDungeonFinderEnabled()
+   787: {
+   788:     return _enableDungeonFinder;
+   789: }
+   790: 
+   791: bool BotCfg::IsNpcBotDungeonFinderBotGenerationEnabled()
+[match 8 at line 774]
+   766: }
+   767: 
+   768: bool BotCfg::IsCompanionCareEnabled()          { return _companionCareEnable; }
+   769: uint32 BotCfg::GetCompanionCareCooldown()      { return _companionCareCooldown; }
+   770: uint32 BotCfg::GetCompanionChatCooldown()      { return _companionChatCooldown; }
+   771: uint8 BotCfg::GetCompanionCareHealthPct()      { return _companionCareHealthPct; }
+   772: uint8 BotCfg::GetCompanionCareManaPct()        { return _companionCareManaPct; }
+   773: uint32 BotCfg::GetCompanionCareMoneyThreshold(){ return _companionCareMoneyThreshold; }
+   774: uint32 BotCfg::GetCompanionCareMoneyGive()     { return _companionCareMoneyGive; }
+   775: 
+   776: bool BotCfg::IsWanderingBotHireEnabled()
+   777: {
+   778:     return _enableWanderingBotHire;
+   779: }
+   780: 
+   781: bool BotCfg::IsNpcBotLogEnabled()
+   782: {
+   783:     return _logToDB;
+   784: }
+   785: 
+   786: bool BotCfg::IsNpcBotDungeonFinderEnabled()
+   787: {
+   788:     return _enableDungeonFinder;
+   789: }
+   790: 
+   791: bool BotCfg::IsNpcBotDungeonFinderBotGenerationEnabled()
+   792: {
+[only first 8 of 92 matches shown]
+
+===== upstream player search API :: src/server/game/Entities/Object/Object.h =====
+
+--- GetPlayerListInGrid declaration / matches=1 ---
+[match 1 at line 552]
+   544: 
+   545:     template <typename Container>
+   546:     void GetCreatureListWithEntryInGrid(Container& creatureContainer, uint32 entry, float maxSearchRange = 250.0f) const;
+   547: 
+   548:     template <typename Container>
+   549:     void GetCreatureListWithOptionsInGrid(Container& creatureContainer, float maxSearchRange, FindCreatureOptions const& options) const;
+   550: 
+   551:     template <typename Container>
+   552:     void GetPlayerListInGrid(Container& playerContainer, float maxSearchRange, bool alive = true) const;
+   553: 
+   554:     void DestroyForNearbyPlayers();
+   555:     virtual void UpdateObjectVisibility(bool forced = true);
+   556:     virtual void UpdateObjectVisibilityOnCreate() { UpdateObjectVisibility(true); }
+   557:     void UpdatePositionData();
+   558: 
+   559:     void BuildUpdate(UpdateDataMapType&) override;
+   560:     bool AddToObjectUpdate() override;
+   561:     void RemoveFromObjectUpdate() override;
+   562: 
+   563:     //relocation and visibility system functions
+   564:     void AddToNotify(uint16 f) { m_notifyflags |= f; }
+
+===== upstream player search implementation :: src/server/game/Entities/Object/Object.cpp =====
+
+--- GetPlayerListInGrid definition / matches=4 ---
+[match 1 at line 3424]
+  3416:     Trinity::CreatureListSearcher searcher(this, creatureContainer, check);
+  3417:     if (options.IgnorePhases)
+  3418:         searcher.i_phaseMask = PHASEMASK_ANYWHERE;
+  3419: 
+  3420:     Cell::VisitGridObjects(this, searcher, maxSearchRange);
+  3421: }
+  3422: 
+  3423: template <typename Container>
+  3424: void WorldObject::GetPlayerListInGrid(Container& playerContainer, float maxSearchRange, bool alive /*= true*/) const
+  3425: {
+  3426:     Trinity::AnyPlayerInObjectRangeCheck checker(this, maxSearchRange, alive);
+  3427:     Trinity::PlayerListSearcher<Trinity::AnyPlayerInObjectRangeCheck> searcher(this, playerContainer, checker);
+  3428:     Cell::VisitWorldObjects(this, searcher, maxSearchRange);
+  3429: }
+  3430: 
+  3431: void WorldObject::GetNearPoint2D(WorldObject const* searcher, float& x, float& y, float distance2d, float absAngle) const
+  3432: {
+  3433:     float effectiveReach = GetCombatReach();
+  3434: 
+  3435:     if (searcher)
+  3436:     {
+  3437:         effectiveReach += searcher->GetCombatReach();
+  3438: 
+  3439:         if (this != searcher)
+  3440:         {
+[match 2 at line 3923]
+  3915: template TC_GAME_API void WorldObject::GetCreatureListWithEntryInGrid(std::list<Creature*>&, uint32, float) const;
+  3916: template TC_GAME_API void WorldObject::GetCreatureListWithEntryInGrid(std::deque<Creature*>&, uint32, float) const;
+  3917: template TC_GAME_API void WorldObject::GetCreatureListWithEntryInGrid(std::vector<Creature*>&, uint32, float) const;
+  3918: 
+  3919: template TC_GAME_API void WorldObject::GetCreatureListWithOptionsInGrid(std::list<Creature*>&, float, FindCreatureOptions const&) const;
+  3920: template TC_GAME_API void WorldObject::GetCreatureListWithOptionsInGrid(std::deque<Creature*>&,float, FindCreatureOptions const&) const;
+  3921: template TC_GAME_API void WorldObject::GetCreatureListWithOptionsInGrid(std::vector<Creature*>&, float, FindCreatureOptions const&) const;
+  3922: 
+  3923: template TC_GAME_API void WorldObject::GetPlayerListInGrid(std::list<Player*>&, float, bool) const;
+  3924: template TC_GAME_API void WorldObject::GetPlayerListInGrid(std::deque<Player*>&, float, bool) const;
+  3925: template TC_GAME_API void WorldObject::GetPlayerListInGrid(std::vector<Player*>&, float, bool) const;
+[match 3 at line 3924]
+  3916: template TC_GAME_API void WorldObject::GetCreatureListWithEntryInGrid(std::deque<Creature*>&, uint32, float) const;
+  3917: template TC_GAME_API void WorldObject::GetCreatureListWithEntryInGrid(std::vector<Creature*>&, uint32, float) const;
+  3918: 
+  3919: template TC_GAME_API void WorldObject::GetCreatureListWithOptionsInGrid(std::list<Creature*>&, float, FindCreatureOptions const&) const;
+  3920: template TC_GAME_API void WorldObject::GetCreatureListWithOptionsInGrid(std::deque<Creature*>&,float, FindCreatureOptions const&) const;
+  3921: template TC_GAME_API void WorldObject::GetCreatureListWithOptionsInGrid(std::vector<Creature*>&, float, FindCreatureOptions const&) const;
+  3922: 
+  3923: template TC_GAME_API void WorldObject::GetPlayerListInGrid(std::list<Player*>&, float, bool) const;
+  3924: template TC_GAME_API void WorldObject::GetPlayerListInGrid(std::deque<Player*>&, float, bool) const;
+  3925: template TC_GAME_API void WorldObject::GetPlayerListInGrid(std::vector<Player*>&, float, bool) const;
+[match 4 at line 3925]
+  3917: template TC_GAME_API void WorldObject::GetCreatureListWithEntryInGrid(std::vector<Creature*>&, uint32, float) const;
+  3918: 
+  3919: template TC_GAME_API void WorldObject::GetCreatureListWithOptionsInGrid(std::list<Creature*>&, float, FindCreatureOptions const&) const;
+  3920: template TC_GAME_API void WorldObject::GetCreatureListWithOptionsInGrid(std::deque<Creature*>&,float, FindCreatureOptions const&) const;
+  3921: template TC_GAME_API void WorldObject::GetCreatureListWithOptionsInGrid(std::vector<Creature*>&, float, FindCreatureOptions const&) const;
+  3922: 
+  3923: template TC_GAME_API void WorldObject::GetPlayerListInGrid(std::list<Player*>&, float, bool) const;
+  3924: template TC_GAME_API void WorldObject::GetPlayerListInGrid(std::deque<Player*>&, float, bool) const;
+  3925: template TC_GAME_API void WorldObject::GetPlayerListInGrid(std::vector<Player*>&, float, bool) const;
+
+===== session classification API :: src/server/game/Server/WorldSession.h =====
+
+--- PlayerDisconnected / matches=1 ---
+[match 1 at line 503]
+   495:         WorldSession(uint32 id, std::string&& name, std::shared_ptr<WorldSocket> sock, AccountTypes sec, uint8 expansion, time_t mute_time,
+   496:             Minutes timezoneOffset, LocaleConstant locale, uint32 recruiter, bool isARecruiter);
+   497:         ~WorldSession();
+   498: 
+   499:         bool PlayerLoading() const { return m_playerLoading; }
+   500:         bool PlayerLogout() const { return m_playerLogout; }
+   501:         bool PlayerLogoutWithSave() const { return m_playerLogout && m_playerSave; }
+   502:         bool PlayerRecentlyLoggedOut() const { return m_playerRecentlyLogout; }
+   503:         bool PlayerDisconnected() const { return !m_Socket; }
+   504: 
+   505:         void ReadAddonsInfo(ByteBuffer& data);
+   506:         void SendAddonsInfo();
+   507: 
+   508:         void ReadMovementInfo(WorldPacket& data, MovementInfo* mi);
+   509:         void static WriteMovementInfo(WorldPacket* data, MovementInfo* mi);
+   510: 
+   511:         void SendPacket(WorldPacket const* packet);
+   512:         void SendNotification(const char *format, ...) ATTR_PRINTF(2, 3);
+   513:         void SendNotification(uint32 string_id, ...);
+   514:         void SendPetNameInvalid(uint32 error, std::string const& name, DeclinedName *declinedName);
+   515:         void SendPartyResult(PartyOperation operation, std::string const& member, PartyResult res, uint32 val = 0);
+
+--- custom IsBotSession / matches=1 ---
+[match 1 at line 580]
+   572:         bool ValidateHyperlinksAndMaybeKick(std::string const& str);
+   573:         // Returns true if the message contains no hyperlinks
+   574:         // May kick player on false depending on world config (handler should abort)
+   575:         bool DisallowHyperlinksAndMaybeKick(std::string const& str);
+   576: 
+   577:         // step40: PlayerBot 需要手动把角色加进白名单。
+   578:         void AddLegitCharacter(ObjectGuid guid) { _legitCharacters.insert(guid); }
+   579:         void SetBotSession(bool val) { m_isBotSession = val; }
+   580:         bool IsBotSession() const { return m_isBotSession; }
+   581: 
+   582:         void QueuePacket(WorldPacket* new_packet);
+   583:         bool Update(uint32 diff, PacketFilter& updater);
+   584: 
+   585:         /// Handle the authentication waiting queue (to be completed)
+   586:         void SendAuthWaitQueue(uint32 position);
+   587: 
+   588:         void SendFeatureSystemStatus();
+   589: 
+   590:         void SendNameQueryOpcode(ObjectGuid guid);
+   591: 
+   592:         void SendTrainerList(Creature* npc);
+
+===== group facts API :: src/server/game/Groups/Group.h =====
+
+--- AddMember Creature / matches=1 ---
+[match 1 at line 197]
+   189:         void Update(uint32 diff);
+   190: 
+   191:         // group manipulation methods
+   192:         bool Create(Player* leader);
+   193:         void LoadGroupFromDB(Field* field);
+   194:         void LoadMemberFromDB(ObjectGuid::LowType guidLow, uint8 memberFlags, uint8 subgroup, uint8 roles);
+   195:         //npcbot
+   196:         bool Create(Creature* leader);
+   197:         bool AddMember(Creature* creature);
+   198:         void LoadCreatureMemberFromDB(uint32 entry, uint8 memberFlags, uint8 subgroup, uint8 roles);
+   199:         void UpdateBotOutOfRange(Creature* creature);
+   200:         void LinkBotMember(GroupBotReference* bRef);
+   201:         void DelinkBotMember(ObjectGuid guid);
+   202:         GroupBotReference* GetFirstBotMember() { return m_botMemberMgr.getFirst(); }
+   203:         GroupBotReference const* GetFirstBotMember() const { return m_botMemberMgr.getFirst(); }
+   204:         //end npcbot
+   205:         bool AddInvite(Player* player);
+   206:         void RemoveInvite(Player* player);
+   207:         void RemoveAllInvites();
+   208:         bool AddLeaderInvite(Player* player);
+   209:         bool AddMember(Player* player);
+
+--- AddInvite Player / matches=1 ---
+[match 1 at line 205]
+   197:         bool AddMember(Creature* creature);
+   198:         void LoadCreatureMemberFromDB(uint32 entry, uint8 memberFlags, uint8 subgroup, uint8 roles);
+   199:         void UpdateBotOutOfRange(Creature* creature);
+   200:         void LinkBotMember(GroupBotReference* bRef);
+   201:         void DelinkBotMember(ObjectGuid guid);
+   202:         GroupBotReference* GetFirstBotMember() { return m_botMemberMgr.getFirst(); }
+   203:         GroupBotReference const* GetFirstBotMember() const { return m_botMemberMgr.getFirst(); }
+   204:         //end npcbot
+   205:         bool AddInvite(Player* player);
+   206:         void RemoveInvite(Player* player);
+   207:         void RemoveAllInvites();
+   208:         bool AddLeaderInvite(Player* player);
+   209:         bool AddMember(Player* player);
+   210:         bool RemoveMember(ObjectGuid guid, RemoveMethod const& method = GROUP_REMOVEMETHOD_DEFAULT, ObjectGuid kicker = ObjectGuid::Empty, char const* reason = nullptr);
+   211:         void ChangeLeader(ObjectGuid guid);
+   212:         static void ConvertLeaderInstancesToGroup(Player* player, Group* group, bool switchLeader);
+   213:         void SetLootMethod(LootMethod method);
+   214:         void SetLooterGuid(ObjectGuid guid);
+   215:         void SetMasterLooterGuid(ObjectGuid guid);
+   216:         void UpdateLooterGuid(WorldObject* pLootedObject, bool ifneed = false);
+   217:         void SetLootThreshold(ItemQualities threshold);
+
+===== SYMBOL COUNTS :: src/server/game/AI/NpcBots/bot_ai.h =====
+GetCurrentScene	1
+GlobalUpdate	1
+CommonTimers	1
+GetPlayerListInGrid	0
+PlayerListSearcher	0
+IsWanderer()	1
+IAmFree()	2
+IsDuringTeleport()	1
+Perception	0
+perception	0
+NpcBot.Autonomy.Perception	0
+
+===== SYMBOL COUNTS :: src/server/game/AI/NpcBots/bot_ai.cpp =====
+GetCurrentScene	5
+GlobalUpdate	2
+CommonTimers	2
+GetPlayerListInGrid	0
+PlayerListSearcher	1
+IsWanderer()	58
+IAmFree()	157
+IsDuringTeleport()	6
+Perception	1
+perception	0
+NpcBot.Autonomy.Perception	0
+
+===== SYMBOL COUNTS :: src/server/game/AI/NpcBots/botconfig.h =====
+GetCurrentScene	0
+GlobalUpdate	0
+CommonTimers	0
+GetPlayerListInGrid	0
+PlayerListSearcher	0
+IsWanderer()	0
+IAmFree()	0
+IsDuringTeleport()	0
+Perception	0
+perception	0
+NpcBot.Autonomy.Perception	0
+
+===== SYMBOL COUNTS :: src/server/game/AI/NpcBots/botconfig.cpp =====
+GetCurrentScene	0
+GlobalUpdate	0
+CommonTimers	0
+GetPlayerListInGrid	0
+PlayerListSearcher	0
+IsWanderer()	0
+IAmFree()	0
+IsDuringTeleport()	0
+Perception	0
+perception	0
+NpcBot.Autonomy.Perception	0
+
+===== BRACE COUNTS (diagnostic only, not a syntax proof) =====
+src/server/game/AI/NpcBots/bot_ai.h	open=252	close=252	delta=0
+src/server/game/AI/NpcBots/bot_ai.cpp	open=3403	close=3403	delta=0
+src/server/game/AI/NpcBots/botconfig.h	open=3	close=3	delta=0
+src/server/game/AI/NpcBots/botconfig.cpp	open=220	close=220	delta=0
+
+===== END =====
+请把本文件完整回传；不要只截最后几十行。
