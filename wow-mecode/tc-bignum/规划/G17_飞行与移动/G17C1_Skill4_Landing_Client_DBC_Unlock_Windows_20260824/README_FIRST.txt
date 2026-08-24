@@ -1,0 +1,31 @@
+G17-C1 客户端 Spell.dbc 解锁（技能4 52226）— 双端解锁的客户端半
+================================================
+
+为什么还要这个包（重要）：
+  B2R4 解锁的是服务器 DBC。但 WoW 3.3.5a 客户端在按下技能按钮时会
+  【本地】读取 Spell.dbc 检查施放条件：52226 的 RequiresSpellFocus=1553
+  和 CasterAuraSpell=52255 让客户端直接判定“不可用”，根本不发送封包。
+  所以只改服务器端（无论 C++ 净化还是 DBC）技能4都不会有任何变化——
+  这就是你上轮“四技能没有任何更改”的根因。
+  本包把【客户端】的 Spell.dbc 也解掉这两个门槛（改的是 DBC 文件本身，
+  按钮名字/图标完全不变），点击后封包才会真正到达服务器。
+
+前提（必须按顺序）：
+  1. 服务器已装 G17-B2R3 + G17-B2R4（服务器 DBC 解锁，10 秒包）
+  2. 客户端已装过 G17-R1→R5（即 Data\patch-Z.MPQ 与
+     Data\zhCN\patch-zhCN-Y.MPQ 已存在且状态 PASS——你现在就是）
+
+操作（约 1 分钟）：
+  1. 完全关闭 WoW（任务管理器确认没有 wow.exe / wow-64.exe）。
+  2. 双击 01_Install_G17C1_Client_Unlock.cmd
+     （自动：校验 R4/R5 状态 -> 从 patch-Z.MPQ 提取 Spell.dbc ->
+       把 52226 的焦点/光环清零 -> 重建 patch-Z.MPQ ->
+       字节级同步到 patch-zhCN-Y.MPQ -> 清客户端缓存）
+  3. 看到 [G17C1] CLIENT UNLOCK PASSED。
+  4. 启动 WoW，召唤坐骑，按技能4：应能释放并分类型着陆。
+
+回滚：双击 02_Rollback_G17C1_Client_Unlock.cmd。
+
+结果文件：
+  C:\Users\Administrator\Downloads\workspace\uploads\G17C1_CLIENT_MPQ_UNLOCK_RESULT.txt
+  回传给我。

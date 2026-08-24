@@ -1,0 +1,5 @@
+G17C1_SPELL_DBC_OFFLINE_VALIDATION=PASS (only record 52226 changed; 49838 other records + string block byte-identical; idempotent)
+DATE_UTC=2026-08-24T19:38:11Z
+INPUT_SPELL_DBC_SHA256=dd25091167f671764735ce88c78b66485c6d661fadf05d322574c261f6e464ea
+OUTPUT_SPELL_DBC_SHA256=03bf11fdeff7c296837fc6b0cc335476a9df33965baf8eed8ca671529577ccba
+REAL_DBC_SOURCE=/home/user/wow-mecode/g17r5_lifecycle/create/DBFilesClient/Spell.dbc

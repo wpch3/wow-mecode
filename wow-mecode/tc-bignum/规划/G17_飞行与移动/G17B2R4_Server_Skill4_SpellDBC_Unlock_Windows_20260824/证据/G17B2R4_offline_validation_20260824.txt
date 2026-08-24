@@ -1,0 +1,3 @@
+G17B2R4_PACKAGE_VALIDATION=PASS (patcher semantic guards verified against real 3.3.5a zhCN Spell.dbc; 4/4 unit tests; no C++ rebuild required)
+DATE_UTC=2026-08-24T19:38:02Z
+PATCHER_VERIFIED_ON=REAL_DBC_52226_focus1553_aura52255_name飞行器着陆
