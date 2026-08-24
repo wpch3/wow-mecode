@@ -141,6 +141,15 @@ def main() -> int:
           all(h in mod.UPGRADEABLE_SHAS for h in (
               INTERMEDIATE_SHA, INTERMEDIATE2_SHA,
               INTERMEDIATE3_SHA, INTERMEDIATE4_SHA)))
+    # R2FIX3: the classifier is a pure function (no filesystem/path mocks, so
+    # the unit test is deterministic on Windows and Linux alike).
+    classifier_ok = (hasattr(mod, "state_for_digest")
+                     and mod.state_for_digest(INTERMEDIATE3_SHA) ==
+                     "B2R2_INTERMEDIATE_UPGRADEABLE"
+                     and mod.state_for_digest(INTERMEDIATE4_SHA) ==
+                     "B2R2_INTERMEDIATE_UPGRADEABLE"
+                     and mod.state_for_digest(POST_SHA) == "B2R2_APPLIED")
+    check("TOOL_STATE_CLASSIFIER_PURE_AND_CORRECT", classifier_ok)
 
     pairs = (
         ("G17B2R2_WORLD_BINDING_GUARD=PASS",

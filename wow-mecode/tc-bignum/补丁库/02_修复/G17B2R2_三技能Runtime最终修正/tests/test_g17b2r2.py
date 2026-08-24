@@ -184,38 +184,43 @@ class TestPowerShellInstaller(unittest.TestCase):
         # pre-check passes and the source is replaced with the frozen payload
         # (with a forensic backup), instead of dying with "not a locked
         # image".
+        #
+        # NOTE (R2FIX3): this used to be tested by monkeypatching module sha()
+        # with a `p == target` stub.  On Windows the temp path from
+        # TemporaryDirectory does not string-equal root.resolve()'s path, so
+        # the stub never fired and check() raised "target SHA not recognized"
+        # on the user's machine.  The classifier is now a pure function, so
+        # this test exercises exactly what the tool does, with no mocks.
         import importlib.util
-        import tempfile
         spec = importlib.util.spec_from_file_location("applytool3", TOOL)
         mod = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(mod)
-        with tempfile.TemporaryDirectory() as tmp:
-            root = Path(tmp)
-            target = root / mod.SOURCE_RELATIVE
-            target.parent.mkdir(parents=True)
-            target.write_bytes(b"placeholder")
-            real_sha = mod.sha
-            mod.sha = lambda p: (INTERMEDIATE3_SHA if p == target
-                                 else real_sha(p))
-            try:
-                state = mod.check(root.resolve())
-            finally:
-                mod.sha = real_sha
-            self.assertIn("UPGRADEABLE", state)
 
-        with tempfile.TemporaryDirectory() as tmp:
-            root = Path(tmp)
-            target = root / mod.SOURCE_RELATIVE
-            target.parent.mkdir(parents=True)
-            target.write_bytes(b"placeholder")
-            real_sha = mod.sha
-            mod.sha = lambda p: (INTERMEDIATE4_SHA if p == target
-                                 else real_sha(p))
-            try:
-                state = mod.check(root.resolve())
-            finally:
-                mod.sha = real_sha
-            self.assertIn("UPGRADEABLE", state)
+        self.assertEqual(
+            mod.state_for_digest(INTERMEDIATE3_SHA),
+            "B2R2_INTERMEDIATE_UPGRADEABLE")
+        self.assertEqual(
+            mod.state_for_digest(INTERMEDIATE4_SHA),
+            "B2R2_INTERMEDIATE_UPGRADEABLE")
+        # Same lifecycle for the other previously-shipped R2 lineage.
+        self.assertEqual(
+            mod.state_for_digest(INTERMEDIATE_SHA),
+            "B2R2_INTERMEDIATE_UPGRADEABLE")
+        self.assertEqual(
+            mod.state_for_digest(INTERMEDIATE2_SHA),
+            "B2R2_INTERMEDIATE_UPGRADEABLE")
+        # And the normal states still classify correctly.  Note PRE_SHA and
+        # SAFE_ROLLBACK_SHA are the SAME byte image (B2R1), and in the state
+        # dict the SAFE_ROLLBACK key is built last, so B2R1 reports as
+        # B2R2_SAFE_ROLLBACK_B2R1 (apply() accepts both B2R1 states anyway).
+        self.assertIn(mod.state_for_digest(PRE_SHA),
+                      ("READY_B2R1_PREIMAGE", "B2R2_SAFE_ROLLBACK_B2R1"))
+        self.assertEqual(mod.state_for_digest(POST_SHA), "B2R2_APPLIED")
+        self.assertEqual(mod.state_for_digest(SAFE_ROLLBACK_SHA),
+                         "B2R2_SAFE_ROLLBACK_B2R1")
+        # Unknown digests stay rejected (no silent writes).
+        self.assertEqual(mod.state_for_digest("40" * 32), "")
+        self.assertNotIn("", (mod.state_for_digest(INTERMEDIATE3_SHA),))
 
 
 class TestSkill2RichVisuals(unittest.TestCase):

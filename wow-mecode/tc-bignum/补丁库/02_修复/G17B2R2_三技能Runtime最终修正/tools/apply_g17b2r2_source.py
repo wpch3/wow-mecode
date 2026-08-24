@@ -49,12 +49,15 @@ def verify_package() -> None:
         raise RuntimeError("package safety-rollback SHA mismatch")
 
 
-def check(root: Path) -> str:
-    verify_package()
-    target = root / SOURCE_RELATIVE
-    if not target.is_file():
-        raise RuntimeError(f"target missing: {target}")
-    digest = sha(target)
+def state_for_digest(digest: str) -> str:
+    """Map a source SHA256 to its lifecycle state ("" when unrecognized).
+
+    Pure function so tests never need to mock filesystem hashing - the
+    previous unit test monkeypatched module sha() with a Path equality stub,
+    which silently failed on Windows (temp paths normalize differently across
+    resolve()/TemporaryDirectory) and made the packaged unit tests fail on
+    the user's machine even though the tool logic is correct.
+    """
     states = {
         PRE_SHA256: "READY_B2R1_PREIMAGE",
         POST_SHA256: "B2R2_APPLIED",
@@ -62,9 +65,18 @@ def check(root: Path) -> str:
     }
     for h in UPGRADEABLE_SHAS:
         states[h] = "B2R2_INTERMEDIATE_UPGRADEABLE"
-    if digest not in states:
+    return states.get(digest, "")
+
+
+def check(root: Path) -> str:
+    verify_package()
+    target = root / SOURCE_RELATIVE
+    if not target.is_file():
+        raise RuntimeError(f"target missing: {target}")
+    digest = sha(target)
+    state = state_for_digest(digest)
+    if not state:
         raise RuntimeError(f"target SHA not recognized: {digest}")
-    state = states[digest]
     print(f"G17B2R2_SOURCE_STATE={state}")
     print(f"TARGET_SHA256={digest}")
     return state
