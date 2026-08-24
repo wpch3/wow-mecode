@@ -8,7 +8,7 @@ from pathlib import Path
 
 EXPECTED = {
     "payload/src/server/scripts/Commands/cs_dragonriding.cpp":
-        "03dd649ded01dcd1917b1d0e98689ae1dbfe4289f6fc2548a3a62d616e6a0844",
+        "3e4590da5d8864f8447cd3b55acf05c249855927a33e0e792dd426f03426237a",
     "original/src/server/scripts/Commands/cs_dragonriding.cpp":
         "ff185d9987b8f4457d8380e1c662cd0313b33a7ae4be6b82974e7702d1fdc4fc",
     "rollback_safe/src/server/scripts/Commands/cs_dragonriding.cpp":
@@ -44,8 +44,8 @@ def main() -> int:
     # The tool must embed the postimage hash and accept the prior final/intermediate.
     tool = (root / "tools/apply_g17b2r2_source.py").read_text(encoding="utf-8")
     for token in (
+        "3e4590da5d8864f8447cd3b55acf05c249855927a33e0e792dd426f03426237a",
         "03dd649ded01dcd1917b1d0e98689ae1dbfe4289f6fc2548a3a62d616e6a0844",
-        "613420676babe4c71c570c24a0f5d94976623516e0519b4553b3d5962056bafe",
         "adedfc58344a104ccc96ff28155b504727f50e0026d842345721610c6a32a59f",
     ):
         if token not in tool:

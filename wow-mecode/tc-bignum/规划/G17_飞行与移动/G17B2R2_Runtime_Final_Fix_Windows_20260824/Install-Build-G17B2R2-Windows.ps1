@@ -13,6 +13,7 @@ $Tool = Join-Path $PSScriptRoot "tools\apply_g17b2r2_source.py"
 $Tests = Join-Path $PSScriptRoot "tests\test_g17b2r2.py"
 $PackageTest = Join-Path $PSScriptRoot "Test-G17B2R2-Package.py"
 $Sql = Join-Path $PSScriptRoot "sql\G17B2R2_world_landing_binding_guard.sql"
+$SqlCastable = Join-Path $PSScriptRoot "sql\G17B2R2_world_spell52226_castable_override.sql"
 $Solution = Join-Path $BuildRoot "TrinityCore.sln"
 $RunDir = Join-Path $BuildRoot "bin\RelWithDebInfo"
 $Exe = Join-Path $RunDir "worldserver.exe"
@@ -93,8 +94,16 @@ function Find-MySqlClient {
     return $null
 }
 function Invoke-WorldMigration {
+    param(
+        [Parameter(Mandatory=$true)][string]$SqlFile,
+        [Parameter(Mandatory=$true)][string]$PassMarker,
+        [Parameter(Mandatory=$true)][string]$Label
+    )
     if (-not (Test-Path -LiteralPath $WorldConf -PathType Leaf)) {
         throw "worldserver.conf missing: $WorldConf"
+    }
+    if (-not (Test-Path -LiteralPath $SqlFile -PathType Leaf)) {
+        throw "SQL file missing: $SqlFile"
     }
     $line = @(Get-Content -LiteralPath $WorldConf | Where-Object { $_ -match '^\s*WorldDatabaseInfo\s*=\s*"([^"]+)"' })[0]
     if (-not $line) { throw "WorldDatabaseInfo not found in worldserver.conf" }
@@ -120,7 +129,7 @@ function Invoke-WorldMigration {
     try {
         $env:MYSQL_PWD = $password
         $ErrorActionPreference = "Continue"
-        $out = @(Get-Content -LiteralPath $Sql | & $mysql @args 2>&1)
+        $out = @(Get-Content -LiteralPath $SqlFile | & $mysql @args 2>&1)
         $rc = $LASTEXITCODE
     } finally {
         $ErrorActionPreference = $oldPreference
@@ -128,11 +137,11 @@ function Invoke-WorldMigration {
     }
     foreach ($entry in $out) { W ("MYSQL|" + $entry.ToString()) }
     W "MYSQL_EXIT=$rc"
-    if ($rc -ne 0) { throw "World SQL guard failed" }
-    if (-not (@($out | Where-Object { $_.ToString() -match 'G17B2R2_WORLD_BINDING_GUARD=PASS' }).Count)) {
-        throw "World SQL did not emit PASS gate"
+    if ($rc -ne 0) { throw ("World SQL failed: " + $Label) }
+    if (-not (@($out | Where-Object { $_.ToString() -match [regex]::Escape($PassMarker) }).Count)) {
+        throw ("World SQL did not emit PASS gate: " + $PassMarker)
     }
-    W "G17B2R2_WORLD_SQL_GATE=PASS"
+    W ("G17B2R2_WORLD_SQL_GATE=PASS " + $Label)
 }
 try {
     W "G17B2R2_WINDOWS_BUILD_START"
@@ -146,7 +155,7 @@ try {
     foreach ($dir in @($SourceRoot, $BuildRoot, $RunDir)) {
         if (-not (Test-Path -LiteralPath $dir -PathType Container)) { throw "directory missing: $dir" }
     }
-    foreach ($file in @($Target, $Tool, $Tests, $PackageTest, $Sql, $Solution, $Exe, $Pdb, $WorldConf)) {
+    foreach ($file in @($Target, $Tool, $Tests, $PackageTest, $Sql, $SqlCastable, $Solution, $Exe, $Pdb, $WorldConf)) {
         if (-not (Test-Path -LiteralPath $file -PathType Leaf)) { throw "file missing: $file" }
     }
     $python = Find-Python
@@ -172,7 +181,8 @@ try {
     W "SOURCE_SHA256_AFTER=$after"
     if ($after -cne $Post) { throw "B2R2 postimage SHA mismatch" }
     W "G17B2R2_SOURCE_APPLY_GATE=PASS"
-    Invoke-WorldMigration
+    Invoke-WorldMigration -SqlFile $Sql -PassMarker "G17B2R2_WORLD_BINDING_GUARD=PASS" -Label "52226_BINDING"
+    Invoke-WorldMigration -SqlFile $SqlCastable -PassMarker "G17B2R2_SPELL_52226_OVERRIDE=PASS" -Label "52226_CASTABLE"
     $vswhere = Join-Path ${env:ProgramFiles(x86)} "Microsoft Visual Studio\Installer\vswhere.exe"
     if (-not (Test-Path -LiteralPath $vswhere -PathType Leaf)) { throw "vswhere missing" }
     $msbuild = @(& $vswhere -latest -products * -requires Microsoft.Component.MSBuild -find "MSBuild\**\Bin\MSBuild.exe" | Where-Object { $_ })[0]

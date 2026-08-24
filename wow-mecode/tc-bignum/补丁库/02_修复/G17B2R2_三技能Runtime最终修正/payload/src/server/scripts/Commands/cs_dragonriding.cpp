@@ -514,7 +514,7 @@ public:
                 vehicle ? vehicle->GetVehicleInfo()->ID : 0, int32(authoritativeSeat), int32(movementSeat));
             if (WorldSession* session = _player->GetSession())
                 ChatHandler(session).SendSysMessage(
-                    "|cff80dfff[G17-B2R1] 完整御空已就绪：1龙息、2四阶段高速反馈、3平滑曲线爬升、4无降落伞多段特色着陆；速度250%-1200%。|r");
+                    "|cff80dfff[G17-B2R2 build 2026-08-24 已加载] 1龙息 2增强推进 3朝向冲刺 4飞行器着陆(52226)；若技能异常请回报worldserver.log中G17-B2R2行。|r");
             return true;
         }
 
@@ -1335,15 +1335,23 @@ private:
         _climbExitHeading = exitHeading;
         _momentum = std::max(0.0f, _momentum - 0.18f);
         RestoreClientFlightControl(true);
+        // CRITICAL: force the vehicle to face the dash direction BEFORE the
+        // spline starts and keep orientation fixed along the path.  Without
+        // this, the MoveSpline faces the first displacement from the dragon's
+        // stale server orientation, causing the reported "back-up then U-turn"
+        // where the mount first reverses and then snaps forward.
+        me->SetFacingTo(exitHeading);
+        me->SetOrientation(exitHeading);
         float const splineSpeed = std::clamp(16.0f + _currentSpeedRate * 1.35f,
             CLIMB_SPLINE_SPEED_MIN, CLIMB_SPLINE_SPEED_MAX);
         me->GetMotionMaster()->LaunchMoveSpline(
-            [path, splineSpeed](Movement::MoveSplineInit& init)
+            [path, splineSpeed, exitHeading](Movement::MoveSplineInit& init)
             {
                 init.MovebyPath(path);
                 init.SetFly();
                 init.SetVelocity(splineSpeed);
-                init.SetOrientationFixed(false);
+                init.SetFacing(exitHeading);
+                init.SetOrientationFixed(true);
             }, POINT_CLIMB);
         SendToRider(me,
             "|cff80dfff[G17-B2R2] 技能3：沿当前朝向直线向前冲刺爬升，无额外转向。|r");
@@ -2049,17 +2057,13 @@ public:
 
 void AddSC_dragonriding_commandscript()
 {
-    // B2R2 proof-of-load banner. If this exact line is NOT in worldserver.log
-    // at startup, the running worldserver.exe was not rebuilt/relinked from
-    // this source and no B2R2 change can possibly be active.
-    TC_LOG_INFO("scripts.g17.dragonriding",
-        "==========================================================");
-    TC_LOG_INFO("scripts.g17.dragonriding",
-        " G17-B2R2 LOADED  build=2026-08-24  postimage=61342067");
-    TC_LOG_INFO("scripts.g17.dragonriding",
-        " skill2=layered_audited_kits  skill3=facing_dash  skill4=52226_checkcast");
-    TC_LOG_INFO("scripts.g17.dragonriding",
-        "==========================================================");
+    // B2R2 proof-of-load banner. Logged to the core "server" channel which is
+    // always active, so it cannot be hidden by appender filtering. If this
+    // block is absent from worldserver.log at startup, the running exe is old.
+    TC_LOG_INFO("server.loading", " ");
+    TC_LOG_INFO("server.loading", ">> G17-B2R2 dragonriding LOADED  build=2026-08-24  postimage=03dd649d");
+    TC_LOG_INFO("server.loading", "   skill2=layered audited visual kits | skill3=facing-locked dash | skill4=52226 checkcast");
+    TC_LOG_INFO("server.loading", " ");
 
     new dragonriding_commandscript();
     new g17_dragonriding_playerscript();

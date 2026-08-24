@@ -9,10 +9,10 @@ from pathlib import Path
 SOURCE_RELATIVE = Path("src/server/scripts/Commands/cs_dragonriding.cpp")
 # B2R1 postimage is the normal preimage for R2.
 PRE_SHA256 = "ff185d9987b8f4457d8380e1c662cd0313b33a7ae4be6b82974e7702d1fdc4fc"
-POST_SHA256 = "03dd649ded01dcd1917b1d0e98689ae1dbfe4289f6fc2548a3a62d616e6a0844"
+POST_SHA256 = "3e4590da5d8864f8447cd3b55acf05c249855927a33e0e792dd426f03426237a"
 # Earlier R2 builds that are valid to upgrade from (banner-less final and the
 # first intermediate with unverified kits).
-INTERMEDIATE_SHA256 = "613420676babe4c71c570c24a0f5d94976623516e0519b4553b3d5962056bafe"
+INTERMEDIATE_SHA256 = "03dd649ded01dcd1917b1d0e98689ae1dbfe4289f6fc2548a3a62d616e6a0844"
 INTERMEDIATE2_SHA256 = "adedfc58344a104ccc96ff28155b504727f50e0026d842345721610c6a32a59f"
 # Safety rollback returns to the B2R1 byte image (the last user-compiled PASS).
 SAFE_ROLLBACK_SHA256 = "ff185d9987b8f4457d8380e1c662cd0313b33a7ae4be6b82974e7702d1fdc4fc"
