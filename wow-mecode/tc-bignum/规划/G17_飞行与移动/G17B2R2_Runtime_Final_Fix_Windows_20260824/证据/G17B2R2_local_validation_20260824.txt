@@ -1,0 +1,35 @@
+G17B2R2_LOCAL_VALIDATION=PASS
+DATE_UTC=2026-08-24T10:34:39Z
+PAYLOAD_SHA256=adedfc58344a104ccc96ff28155b504727f50e0026d842345721610c6a32a59f
+PREIMAGE_B2R1_SHA256=ff185d9987b8f4457d8380e1c662cd0313b33a7ae4be6b82974e7702d1fdc4fc
+SAFE_ROLLBACK_SHA256=ff185d9987b8f4457d8380e1c662cd0313b33a7ae4be6b82974e7702d1fdc4fc
+SQL=8a571cd70329d6311f88903ba85a9f4f820c49daa1b08cb3c980ada6d43b5a4f
+INSTALLER=c3be212f71175814e912b8765dc0a4da5eaf0ee0e4599d2552c8a2d92b70537c
+PAYLOAD_LINES=2034
+
+== Python unit tests ==
+----------------------------------------------------------------------
+Ran 23 tests in 0.008s
+
+OK
+
+== Brace balance (strings/comments stripped) ==
+{}: 189/189 OK
+(): 1043/1043 OK
+[]: 21/21 OK
+
+== Installer check/apply/rollback (simulated tree) ==
+G17B2R2_SOURCE_STATE=B2R2_SAFE_ROLLBACK_B2R1
+TARGET_SHA256=ff185d9987b8f4457d8380e1c662cd0313b33a7ae4be6b82974e7702d1fdc4fc
+FORENSIC_BACKUP=/tmp/g17b2r2sim/src/server/scripts/Commands/cs_dragonriding.cpp.g17b2r2.b2r1-preimage
+G17B2R2_SOURCE_APPLY=PASS
+G17B2R2_SOURCE_STATE=B2R2_APPLIED
+TARGET_SHA256=adedfc58344a104ccc96ff28155b504727f50e0026d842345721610c6a32a59f
+G17B2R2_SOURCE_STATE=B2R2_APPLIED
+TARGET_SHA256=adedfc58344a104ccc96ff28155b504727f50e0026d842345721610c6a32a59f
+G17B2R2_SOURCE_ROLLBACK=PASS_B2R1_FLOOR
+ROLLBACK_FILE_SHA256=ff185d9987b8f4457d8380e1c662cd0313b33a7ae4be6b82974e7702d1fdc4fc
+
+NOTE: Full TrinityCore MSBuild/GCC compilation cannot run in this workspace
+(no src/server/game headers or Boost/MySQL dev libs).  Compilation must be
+verified on the user's D:\TrinityCore + VS2022 environment.
