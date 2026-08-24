@@ -1705,6 +1705,10 @@ class spell_g17_dragon_accelerate_energy : public SpellScript
 
     void HandleBoost(SpellEffIndex effectIndex)
     {
+        TC_LOG_INFO("scripts.g17.dragonriding",
+            "G17-B2R2 SKILL2 BOOST HandleBoost fired: caster={} isDragon={}",
+            GetCaster() ? GetCaster()->GetGUID().ToString() : "null",
+            G17Dragonriding::IsDragon(GetCaster()) ? 1 : 0);
         if (!G17Dragonriding::IsDragon(GetCaster()))
             return;
 
@@ -1761,6 +1765,10 @@ class spell_g17_dragon_climb : public SpellScript
 
     void HandleJump(SpellEffIndex effectIndex)
     {
+        TC_LOG_INFO("scripts.g17.dragonriding",
+            "G17-B2R2 SKILL3 DASH HandleJump fired: caster={} isDragon={}",
+            GetCaster() ? GetCaster()->GetGUID().ToString() : "null",
+            G17Dragonriding::IsDragon(GetCaster()) ? 1 : 0);
         if (!G17Dragonriding::IsDragon(GetCaster()))
             return;
 
@@ -1809,6 +1817,10 @@ class spell_g17_dragon_safe_landing : public SpellScript
 
     void StartLanding(SpellEffIndex effectIndex)
     {
+        TC_LOG_INFO("scripts.g17.dragonriding",
+            "G17-B2R2 SKILL4 LAND OnEffectHit fired: caster={} isDragon={}",
+            GetCaster() ? GetCaster()->GetGUID().ToString() : "null",
+            G17Dragonriding::IsDragon(GetCaster()) ? 1 : 0);
         if (!G17Dragonriding::IsDragon(GetCaster()))
             return;
 
@@ -1826,8 +1838,13 @@ class spell_g17_dragon_safe_landing : public SpellScript
         // effect is skipped by core effect processing.  ACTION_LAND is
         // idempotent in the AI (guarded by _landing), so a double call is safe.
         if (Creature* dragon = GetCaster()->ToCreature())
+        {
+            TC_LOG_INFO("scripts.g17.dragonriding",
+                "G17-B2R2 SKILL4 LAND AfterCast fired: isDragon={} aiEnabled={}",
+                G17Dragonriding::IsDragon(dragon) ? 1 : 0, dragon->IsAIEnabled() ? 1 : 0);
             if (G17Dragonriding::IsDragon(dragon) && dragon->IsAIEnabled())
                 dragon->AI()->DoAction(G17Dragonriding::ACTION_LAND);
+        }
     }
 
     void Register() override
@@ -2032,6 +2049,18 @@ public:
 
 void AddSC_dragonriding_commandscript()
 {
+    // B2R2 proof-of-load banner. If this exact line is NOT in worldserver.log
+    // at startup, the running worldserver.exe was not rebuilt/relinked from
+    // this source and no B2R2 change can possibly be active.
+    TC_LOG_INFO("scripts.g17.dragonriding",
+        "==========================================================");
+    TC_LOG_INFO("scripts.g17.dragonriding",
+        " G17-B2R2 LOADED  build=2026-08-24  postimage=61342067");
+    TC_LOG_INFO("scripts.g17.dragonriding",
+        " skill2=layered_audited_kits  skill3=facing_dash  skill4=52226_checkcast");
+    TC_LOG_INFO("scripts.g17.dragonriding",
+        "==========================================================");
+
     new dragonriding_commandscript();
     new g17_dragonriding_playerscript();
     RegisterCreatureAI(npc_g17_dragonriding_vehicle);
