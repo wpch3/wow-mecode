@@ -9,4 +9,6 @@ TARGET=D:\TC-Build\bin\RelWithDebInfo\dbc\Spell.dbc
 EXPECTED_PREIMAGE_SHA256=df44e75ef1730e363dc06f1bc5ae064299b08d2d0047e663c0a1782ed4c8d10f
 SEMANTIC_GUARDS=record_52226+Attributes_0x100+focus_1553+aura_52255+effect_dummy+name_飞行器着陆
 PROOF=G17B2R4_SERVER_SPELL_DBC=PASS
+STATES_ACCEPTED=PATCHED|ALREADY_CLEAN(no write)
+REGRESSION_FIX=server DBC with 0/0 gates (fc151891/GBK zhCN) was wrongly failed; now PASS without writing
 CLIENT_PARTNER=G17C1_Skill4_Landing_Client_DBC_Unlock_Windows_20260824

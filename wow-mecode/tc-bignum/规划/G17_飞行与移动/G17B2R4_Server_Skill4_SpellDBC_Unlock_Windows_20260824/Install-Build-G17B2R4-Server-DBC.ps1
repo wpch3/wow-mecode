@@ -83,9 +83,41 @@ try {
     W "CHECK_BEFORE_EXIT=$rc"
     if ($rc -ne 0) { throw "Spell.dbc semantic check failed - refusing to patch a foreign DBC" }
     $checkText = [IO.File]::ReadAllText($checkReport)
-    if ($checkText -notmatch "G17C1_SPELL_DBC_STATE=PATCHED") {
-        W "G17B2R4_STATE=$((($checkText -split "`n") | Where-Object { $_ -match '^G17C1_SPELL_DBC_STATE=' })[0])"
-        throw "server Spell.dbc is not in the expected 1553/52255 state; not patched"
+    $stateLine = @($checkText -split "`r?`n" | Where-Object { $_ -match '^G17C1_SPELL_DBC_STATE=' })[0]
+    $dbState = if ($stateLine -match '^G17C1_SPELL_DBC_STATE=(.+)$') { $Matches[1] } else { "" }
+    W "G17B2R4_PRE_PATCH_STATE=$dbState"
+    if ($dbState -ceq "LAYOUT_UNKNOWN") {
+        throw "server Spell.dbc layout unknown (not a 234-field Spell.dbc); refusing to interpret column positions"
+    }
+    if ($dbState -ceq "ALREADY_CLEAN") {
+        # The gates are already 0/0 on the server DBC - the target state.
+        # No bytes are written; we still record state + evidence so the run
+        # is idempotent and auditable.
+        $stateFile = Join-Path $UploadDir "G17B2R4_SERVER_SPELL_DBC_STATE.txt"
+        $alreadyLine = @(
+            "STATE_FORMAT=1",
+            "INSTALL_STATUS=PASS",
+            "PRE_PATCH_STATE=ALREADY_CLEAN",
+            "WROTE_FILE=False",
+            ("RUN_DIR=" + $RunDir),
+            ("SERVER_SPELL_DBC=" + $Target),
+            ("SERVER_SPELL_DBC_SHA256=" + $before),
+            ("SERVER_SPELL_DBC_SIZE=" + $size),
+            ("INSTALLED_AT=" + (Get-Date).ToString("o"))
+        )
+        $stateTemp = $stateFile + ".tmp"
+        if (Test-Path -LiteralPath $stateTemp) { throw "state temp exists" }
+        [IO.File]::WriteAllText($stateTemp, (($alreadyLine -join [Environment]::NewLine) + [Environment]::NewLine), $Utf8NoBom)
+        Move-Item -LiteralPath $stateTemp -Destination $stateFile
+        W "G17B2R4_SERVER_SPELL_DBC_WROTE_FILE=False"
+        W "G17B2R4_SERVER_SPELL_DBC=ALREADY_CLEAN"
+        W "G17B2R4_SERVER_SPELL_DBC_RESULT=PASS"
+        W "NOTE=server Spell.dbc already has 52226 focus/aura=0; nothing to write. Restart worldserver and run the client unlock (G17-C1)."
+        W "RESULT_FILE=$Result"
+        exit 0
+    }
+    if ($dbState -cne "PATCHED") {
+        throw "server Spell.dbc is not in the expected 1553/52255 state (state=$dbState); not patched"
     }
 
     $stamp = Get-Date -Format "yyyyMMdd_HHmmss"

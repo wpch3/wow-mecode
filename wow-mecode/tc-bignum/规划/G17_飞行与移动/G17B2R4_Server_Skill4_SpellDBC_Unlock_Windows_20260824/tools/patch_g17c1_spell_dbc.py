@@ -71,9 +71,36 @@ def cstr(strings: bytes, idx: int) -> str:
         return ""
     try:
         end = strings.index(b"\0", idx)
-        return strings[idx:end].decode("utf-8", "replace")
     except ValueError:
         return "?"
+    raw = strings[idx:end]
+    # 3.3.5a zhCN DBCs are normally UTF-8, but some zhCN toolchains
+    # (e.g. the user's server Spell.dbc) store GBK.  Try UTF-8 first, then
+    # GBK, and report which one decoded.  Name matching is only diagnostic
+    # in the "already clean" path, but decoding correctly removes noise.
+    for enc in ("utf-8", "gbk"):
+        try:
+            return raw.decode(enc)
+        except (UnicodeDecodeError, LookupError):
+            continue
+    return raw.decode("utf-8", "replace")
+
+
+def decode_name(strings: bytes, idx: int) -> tuple[str, str]:
+    """Return (text, encoding) for a DBC string offset."""
+    if idx == 0:
+        return "", "empty"
+    try:
+        end = strings.index(b"\0", idx)
+    except ValueError:
+        return "?", "?"
+    raw = strings[idx:end]
+    for enc in ("utf-8", "gbk"):
+        try:
+            return raw.decode(enc), enc
+        except (UnicodeDecodeError, LookupError):
+            continue
+    return raw.decode("utf-8", "replace"), "replace"
 
 
 def find_record(records: bytes, count: int, recsize: int, spell_id: int,
@@ -88,9 +115,11 @@ def find_record(records: bytes, count: int, recsize: int, spell_id: int,
 
 
 def detect_name_col(vals: tuple[int, ...], strings: bytes) -> int | None:
-    # Localized Name array (cols 136..151).  Any of them may hold zhCN.
+    # Localized Name array (cols 136..151).  Any of them may hold zhCN
+    # (UTF-8 in the stock client, GBK in some zhCN server toolchains).
     for col in range(136, min(152, len(vals))):
-        if cstr(strings, vals[col]) == NAME_TEXT:
+        text, _enc = decode_name(strings, vals[col])
+        if text == NAME_TEXT:
             return col
     return None
 
@@ -99,7 +128,13 @@ def audit(data: bytes) -> dict:
     count, fields, recsize, records, strings = parse_dbc(data)
     rec_idx, vals = find_record(records, count, recsize, SPELL_ID, fields)
     name_col = detect_name_col(vals, strings)
+    name_text, name_enc = (decode_name(strings, vals[name_col])
+                           if name_col is not None else ("", "none"))
     guards = {
+        "dbc_count": count,
+        "dbc_fields": fields,
+        "dbc_recsize": recsize,
+        "dbc_stringblock_size": len(strings),
         "record_index": rec_idx,
         "spell_id": vals[0],
         "attributes_col4": vals[4],
@@ -111,15 +146,23 @@ def audit(data: bytes) -> dict:
         "effect1_col71": vals[71] if fields > 71 else None,
         "effect1_expected": 3,
         "name_col": name_col,
-        "name": NAME_TEXT if name_col is not None else None,
+        "name": name_text,
+        "name_encoding": name_enc,
     }
+    # The layout guard: a real 234-field Spell.dbc.  If fields differ, the
+    # column positions for focus/aura/effect are meaningless and we must NOT
+    # interpret them (refuse with layout_unknown instead of a false pass).
+    guards["layout_ok"] = (fields == 234 and recsize == 234 * 4)
+    guards["name_ok"] = (name_col is not None and name_text == NAME_TEXT)
     guards["ok"] = bool(
-        vals[0] == SPELL_ID and vals[4] == 0x100
+        guards["layout_ok"] and vals[0] == SPELL_ID and vals[4] == 0x100
         and vals[FOCUS_COL] == EXPECTED_FOCUS and vals[AURA_COL] == EXPECTED_AURA
-        and fields > 71 and vals[71] == 3 and name_col is not None)
+        and vals[71] == 3 and guards["name_ok"])
     guards["already_clean"] = bool(
-        vals[0] == SPELL_ID and vals[4] == 0x100
-        and vals[FOCUS_COL] == 0 and vals[AURA_COL] == 0 and name_col is not None)
+        guards["layout_ok"] and vals[0] == SPELL_ID and vals[4] == 0x100
+        and vals[FOCUS_COL] == 0 and vals[AURA_COL] == 0
+        and vals[71] == 3 and guards["name_ok"])
+    guards["layout_unknown"] = not guards["layout_ok"]
     return guards
 
 
@@ -134,12 +177,21 @@ def do_patch(args) -> int:
     report_lines = []
     for k, v in a.items():
         report_lines.append(f"{k}={v}")
+    if a["layout_unknown"]:
+        report_lines.append("G17C1_SPELL_DBC_STATE=LAYOUT_UNKNOWN")
+        report_lines.append("G17C1_SPELL_DBC_PATCH=FAIL")
+        write_report(Path(args.report), report_lines)
+        print("G17C1_SPELL_DBC_STATE=LAYOUT_UNKNOWN")
+        print("G17C1_SPELL_DBC_PATCH=FAIL")
+        return 3
     if a["already_clean"]:
         report_lines.append("G17C1_SPELL_DBC_STATE=ALREADY_CLEAN")
         report_lines.append("G17C1_SPELL_DBC_PATCH=PASS")
+        report_lines.append("G17C1_SPELL_DBC_WRITE=NONE")
         write_report(Path(args.report), report_lines)
         print("G17C1_SPELL_DBC_STATE=ALREADY_CLEAN")
         print("G17C1_SPELL_DBC_PATCH=PASS")
+        print("G17C1_SPELL_DBC_WRITE=NONE")
         return 0
     if not a["ok"]:
         report_lines.append("G17C1_SPELL_DBC_STATE=GUARD_FAIL")
@@ -174,7 +226,14 @@ def do_check(args) -> int:
     data = Path(args.input).read_bytes()
     a = audit(data)
     report_lines = [f"{k}={v}" for k, v in a.items()]
-    state = "PATCHED" if a["ok"] else ("ALREADY_CLEAN" if a["already_clean"] else "GUARD_FAIL")
+    if a["layout_unknown"]:
+        state = "LAYOUT_UNKNOWN"
+    elif a["ok"]:
+        state = "PATCHED"
+    elif a["already_clean"]:
+        state = "ALREADY_CLEAN"
+    else:
+        state = "GUARD_FAIL"
     report_lines.append(f"G17C1_SPELL_DBC_STATE={state}")
     write_report(Path(args.report), report_lines)
     for line in report_lines:

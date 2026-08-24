@@ -30,6 +30,12 @@ try {
         if ($line -match '^([^=]+)=(.*)$') { $state[$Matches[1]] = $Matches[2] }
     }
     if ($state["INSTALL_STATUS"] -cne "PASS") { throw "state is not PASS" }
+    if ($state["PRE_PATCH_STATE"] -ceq "ALREADY_CLEAN" -or $state["WROTE_FILE"] -ceq "False") {
+        W "G17B2R4_SERVER_SPELL_DBC_ROLLBACK=NONE_NEEDED (install wrote no file; server DBC was already clean)"
+        W "G17B2R4_SERVER_SPELL_DBC_ROLLBACK_RESULT=PASS"
+        W "RESULT_FILE=$Result"
+        exit 0
+    }
     $backup = $state["BACKUP_SPELL_DBC"]
     $before = $state["SERVER_SPELL_DBC_SHA256_BEFORE"]
     if (-not $backup -or -not (Test-Path -LiteralPath $backup -PathType Leaf)) {
