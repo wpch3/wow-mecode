@@ -15,7 +15,6 @@ TOOL = ROOT / "tools/apply_g17b2r2_source.py"
 
 PRE_SHA = "ff185d9987b8f4457d8380e1c662cd0313b33a7ae4be6b82974e7702d1fdc4fc"
 POST_SHA = "613420676babe4c71c570c24a0f5d94976623516e0519b4553b3d5962056bafe"
-INTERMEDIATE_SHA = "adedfc58344a104ccc96ff28155b504727f50e0026d842345721610c6a32a59f"
 SAFE_ROLLBACK_SHA = "ff185d9987b8f4457d8380e1c662cd0313b33a7ae4be6b82974e7702d1fdc4fc"
 LANDING_SCRIPT = "spell_g17_dragon_safe_landing"
 SAFE_ACTION = 52226
@@ -69,19 +68,7 @@ class TestFrozenInputs(unittest.TestCase):
         text = TOOL.read_text(encoding="utf-8")
         self.assertIn(PRE_SHA, text)
         self.assertIn(POST_SHA, text)
-        self.assertIn(INTERMEDIATE_SHA, text)
         self.assertIn(SAFE_ROLLBACK_SHA, text)
-
-    def test_06_tool_recognizes_intermediate_as_upgradeable(self):
-        import importlib.util
-        spec = importlib.util.spec_from_file_location("applytool", TOOL)
-        mod = importlib.util.module_from_spec(spec)
-        spec.loader.exec_module(mod)
-        self.assertEqual(mod.INTERMEDIATE_SHA256, INTERMEDIATE_SHA)
-        states = {
-            mod.PRE_SHA256, mod.POST_SHA256, mod.INTERMEDIATE_SHA256,
-            mod.SAFE_ROLLBACK_SHA256}
-        self.assertEqual(len(states), 3)  # preimage == safe rollback
 
 
 class TestSkill2RichVisuals(unittest.TestCase):

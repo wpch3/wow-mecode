@@ -14,7 +14,8 @@ SQL = ROOT / "sql/G17B2R2_world_landing_binding_guard.sql"
 TOOL = ROOT / "tools/apply_g17b2r2_source.py"
 
 PRE_SHA = "ff185d9987b8f4457d8380e1c662cd0313b33a7ae4be6b82974e7702d1fdc4fc"
-POST_SHA = "adedfc58344a104ccc96ff28155b504727f50e0026d842345721610c6a32a59f"
+POST_SHA = "613420676babe4c71c570c24a0f5d94976623516e0519b4553b3d5962056bafe"
+INTERMEDIATE_SHA = "adedfc58344a104ccc96ff28155b504727f50e0026d842345721610c6a32a59f"
 SAFE_ROLLBACK_SHA = "ff185d9987b8f4457d8380e1c662cd0313b33a7ae4be6b82974e7702d1fdc4fc"
 LANDING_SCRIPT = "spell_g17_dragon_safe_landing"
 SAFE_ACTION = 52226
@@ -68,48 +69,76 @@ class TestFrozenInputs(unittest.TestCase):
         text = TOOL.read_text(encoding="utf-8")
         self.assertIn(PRE_SHA, text)
         self.assertIn(POST_SHA, text)
+        self.assertIn(INTERMEDIATE_SHA, text)
         self.assertIn(SAFE_ROLLBACK_SHA, text)
+
+    def test_06_tool_recognizes_intermediate_as_upgradeable(self):
+        import importlib.util
+        spec = importlib.util.spec_from_file_location("applytool", TOOL)
+        mod = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(mod)
+        self.assertEqual(mod.INTERMEDIATE_SHA256, INTERMEDIATE_SHA)
+        states = {
+            mod.PRE_SHA256, mod.POST_SHA256, mod.INTERMEDIATE_SHA256,
+            mod.SAFE_ROLLBACK_SHA256}
+        self.assertEqual(len(states), 3)  # preimage == safe rollback
 
 
 class TestSkill2RichVisuals(unittest.TestCase):
     def setUp(self):
         self.text = SOURCE.read_text(encoding="utf-8")
 
-    def test_01_layered_boost_launch_kits(self):
-        # Launch fires the original ChargeTrail plus a new burst kit.
-        self.assertIn("VISUAL_KIT_BOOST_BURST", self.text)
-        self.assertIn("VISUAL_KIT_BOOST_LAUNCH", self.text)
-        # New kit IDs are present and valid-looking positive integers.
-        for name in ("VISUAL_KIT_BOOST_BURST", "VISUAL_KIT_BOOST_GUST",
-                     "VISUAL_KIT_BOOST_IMPACT", "VISUAL_KIT_DRAGON_DASH_FLASH",
-                     "VISUAL_KIT_MAGIC_TRAIL"):
-            m = re.search(rf"constexpr uint32 {name}\s*=\s*(\d+);", self.text)
-            self.assertIsNotNone(m, name)
-            self.assertGreater(int(m.group(1)), 0)
+    def test_01_only_audited_kit_ids_used(self):
+        # B2R2 must NOT introduce unverified SpellVisualKit IDs.  Only the
+        # already-audited B2R1 kits (44/696/13709/13481/1066) may be used.
+        audited = {"44", "696", "13709", "13481", "1066"}
+        consts = dict(re.findall(
+            r"constexpr uint32 (VISUAL_KIT_\w+)\s*=\s*(\d+);", self.text))
+        self.assertTrue(consts)
+        for name, value in consts.items():
+            self.assertIn(value, audited, f"{name}={value} unverified")
+        used = set(re.findall(
+            r"SendPlaySpellVisualKit\(\s*(VISUAL_KIT_\w+)\s*,", self.text))
+        self.assertTrue(used, "expected at least one kit send")
+        for name in used:
+            self.assertIn(name, consts, f"undefined kit constant {name}")
+        raw = set(re.findall(
+            r"SendPlaySpellVisualKit\(\s*(\d+)\s*,", self.text))
+        self.assertEqual(raw, set(), f"raw numeric kit IDs used: {raw}")
 
-    def test_02_midboost_gust_timer_exists_and_runs(self):
+    def test_02_layered_launch_fires_multiple_kits(self):
+        # Launch must be richer than B2R1's single kit: locate the
+        # ACTION_ACCELERATE handler and assert several SendPlay calls in it.
+        start = self.text.index("if (action == ACTION_ACCELERATE)")
+        end = self.text.index("if (action == ACTION_CLIMB)")
+        block = self.text[start:end]
+        self.assertGreaterEqual(
+            block.count("SendPlaySpellVisualKit"), 3)
+        self.assertIn("VISUAL_KIT_BOOST_LAUNCH", block)
+        self.assertIn("VISUAL_KIT_MECHANICAL_THRUST", block)
+
+    def test_03_midboost_gust_timer_exists_and_alternates(self):
         self.assertIn("_boostGustTimer", self.text)
+        self.assertIn("_boostGustPulseCount", self.text)
         self.assertIn("BOOST_GUST_INTERVAL_MS", self.text)
-        # Gust pulse fires during boost alongside the ribbon trail.
-        self.assertIn("VISUAL_KIT_BOOST_GUST", self.text)
+        # The gust alternates between wind burst and ribbon pulse.
+        self.assertIn("VISUAL_KIT_WIND_BURST", self.text)
+        self.assertIn("VISUAL_KIT_TRAIL_PULSE", self.text)
 
-    def test_03_top_speed_and_shutdown_have_impact_ring(self):
-        # Both top-speed and shutdown should fire the impact ring kit (the
-        # constant is also declared once, so at least two SendPlay calls).
-        self.assertGreaterEqual(self.text.count("VISUAL_KIT_BOOST_IMPACT"), 3)
-        send_calls = len(re.findall(
-            r"SendPlaySpellVisualKit\(VISUAL_KIT_BOOST_IMPACT", self.text))
-        self.assertEqual(send_calls, 2)
+    def test_04_top_speed_and_shutdown_have_double_impact(self):
+        # Both top-speed and shutdown fire the impact ring (wind burst) twice
+        # each so the moments read strongly on screen.
+        self.assertEqual(
+            self.text.count("me->SendPlaySpellVisualKit(VISUAL_KIT_IMPACT_RING, 0);"),
+            2)
 
-    def test_04_mechanical_flame_still_type_gated(self):
-        # Jet flame must only fire for MECHANICAL, never for beast/dragon.
+    def test_05_mechanical_flame_still_type_gated(self):
         self.assertIn("ARCHETYPE_MECHANICAL", self.text)
         self.assertIn("VISUAL_KIT_MECHANICAL_THRUST", self.text)
         # The rejected fire kit must not be reintroduced.
         self.assertNotIn("14475", self.text)
 
-    def test_05_no_aura_or_damage_added(self):
-        # Boost visuals must remain one-shot kits; no aura application added.
+    def test_06_no_aura_or_damage_added(self):
         self.assertNotIn("AddAura", self.text)
         self.assertNotIn("DealDamage", self.text)
 

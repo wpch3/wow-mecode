@@ -7,9 +7,12 @@ import os
 from pathlib import Path
 
 SOURCE_RELATIVE = Path("src/server/scripts/Commands/cs_dragonriding.cpp")
-# B2R1 postimage is the required preimage for R2.
+# B2R1 postimage is the normal preimage for R2.
 PRE_SHA256 = "ff185d9987b8f4457d8380e1c662cd0313b33a7ae4be6b82974e7702d1fdc4fc"
-POST_SHA256 = "adedfc58344a104ccc96ff28155b504727f50e0026d842345721610c6a32a59f"
+POST_SHA256 = "613420676babe4c71c570c24a0f5d94976623516e0519b4553b3d5962056bafe"
+# Earlier R2 intermediate that shipped unverified visual kit IDs; it is a valid
+# source to UPGRADE from (it will be overwritten to the final postimage).
+INTERMEDIATE_SHA256 = "adedfc58344a104ccc96ff28155b504727f50e0026d842345721610c6a32a59f"
 # Safety rollback returns to the B2R1 byte image (the last user-compiled PASS).
 SAFE_ROLLBACK_SHA256 = "ff185d9987b8f4457d8380e1c662cd0313b33a7ae4be6b82974e7702d1fdc4fc"
 PACKAGE_ROOT = Path(__file__).resolve().parents[1]
@@ -44,6 +47,7 @@ def check(root: Path) -> str:
     digest = sha(target)
     states = {
         PRE_SHA256: "READY_B2R1_PREIMAGE",
+        INTERMEDIATE_SHA256: "B2R2_INTERMEDIATE_UPGRADEABLE",
         POST_SHA256: "B2R2_APPLIED",
         SAFE_ROLLBACK_SHA256: "B2R2_SAFE_ROLLBACK_B2R1",
     }
@@ -63,9 +67,12 @@ def apply(root: Path) -> None:
         return
 
     backup = target.with_name(target.name + ".g17b2r2.b2r1-preimage")
-    if state == "READY_B2R1_PREIMAGE":
-        if backup.exists() and sha(backup) != PRE_SHA256:
-            raise RuntimeError("existing B2R1 forensic backup SHA mismatch")
+    if state in ("READY_B2R1_PREIMAGE", "B2R2_INTERMEDIATE_UPGRADEABLE"):
+        # Keep a forensic backup of whatever is currently there (B2R1 final or
+        # the earlier R2 intermediate) before overwriting it, unless a backup
+        # already exists from a previous apply.
+        if backup.exists() and sha(backup) not in (PRE_SHA256, INTERMEDIATE_SHA256):
+            raise RuntimeError("existing forensic backup SHA mismatch")
         if not backup.exists():
             backup.write_bytes(target.read_bytes())
 

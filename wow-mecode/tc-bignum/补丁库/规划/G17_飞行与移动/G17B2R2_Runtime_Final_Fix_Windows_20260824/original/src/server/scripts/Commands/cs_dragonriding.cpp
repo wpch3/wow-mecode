@@ -1,22 +1,13 @@
 /*
- * G17-B2R2: runtime experience final fix for boost, dash and landing.
+ * G17-B2R1: runtime experience rework for momentum boost, curved climb and landing.
  *
- * B2R2 preserves B1R3 authoritative seating, B1R4 indoor enforcement, B1R5
- * wrapper-mount resolution and B2's bounded 250%-1200% momentum model. It is
- * the follow-up to B2R1 and fixes three real runtime defects:
- *   - Skill 2 (boost) now has richer layered feedback (launch burst + charge
- *     trail, a slower mid-boost gust, a top-speed impact ring and a shutdown
- *     burst) instead of a single thin streamer.
- *   - Skill 3 (dash/climb) no longer launches along a stale smoothed travel
- *     heading. The whole 7-node path is anchored to the rider's facing at cast
- *     time, so the dash is a straight forward surge in the direction the player
- *     is actually looking. This removes the fixed-direction curve / U-turn.
- *   - Skill 4 (landing) uses the real quest-item command 52226 "飞行器着陆" and
- *     explicitly allows the cast from the G17 dragon, suppressing the native
- *     dummy effect and starting landing from both OnEffectHit and AfterCast so
- *     it works for every mount type.
- * Landing profiles stay type-gated: flat magic/wind glide, long dragon slope,
- * mechanical reverse-thrust approach, and fire-free beast pounce.
+ * B2R1 preserves B1R3 authoritative seating, B1R4 indoor enforcement, B1R5
+ * wrapper-mount resolution and B2's bounded 250%-1200% momentum model. Skill 2
+ * now has non-aura launch, sustained-speed, top-speed and shutdown feedback.
+ * Skill 3 uses a collision-checked multi-point Catmull-Rom arc with bounded yaw
+ * curvature and tangent-aligned client handoff. Skill 4 uses a visual-free dummy
+ * command and forward multi-segment profiles: flat magic/wind glide, long dragon
+ * slope, mechanical reverse-thrust approach, and fire-free beast pounce.
  */
 
 #include "ScriptMgr.h"
@@ -248,8 +239,7 @@ constexpr float CLIMB_SPLINE_SPEED_MAX = 32.0f;
 constexpr float CLIMB_MAX_YAW_DELTA = 0.70f; // 40 degrees per cast, never a hairpin.
 constexpr uint32 CLIMB_CONTROL_TIMEOUT_MS = 2600;
 constexpr uint32 BOOST_DURATION_MS = 4000;
-constexpr uint32 BOOST_TRAIL_INTERVAL_MS = 550;
-constexpr uint32 BOOST_GUST_INTERVAL_MS = 1100;
+constexpr uint32 BOOST_TRAIL_INTERVAL_MS = 700;
 constexpr uint32 LANDING_TIMEOUT_MS = 45000;
 constexpr uint32 SAFETY_CHECK_INTERVAL_MS = 250;
 constexpr uint32 MOTION_SAMPLE_INTERVAL_MS = 100;
@@ -258,21 +248,12 @@ constexpr uint32 FALL_GUARD_INTERVAL_MS = 100;
 constexpr uint32 FALL_GUARD_MAX_CHECKS = 200;
 constexpr uint32 FALL_GUARD_START_CHECKS = 10;
 
-// Every B2R2 visual kit is a client-side one-shot with no aura and no damage.
-// Only SpellVisualKit IDs already audited against the project's real 3.3.5a
-// zhCN SpellVisualKit.dbc (see the B2R1 visual-kit audit evidence) are used.
-// "Richer" feedback comes from layering and timing these known-good kits, not
-// from inventing new IDs that might not exist in the client.  The mechanical
-// jet flame stays type-gated to mechanical/rocket archetypes only.
-constexpr uint32 VISUAL_KIT_BOOST_LAUNCH      = 44;    // ChargeTrail + dust + launch sound.
-constexpr uint32 VISUAL_KIT_SPEED_TRAIL       = 696;   // Generic RibbonTrail sustained-speed pulse.
-constexpr uint32 VISUAL_KIT_WIND_BURST        = 13709; // One-shot Wind Shear impact + sound.
+// Every B2R1 visual kit is a client-side one-shot with no aura and no damage.
+constexpr uint32 VISUAL_KIT_BOOST_LAUNCH = 44;       // ChargeTrail + dust + launch sound.
+constexpr uint32 VISUAL_KIT_SPEED_TRAIL = 696;       // Generic RibbonTrail sustained-speed pulse.
+constexpr uint32 VISUAL_KIT_WIND_BURST = 13709;      // One-shot Wind Shear impact + sound.
 constexpr uint32 VISUAL_KIT_MECHANICAL_THRUST = 13481; // Mechanical-only jet-pack flame attach.
-constexpr uint32 VISUAL_KIT_LANDING_DUST      = 1066;  // Fire-free contact dust.
-// B2R2 reuses the audited kits for denser layered feedback:
-constexpr uint32 VISUAL_KIT_BURST_EXTRA       = 44;    // Second ChargeTrail burst (double launch).
-constexpr uint32 VISUAL_KIT_TRAIL_PULSE       = 696;   // Faster ribbon-trail pulse.
-constexpr uint32 VISUAL_KIT_IMPACT_RING       = 13709; // Wind-shear impact ring (top speed / end).
+constexpr uint32 VISUAL_KIT_LANDING_DUST = 1066;     // Fire-free contact dust.
 
 constexpr std::array<float, 7> FLIGHT_SPEED_RATES = { 2.5f, 4.0f, 6.0f, 8.0f, 10.0f, 11.0f, 12.0f };
 constexpr std::array<float, 7> MOMENTUM_THRESHOLDS = { 0.0f, 0.18f, 0.34f, 0.50f, 0.66f, 0.82f, 0.94f };
@@ -691,7 +672,6 @@ struct npc_g17_dragonriding_vehicle : public VehicleAI
         _climbControlTimer = 0;
         _boostTimer = 0;
         _boostTrailTimer = 0;
-        _boostGustTimer = 0;
         _landingTimer = 0;
         _landingSegments = 0;
         _boostTopSpeedAnnounced = false;
@@ -788,7 +768,6 @@ struct npc_g17_dragonriding_vehicle : public VehicleAI
             _climbControlTimer = 0;
             _boostTimer = 0;
             _boostTrailTimer = 0;
-            _boostGustTimer = 0;
             _landingTimer = 0;
             _landingSegments = 0;
             _boostTopSpeedAnnounced = false;
@@ -900,26 +879,13 @@ struct npc_g17_dragonriding_vehicle : public VehicleAI
 
             _boostTimer = BOOST_DURATION_MS;
             _boostTrailTimer = 1;
-            _boostGustTimer = BOOST_GUST_INTERVAL_MS;
-            _boostGustPulseCount = 0;
             _boostTopSpeedAnnounced = false;
             _momentum = std::min(MAX_MOMENTUM, _momentum + 0.28f);
-            // Layered launch feedback using only audited 3.3.5a client kits: a
-            // double ChargeTrail burst for a strong launch read, plus the
-            // ribbon trail starter.  Mechanical mounts also fire the jet flame;
-            // all are client-side one-shots (no aura, no damage, no state).
             me->SendPlaySpellVisualKit(VISUAL_KIT_BOOST_LAUNCH, 0);
-            me->SendPlaySpellVisualKit(VISUAL_KIT_BURST_EXTRA, 0);
-            me->SendPlaySpellVisualKit(VISUAL_KIT_TRAIL_PULSE, 0);
-            if (_archetype == ARCHETYPE_MECHANICAL)
-                me->SendPlaySpellVisualKit(VISUAL_KIT_MECHANICAL_THRUST, 0);
-            else
-                // Non-mechanical mounts get an extra wind-burst punch on launch.
-                me->SendPlaySpellVisualKit(VISUAL_KIT_WIND_BURST, 0);
             if (_stalling)
                 RecoverFromStall();
             SendToRider(me,
-                "|cff80dfff[G17-B2R2] 高速推进启动：双层冲刺爆发、持续尾流与气浪已触发，正在平滑升档（硬上限1200%）。|r");
+                "|cff80dfff[G17-B2R1] 高速推进启动：冲刺声效与尾流已触发，正在平滑升档（硬上限1200%）。|r");
             return;
         }
 
@@ -1028,7 +994,6 @@ private:
         _stalling = false;
         _boostTimer = 0;
         _boostTrailTimer = 0;
-        _boostGustTimer = 0;
         _boostTopSpeedAnnounced = false;
         _landingTimer = 0;
         _landingSegments = 0;
@@ -1067,34 +1032,14 @@ private:
                 _boostTrailTimer = BOOST_TRAIL_INTERVAL_MS;
                 me->SendPlaySpellVisualKit(VISUAL_KIT_SPEED_TRAIL, 0);
             }
-            // A second, slower pulse layers an alternating wind burst over the
-            // ribbon trail so the boost has a visible body instead of a single
-            // thin streamer.  Kits alternate between wind burst and an extra
-            // ribbon pulse; both are already-audited one-shot visuals.
-            if (_boostGustTimer > diff)
-                _boostGustTimer -= diff;
-            else
-            {
-                _boostGustTimer = BOOST_GUST_INTERVAL_MS;
-                ++_boostGustPulseCount;
-                if ((_boostGustPulseCount & 1u) != 0u)
-                    me->SendPlaySpellVisualKit(VISUAL_KIT_WIND_BURST, 0);
-                else
-                    me->SendPlaySpellVisualKit(VISUAL_KIT_TRAIL_PULSE, 0);
-            }
         }
         else if (wasBoosting)
         {
             _boostTrailTimer = 0;
-            _boostGustTimer = 0;
-            _boostGustPulseCount = 0;
             _boostTopSpeedAnnounced = false;
-            // Shutdown feedback: two wind-burst/impact one-shots so the end of
-            // the boost reads on screen instead of silently cutting off.
             me->SendPlaySpellVisualKit(VISUAL_KIT_WIND_BURST, 0);
-            me->SendPlaySpellVisualKit(VISUAL_KIT_IMPACT_RING, 0);
             SendToRider(me,
-                "|cff80ff80[G17-B2R2] 高速推进结束：结束风爆与冲击环已触发、持续尾流停止；保留当前动量并自然换档。|r");
+                "|cff80ff80[G17-B2R1] 高速推进结束：结束风爆已触发、持续尾流停止；保留当前动量并自然换档。|r");
         }
 
         _motionSampleAccumulator += diff;
@@ -1185,12 +1130,9 @@ private:
         if (_boostTimer && !_boostTopSpeedAnnounced && _currentSpeedRate >= 11.5f)
         {
             _boostTopSpeedAnnounced = true;
-            // Top-speed punch: two wind-burst/impact one-shots so crossing into
-            // the top tier is unmistakable, not just a chat line.
             me->SendPlaySpellVisualKit(VISUAL_KIT_WIND_BURST, 0);
-            me->SendPlaySpellVisualKit(VISUAL_KIT_IMPACT_RING, 0);
             SendToRider(me,
-                "|cffffff80[G17-B2R2] 已进入极速段：冲击环已触发，当前接近1200%硬上限，持续尾流仍在工作。|r");
+                "|cffffff80[G17-B2R1] 已进入极速段：当前接近1200%硬上限，持续尾流仍在工作。|r");
         }
 
         if (_speedPacketTimer >= SPEED_PACKET_INTERVAL_MS)
@@ -1248,21 +1190,6 @@ private:
             "|cff80ff80[G17-B2R1] 已从失速恢复：上升、下降、转向和前进控制全部恢复。|r");
     }
 
-    // B2R2: The dash MUST follow the direction the player is actually facing at
-    // cast time, not a stale smoothed travel heading.  Using the old
-    // _smoothedTravelHeading (which lingers from the previous dash or from
-    // momentum sampling) as the path baseline caused the vehicle to launch in an
-    // old direction and slowly curve toward the current heading, producing the
-    // user-reported "forced U-turn / 增强掉头" when the player had turned.  We
-    // now anchor both the start tangent and the exit tangent to the rider's
-    // current orientation so the dash is always a straight forward surge.
-    float ResolveFacingHeading() const
-    {
-        if (Player const* rider = G17Dragonriding::GetRider(const_cast<Creature*>(me)))
-            return rider->GetOrientation();
-        return me->GetOrientation();
-    }
-
     bool BuildClimbPath(float distance, Movement::PointsArray& path, float& exitHeading)
     {
         using namespace G17Dragonriding;
@@ -1270,10 +1197,9 @@ private:
         float const startX = me->GetPositionX();
         float const startY = me->GetPositionY();
         float const startZ = me->GetPositionZ();
-        // Anchor the whole dash to the facing at cast time.  There is no
-        // residual turn blend because that is precisely what created the
-        // fixed-direction curve/U-turn; the dash is a straight forward surge.
-        float const facingHeading = ResolveFacingHeading();
+        float const startHeading = _travelHeadingReady ? _smoothedTravelHeading : me->GetOrientation();
+        float const desiredDelta = NormalizeRadians(me->GetOrientation() - startHeading);
+        float const yawDelta = std::clamp(desiredDelta, -CLIMB_MAX_YAW_DELTA, CLIMB_MAX_YAW_DELTA);
 
         path.clear();
         path.reserve(8);
@@ -1287,19 +1213,18 @@ private:
         for (uint32 node = 1; node <= nodeCount; ++node)
         {
             float const t = float(node) / float(nodeCount);
-            // Every node advances along the same facing heading; only altitude
-            // is curved.  This guarantees no horizontal yaw at all, so the
-            // vehicle can never turn away from where the player is looking.
+            float const turnBlend = SmoothStep(t);
+            float const heading = NormalizeRadians(startHeading + yawDelta * turnBlend);
             float const stepDistance = distance / float(nodeCount);
-            x += std::cos(facingHeading) * stepDistance;
-            y += std::sin(facingHeading) * stepDistance;
+            x += std::cos(heading) * stepDistance;
+            y += std::sin(heading) * stepDistance;
             float const z = startZ + CLIMB_HEIGHT * SmoothStep(t);
             if (!me->IsWithinLOS(x, y, z))
                 return false;
             path.emplace_back(x, y, z);
         }
 
-        exitHeading = facingHeading;
+        exitHeading = NormalizeRadians(startHeading + yawDelta);
         return true;
     }
 
@@ -1325,7 +1250,7 @@ private:
         if (acceptedDistance <= 0.0f)
         {
             SendToRider(me,
-                "|cffffb040[G17-B2R2] 技能3冲刺路径被障碍阻挡：已取消且保持客户端飞行控制。|r");
+                "|cffffb040[G17-B2R1] 技能3曲线路径被障碍阻挡：已取消且保持客户端飞行控制。|r");
             RestoreClientFlightControl(true);
             return;
         }
@@ -1346,7 +1271,7 @@ private:
                 init.SetOrientationFixed(false);
             }, POINT_CLIMB);
         SendToRider(me,
-            "|cff80dfff[G17-B2R2] 技能3：沿当前朝向直线向前冲刺爬升，无额外转向。|r");
+            "|cff80dfff[G17-B2R1] 技能3：多点曲线沿实际航向向前爬升；转角受限并以末端切线交还控制。|r");
     }
 
     void CompleteClimb(bool timedOut)
@@ -1368,8 +1293,8 @@ private:
         RestoreClientFlightControl(timedOut);
         ApplyMovementRates(_currentSpeedRate, true);
         G17Dragonriding::SendToRider(me, timedOut
-            ? "|cffffb040[G17-B2R2] 冲刺回调超时：已清除服务端运动并恢复全部控制。|r"
-            : "|cff80ff80[G17-B2R2] 冲刺完成：朝向、姿态、速度与客户端控制已平滑交接。|r");
+            ? "|cffffb040[G17-B2R1] 爬升回调超时：已清除服务端运动并恢复全部控制。|r"
+            : "|cff80ff80[G17-B2R1] 爬升完成：末端切线、姿态、速度与客户端控制已平滑交接。|r");
     }
 
     struct LandingProfile
@@ -1513,7 +1438,6 @@ private:
         _stalling = false;
         _boostTimer = 0;
         _boostTrailTimer = 0;
-        _boostGustTimer = 0;
         _boostTopSpeedAnnounced = false;
         _landingTimer = LANDING_TIMEOUT_MS;
         _landingSegments = 0;
@@ -1636,8 +1560,6 @@ private:
     uint32 _climbControlTimer = 0;
     uint32 _boostTimer = 0;
     uint32 _boostTrailTimer = 0;
-    uint32 _boostGustTimer = 0;
-    uint32 _boostGustPulseCount = 0;
     uint32 _landingTimer = 0;
     uint32 _landingSegments = 0;
     uint32 _orphanGraceTimer = 3000;
@@ -1782,60 +1704,23 @@ class spell_g17_dragon_safe_landing : public SpellScript
 {
     PrepareSpellScript(spell_g17_dragon_safe_landing);
 
-    // B2R2: 52226 "飞行器着陆" is the real quest-item/vehicle landing command,
-    // not a no-op.  Its DBC dummy effect can carry cast conditions (quest/item
-    // requirements) that reject the cast when the caster is the G17 dragon,
-    // which is why skill 4 "could not be used on any mount" after B2R1.  We
-    // explicitly allow the cast while on a G17 dragon, suppress the default
-    // dummy effect so the quest behavior never fires in this context, and
-    // trigger landing from both OnEffectHit and AfterCast so it cannot be
-    // skipped by a single hook ordering issue.
-    SpellCastResult CheckCast()
-    {
-        Unit* caster = GetCaster();
-        if (!caster)
-            return SPELL_FAILED_ERROR;
-
-        // Always allow the landing command while seated on a G17 vehicle, even
-        // though the dragon is not the original flying machine the quest spell
-        // was authored for.  This overrides the quest/item cast conditions
-        // that were blocking skill 4 on every mount.
-        if (G17Dragonriding::IsDragon(caster))
-            return SPELL_CAST_OK;
-
-        // Outside a G17 dragon, do not interfere with the native spell at all.
-        return SPELL_CAST_OK;
-    }
-
     void StartLanding(SpellEffIndex effectIndex)
     {
         if (!G17Dragonriding::IsDragon(GetCaster()))
             return;
 
-        // Suppress the native dummy effect so only the guarded G17 vehicle
-        // landing state machine acts for this cast.
+        // The action-bar command is a visual-free dummy. Suppress even that
+        // no-op effect so only the guarded G17 vehicle state machine can act.
         PreventHitDefaultEffect(effectIndex);
         if (Creature* dragon = GetCaster()->ToCreature())
             if (dragon->IsAIEnabled())
                 dragon->AI()->DoAction(G17Dragonriding::ACTION_LAND);
     }
 
-    void EnsureLanding()
-    {
-        // AfterCast fallback: guarantees the landing starts even if the dummy
-        // effect is skipped by core effect processing.  ACTION_LAND is
-        // idempotent in the AI (guarded by _landing), so a double call is safe.
-        if (Creature* dragon = GetCaster()->ToCreature())
-            if (G17Dragonriding::IsDragon(dragon) && dragon->IsAIEnabled())
-                dragon->AI()->DoAction(G17Dragonriding::ACTION_LAND);
-    }
-
     void Register() override
     {
-        OnCheckCast += SpellCheckCastFn(spell_g17_dragon_safe_landing::CheckCast);
         OnEffectHit += SpellEffectFn(spell_g17_dragon_safe_landing::StartLanding,
             EFFECT_0, SPELL_EFFECT_ANY);
-        AfterCast += SpellCastFn(spell_g17_dragon_safe_landing::EnsureLanding);
     }
 };
 
