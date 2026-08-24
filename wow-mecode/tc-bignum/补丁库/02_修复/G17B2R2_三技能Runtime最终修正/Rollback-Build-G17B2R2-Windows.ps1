@@ -16,8 +16,12 @@ $Exe = Join-Path $RunDir "worldserver.exe"
 $Pdb = Join-Path $RunDir "worldserver.pdb"
 # Read hashes from the Python tool so they never drift from the payload.
 function Read-ToolHash([string]$Name) {
-    $line = @(Get-Content -LiteralPath $Tool | Where-Object { $_ -match ('^\s*' + $Name + '\s*=\s*"([0-9a-f]+)"') })[0]
+    $pattern = ('^\s*' + [regex]::Escape($Name) + '\s*=\s*"([0-9a-f]+)"')
+    $line = @(Get-Content -LiteralPath $Tool | Where-Object { $_ -match $pattern })[0]
     if (-not $line) { throw "could not read $Name from $Tool" }
+    # $Matches set inside the Where-Object filter scope does not survive into
+    # this function scope: re-match directly here (proven two-step pattern).
+    if ($line -notmatch $pattern) { throw "could not parse $Name from $Tool" }
     return $Matches[1]
 }
 $Post = Read-ToolHash "POST_SHA256"

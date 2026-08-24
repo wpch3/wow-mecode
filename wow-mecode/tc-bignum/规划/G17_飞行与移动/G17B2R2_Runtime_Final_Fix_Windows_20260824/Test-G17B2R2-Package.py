@@ -48,6 +48,35 @@ def main() -> int:
         if token not in tool:
             print(f"PACKAGE_TOOL_MISSING_HASH {token}")
             rc = 1
+    # Installer gates must match the gate strings the SQL files really emit,
+    # and the READMEs must quote the banner the payload really prints.
+    install = (root / "Install-Build-G17B2R2-Windows.ps1").read_text(
+        encoding="utf-8")
+    binding_sql = (root / "sql/G17B2R2_world_landing_binding_guard.sql")
+    castable_sql = (root / "sql/G17B2R2_world_spell52226_castable_override.sql")
+    pairs = (
+        ("G17B2R2_WORLD_BINDING_GUARD=PASS", binding_sql.read_text(
+            encoding="utf-8")),
+        ("G17B2R2_SPELL_52226_CASTABLE=PASS", castable_sql.read_text(
+            encoding="utf-8")),
+    )
+    for marker, sql_text in pairs:
+        if marker not in sql_text:
+            print(f"PACKAGE_SQL_MISSING_GATE {marker}")
+            rc = 1
+        if f'-PassMarker "{marker}"' not in install:
+            print(f"PACKAGE_PS1_MISSING_GATE {marker}")
+            rc = 1
+    payload = (root / "payload/src/server/scripts/Commands/cs_dragonriding.cpp"
+               ).read_text(encoding="utf-8")
+    banner = (">> G17-B2R2 dragonriding LOADED  build=20260824-r2 "
+              "(skill2/3/4 fixes active)")
+    if banner not in payload:
+        print("PACKAGE_PAYLOAD_MISSING_BANNER")
+        rc = 1
+    if not (root / "PACKAGE_METADATA.txt").is_file():
+        print("PACKAGE_FILE_MISSING PACKAGE_METADATA.txt")
+        rc = 1
     if rc == 0:
         print("G17B2R2_PACKAGE_SELF_TEST=PASS")
     else:

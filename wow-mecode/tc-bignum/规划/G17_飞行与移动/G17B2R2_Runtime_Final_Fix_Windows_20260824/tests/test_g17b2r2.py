@@ -99,13 +99,47 @@ class TestPowerShellInstaller(unittest.TestCase):
             self.assertNotIn(f'$Post = "{h}"', self.rollback)
 
     def test_03_no_broken_ps1_quote_escaping(self):
-        # The broken form was: -match "^\s*$Name...\"  inside a DOUBLE-quoted
+        # The broken form was: -match "^\s*$Name...\""  inside a DOUBLE-quoted
         # PS string, where \" is a parse error (PS escapes with backtick).
-        # The fixed form uses single-quote concatenation: ('...' + $Name + '...').
+        # The fixed form builds ONE single-quoted pattern string and passes it
+        # as a variable: single backslashes survive into .NET regex unchanged.
+        pattern_line = ("$pattern = ('^\s*' + [regex]::Escape($Name) + "
+                        "'\s*=\s*\"([0-9a-f]+)\"')")
         for script in (self.install, self.rollback):
             self.assertNotIn('-match "^', script)
-            self.assertIn("$_ -match ('^", script)
+            self.assertIn(pattern_line, script)
+            self.assertIn("Where-Object { $_ -match $pattern", script)
 
+    def test_04_hash_read_uses_function_scope_rematch(self):
+        # Regression: the first R2 installer read $Matches[1] immediately after
+        # the Where-Object filter. $Matches is populated inside the filter's
+        # child scope and does not survive into the function scope, so the
+        # returned hash was $null and the installer died with "dragonriding
+        # source is not a locked B2R1/B2R2 image" on the user's machine. The
+        # proven two-step pattern (identical to the WorldDatabaseInfo parser
+        # that already ran successfully on the user's Windows build) re-runs
+        # -match on the selected line in the function scope.
+        for script in (self.install, self.rollback):
+            idx_filter = script.index("Where-Object { $_ -match $pattern")
+            idx_rematch = script.index("if ($line -notmatch $pattern)")
+            self.assertLess(idx_filter, idx_rematch)
+            self.assertIn("return $Matches[1]", script)
+
+    def test_05_sql_gate_markers_match_installer(self):
+        # Regression: the installer waited for "G17B2R2_SPELL_52226_OVERRIDE=PASS"
+        # but the castable SQL ALWAYS emits "G17B2R2_SPELL_52226_CASTABLE=PASS".
+        # After mysql exited 0 the gate check still threw -> guaranteed FAIL at
+        # the second World SQL step, so the one-click run could never complete.
+        markers = {
+            "G17B2R2_world_landing_binding_guard.sql":
+                "G17B2R2_WORLD_BINDING_GUARD=PASS",
+            "G17B2R2_world_spell52226_castable_override.sql":
+                "G17B2R2_SPELL_52226_CASTABLE=PASS",
+        }
+        for fname, marker in markers.items():
+            sql = (ROOT / "sql" / fname).read_text(encoding="utf-8")
+            self.assertIn("'" + marker + "'", sql)
+            self.assertIn('-PassMarker "' + marker + '"', self.install)
 
     def test_06_tool_recognizes_both_intermediates_as_upgradeable(self):
         import importlib.util
@@ -287,6 +321,32 @@ class TestWorldBindingGuard(unittest.TestCase):
             [9573, 55215, 52197, 12345], set())
         self.assertFalse(can)
         self.assertEqual(spells[3], 12345)
+
+
+
+class TestDocsConsistency(unittest.TestCase):
+    """README / status docs must describe the real banner and real postimage."""
+
+    def setUp(self):
+        self.docs = [ROOT / name for name in (
+            "README_FIRST.txt", "README_详细步骤.txt",
+            "00-G17B2R2_实现与验收状态.md")]
+
+    def test_01_readmes_use_exact_payload_banner(self):
+        banner = (">> G17-B2R2 dragonriding LOADED  build=20260824-r2 "
+                  "(skill2/3/4 fixes active)")
+        self.assertIn(banner, SOURCE.read_text(encoding="utf-8"))
+        for doc in self.docs:
+            self.assertIn(banner, doc.read_text(encoding="utf-8"),
+                          f"{doc.name} does not quote the real banner")
+
+    def test_02_readmes_use_postimage_not_stale_hash(self):
+        for doc in self.docs:
+            text = doc.read_text(encoding="utf-8")
+            self.assertIn("3b92e815", text, doc.name)
+            self.assertNotIn("3e4590da", text, doc.name)
+            self.assertNotIn("postimage=61342067", text, doc.name)
+            self.assertNotIn("postimage=03dd649d", text, doc.name)
 
 
 if __name__ == "__main__":

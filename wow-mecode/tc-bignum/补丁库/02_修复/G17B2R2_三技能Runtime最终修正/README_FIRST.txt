@@ -9,9 +9,11 @@ G17-B2R2 三技能 Runtime 最终修正 — 一键安装
        用 MSBuild 重新生成 worldserver 目标 -> 校验新 exe/pdb 时间戳和哈希）
   3. 看到 [G17B2R2] INSTALL/BUILD PASSED 后，正常启动：
        D:\TC-Build\bin\RelWithDebInfo\worldserver.exe
-  4. 在 worldserver.log 启动处确认出现：
-       G17-B2R2 LOADED  build=2026-08-24  postimage=61342067
+  4. 在 worldserver.log 启动处确认出现（逐字一致）：
+       >> G17-B2R2 dragonriding LOADED  build=20260824-r2 (skill2/3/4 fixes active)
      如果没有这行，说明跑的不是新 exe。
+     源码后像 SHA256（结果文件 SOURCE_SHA256_AFTER 应等于）：
+       3b92e815dc81ade4aa9927c19716dabddb8e8f93a6d0aff8b32c80dfbcbfc7f1
   5. 进游戏召唤坐骑，依次按一次技能2、技能3、技能4。
   6. 把这个结果文件发回给代理：
        C:\Users\Administrator\Downloads\workspace\uploads\G17B2R2_WINDOWS_BUILD_RESULT.txt

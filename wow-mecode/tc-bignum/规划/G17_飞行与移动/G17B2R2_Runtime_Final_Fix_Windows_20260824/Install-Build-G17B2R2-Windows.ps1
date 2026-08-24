@@ -23,8 +23,14 @@ $WorldConf = Join-Path $RunDir "worldserver.conf"
 # the payload. Hard-coding them here was the root cause of the B2R2 FAIL where
 # the source was already the new postimage but this script rejected it.
 function Read-ToolHash([string]$Name) {
-    $line = @(Get-Content -LiteralPath $Tool | Where-Object { $_ -match ('^\s*' + $Name + '\s*=\s*"([0-9a-f]+)"') })[0]
+    $pattern = ('^\s*' + [regex]::Escape($Name) + '\s*=\s*"([0-9a-f]+)"')
+    $line = @(Get-Content -LiteralPath $Tool | Where-Object { $_ -match $pattern })[0]
     if (-not $line) { throw "could not read $Name from $Tool" }
+    # IMPORTANT: $Matches set inside the Where-Object filter scope does not
+    # survive into this function scope, so re-run the match directly here and
+    # read the capture group from the function-scope $Matches (same proven
+    # two-step pattern as the WorldDatabaseInfo parser below).
+    if ($line -notmatch $pattern) { throw "could not parse $Name from $Tool" }
     return $Matches[1]
 }
 $Pre          = Read-ToolHash "PRE_SHA256"
@@ -194,7 +200,7 @@ try {
     if ($after -cne $Post) { throw "B2R2 postimage SHA mismatch" }
     W "G17B2R2_SOURCE_APPLY_GATE=PASS"
     Invoke-WorldMigration -SqlFile $Sql -PassMarker "G17B2R2_WORLD_BINDING_GUARD=PASS" -Label "52226_BINDING"
-    Invoke-WorldMigration -SqlFile $SqlCastable -PassMarker "G17B2R2_SPELL_52226_OVERRIDE=PASS" -Label "52226_CASTABLE"
+    Invoke-WorldMigration -SqlFile $SqlCastable -PassMarker "G17B2R2_SPELL_52226_CASTABLE=PASS" -Label "52226_CASTABLE"
     $vswhere = Join-Path ${env:ProgramFiles(x86)} "Microsoft Visual Studio\Installer\vswhere.exe"
     if (-not (Test-Path -LiteralPath $vswhere -PathType Leaf)) { throw "vswhere missing" }
     $msbuild = @(& $vswhere -latest -products * -requires Microsoft.Component.MSBuild -find "MSBuild\**\Bin\MSBuild.exe" | Where-Object { $_ })[0]

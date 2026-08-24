@@ -41,7 +41,7 @@ G17-B2R2 三技能最终修正 — 详细安装与回传步骤
   a) 找 Python312/310（不用 py，避开 Python314 不存在的101错误）
   b) 包自检 + 25项单元测试
   c) 记录 D:\TrinityCore\...\cs_dragonriding.cpp 替换前哈希
-  d) 把源码替换成最终版（哈希 3e4590da...），原文件备份为
+  d) 把源码替换成最终版（哈希 3b92e815...），原文件备份为
      cs_dragonriding.cpp.g17b2r2.b2r1-preimage
   e) 对 world 库执行：
        sql/G17B2R2_world_landing_binding_guard.sql
@@ -60,8 +60,8 @@ G17-B2R2 三技能最终修正 — 详细安装与回传步骤
 第三步：启动并验证（这是判断“到底跑没跑新代码”的唯一标准）
 ================================================================
 1. 启动：D:\TC-Build\bin\RelWithDebInfo\worldserver.exe
-2. 看启动窗口/worldserver.log，【必须】出现这一行：
-     >> G17-B2R2 dragonriding LOADED  build=2026-08-24  postimage=03dd649d
+2. 看启动窗口/worldserver.log，【必须】出现这一行（逐字一致）：
+     >> G17-B2R2 dragonriding LOADED  build=20260824-r2 (skill2/3/4 fixes active)
    - 有这行 = 新代码在运行。
    - 没有这行 = 跑的还是旧 exe（检查第二步是不是 FAILED，
      或是不是启动了别的目录的 worldserver.exe）。
@@ -83,7 +83,7 @@ G17-B2R2 三技能最终修正 — 详细安装与回传步骤
   C:\Users\Administrator\Downloads\workspace\uploads\G17B2R2_WINDOWS_BUILD_RESULT.txt
 
 我主要看里面这几项：
-  G17B2R2_SOURCE_STATE / SOURCE_SHA256_AFTER（应为 3e4590da...）
+  G17B2R2_SOURCE_STATE / SOURCE_SHA256_AFTER（应为 3b92e815...c7f1）
   MYSQL|...（两个SQL是否都 GATE=PASS）
   MSBUILD_EXIT（必须 0）
   DRAGONRIDING_FRESH_OBJECTS（必须 >=1）
