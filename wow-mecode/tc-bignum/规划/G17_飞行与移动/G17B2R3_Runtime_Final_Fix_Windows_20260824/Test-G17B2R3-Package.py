@@ -106,6 +106,19 @@ def main() -> int:
         print(f"PACKAGE_STALE_R2_REF {rel}")
         rc = 1
 
+    # R3FIX5 gate: no filesystem/path-mock patterns in the unit tests (see
+    # validator for the rationale; this exact bug just failed on the user's
+    # Windows box).
+    test_text = (root / "tests/test_g17b2r3.py").read_text(
+        encoding="utf-8")
+    code_lines = [l for l in test_text.splitlines()
+                  if not l.lstrip().startswith("#")]
+    for token in ("import tempfile", "mod.sha =", "TemporaryDirectory",
+                  "p == target"):
+        if any(token in l for l in code_lines):
+            print(f"PACKAGE_UNIT_TEST_PATH_MOCK {token}")
+            rc = 1
+
     referenced = re.findall(r'Join-Path \$PSScriptRoot \"([^\"]+)\"',
                             install)
     missing_refs = [r for r in referenced

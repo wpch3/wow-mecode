@@ -57,10 +57,10 @@ def model_world_binding(slot_spells: list[int],
 
 
 class TestFrozenInputs(unittest.TestCase):
-    def test_01_original_is_exact_b2r1_postimage(self):
+    def test_01_original_is_exact_b2r2_postimage(self):
         self.assertEqual(sha(ORIGINAL), PRE_SHA)
 
-    def test_02_safe_rollback_is_b2r1_floor(self):
+    def test_02_safe_rollback_is_b2r2_floor(self):
         self.assertEqual(sha(SAFE_ROLLBACK), SAFE_ROLLBACK_SHA)
 
     def test_03_payload_has_frozen_postimage(self):
@@ -180,45 +180,40 @@ class TestPowerShellInstaller(unittest.TestCase):
         self.assertEqual(len(mod.UPGRADEABLE_SHAS), 5)
 
     def test_08_tool_check_accepts_user_source_3e4590da(self):
-        # The user's real second run: D:\TrinityCore held the earlier R2
-        # draft 3e4590da (an earlier delivery README called it final).  The
-        # apply tool must classify it as upgradeable, so the installer's
-        # pre-check passes and the source is replaced with the frozen payload
-        # (with a forensic backup), instead of dying with "not a locked
-        # image".
+        # The user's real run: D:\TrinityCore held the earlier R2 draft
+        # 3e4590da (an earlier delivery README called it final).  The apply
+        # tool must classify it as upgradeable, so the installer's pre-check
+        # passes and the source is replaced with the frozen payload (with a
+        # forensic backup), instead of dying with "not a locked image".
+        #
+        # R3FIX5: this used to be tested by monkeypatching module sha() with a
+        # `p == target` stub.  On Windows the temp path from
+        # TemporaryDirectory does not string-equal root.resolve()'s path, so
+        # the stub never fired and check() raised "target SHA not recognized"
+        # on the user's machine.  The classifier is a pure function, so this
+        # test exercises exactly what the tool does - no filesystem, no mocks,
+        # identical on Windows and Linux.
         import importlib.util
-        import tempfile
         spec = importlib.util.spec_from_file_location("applytool3", TOOL)
         mod = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(mod)
-        with tempfile.TemporaryDirectory() as tmp:
-            root = Path(tmp)
-            target = root / mod.SOURCE_RELATIVE
-            target.parent.mkdir(parents=True)
-            target.write_bytes(b"placeholder")
-            real_sha = mod.sha
-            mod.sha = lambda p: (INTERMEDIATE3_SHA if p == target
-                                 else real_sha(p))
-            try:
-                state = mod.check(root.resolve())
-            finally:
-                mod.sha = real_sha
-            self.assertIn("UPGRADEABLE", state)
 
-        with tempfile.TemporaryDirectory() as tmp:
-            root = Path(tmp)
-            target = root / mod.SOURCE_RELATIVE
-            target.parent.mkdir(parents=True)
-            target.write_bytes(b"placeholder")
-            real_sha = mod.sha
-            mod.sha = lambda p: (INTERMEDIATE4_SHA if p == target
-                                 else real_sha(p))
-            try:
-                state = mod.check(root.resolve())
-            finally:
-                mod.sha = real_sha
-            self.assertIn("UPGRADEABLE", state)
+        for h in (INTERMEDIATE2_SHA, INTERMEDIATE3_SHA, INTERMEDIATE_SHA,
+                  INTERMEDIATE4_SHA, INTERMEDIATE5_SHA):
+            self.assertEqual(
+                mod.state_for_digest(h), "B2R3_INTERMEDIATE_UPGRADEABLE", h)
 
+        # Normal states: R3 preimage and rollback floor are the SAME byte
+        # image (3b92e815, R2 postimage); the state dict builds SAFE_ROLLBACK
+        # last, so R2 reports as B2R3_SAFE_ROLLBACK_B2R2 (apply() accepts it
+        # as the R2 preimage either way).
+        self.assertIn(mod.state_for_digest(PRE_SHA),
+                      ("READY_B2R2_PREIMAGE", "B2R3_SAFE_ROLLBACK_B2R2"))
+        self.assertEqual(mod.state_for_digest(POST_SHA), "B2R3_APPLIED")
+        self.assertEqual(mod.state_for_digest(SAFE_ROLLBACK_SHA),
+                         "B2R3_SAFE_ROLLBACK_B2R2")
+        # Unknown digests stay rejected (no silent writes).
+        self.assertEqual(mod.state_for_digest("40" * 32), "")
 
 class TestSkill2RichVisuals(unittest.TestCase):
     def setUp(self):

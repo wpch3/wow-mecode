@@ -210,6 +210,20 @@ def main() -> int:
             lowered = text.lower()
             if any(t in lowered for t in stale_tokens):
                 stale.append(f.relative_to(root))
+    # R3FIX5 gate: unit tests must never monkeypatch the tool's sha() with a
+    # filesystem/path equality stub - on Windows temp paths normalize
+    # differently and the packaged unit tests fail on the user's machine even
+    # though the tool logic is correct.  Only comment lines are ignored.
+    test_text = (root / "tests/test_g17b2r3.py").read_text(
+        encoding="utf-8")
+    code_lines = [l for l in test_text.splitlines()
+                  if not l.lstrip().startswith("#")]
+    mock_leaks = [tok for tok in ("import tempfile", "mod.sha =",
+                                  "TemporaryDirectory", "p == target")
+                  if any(tok in l for l in code_lines)]
+    check("NO_FILESYSTEM_PATH_MOCKS_IN_UNIT_TESTS", not mock_leaks,
+          "; ".join(mock_leaks))
+
     check("NO_STALE_R2_REFERENCES_IN_FUNCTIONAL_FILES", not stale,
           "; ".join(str(x) for x in stale[:5]))
 
