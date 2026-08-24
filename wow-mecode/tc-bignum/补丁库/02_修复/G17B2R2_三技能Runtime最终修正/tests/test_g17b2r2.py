@@ -14,7 +14,7 @@ SQL = ROOT / "sql/G17B2R2_world_landing_binding_guard.sql"
 TOOL = ROOT / "tools/apply_g17b2r2_source.py"
 
 PRE_SHA = "ff185d9987b8f4457d8380e1c662cd0313b33a7ae4be6b82974e7702d1fdc4fc"
-POST_SHA = "3e4590da5d8864f8447cd3b55acf05c249855927a33e0e792dd426f03426237a"
+POST_SHA = "3b92e815dc81ade4aa9927c19716dabddb8e8f93a6d0aff8b32c80dfbcbfc7f1"
 INTERMEDIATE_SHA = "03dd649ded01dcd1917b1d0e98689ae1dbfe4289f6fc2548a3a62d616e6a0844"
 INTERMEDIATE2_SHA = "adedfc58344a104ccc96ff28155b504727f50e0026d842345721610c6a32a59f"
 SAFE_ROLLBACK_SHA = "ff185d9987b8f4457d8380e1c662cd0313b33a7ae4be6b82974e7702d1fdc4fc"
@@ -73,6 +73,31 @@ class TestFrozenInputs(unittest.TestCase):
         self.assertIn(INTERMEDIATE_SHA, text)
         self.assertIn(INTERMEDIATE2_SHA, text)
         self.assertIn(SAFE_ROLLBACK_SHA, text)
+
+
+class TestPowerShellInstaller(unittest.TestCase):
+    """The PS1 must read hashes from the Python tool, never hard-code them,
+    so a payload hash change can never cause the 'not a locked image' FAIL."""
+
+    def setUp(self):
+        self.install = (ROOT / "Install-Build-G17B2R2-Windows.ps1").read_text(encoding="utf-8")
+        self.rollback = (ROOT / "Rollback-Build-G17B2R2-Windows.ps1").read_text(encoding="utf-8")
+
+    def test_01_reads_hashes_from_tool(self):
+        for script in (self.install, self.rollback):
+            self.assertIn("Read-ToolHash", script)
+            self.assertIn('POST_SHA256', script)
+            self.assertRegex(script, r"Read-ToolHash\s+\"POST_SHA256\"")
+
+    def test_02_no_stale_hardcoded_post_hash(self):
+        # The old postimage hashes must not be assigned to $Post.
+        stale = ("03dd649ded01dcd1917b1d0e98689ae1dbfe4289f6fc2548a3a62d616e6a0844",
+                 "3e4590da5d8864f8447cd3b55acf05c249855927a33e0e792dd426f03426237a",
+                 "613420676babe4c71c570c24a0f5d94976623516e0519b4553b3d5962056bafe")
+        for h in stale:
+            self.assertNotIn(f'$Post = "{h}"', self.install)
+            self.assertNotIn(f'$Post = "{h}"', self.rollback)
+
 
     def test_06_tool_recognizes_both_intermediates_as_upgradeable(self):
         import importlib.util

@@ -14,8 +14,14 @@ $Solution = Join-Path $BuildRoot "TrinityCore.sln"
 $RunDir = Join-Path $BuildRoot "bin\RelWithDebInfo"
 $Exe = Join-Path $RunDir "worldserver.exe"
 $Pdb = Join-Path $RunDir "worldserver.pdb"
-$Post = "03dd649ded01dcd1917b1d0e98689ae1dbfe4289f6fc2548a3a62d616e6a0844"
-$B2R1 = "ff185d9987b8f4457d8380e1c662cd0313b33a7ae4be6b82974e7702d1fdc4fc"
+# Read hashes from the Python tool so they never drift from the payload.
+function Read-ToolHash([string]$Name) {
+    $line = @(Get-Content -LiteralPath $Tool | Where-Object { $_ -match ('^\s*' + $Name + '\s*=\s*"([0-9a-f]+)"') })[0]
+    if (-not $line) { throw "could not read $Name from $Tool" }
+    return $Matches[1]
+}
+$Post = Read-ToolHash "POST_SHA256"
+$B2R1 = Read-ToolHash "SAFE_ROLLBACK_SHA256"
 
 New-Item -ItemType Directory -Path $UploadDir -Force | Out-Null
 [IO.File]::WriteAllText($Result, "", $Utf8NoBom)

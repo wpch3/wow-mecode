@@ -2061,7 +2061,7 @@ void AddSC_dragonriding_commandscript()
     // always active, so it cannot be hidden by appender filtering. If this
     // block is absent from worldserver.log at startup, the running exe is old.
     TC_LOG_INFO("server.loading", " ");
-    TC_LOG_INFO("server.loading", ">> G17-B2R2 dragonriding LOADED  build=2026-08-24  postimage=03dd649d");
+    TC_LOG_INFO("server.loading", ">> G17-B2R2 dragonriding LOADED  build=20260824-r2 (skill2/3/4 fixes active)");
     TC_LOG_INFO("server.loading", "   skill2=layered audited visual kits | skill3=facing-locked dash | skill4=52226 checkcast");
     TC_LOG_INFO("server.loading", " ");
 

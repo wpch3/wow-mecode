@@ -19,13 +19,25 @@ $RunDir = Join-Path $BuildRoot "bin\RelWithDebInfo"
 $Exe = Join-Path $RunDir "worldserver.exe"
 $Pdb = Join-Path $RunDir "worldserver.pdb"
 $WorldConf = Join-Path $RunDir "worldserver.conf"
-$Pre = "ff185d9987b8f4457d8380e1c662cd0313b33a7ae4be6b82974e7702d1fdc4fc"
-$Post = "03dd649ded01dcd1917b1d0e98689ae1dbfe4289f6fc2548a3a62d616e6a0844"
-$Upgradeable = @(
-    "613420676babe4c71c570c24a0f5d94976623516e0519b4553b3d5962056bafe",
-    "adedfc58344a104ccc96ff28155b504727f50e0026d842345721610c6a32a59f"
+# Hashes are READ from the Python installer tool so they can never drift from
+# the payload. Hard-coding them here was the root cause of the B2R2 FAIL where
+# the source was already the new postimage but this script rejected it.
+function Read-ToolHash([string]$Name) {
+    $line = @(Get-Content -LiteralPath $Tool | Where-Object { $_ -match "^\s*$Name\s*=\s*\"([0-9a-f]+)\"" })[0]
+    if (-not $line) { throw "could not read $Name from $Tool" }
+    return $Matches[1]
+}
+$Pre          = Read-ToolHash "PRE_SHA256"
+$Post         = Read-ToolHash "POST_SHA256"
+$SafeRollback = Read-ToolHash "SAFE_ROLLBACK_SHA256"
+$Upgradeable  = @(
+    (Read-ToolHash "INTERMEDIATE_SHA256"),
+    (Read-ToolHash "INTERMEDIATE2_SHA256")
 )
-$SafeRollback = "ff185d9987b8f4457d8380e1c662cd0313b33a7ae4be6b82974e7702d1fdc4fc"
+# Any earlier postimage is also a valid upgrade source.
+$Upgradeable += "03dd649ded01dcd1917b1d0e98689ae1dbfe4289f6fc2548a3a62d616e6a0844"
+$Upgradeable += "613420676babe4c71c570c24a0f5d94976623516e0519b4553b3d5962056bafe"
+$Upgradeable += "adedfc58344a104ccc96ff28155b504727f50e0026d842345721610c6a32a59f"
 
 New-Item -ItemType Directory -Path $UploadDir -Force | Out-Null
 [IO.File]::WriteAllText($Result, "", $Utf8NoBom)

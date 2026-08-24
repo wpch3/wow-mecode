@@ -9,7 +9,7 @@ from pathlib import Path
 SOURCE_RELATIVE = Path("src/server/scripts/Commands/cs_dragonriding.cpp")
 # B2R1 postimage is the normal preimage for R2.
 PRE_SHA256 = "ff185d9987b8f4457d8380e1c662cd0313b33a7ae4be6b82974e7702d1fdc4fc"
-POST_SHA256 = "3e4590da5d8864f8447cd3b55acf05c249855927a33e0e792dd426f03426237a"
+POST_SHA256 = "3b92e815dc81ade4aa9927c19716dabddb8e8f93a6d0aff8b32c80dfbcbfc7f1"
 # Earlier R2 builds that are valid to upgrade from (banner-less final and the
 # first intermediate with unverified kits).
 INTERMEDIATE_SHA256 = "03dd649ded01dcd1917b1d0e98689ae1dbfe4289f6fc2548a3a62d616e6a0844"
