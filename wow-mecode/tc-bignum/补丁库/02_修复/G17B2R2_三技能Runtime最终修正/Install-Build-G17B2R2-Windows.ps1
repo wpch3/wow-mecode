@@ -23,7 +23,7 @@ $WorldConf = Join-Path $RunDir "worldserver.conf"
 # the payload. Hard-coding them here was the root cause of the B2R2 FAIL where
 # the source was already the new postimage but this script rejected it.
 function Read-ToolHash([string]$Name) {
-    $line = @(Get-Content -LiteralPath $Tool | Where-Object { $_ -match "^\s*$Name\s*=\s*\"([0-9a-f]+)\"" })[0]
+    $line = @(Get-Content -LiteralPath $Tool | Where-Object { $_ -match ('^\s*' + $Name + '\s*=\s*"([0-9a-f]+)"') })[0]
     if (-not $line) { throw "could not read $Name from $Tool" }
     return $Matches[1]
 }

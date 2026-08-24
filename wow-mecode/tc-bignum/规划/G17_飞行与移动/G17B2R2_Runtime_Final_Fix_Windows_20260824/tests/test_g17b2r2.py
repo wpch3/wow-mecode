@@ -98,6 +98,14 @@ class TestPowerShellInstaller(unittest.TestCase):
             self.assertNotIn(f'$Post = "{h}"', self.install)
             self.assertNotIn(f'$Post = "{h}"', self.rollback)
 
+    def test_03_no_broken_ps1_quote_escaping(self):
+        # The broken form was: -match "^\s*$Name...\"  inside a DOUBLE-quoted
+        # PS string, where \" is a parse error (PS escapes with backtick).
+        # The fixed form uses single-quote concatenation: ('...' + $Name + '...').
+        for script in (self.install, self.rollback):
+            self.assertNotIn('-match "^', script)
+            self.assertIn("$_ -match ('^", script)
+
 
     def test_06_tool_recognizes_both_intermediates_as_upgradeable(self):
         import importlib.util
