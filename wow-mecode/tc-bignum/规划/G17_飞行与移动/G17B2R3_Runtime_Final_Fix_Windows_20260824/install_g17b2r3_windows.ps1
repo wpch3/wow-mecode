@@ -1,6 +1,6 @@
-# G17-B2R2 Windows source apply + self-test.
+# G17-B2R3 Windows source apply + self-test.
 # Usage (from an unzipped package directory):
-#   powershell -ExecutionPolicy Bypass -File .\install_g17b2r2_windows.ps1 -SourceRoot D:\TrinityCore
+#   powershell -ExecutionPolicy Bypass -File .\install_g17b2r3_windows.ps1 -SourceRoot D:\TrinityCore
 # This only replaces the single G17 source file.  Run the world SQL separately
 # (see sql\G17B2R3_world_landing_binding_guard.sql), then rebuild scripts.
 #

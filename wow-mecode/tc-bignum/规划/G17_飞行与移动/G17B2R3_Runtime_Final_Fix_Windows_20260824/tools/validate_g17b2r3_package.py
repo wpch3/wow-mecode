@@ -195,6 +195,31 @@ def main() -> int:
                 docs_ok = False
     check("DOCS_CARRY_REAL_POSTIMAGE_NO_STALE", docs_ok)
 
+    # R2FIX4 gate: the previous revision's test-file reference must not
+    # survive in any functional package file (case-insensitive), and every
+    # file the installer joins under $PSScriptRoot must exist.
+    stale_tokens = ("g17" + "b2r2", "g17-" + "b2r2")
+    stale = []
+    for ext in ("*.ps1", "*.cmd", "*.py", "*.sql"):
+        for f in root.rglob(ext):
+            lowered_name = f.name.lower()
+            if any(t in lowered_name for t in stale_tokens):
+                stale.append(f.relative_to(root))
+                continue
+            text = f.read_text(encoding="utf-8", errors="replace")
+            lowered = text.lower()
+            if any(t in lowered for t in stale_tokens):
+                stale.append(f.relative_to(root))
+    check("NO_STALE_R2_REFERENCES_IN_FUNCTIONAL_FILES", not stale,
+          "; ".join(str(x) for x in stale[:5]))
+
+    referenced = re.findall(r'Join-Path \$PSScriptRoot \"([^\"]+)\"',
+                            install_ps1)
+    missing_refs = [r for r in referenced
+                    if not (root / r.replace("\\", "/")).is_file()]
+    check("INSTALLER_REFERENCED_FILES_ALL_EXIST", not missing_refs,
+          "; ".join(missing_refs))
+
     suite = unittest.defaultTestLoader.discover(str(root / "tests"),
                                                 pattern="test_g17b2r3.py")
     stream = io.StringIO()

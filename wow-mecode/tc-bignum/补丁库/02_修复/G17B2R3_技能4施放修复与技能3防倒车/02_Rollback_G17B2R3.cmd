@@ -2,7 +2,7 @@
 setlocal
 chcp 65001 >nul
 echo.
-echo === G17-B2R2 Rollback to B2R1 floor + Rebuild ===
+echo === G17-B2R3 Rollback to B2R1 floor + Rebuild ===
 echo.
 powershell.exe -NoLogo -NoProfile -ExecutionPolicy Bypass -File "%~dp0Rollback-Build-G17B2R3-Windows.ps1" %*
 set "RC=%ERRORLEVEL%"

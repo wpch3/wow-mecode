@@ -10,7 +10,7 @@ $Result = Join-Path $UploadDir "G17B2R3_WINDOWS_BUILD_RESULT.txt"
 $Utf8NoBom = New-Object System.Text.UTF8Encoding($false)
 $Target = Join-Path $SourceRoot "src\server\scripts\Commands\cs_dragonriding.cpp"
 $Tool = Join-Path $PSScriptRoot "tools\apply_g17b2r3_source.py"
-$Tests = Join-Path $PSScriptRoot "tests\test_g17b2r2.py"
+$Tests = Join-Path $PSScriptRoot "tests\test_g17b2r3.py"
 $PackageTest = Join-Path $PSScriptRoot "Test-G17B2R3-Package.py"
 $Sql = Join-Path $PSScriptRoot "sql\G17B2R3_world_landing_binding_guard.sql"
 $SqlCastable = Join-Path $PSScriptRoot "sql\G17B2R3_world_spell52226_castable_override.sql"
@@ -170,7 +170,7 @@ try {
     W "RUNS_SQL=True"
     W "DATABASE=world"
     W "MODIFIES_CLIENT=False"
-    W "BANNER=G17-B2R2_LOADED"
+    W "BANNER=G17-B2R3_LOADED"
     W "POST_SHA256=$Post"
     if (Get-Process worldserver -ErrorAction SilentlyContinue) { throw "worldserver is running; stop it normally first" }
     foreach ($dir in @($SourceRoot, $BuildRoot, $RunDir)) {
@@ -187,12 +187,12 @@ try {
     if ($rc -ne 0) { throw "package self-test failed" }
     $rc = Invoke-NativeLogged -FilePath $python -NativeArgs @($Tests) -Prefix "UNIT_TEST"
     W "UNIT_TEST_EXIT=$rc"
-    if ($rc -ne 0) { throw "B2R2 unit tests failed" }
+    if ($rc -ne 0) { throw "B2R3 unit tests failed" }
     $before = (Get-FileHash -LiteralPath $Target -Algorithm SHA256).Hash.ToLowerInvariant()
     W "SOURCE_SHA256_BEFORE=$before"
     $recognized = @($Pre, $Post, $SafeRollback) + $Upgradeable
     if ($before -cnotin $recognized) {
-        throw ("dragonriding source is not a locked B2R1/B2R2 image: " + $before)
+        throw ("dragonriding source is not a locked R2-lineage image: " + $before)
     }
     $first = ($before -cne $Post)
     $rc = Invoke-NativeLogged -FilePath $python -NativeArgs @($Tool, "apply", "--source-root", $SourceRoot) -Prefix "SOURCE_APPLY"
@@ -200,7 +200,7 @@ try {
     if ($rc -ne 0) { throw "source apply failed" }
     $after = (Get-FileHash -LiteralPath $Target -Algorithm SHA256).Hash.ToLowerInvariant()
     W "SOURCE_SHA256_AFTER=$after"
-    if ($after -cne $Post) { throw "B2R2 postimage SHA mismatch" }
+    if ($after -cne $Post) { throw "B2R3 postimage SHA mismatch" }
     W "G17B2R3_SOURCE_APPLY_GATE=PASS"
     Invoke-WorldMigration -SqlFile $Sql -PassMarker "G17B2R3_WORLD_BINDING_GUARD=PASS" -Label "52226_BINDING"
     Invoke-WorldMigration -SqlFile $SqlCastable -PassMarker "G17B2R3_SPELL_52226_CASTABLE=PASS" -Label "52226_CASTABLE"
@@ -248,11 +248,11 @@ try {
         throw "exe/pdb predates build start"
     }
     if ($first -and $afterExeHash -ceq $beforeExeHash) {
-        throw "first B2R2 build did not change worldserver.exe SHA"
+        throw "first B2R3 build did not change worldserver.exe SHA"
     }
     W "G17B2R3_WINDOWS_BUILD_RESULT=PASS"
-    W "PROOF_OF_LOAD=start worldserver and confirm 'G17-B2R2 LOADED' appears in worldserver.log"
-    W "NEXT=Start worldserver normally; press skills 2/3/4 once, then send back this result file plus the G17-B2R2 log lines."
+    W "PROOF_OF_LOAD=start worldserver and confirm 'G17-B2R3 LOADED' appears in worldserver.log"
+    W "NEXT=Start worldserver normally; press skills 2/3/4 once, then send back this result file plus the G17-B2R3 log lines."
     W "RESULT_FILE=$Result"
     exit 0
 } catch {

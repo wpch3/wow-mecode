@@ -3,8 +3,13 @@ from __future__ import annotations
 
 import argparse
 import hashlib
+import re
 import sys
 from pathlib import Path
+
+# Built dynamically so this self-test does not contain the literal it scans for.
+R2_TOKEN = "g17" + "b2r2"
+BANNER_TOKEN = "g17-" + "b2r2"
 
 EXPECTED = {
     "payload/src/server/scripts/Commands/cs_dragonriding.cpp": "98446106309b45371f138d9c7bc707ee608d9a3db347e13d61cfd68cc97810f9",
@@ -79,6 +84,34 @@ def main() -> int:
         rc = 1
     if not (root / "PACKAGE_METADATA.txt").is_file():
         print("PACKAGE_FILE_MISSING PACKAGE_METADATA.txt")
+        rc = 1
+
+    # R2FIX4 regression: the R3 installer once still referenced
+    # the previous revision's test-file name (case-insensitive
+    # leftover from the R2->R3 rename; bulk rename only covered
+    # upper-case token), so one-click failed with 'file missing'.
+    # No functional package file may contain the old revision name
+    # in ANY casing, and every file the installer joins under
+    # $PSScriptRoot must exist in the package.
+    stale = []
+    for ext in ("*.ps1", "*.cmd", "*.py", "*.sql"):
+        for f in root.rglob(ext):
+            if R2_TOKEN in f.name.lower() or BANNER_TOKEN in f.name.lower():
+                stale.append(f.relative_to(root))
+                continue
+            text = f.read_text(encoding="utf-8", errors="replace")
+            if R2_TOKEN in text.lower() or BANNER_TOKEN in text.lower():
+                stale.append(f.relative_to(root))
+    for rel in sorted(stale, key=str):
+        print(f"PACKAGE_STALE_R2_REF {rel}")
+        rc = 1
+
+    referenced = re.findall(r'Join-Path \$PSScriptRoot \"([^\"]+)\"',
+                            install)
+    missing_refs = [r for r in referenced
+                    if not (root / r.replace("\\", "/")).is_file()]
+    for rel in missing_refs:
+        print(f"PACKAGE_REFERENCED_FILE_MISSING {rel}")
         rc = 1
     if rc == 0:
         print("G17B2R3_PACKAGE_SELF_TEST=PASS")

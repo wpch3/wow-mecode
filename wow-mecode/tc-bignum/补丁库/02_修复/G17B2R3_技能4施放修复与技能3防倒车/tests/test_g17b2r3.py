@@ -225,7 +225,7 @@ class TestSkill2RichVisuals(unittest.TestCase):
         self.text = SOURCE.read_text(encoding="utf-8")
 
     def test_01_only_audited_kit_ids_used(self):
-        # B2R2 must NOT introduce unverified SpellVisualKit IDs.  Only the
+        # B2R3 must NOT introduce unverified SpellVisualKit IDs.  Only the
         # already-audited B2R1 kits (44/696/13709/13481/1066) may be used.
         audited = {"44", "696", "13709", "13481", "1066"}
         consts = dict(re.findall(
