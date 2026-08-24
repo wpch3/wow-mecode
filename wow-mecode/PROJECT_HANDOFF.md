@@ -17,19 +17,19 @@
 4. **G17-A代码交付、用户真实Apply、VS2022编译和基础运行均已完成。** 完整后镜像 `SpellInfo.cpp`=`537e5c35...0755`，新worldserver已由用户真实MSBuild链接；schema-2、第17/18/18R/19A/19B/20A/20B-S全部关闭，禁止重复。
 5. G17-A第20C-1也已关闭：用户明确确认主城内召唤拒绝、从外飞入暴风城会落地、PVP战场表现相同，并声明“执行完成”。证据只按该摘要归档；没有单独提供的A4室内地点/GPS、精确世界竞技场地点和逐项前后检行不得补造，也不得要求重复主城/PVP测试。
 6. G17-A只改 `src/server/game/Spells/SpellInfo.cpp`，conf默认关闭；G17旧世界安全策略保留NO_FLY/竞技场/城市/室内等边界。R2服务端链PASS；R5把同一R4归档置于有效zhCN Y槽后，用户确认59961普通按钮召唤、上马、起飞、水平移动及室内自动解除全部成功，纯飞行门关闭。R3实时`Player::IsOutdoors()`安全门继续保留；R1–R5禁止重复。
-7. 御龙术不能缩成学几个技能。R1–R5纯飞行门与B1全坐骑接管均已关闭；B2已真实Windows部署，技能3向前/向上与控制恢复PASS，但技能2反馈、高速转向和技能4类型化着陆真实体验FAIL。B2R1三技能重制已由用户真实Windows报告证明源码应用、World迁移、MSBuild、新鲜OBJ/EXE/PDB及新EXE哈希全部PASS；当前只待重启新worldserver并做客户端A–E Runtime。B3玩家/移动/类型攻击独立页→B4骑乘施法/吃喝→B5自动寻路/固定→B6客户端反馈和压力加固仍未实现。
+7. 御龙术不能缩成学几个技能。R1–R5纯飞行门与B1全坐骑接管均已关闭；B2已真实Windows部署，技能3向前/向上与控制恢复PASS，但技能2反馈、高速转向和技能4类型化着陆真实体验FAIL。B2R1三技能重制已由用户真实Windows报告证明源码应用、World迁移、MSBuild、新鲜OBJ/EXE/PDB及新EXE哈希全部PASS；B2R2用户真实运行确认：安装/编译PASS、技能2OK、技能3方向OK但偶尔先倒车、技能4完全不能用；B2R3已修复（52226施放门槛C++运行时净化+技能3先StopMoving再取样，42/42测试），待用户Windows一键运行。B3玩家/移动/类型攻击独立页→B4骑乘施法/吃喝→B5自动寻路/固定→B6客户端反馈和压力加固仍未实现。
 8. **完美客户端最终目标已锁定。** 不能永远停在纯服务端绕行；人物模型、真实ADT/WMO城市与建筑、新种族/职业/世界、NPC种族和真龙主线都要双端落地。权威总纲已加入官方12.x持续差分账（截至2026-08-21为12.1）及“改造完成后的城市/新世界户外空域默认可飞”终局口径；当前主城落地只属G17-A安全一期，不是最终上限。
 9. **PBot完成度已按用户纠正重置：只有基础，其它完善完全没有。** 旧A25/A27/A39/A41勾选只算基础文件/命令，不能宣称完整AI。NPCBot有较成熟Creature战斗伙伴基础，但自主冒险、长期记忆、身份、背包经济、生活、Eluna和规模仍未完成。权威清单：`tc-bignum/规划/04-PBot与NPCBot真实完成度及后续路线_2026-08-21.md`。
 10. G19第3步已编译、数据库及启动加载通过；只剩游戏内场景/900秒冷却矩阵，不重跑SQL。
 11. G16永久硬需求：每个eligible item至少10条有效独立拍卖行；堆叠件数只作诊断；传说装备禁止，传说坐骑/宠物例外。约99,250总量不能作为完成。
 12. 每批除原始源码/config/SQL/probe外，必须同步 `tc-bignum/00-当前整体安装步骤_单文件入口.md`；它是用户唯一操作入口。当前工作树未提交/推送；以manifest/git-state为准。
 13. **旧F44真人功能FAIL；F44R1已运行并获用户定性烟雾认可。** 本地回归、Windows Check/Apply、VS2022增量编译及正确哈希新二进制启动均PASS；PID=`16556`，exe=`36734464`字节/SHA `07a8f952...a86c1`。用户真人反馈“没什么太大的问题”并授权转下一步；A至D全职业结构化矩阵未回传，不得补造。Check/Apply/编译/启动禁止重复。
-14. **当前开发主线是G17-B2R1三技能Runtime体验重制。** B1已关闭；B2旧包真实部署且技能3向前/向上和控制恢复PASS，但整体体验FAIL。B2R1以B2后像`8b47a5b...c1d5`为前像，后像=`ff185d99...c4fc`，安全回滚=`e298a856...0203`：技能2四阶段反馈；技能3七节点曲线、0.70弧度偏航上限、三级LOS回退和平滑交还；技能4迁移到项目真实DBC中无视觉/无Aura的52226，按魔法平姿、龙45码斜坡、机械反推、猛兽无火扑落、通用避障处理。payload/安全回滚双GCC14/C++20零诊断，52/52、未知SHA零写入拒绝、World迁移三状态模型、双AST、18文件包与ZIP解压复验PASS。唯一ZIP=`G17B2R1_Runtime_Experience_Rework_Windows_20260824.zip`（73526字节/SHA `94822d39...8daa`）；统一CMD已真实执行PASS，当前只待新二进制启动和A–E五行Runtime。
+14. **当前开发主线是G17-B2R3：技能4施放修复+技能3防倒车（B2R2用户确认安装PASS、技能2/3基本OK、技能4完全不能用；根因52226 RequiresSpellFocus=1553+CasterAuraSpell=52255在脚本钩子前被拒，spell_dbc无此列→C++运行时净化；技能3先StopMoving再取样防倒车）。** B1已关闭；B2旧包真实部署且技能3向前/向上和控制恢复PASS，但整体体验FAIL。B2R1以B2后像`8b47a5b...c1d5`为前像，后像=`ff185d99...c4fc`，安全回滚=`e298a856...0203`：技能2四阶段反馈；技能3七节点曲线、0.70弧度偏航上限、三级LOS回退和平滑交还；技能4迁移到项目真实DBC中无视觉/无Aura的52226，按魔法平姿、龙45码斜坡、机械反推、猛兽无火扑落、通用避障处理。payload/安全回滚双GCC14/C++20零诊断，52/52、未知SHA零写入拒绝、World迁移三状态模型、双AST、18文件包与ZIP解压复验PASS。唯一ZIP=`G17B2R1_Runtime_Experience_Rework_Windows_20260824.zip`（73526字节/SHA `94822d39...8daa`）；统一CMD已真实执行PASS，当前只待新二进制启动和A–E五行Runtime。
 15. **超大团队一键组团没有完成。** 固定状态为`BOT_MASS_RAID_ONE_CLICK=NOT_IMPLEMENTED`；40/100/250/500/1000规模路线已持久化，但按用户决定排在G17-B0/B1后，不打断御龙术。
 16. **游荡NPCBot跟随入本/团本的装备适配也未完成。** 固定状态为`NPCBOT_CONTEXT_GEAR_ADAPTATION=NOT_IMPLEMENTED`。上游证据显示装备只在firstspawn初始化，游荡优先走WANDERING类别，DUNGEON仅面向临时5人LFG bot且断言非团本。GEAR-P0到P5的场景分类、职责配装、临时覆盖/恢复、防复制、诊断、性能和UI路线已写入04号权威规划；排在G17-B0/B1后、规模线前。
 17. **Bot职责自动选择和缺口补充没有完成。** 固定状态为`BOT_AUTO_ROLE_SELECTION_AND_FILL=NOT_IMPLEMENTED`（实现域别名`BOT_ROLE_AUTO_ASSIGN_AND_FILL=NOT_IMPLEMENTED`）。后续必须区分CAPABLE/ASSIGNED/ACTIVE，尊重玩家锁定，按真实技能/装备/AI选择主副坦、治疗、近远程和关键能力，从PBot/NPCBot混合池补缺并设置备援；不得只按人数或role标签盲目加入。
 18. **超大团队BOSS可玩性缩放没有完成。** 固定状态为`MASS_RAID_BOSS_SCALING_PLAYABILITY=NOT_IMPLEMENTED`（实现域别名`BOT_INSTANCE_SCALING_CONTROL=NOT_IMPLEMENTED`）。用户已观察到人数增加后BOSS血量直接上亿且不可击杀；后续必须锁定真实乘法链，以有效参战人数和目标TTK做分段递减，限制生命/伤害倍率，使用uint64中间值、防重复缩放和开怪快照，并将40/100/250/500/1000职责、装备、机制、战斗时长、奖励与性能一起验收。
-19. **G17完整通用坐骑范围当前到B2R1待Runtime。** `G17_通用御龙与战斗坐骑总设计_20260823.md`中的B1已真实Runtime关闭；B2已真实部署但体验FAIL；B2R1源码/SQL/自动测试/Windows源码应用、World迁移、MSBuild和新鲜产物门均已真实PASS；尚未做新二进制下的操控/视觉验收。B3四类型攻击与独立页、B4骑乘施法、B5寻路/固定、B6客户端反馈/压力均未实现。
+19. **G17完整通用坐骑范围当前到B2R3（B2R2用户确认：技能2OK/技能3方向OK偶倒车/技能4完全不能用；B2R3已修复待用户编译）。** `G17_通用御龙与战斗坐骑总设计_20260823.md`中的B1已真实Runtime关闭；B2已真实部署但体验FAIL；B2R1源码/SQL/自动测试/Windows源码应用、World迁移、MSBuild和新鲜产物门均已真实PASS；尚未做新二进制下的操控/视觉验收。B3四类型攻击与独立页、B4骑乘施法、B5寻路/固定、B6客户端反馈/压力均未实现。
 
 ---
 
@@ -119,7 +119,7 @@
 - 最终ZIP=`G23P3A_delivery_20260822.zip`，34756字节，SHA=`fc9d850f...415270`，20文件；Lua5.2/mock/完整P2R1集成/安装器/ZIP门槛PASS。
 - 当前只按10号执行P3A Check→停服→Apply→正常启动；无SQL/编译，禁止`.reload eluna`。
 
-### P2（当前开发主线）：G17-B2R1客户端Runtime与G22客户端终局
+### P2（当前开发主线）：G17-B2R3技能4/技能3最终修正 → 通过后进入B3–B6；G22客户端终局为长期目标
 
 - B0参考实现已经写入`tc-bignum/补丁库/01_功能/G17B0_原生御龙载具/`：`.dragon summon/dismiss/status/help`、原生VehicleAI、4格VehicleActionBar、100 Energy、龙息/加速扣能、离散爬升、安全着陆和PlayerScript清理。
 - C++已在上游`4e8762e`头文件/API上通过GCC 14.2/C++20单翻译单元`-fsyntax-only`；完整CMake因本地缺Boost开发依赖而未完成，不能写成构建PASS。
@@ -974,6 +974,6 @@ F44R1 `.combo`正确哈希新二进制已以PID 16556运行，用户真人定性
 
 F45正常并转被动观察；P2R1已由用户确认修复成功。G23-P3A `.server`助手与153条/11类新版`.gmhelp`已通过本地/ZIP门槛，仍待Windows Check→停服→Apply→正常启动，无SQL/编译且禁止reload。
 
-当前开发主线已进入G17-B2R1客户端Runtime。B1已关闭；B2已真实部署且技能3向前/向上和控制恢复PASS，但技能2反馈、高速转向与技能4类型化着陆体验FAIL。B2R1四阶段反馈、七节点曲线/平滑交还、52226安全动作及五类分段着陆已通过双严格编译、52/52、未知SHA零写入拒绝、World三状态模型、双AST、18文件包和ZIP解压门。用户真实B2R1构建报告已证明源码应用、World迁移、MSBuild、新鲜OBJ/EXE/PDB和新EXE哈希PASS；统一CMD禁止重跑。当前唯一动作是启动新worldserver并回A–E五行客户端体验。B3–B6仍未实现。
+当前开发主线已到G17-B2R3（B2R2用户真实运行确认：安装PASS、技能2OK、技能3方向OK偶尔先倒车、技能4完全不能用；B2R3修复52226施放门槛+技能3防倒车，42/42测试，前后像/回滚=3b92e815（R2后像））。B1已关闭；B2已真实部署且技能3向前/向上和控制恢复PASS，但技能2反馈、高速转向与技能4类型化着陆体验FAIL（B2R2 已解决技能2反馈/技能3方向，技能4 由 B2R3 解决）。B2R1四阶段反馈、七节点曲线/平滑交还、52226安全动作及五类分段着陆已通过双严格编译、52/52、未知SHA零写入拒绝、World三状态模型、双AST、18文件包和ZIP解压门。用户真实B2R1构建报告已证明源码应用、World迁移、MSBuild、新鲜OBJ/EXE/PDB和新EXE哈希PASS；统一CMD禁止重跑。当前唯一动作是启动新worldserver并回A–E五行客户端体验。B3–B6仍未实现。
 
 NPCBot场景装备、职责自动选择/补缺和BOSS人数缩放可玩性分别固定为`NPCBOT_CONTEXT_GEAR_ADAPTATION=NOT_IMPLEMENTED`、`BOT_ROLE_AUTO_ASSIGN_AND_FILL=NOT_IMPLEMENTED`、`BOT_INSTANCE_SCALING_CONTROL=NOT_IMPLEMENTED`；GEAR-P0–P5、ROLE能力编成/备援及SCALING有效人数/递减/TTK/防重复/数值安全均已加入04号权威路线。PBot/NPCBot超大团队入口固定为`BOT_MASS_RAID_ONE_CLICK=NOT_IMPLEMENTED`，需在上述硬门槛后推进，且不得提前打断御龙术。G19只剩游戏内场景/冷却验收，不重跑SQL。G16约99,250总量不算完成，仍必须实现每个eligible entry至少10条独立活动拍卖、禁止传说装备并保留传说坐骑/宠物例外。
