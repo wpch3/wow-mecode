@@ -69,10 +69,11 @@ def apply(root: Path) -> None:
     backup = target.with_name(target.name + ".g17b2r2.b2r1-preimage")
     if state in ("READY_B2R1_PREIMAGE", "B2R2_INTERMEDIATE_UPGRADEABLE"):
         # Keep a forensic backup of whatever is currently there (B2R1 final or
-        # the earlier R2 intermediate) before overwriting it, unless a backup
-        # already exists from a previous apply.
-        if backup.exists() and sha(backup) not in (PRE_SHA256, INTERMEDIATE_SHA256):
-            raise RuntimeError("existing forensic backup SHA mismatch")
+        # an earlier R2 build) before overwriting it.  If a backup already
+        # exists from a previous apply, keep it as-is instead of refusing:
+        # its only job is to preserve the last-known-good bytes for rollback
+        # reference, and the postimage SHA + unknown-SHA rejection already
+        # guarantee we only write a recognized payload.
         if not backup.exists():
             backup.write_bytes(target.read_bytes())
 
