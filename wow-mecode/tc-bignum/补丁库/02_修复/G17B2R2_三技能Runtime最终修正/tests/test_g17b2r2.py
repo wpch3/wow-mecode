@@ -16,6 +16,7 @@ TOOL = ROOT / "tools/apply_g17b2r2_source.py"
 PRE_SHA = "ff185d9987b8f4457d8380e1c662cd0313b33a7ae4be6b82974e7702d1fdc4fc"
 POST_SHA = "03dd649ded01dcd1917b1d0e98689ae1dbfe4289f6fc2548a3a62d616e6a0844"
 INTERMEDIATE_SHA = "613420676babe4c71c570c24a0f5d94976623516e0519b4553b3d5962056bafe"
+INTERMEDIATE2_SHA = "adedfc58344a104ccc96ff28155b504727f50e0026d842345721610c6a32a59f"
 SAFE_ROLLBACK_SHA = "ff185d9987b8f4457d8380e1c662cd0313b33a7ae4be6b82974e7702d1fdc4fc"
 LANDING_SCRIPT = "spell_g17_dragon_safe_landing"
 SAFE_ACTION = 52226
@@ -70,18 +71,18 @@ class TestFrozenInputs(unittest.TestCase):
         self.assertIn(PRE_SHA, text)
         self.assertIn(POST_SHA, text)
         self.assertIn(INTERMEDIATE_SHA, text)
+        self.assertIn(INTERMEDIATE2_SHA, text)
         self.assertIn(SAFE_ROLLBACK_SHA, text)
 
-    def test_06_tool_recognizes_intermediate_as_upgradeable(self):
+    def test_06_tool_recognizes_both_intermediates_as_upgradeable(self):
         import importlib.util
         spec = importlib.util.spec_from_file_location("applytool", TOOL)
         mod = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(mod)
         self.assertEqual(mod.INTERMEDIATE_SHA256, INTERMEDIATE_SHA)
-        states = {
-            mod.PRE_SHA256, mod.POST_SHA256, mod.INTERMEDIATE_SHA256,
-            mod.SAFE_ROLLBACK_SHA256}
-        self.assertEqual(len(states), 3)  # preimage == safe rollback
+        self.assertEqual(mod.INTERMEDIATE2_SHA256, INTERMEDIATE2_SHA)
+        self.assertIn(INTERMEDIATE_SHA, mod.UPGRADEABLE_SHAS)
+        self.assertIn(INTERMEDIATE2_SHA, mod.UPGRADEABLE_SHAS)
 
 
 class TestSkill2RichVisuals(unittest.TestCase):

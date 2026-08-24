@@ -10,11 +10,13 @@ SOURCE_RELATIVE = Path("src/server/scripts/Commands/cs_dragonriding.cpp")
 # B2R1 postimage is the normal preimage for R2.
 PRE_SHA256 = "ff185d9987b8f4457d8380e1c662cd0313b33a7ae4be6b82974e7702d1fdc4fc"
 POST_SHA256 = "03dd649ded01dcd1917b1d0e98689ae1dbfe4289f6fc2548a3a62d616e6a0844"
-# Earlier R2 intermediate that shipped unverified visual kit IDs; it is a valid
-# source to UPGRADE from (it will be overwritten to the final postimage).
+# Earlier R2 builds that are valid to upgrade from (banner-less final and the
+# first intermediate with unverified kits).
 INTERMEDIATE_SHA256 = "613420676babe4c71c570c24a0f5d94976623516e0519b4553b3d5962056bafe"
+INTERMEDIATE2_SHA256 = "adedfc58344a104ccc96ff28155b504727f50e0026d842345721610c6a32a59f"
 # Safety rollback returns to the B2R1 byte image (the last user-compiled PASS).
 SAFE_ROLLBACK_SHA256 = "ff185d9987b8f4457d8380e1c662cd0313b33a7ae4be6b82974e7702d1fdc4fc"
+UPGRADEABLE_SHAS = (INTERMEDIATE_SHA256, INTERMEDIATE2_SHA256)
 PACKAGE_ROOT = Path(__file__).resolve().parents[1]
 PAYLOAD = PACKAGE_ROOT / "payload" / SOURCE_RELATIVE
 SAFE_ROLLBACK = PACKAGE_ROOT / "rollback_safe" / SOURCE_RELATIVE
@@ -47,10 +49,11 @@ def check(root: Path) -> str:
     digest = sha(target)
     states = {
         PRE_SHA256: "READY_B2R1_PREIMAGE",
-        INTERMEDIATE_SHA256: "B2R2_INTERMEDIATE_UPGRADEABLE",
         POST_SHA256: "B2R2_APPLIED",
         SAFE_ROLLBACK_SHA256: "B2R2_SAFE_ROLLBACK_B2R1",
     }
+    for h in UPGRADEABLE_SHAS:
+        states[h] = "B2R2_INTERMEDIATE_UPGRADEABLE"
     if digest not in states:
         raise RuntimeError(f"target SHA not recognized: {digest}")
     state = states[digest]
@@ -68,12 +71,9 @@ def apply(root: Path) -> None:
 
     backup = target.with_name(target.name + ".g17b2r2.b2r1-preimage")
     if state in ("READY_B2R1_PREIMAGE", "B2R2_INTERMEDIATE_UPGRADEABLE"):
-        # Keep a forensic backup of whatever is currently there (B2R1 final or
-        # an earlier R2 build) before overwriting it.  If a backup already
-        # exists from a previous apply, keep it as-is instead of refusing:
-        # its only job is to preserve the last-known-good bytes for rollback
-        # reference, and the postimage SHA + unknown-SHA rejection already
-        # guarantee we only write a recognized payload.
+        # Keep a forensic backup of whatever is currently there before
+        # overwriting it.  If a backup already exists from a previous apply,
+        # keep it as-is instead of refusing.
         if not backup.exists():
             backup.write_bytes(target.read_bytes())
 
