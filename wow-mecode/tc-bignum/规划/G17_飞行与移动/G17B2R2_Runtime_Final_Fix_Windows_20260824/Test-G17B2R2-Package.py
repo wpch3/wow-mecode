@@ -40,10 +40,13 @@ def main() -> int:
             rc = 1
         else:
             print(f"PACKAGE_FILE_OK {rel} sha256={actual}")
-    # The tool must embed the postimage hash and accept the prior final/intermediate.
+    # The tool must embed the postimage hash and every valid R2-lineage
+    # upgrade source (earlier drafts included).
     tool = (root / "tools/apply_g17b2r2_source.py").read_text(encoding="utf-8")
     for token in (
         "adedfc58344a104ccc96ff28155b504727f50e0026d842345721610c6a32a59f",
+        "3e4590da5d8864f8447cd3b55acf05c249855927a33e0e792dd426f03426237a",
+        "613420676babe4c71c570c24a0f5d94976623516e0519b4553b3d5962056bafe",
     ):
         if token not in tool:
             print(f"PACKAGE_TOOL_MISSING_HASH {token}")

@@ -36,14 +36,18 @@ function Read-ToolHash([string]$Name) {
 $Pre          = Read-ToolHash "PRE_SHA256"
 $Post         = Read-ToolHash "POST_SHA256"
 $SafeRollback = Read-ToolHash "SAFE_ROLLBACK_SHA256"
+# Every valid upgrade source lives in the Python tool (single source of
+# truth).  This includes the earlier R2 drafts 3e4590da (the hash an earlier
+# delivery README called final; present on the user's machine after the
+# first attempt) and 61342067 (earliest R2 draft shell), plus the
+# banner-less final and the unverified-kits intermediate.  The installer
+# must never hard-code them, or the tool and PS1 drift like before.
 $Upgradeable  = @(
     (Read-ToolHash "INTERMEDIATE_SHA256"),
-    (Read-ToolHash "INTERMEDIATE2_SHA256")
+    (Read-ToolHash "INTERMEDIATE2_SHA256"),
+    (Read-ToolHash "INTERMEDIATE3_SHA256"),
+    (Read-ToolHash "INTERMEDIATE4_SHA256")
 )
-# Any earlier postimage is also a valid upgrade source.
-$Upgradeable += "03dd649ded01dcd1917b1d0e98689ae1dbfe4289f6fc2548a3a62d616e6a0844"
-$Upgradeable += "613420676babe4c71c570c24a0f5d94976623516e0519b4553b3d5962056bafe"
-$Upgradeable += "adedfc58344a104ccc96ff28155b504727f50e0026d842345721610c6a32a59f"
 
 New-Item -ItemType Directory -Path $UploadDir -Force | Out-Null
 [IO.File]::WriteAllText($Result, "", $Utf8NoBom)

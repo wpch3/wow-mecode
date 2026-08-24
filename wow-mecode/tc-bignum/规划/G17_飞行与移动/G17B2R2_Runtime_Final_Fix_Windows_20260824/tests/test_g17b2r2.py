@@ -17,6 +17,8 @@ PRE_SHA = "ff185d9987b8f4457d8380e1c662cd0313b33a7ae4be6b82974e7702d1fdc4fc"
 POST_SHA = "3b92e815dc81ade4aa9927c19716dabddb8e8f93a6d0aff8b32c80dfbcbfc7f1"
 INTERMEDIATE_SHA = "03dd649ded01dcd1917b1d0e98689ae1dbfe4289f6fc2548a3a62d616e6a0844"
 INTERMEDIATE2_SHA = "adedfc58344a104ccc96ff28155b504727f50e0026d842345721610c6a32a59f"
+INTERMEDIATE3_SHA = "3e4590da5d8864f8447cd3b55acf05c249855927a33e0e792dd426f03426237a"
+INTERMEDIATE4_SHA = "613420676babe4c71c570c24a0f5d94976623516e0519b4553b3d5962056bafe"
 SAFE_ROLLBACK_SHA = "ff185d9987b8f4457d8380e1c662cd0313b33a7ae4be6b82974e7702d1fdc4fc"
 LANDING_SCRIPT = "spell_g17_dragon_safe_landing"
 SAFE_ACTION = 52226
@@ -103,11 +105,15 @@ class TestPowerShellInstaller(unittest.TestCase):
         # PS string, where \" is a parse error (PS escapes with backtick).
         # The fixed form builds ONE single-quoted pattern string and passes it
         # as a variable: single backslashes survive into .NET regex unchanged.
-        pattern_line = ("$pattern = ('^\s*' + [regex]::Escape($Name) + "
-                        "'\s*=\s*\"([0-9a-f]+)\"')")
+        # Raw regex: in the PS1 single-quoted pattern string, single
+        # backslashes reach .NET regex unchanged, so the source line literally
+        # contains ^\s* etc.  (Built via regex, not a Python string, to avoid
+        # SyntaxWarning for \s on Python 3.12.)
+        ps_pattern = (r"\$pattern = \('\^\\s\*' \+ \[regex\]::Escape\(\$Name\) "
+                      r"\+ '\\s\*=\\s\*\"\(\[0-9a-f\]\+\)\"'\)")
         for script in (self.install, self.rollback):
             self.assertNotIn('-match "^', script)
-            self.assertIn(pattern_line, script)
+            self.assertIsNotNone(re.search(ps_pattern, script), script)
             self.assertIn("Where-Object { $_ -match $pattern", script)
 
     def test_04_hash_read_uses_function_scope_rematch(self):
@@ -141,15 +147,75 @@ class TestPowerShellInstaller(unittest.TestCase):
             self.assertIn("'" + marker + "'", sql)
             self.assertIn('-PassMarker "' + marker + '"', self.install)
 
-    def test_06_tool_recognizes_both_intermediates_as_upgradeable(self):
+    def test_06_tool_recognizes_all_intermediates_as_upgradeable(self):
         import importlib.util
         spec = importlib.util.spec_from_file_location("applytool", TOOL)
         mod = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(mod)
         self.assertEqual(mod.INTERMEDIATE_SHA256, INTERMEDIATE_SHA)
         self.assertEqual(mod.INTERMEDIATE2_SHA256, INTERMEDIATE2_SHA)
-        self.assertIn(INTERMEDIATE_SHA, mod.UPGRADEABLE_SHAS)
-        self.assertIn(INTERMEDIATE2_SHA, mod.UPGRADEABLE_SHAS)
+        self.assertEqual(mod.INTERMEDIATE3_SHA256, INTERMEDIATE3_SHA)
+        self.assertEqual(mod.INTERMEDIATE4_SHA256, INTERMEDIATE4_SHA)
+        for h in (INTERMEDIATE_SHA, INTERMEDIATE2_SHA,
+                  INTERMEDIATE3_SHA, INTERMEDIATE4_SHA):
+            self.assertIn(h, mod.UPGRADEABLE_SHAS)
+
+    def test_07_ps1_reads_all_upgrade_sources_from_tool(self):
+        # Regression (second user run): D:\TrinityCore held the earlier R2
+        # draft 3e4590da (an earlier delivery README called it final), but the
+        # PS1/tool had no such hash in the recognized list, so the run died at
+        # "dragonriding source is not a locked B2R1/B2R2 image".  Every valid
+        # R2-lineage source must be read from the tool, never hard-coded.
+        import importlib.util
+        spec = importlib.util.spec_from_file_location("applytool", TOOL)
+        mod = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(mod)
+        for name in ("INTERMEDIATE_SHA256", "INTERMEDIATE2_SHA256",
+                     "INTERMEDIATE3_SHA256", "INTERMEDIATE4_SHA256"):
+            self.assertIn(f'Read-ToolHash "{name}"', self.install)
+        self.assertNotIn("$Upgradeable +=", self.install)
+        self.assertNotIn("$Upgradeable +=", self.rollback)
+        self.assertEqual(len(mod.UPGRADEABLE_SHAS), 4)
+
+    def test_08_tool_check_accepts_user_source_3e4590da(self):
+        # The user's real second run: D:\TrinityCore held the earlier R2
+        # draft 3e4590da (an earlier delivery README called it final).  The
+        # apply tool must classify it as upgradeable, so the installer's
+        # pre-check passes and the source is replaced with the frozen payload
+        # (with a forensic backup), instead of dying with "not a locked
+        # image".
+        import importlib.util
+        import tempfile
+        spec = importlib.util.spec_from_file_location("applytool3", TOOL)
+        mod = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(mod)
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            target = root / mod.SOURCE_RELATIVE
+            target.parent.mkdir(parents=True)
+            target.write_bytes(b"placeholder")
+            real_sha = mod.sha
+            mod.sha = lambda p: (INTERMEDIATE3_SHA if p == target
+                                 else real_sha(p))
+            try:
+                state = mod.check(root.resolve())
+            finally:
+                mod.sha = real_sha
+            self.assertIn("UPGRADEABLE", state)
+
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            target = root / mod.SOURCE_RELATIVE
+            target.parent.mkdir(parents=True)
+            target.write_bytes(b"placeholder")
+            real_sha = mod.sha
+            mod.sha = lambda p: (INTERMEDIATE4_SHA if p == target
+                                 else real_sha(p))
+            try:
+                state = mod.check(root.resolve())
+            finally:
+                mod.sha = real_sha
+            self.assertIn("UPGRADEABLE", state)
 
 
 class TestSkill2RichVisuals(unittest.TestCase):
@@ -341,12 +407,17 @@ class TestDocsConsistency(unittest.TestCase):
                           f"{doc.name} does not quote the real banner")
 
     def test_02_readmes_use_postimage_not_stale_hash(self):
+        # The docs NOW legitimately mention 3e4590da/61342067 as *upgrade
+        # sources* (that was the user's real machine state), so only stale
+        # postimage claims are forbidden.
+        stale_claims = ("postimage=61342067", "postimage=03dd649d",
+                        '$Post = "3e4590da', '$Post = "61342067',
+                        "应为 3e4590da", "应为 61342067")
         for doc in self.docs:
             text = doc.read_text(encoding="utf-8")
             self.assertIn("3b92e815", text, doc.name)
-            self.assertNotIn("3e4590da", text, doc.name)
-            self.assertNotIn("postimage=61342067", text, doc.name)
-            self.assertNotIn("postimage=03dd649d", text, doc.name)
+            for stale in stale_claims:
+                self.assertNotIn(stale, text, doc.name)
 
 
 if __name__ == "__main__":

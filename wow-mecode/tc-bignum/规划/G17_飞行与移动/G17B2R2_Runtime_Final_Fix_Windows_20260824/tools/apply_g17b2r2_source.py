@@ -10,13 +10,21 @@ SOURCE_RELATIVE = Path("src/server/scripts/Commands/cs_dragonriding.cpp")
 # B2R1 postimage is the normal preimage for R2.
 PRE_SHA256 = "ff185d9987b8f4457d8380e1c662cd0313b33a7ae4be6b82974e7702d1fdc4fc"
 POST_SHA256 = "3b92e815dc81ade4aa9927c19716dabddb8e8f93a6d0aff8b32c80dfbcbfc7f1"
-# Earlier R2 builds that are valid to upgrade from (banner-less final and the
-# first intermediate with unverified kits).
+# Earlier R2 builds that are valid to upgrade from (banner-less final, the
+# first intermediate with unverified kits, and the two earlier R2 drafts:
+# 3e4590da was the hash an earlier delivery README called "final" and is what
+# the user's D:\TrinityCore actually contained when the first one-click run
+# was attempted; 61342067 is the earliest R2 draft shell archived in the
+# repo under 补丁库/规划.  Both are R2 lineage, never B2/B2R1 by mistake, so
+# upgrading from them with the frozen payload + forensic backup is safe).
 INTERMEDIATE_SHA256 = "03dd649ded01dcd1917b1d0e98689ae1dbfe4289f6fc2548a3a62d616e6a0844"
 INTERMEDIATE2_SHA256 = "adedfc58344a104ccc96ff28155b504727f50e0026d842345721610c6a32a59f"
+INTERMEDIATE3_SHA256 = "3e4590da5d8864f8447cd3b55acf05c249855927a33e0e792dd426f03426237a"
+INTERMEDIATE4_SHA256 = "613420676babe4c71c570c24a0f5d94976623516e0519b4553b3d5962056bafe"
 # Safety rollback returns to the B2R1 byte image (the last user-compiled PASS).
 SAFE_ROLLBACK_SHA256 = "ff185d9987b8f4457d8380e1c662cd0313b33a7ae4be6b82974e7702d1fdc4fc"
-UPGRADEABLE_SHAS = (INTERMEDIATE_SHA256, INTERMEDIATE2_SHA256)
+UPGRADEABLE_SHAS = (INTERMEDIATE_SHA256, INTERMEDIATE2_SHA256,
+                    INTERMEDIATE3_SHA256, INTERMEDIATE4_SHA256)
 PACKAGE_ROOT = Path(__file__).resolve().parents[1]
 PAYLOAD = PACKAGE_ROOT / "payload" / SOURCE_RELATIVE
 SAFE_ROLLBACK = PACKAGE_ROOT / "rollback_safe" / SOURCE_RELATIVE
