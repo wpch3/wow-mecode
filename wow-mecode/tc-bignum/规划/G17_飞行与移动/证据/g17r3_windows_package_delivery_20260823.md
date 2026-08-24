@@ -1,0 +1,67 @@
+# G17-R3 Windows组合包交付证据
+
+日期：2026-08-23
+
+## 不可变ZIP
+
+- 文件：`G17R3_Pure_Flight_Client_AreaTable_Windows_20260823.zip`
+- 大小：620074字节
+- 文件数：21
+- SHA-256：`817b02a32b36a1deb21071e64536c9cef92e0414c48494b286fb316f442db4d2`
+- ZIP CRC：PASS
+- 解压后`SHA256SUMS.txt`：20/20 PASS
+- 解压后包自检：PASS
+
+## 唯一入口
+
+- 安装：`Run-G17R3-Windows-Fix.cmd`
+- 全量回滚：`Run-G17R3-Full-Rollback.cmd`
+
+安装入口固定先后顺序：
+
+1. 服务端R2二进制持久备份；
+2. 精确安装R3 `SpellInfo.cpp`实时`Player::IsOutdoors()`门；
+3. VS2022增量构建并证明fresh SpellInfo OBJ/EXE/PDB；
+4. 校验R1客户端状态、自有MPQ、zhCN和服务端原始DBC；
+5. 生成并回读验证同时含R1 Spell.dbc与R3 AreaTable.dbc的新MPQ；
+6. 备份R1 MPQ并原子交换；
+7. 写入服务端/客户端状态和主结果。
+
+## 离线门槛
+
+- G17-R3单元测试：9/9 PASS；
+- 四个PowerShell脚本AST：0解析错误；
+- Python语法/包静态自检：PASS；
+- 同版本mpqcli真实MPQ create/list/info/extract：PASS；
+- 客户端R1→R3→重复执行→rollback：PASS；
+- 客户端交换失败自动恢复R1：PASS；
+- 客户端回滚篡改拒绝：PASS；
+- 服务端preimage→apply→构建失败PREPARED恢复→PASS→重复构建→rollback：PASS；
+- 服务端回滚篡改拒绝：PASS；
+- 服务端回滚中途故障自动恢复R3源码和二进制：PASS。
+
+## 真实Windows与Runtime回传（2026-08-23）
+
+原始报告：`G17R3_WINDOWS_FIX_RESULT_20260823.txt`，SHA-256 `3b2fef4409947159cfa26d590dfaf8e97f611edc2b1c0054c5fc1dc728a0fcce`。
+
+```text
+G17R3_WINDOWS_FIX_RESULT=PASS
+G17R3_SERVER_WINDOWS_BUILD_RESULT=PASS
+G17R3_REAL_WINDOWS_NEW_EXE_SHA256=15005e8fe90425261ebeb58bd3c0ae432a9ea1798e56d1056e10f3885d0172a9
+G17R3_INSTALLED_MPQ_SHA256=c901362472f5fee2caa5893eaa7b469d8fa64142b79c6882bdc95060fe62c15f
+G17R3_INSTALLED_SPELL_SHA256=dd25091167f671764735ce88c78b66485c6d661fadf05d322574c261f6e464ea
+G17R3_INSTALLED_AREA_SHA256=214c6935d11b784f0bf5e4855fb756126d9d667d622a346c3124ae748812b6a8
+G17R3_SERVER_DBC_MODIFIED=False
+G17R3_NORMAL_BUTTON_RUNTIME=FAIL_STILL_AREA_RESTRICTED
+G17R3_WETLANDS_ISFLYABLEAREA=nil
+G17R3_HEADLESS_HORSEMAN_NORMAL_SUMMON=PASS
+G17R3_PROTO_DRAKE_RUNTIME=PASS_ONLY_OUTLAND_OR_NORTHREND
+```
+
+R3客户端失败的确定缺陷：只增加`0x00000400`，遗漏扩展区域正常可飞行行通常同时具有的`0x00004000`。湿地Area ID 11由原版`0x00000040`变成R3的`0x00000440`，仍不足以令客户端API返回1。G17-R4在相同948行补齐第二标志，目标为`0x00004440`；不采用Spell Effect/Aura伪装。
+
+```text
+G17R3_CLIENT_AREA_PATCH=INCOMPLETE_SUPERSEDED_BY_G17R4
+G17R3_SERVER_OUTDOOR_SAFETY_GATE=KEEP
+G17B1=BLOCKED_PENDING_G17R4_RUNTIME
+```

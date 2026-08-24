@@ -1,0 +1,14 @@
+G23-P3A最终交付证据
+日期：2026-08-22（Asia/Shanghai）
+
+ZIP=G23P3A_delivery_20260822.zip
+ZIP_SIZE=34756
+ZIP_SHA256=fc9d850f9b0a2cf0c4f1518b44c55f96a78423a6bb09cc76ac30074876415270
+ZIP_FILE_COUNT=20
+PACKAGE_SHA256SUMS_FILE_COUNT=19
+ZIP_CRC_AND_BYTE_COMPARE=PASS
+CANONICAL_SOURCE_SYNC=PASS
+
+功能：.server统一助手、原生.server子命令显式透传、153条/11类无状态gmhelp、world.command按需搜索、权限过滤help2。
+范围：2个修改Lua + 2个新增Lua；无SQL/conf/C++/编译。
+Windows边界：Check/Apply/Runtime均NOT_RUN。

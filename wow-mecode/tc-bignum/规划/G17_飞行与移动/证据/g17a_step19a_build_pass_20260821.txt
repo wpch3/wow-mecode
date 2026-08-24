@@ -1,0 +1,40 @@
+G17-A 第19A步真实VS2022/MSBuild编译回传
+日期：2026-08-21（Asia/Shanghai）
+来源：用户Windows PowerShell真实环境
+性质：RelWithDebInfo/x64 worldserver目标编译证据；未启动worldserver
+
+[INFO] MSBuild=D:\vs\MSBuild\Current\Bin\MSBuild.exe
+[INFO] before exe size=36696576 utc=2026-08-20T08:00:17.4772295Z sha256=d0fbc5e3cf429a3674a6b6b48ba6f436c0be7791bebcf5014942b804f077b474
+[INFO] before pdb size=432328704 utc=2026-08-20T08:00:17.5037891Z
+适用于 .NET Framework MSBuild 版本 18.8.2+ce25c0108
+
+  gsoap.vcxproj -> D:\TC-Build\dep\gsoap\RelWithDebInfo\gsoap.lib
+  efsw.vcxproj -> D:\TC-Build\dep\efsw\RelWithDebInfo\efsw.lib
+  sfmt.vcxproj -> D:\TC-Build\dep\SFMT\RelWithDebInfo\sfmt.lib
+  fmt.vcxproj -> D:\TC-Build\dep\fmt\RelWithDebInfo\fmt.lib
+  lualib.vcxproj -> D:\TC-Build\bin\RelWithDebInfo\lua52.dll
+  zlib.vcxproj -> D:\TC-Build\dep\zlib\RelWithDebInfo\zlib.lib
+  argon2.vcxproj -> D:\TC-Build\dep\argon2\RelWithDebInfo\argon2.lib
+  Detour.vcxproj -> D:\TC-Build\dep\recastnavigation\Detour\RelWithDebInfo\Detour.lib
+  g3dlib.vcxproj -> D:\TC-Build\dep\g3dlite\RelWithDebInfo\g3dlib.lib
+  common.vcxproj -> D:\TC-Build\src\common\RelWithDebInfo\common.lib
+  database.vcxproj -> D:\TC-Build\src\server\database\RelWithDebInfo\database.lib
+  shared.vcxproj -> D:\TC-Build\src\server\shared\RelWithDebInfo\shared.lib
+  SpellInfo.cpp
+  scripts.vcxproj -> D:\TC-Build\src\server\scripts\RelWithDebInfo\scripts.lib
+  game.vcxproj -> D:\TC-Build\src\server\game\RelWithDebInfo\game.lib
+    正在创建库 D:/TC-Build/src/server/worldserver/RelWithDebInfo/worldserver.lib 和对象 D:/TC-Build/src/server/worldserver/RelWithDebInfo/worldserver.exp
+  worldserver.vcxproj -> D:\TC-Build\bin\RelWithDebInfo\worldserver.exe
+[OK] after exe size=36699136 utc=2026-08-21T07:48:22.1245419Z sha256=02bfe1e6373bf8f21b136863280ad12290407d5450ea2f844647c19f2cf7a5dd
+[OK] after pdb size=432877568 utc=2026-08-21T07:48:22.1578476Z
+[OK] source postimage sha256=537e5c350baa5f4a90bd0ec38c6b6858360e287aeabd75ab54050b4432e50755
+[OK] conf remains default-off sha256=a96afb09409f1a3080c62e2df7f6f02d91efc17270106b64339efa1529d30f17
+[OK] G17-A STEP19A_BUILD_PASS=True
+[STOP] 当前到此为止；不要启动worldserver，先完整回传本窗口输出。
+
+证据判定：
+- 第19A步通过并关闭，禁止重复编译。
+- MSBuild明确编译SpellInfo.cpp、生成game.lib并链接worldserver.exe。
+- 新exe/PDB时间均前进且非空；新exe哈希与旧exe不同。
+- 编译前postimage与默认关闭conf仍精确匹配。
+- 此证据不包含worldserver启动或游戏内行为；下一步另行执行第19B默认关闭启动门槛。

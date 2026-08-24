@@ -1,0 +1,105 @@
+G17-R1 packed client MPQ install delivery
+Date: 2026-08-22 Asia/Shanghai
+
+Package directory:
+tc-bignum/规划/G17_飞行与移动/G17R1_Client_MPQ_Install_Windows_20260822
+
+ZIP:
+tc-bignum/规划/G17_飞行与移动/G17R1_Client_MPQ_Install_Windows_20260822.zip
+ZIP_SIZE=454641
+ZIP_SHA256=f59513e9f946df42acae909566f5892e397ea550b8a8e8a4425e7e90ffe0e5ec
+ZIP_FILES=13
+ZIP_UNCOMPRESSED_BYTES=1013434
+ZIP_COMPRESSED_MEMBER_BYTES=451801
+ZIP_CRC_TEST=PASS
+ZIP_DIRECTORY_BYTE_COMPARE=PASS
+ZIP_EXTRACTED_SELFTEST=PASS
+
+Bundled tool:
+MPQCLI_VERSION=v0.10.2
+MPQCLI_WINDOWS_AMD64_SIZE=970752
+MPQCLI_WINDOWS_AMD64_SHA256=5dc56b130432098d18e911fdf4b3464adf850432b7fbb35003a2feff7c30a79f
+MPQCLI_WINDOWS_BINARY_FORMAT=PE32+_X86_64_CONSOLE
+MPQCLI_LICENSE=MIT
+MPQCLI_PROVENANCE=https://github.com/thegraydot/mpqcli/releases/tag/v0.10.2
+MPQCLI_RELEASE_ASSET_DIGEST_MATCH=PASS
+
+Package gates:
+G17R1_CLIENT_MPQ_PACKAGE_FILESET=PASS
+G17R1_CLIENT_MPQ_TOOL_PE_SHA256=PASS
+G17R1_CLIENT_MPQ_POWERSHELL_ASCII_CRLF=PASS
+G17R1_CLIENT_MPQ_NONOVERWRITE_ROLLBACK_POLICY=PASS
+G17R1_CLIENT_MPQ_SHA256SUMS=PASS
+G17R1_CLIENT_MPQ_PACKAGE_SELFTEST=PASS
+
+PowerShell parser gate (PowerShell 7.6.5 parser; scripts target Windows PowerShell 5.1):
+PS_PARSE_FILE=Install-G17R1-Client-MPQ.ps1; TOKENS=2687; ERRORS=0
+PS_PARSE_FILE=Rollback-G17R1-Client-MPQ.ps1; TOKENS=835; ERRORS=0
+G17R1_CLIENT_MPQ_POWERSHELL_PARSE=PASS
+
+Real build-12340 zhCN Spell.dbc MPQ round-trip gate:
+Fixture: https://github.com/upupzealot/AzerothCore-Database/releases/download/release/data.zip
+FIXTURE_ARCHIVE_SHA256=111ec5afa574de91b71b10dd0aa230d2ed61d94d3dbe626002af4c99ffac338f
+ORIGINAL_DBC_SIZE=48956359
+ORIGINAL_DBC_SHA256=df44e75ef1730e363dc06f1bc5ae064299b08d2d0047e663c0a1782ed4c8d10f
+PATCHED_DBC_SIZE=48956359
+PATCHED_DBC_SHA256=dd25091167f671764735ce88c78b66485c6d661fadf05d322574c261f6e464ea
+MPQ_TEST_TOOL_VERSION=0.10.2-4bd21908966bafbafc55c6dd293c68488684d212
+MPQ_TEST_TOOL_LINUX_AMD64_SHA256=d2f97ee5b5a7473d8318238d3fc7238a76c35727c4e0b55275516b6ad325b2e7
+MPQ_INTERNAL_TARGET=DBFilesClient\Spell.dbc
+MPQ_FILE_COUNT=3
+MPQ_FORMAT_VERSION=2
+MPQ_HEADER_SIZE=44
+MPQ_SIGNATURE_TYPE=None
+LOCAL_TEST_MPQ_SIZE=4715386
+LOCAL_TEST_MPQ_SHA256=6a299ec500fc04e2d3902108a54c856b84674f34ddf5ba41fba9266b6b43099b
+EXTRACTED_DBC_SIZE=48956359
+EXTRACTED_DBC_SHA256=dd25091167f671764735ce88c78b66485c6d661fadf05d322574c261f6e464ea
+EXTRACTED_DBC_BYTE_IDENTICAL=True
+G17R1_CLIENT_MPQ_REAL_DBC_LOCAL_VALIDATION=PASS
+
+Full PowerShell lifecycle integration using the exact 48,956,359-byte DBCs
+and same-version Linux mpqcli command behavior:
+FIRST_INSTALL_SELECTED_SLOT=Z
+FIRST_INSTALL_TARGET_PREIMAGE=ABSENT
+FIRST_INSTALL_CREATE_EXIT=0
+FIRST_INSTALL_BUILT_LIST_TARGET_HITS=1
+FIRST_INSTALL_BUILT_FORMAT_VERSION=2
+FIRST_INSTALL_BUILT_FILE_COUNT=3
+FIRST_INSTALL_BUILT_EXTRACTED_DBC_SHA256=dd25091167f671764735ce88c78b66485c6d661fadf05d322574c261f6e464ea
+FIRST_INSTALL_INSTALLED_EXTRACTED_DBC_SHA256=dd25091167f671764735ce88c78b66485c6d661fadf05d322574c261f6e464ea
+FIRST_INSTALL_SERVER_DBC_MODIFIED=False
+FIRST_INSTALL_RESULT=PASS
+IDEMPOTENT_RECHECK=ALREADY_CURRENT_PASS
+ROLLBACK_TARGET_POSTIMAGE=ABSENT
+ROLLBACK_SERVER_DBC_MODIFIED=False
+ROLLBACK_RESULT=PASS
+G17R1_CLIENT_MPQ_POWERSHELL_FULL_LIFECYCLE=PASS
+
+Higher-slot and conflict gates:
+- Existing valid patch-Z without Spell.dbc remained byte-identical; installer
+  selected patch-Y and passed.
+- Existing patch-Z containing Spell.dbc remained byte-identical; installer
+  failed closed and did not create patch-Y.
+G17R1_CLIENT_MPQ_HIGHER_SLOT_DIRECT_TARGET_PROBE_GATES=PASS
+
+Injected post-install state-write failure:
+AUTO_ROLLBACK_AFTER_FAILURE=PASS
+FINAL_CLIENT_TARGET_AFTER_FAILURE=ABSENT
+ACTIVE_STATE_AFTER_FAILURE=ABSENT
+G17R1_CLIENT_MPQ_POSTINSTALL_FAILURE_AUTO_ROLLBACK=PASS
+
+Safety policy:
+- Default client root is D:\WOW.
+- Select the highest absent root letter patch from Z through A.
+- Never overwrite an existing packed MPQ or loose patch directory.
+- Read-only inspect any occupied higher-priority custom archive; fail on an
+  existing DBFilesClient\Spell.dbc or any unreadable higher archive.
+- Create MPQ in uploads, verify list/format/file-count/extracted DBC hash, then
+  install through same-directory temporary file and final rename.
+- Record selected target and exact archive hash in an external state file.
+- Rollback only the exact state-owned archive and preserve it under uploads.
+- Never write server Spell.dbc; verify its hash before and after installation.
+
+This delivery does not claim installation on D:\WOW or game Runtime. Those
+remain pending until the user's Windows result and game observations return.

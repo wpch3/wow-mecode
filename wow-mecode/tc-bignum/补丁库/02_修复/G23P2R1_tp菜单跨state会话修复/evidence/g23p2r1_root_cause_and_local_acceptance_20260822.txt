@@ -1,0 +1,38 @@
+G23-P2R1 .tp菜单跨Lua state假超时：根因与本地验收
+日期：2026-08-22（Asia/Shanghai）
+
+用户现场：
+- G23-P2 Check与Apply成功后，输入.tp打开UI；
+- 点击“东部王国”等区域分类立即提示“传送会话已超时，请重新输入.tp”；
+- `.tp 暴风城`单结果直接传送仍可用。
+
+锁定P2前像机制：
+- custom_teleport.lua使用脚本局部local sessions；
+- .tp命令在当前Lua state写入sessions[guid]；
+- Player Gossip回调先执行sessionOf(player,false)，在当前state查不到即误报超时；
+- Eluna multistate的state局部Lua表不跨state共享；
+- 单结果搜索直接safeTeleport，不读取session，因此不受影响。
+
+P2R1修复：
+- 删除sessions、SESSION_TTL、sessionOf、sweepSessions和登出清理；
+- 分类/页码由sender/intid无状态编码；
+- 地点点击按game_tele.id重新只读查询；
+- 保留并重复检查P2全部安全门；
+- 不新增characters DB表，不修改SQL、conf或F45。
+
+本地结果：
+G23P2R1_LUAC_5_2=PASS
+G23P2R1_CROSS_STATE_REPRO_OLD=PASS
+G23P2R1_CROSS_STATE_FIXED_NEW=PASS
+G23P2R1_TELEPORT_STATELESS_MOCK=PASS
+G23P2R1_STATIC=PASS
+G23P2R1_INSTALLER_SELFTEST=PASS
+G23P2R1_INSTALLER_SELFTEST_OPTIMIZED=PASS
+G23P2R1_CMD_CRLF=PASS
+G23P2R1_FULL_P2_INTEGRATION=PASS
+G23P2R1_ALL_LOCAL_TESTS=PASS
+
+Windows边界：
+G23P2R1_WINDOWS_CHECK=NOT_RUN
+G23P2R1_WINDOWS_APPLY=NOT_RUN
+G23P2R1_RUNTIME=NOT_RUN

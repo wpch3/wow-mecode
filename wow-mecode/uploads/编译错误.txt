@@ -1,0 +1,32 @@
+严重性	代码	说明	项目	文件	行	抑制状态	详细信息
+错误	C1069	无法读取编译器命令行	game	D:\TrinityCore\src\server\game\Globals\ObjectMgr.cpp	10499		
+错误	C2267	“TryAcceptGuild”: 具有块范围的静态函数非法	scripts	D:\TrinityCore\src\server\scripts\Commands\pbot_autoaccept.cpp	216		
+错误	C2601	“TryAcceptGuild”: 本地函数定义是非法的	scripts	D:\TrinityCore\src\server\scripts\Commands\pbot_autoaccept.cpp	216		
+错误	C2267	“TryAcceptDuel”: 具有块范围的静态函数非法	scripts	D:\TrinityCore\src\server\scripts\Commands\pbot_autoaccept.cpp	248		
+错误	C2601	“TryAcceptDuel”: 本地函数定义是非法的	scripts	D:\TrinityCore\src\server\scripts\Commands\pbot_autoaccept.cpp	248		
+错误	C2267	“TryAcceptResurrect”: 具有块范围的静态函数非法	scripts	D:\TrinityCore\src\server\scripts\Commands\pbot_autoaccept.cpp	276		
+错误	C2601	“TryAcceptResurrect”: 本地函数定义是非法的	scripts	D:\TrinityCore\src\server\scripts\Commands\pbot_autoaccept.cpp	276		
+错误	C2267	“FinishPendingTeleport”: 具有块范围的静态函数非法	scripts	D:\TrinityCore\src\server\scripts\Commands\pbot_autoaccept.cpp	315		
+错误	C2601	“FinishPendingTeleport”: 本地函数定义是非法的	scripts	D:\TrinityCore\src\server\scripts\Commands\pbot_autoaccept.cpp	315		
+错误	C2267	“TryAcceptSummon”: 具有块范围的静态函数非法	scripts	D:\TrinityCore\src\server\scripts\Commands\pbot_autoaccept.cpp	341		
+错误	C2601	“TryAcceptSummon”: 本地函数定义是非法的	scripts	D:\TrinityCore\src\server\scripts\Commands\pbot_autoaccept.cpp	341		
+错误	C2267	“TryAcceptTrade”: 具有块范围的静态函数非法	scripts	D:\TrinityCore\src\server\scripts\Commands\pbot_autoaccept.cpp	390		
+错误	C2601	“TryAcceptTrade”: 本地函数定义是非法的	scripts	D:\TrinityCore\src\server\scripts\Commands\pbot_autoaccept.cpp	390		
+错误	C2267	“PBotDecideRequest”: 具有块范围的静态函数非法	scripts	D:\TrinityCore\src\server\scripts\Commands\pbot_autoaccept.cpp	492		
+错误	C2601	“PBotDecideRequest”: 本地函数定义是非法的	scripts	D:\TrinityCore\src\server\scripts\Commands\pbot_autoaccept.cpp	492		
+错误	C2267	“TryBotRequest”: 具有块范围的静态函数非法	scripts	D:\TrinityCore\src\server\scripts\Commands\pbot_autoaccept.cpp	529		
+错误	C2601	“TryBotRequest”: 本地函数定义是非法的	scripts	D:\TrinityCore\src\server\scripts\Commands\pbot_autoaccept.cpp	529		
+错误	C2267	“TryAutoRelease”: 具有块范围的静态函数非法	scripts	D:\TrinityCore\src\server\scripts\Commands\pbot_autoaccept.cpp	639		
+错误	C2601	“TryAutoRelease”: 本地函数定义是非法的	scripts	D:\TrinityCore\src\server\scripts\Commands\pbot_autoaccept.cpp	639		
+错误	C2601	“PBotForceAcceptAll”: 本地函数定义是非法的	scripts	D:\TrinityCore\src\server\scripts\Commands\pbot_autoaccept.cpp	668		
+错误	C2246	“TryAcceptGroup::pbot_autoaccept_worldscript::CHECK_INTERVAL”: 本地定义的类中的非法静态数据成员	scripts	D:\TrinityCore\src\server\scripts\Commands\pbot_autoaccept.cpp	750		
+错误	C2601	“AddSC_pbot_autoaccept”: 本地函数定义是非法的	scripts	D:\TrinityCore\src\server\scripts\Commands\pbot_autoaccept.cpp	754		
+错误	C1075	“{”: 未找到匹配令牌	scripts	D:\TrinityCore\src\server\scripts\Commands\pbot_autoaccept.cpp	162		
+错误	C1069	无法读取编译器命令行	scripts	D:\TrinityCore\src\server\scripts\Northrend\zone_wintergrasp.cpp	583		
+错误	C1069	无法读取编译器命令行	game	D:\TrinityCore\src\server\game\Handlers\NPCHandler.cpp	748		
+错误	C1069	无法读取编译器命令行	scripts	D:\TrinityCore\src\server\scripts\Northrend\AzjolNerub\Ahnkahet\ahnkahet.cpp	138		
+错误	C1069	无法读取编译器命令行	game	D:\TrinityCore\src\server\game\Handlers\CharacterHandler.cpp	2202		
+错误	C1069	无法读取编译器命令行	game	D:\TrinityCore\src\server\game\Handlers\MiscHandler.cpp	1454		
+错误	C1069	无法读取编译器命令行	game	D:\TrinityCore\src\server\game\Entities\Player\Player.cpp	26821		
+错误	C1069	无法读取编译器命令行	game	D:\TrinityCore\src\server\game\Handlers\MovementHandler.cpp	1099		
+错误	LNK1181	无法打开输入文件“..\scripts\RelWithDebInfo\scripts.lib”	worldserver	D:\TC-Build\src\server\worldserver\LINK	1		

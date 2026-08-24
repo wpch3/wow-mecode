@@ -1,0 +1,21 @@
+F44R1 Windows新批只读Check真实回传
+日期：2026-08-21（Asia/Shanghai）
+执行环境：用户Windows PowerShell 5.1
+目标源码：D:\TrinityCore
+安装器：C:\Users\Administrator\Downloads\workspace\wow-mecode\tc-bignum\补丁库\02_修复\F44R1_combo增益生命周期与治疗优先\install_f44r1_combo.py
+
+用户回传原始结果：
+
+[OK] cs_combathelper.cpp state=ready sha256=5f31a5b97fa0ffe99d1472b370660dc86164ddf3f402bc16b030ee47418f31da
+[OK] CombatSpecData.h state=ready sha256=af3e9c2575b725fa50e7bee921d1f7612546e04b967cb2da149e4fe6a2bdd4a7
+[OK] CombatSpecData.cpp state=ready sha256=1cdd6d3a8b07a4915de60746c04848f00bae2608a9c9cd25982d6f6e6a14272e
+[OK] CHECK_STATE=ready
+[OK] SOURCE_EDITS=0
+
+判定：
+- F44R1_WINDOWS_CHECK=PASS
+- 三文件为锁定的旧F44真人缺陷版整组preimage，允许进入F44R1 Apply。
+- Check未修改源码（SOURCE_EDITS=0）。
+- 本证据不代表Apply、VS2022编译、新二进制启动或修复后真人验收完成。
+
+注：用户聊天界面曾将文件名combo.py自动显示为Markdown链接；实际安装器已成功执行，不影响以上真实输出判定。

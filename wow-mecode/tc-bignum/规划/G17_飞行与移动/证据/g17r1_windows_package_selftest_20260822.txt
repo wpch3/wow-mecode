@@ -1,0 +1,122 @@
+[OK] required file exists: original/src/server/scripts/Commands/cs_dragonriding.cpp
+[OK] required file exists: payload/src/server/scripts/Commands/cs_dragonriding.cpp
+[OK] required file exists: Install-Build-G17R1-Windows.ps1
+[OK] required file exists: Prepare-G17R1-Client-Patch.ps1
+[OK] required file exists: tools/apply_g17r1_source.py
+[OK] required file exists: tools/patch_g17r1_client_spell_dbc.py
+[OK] required file exists: tests/test_g17r1_runtime_fix.py
+[OK] locked G17-B0 preimage hash
+[OK] locked G17-R1 postimage hash
+[OK] ASCII Windows script: Install-Build-G17R1-Windows.ps1
+[OK] CRLF Windows script: Install-Build-G17R1-Windows.ps1
+[OK] ASCII Windows script: Prepare-G17R1-Client-Patch.ps1
+[OK] CRLF Windows script: Prepare-G17R1-Client-Patch.ps1
+[OK] ASCII Windows script: Run-G17R1-Windows-Fix.cmd
+[OK] CRLF Windows script: Run-G17R1-Windows-Fix.cmd
+[OK] ASCII Windows script: Run-G17R1-Prepare-Client-Patch.cmd
+[OK] CRLF Windows script: Run-G17R1-Prepare-Client-Patch.cmd
+[OK] build marker: Invoke-NativeLogged
+[OK] build marker: apply_g17r1_source.py
+[OK] build marker: 10a7002db4c173e441836870da01dd3009a7ba470369ca1a89bdb399ee9b2f45
+[OK] build marker: DRAGONRIDING_FRESH_OBJECTS
+[OK] build marker: DRAGONRIDING_C4018_HITS
+[OK] build marker: G17R1_C4018_FIX_GATE=PASS
+[OK] build marker: STOP_DO_NOT_START_WORLDSERVER
+[OK] build marker: Python312\python.exe
+[OK] build marker: WindowsApps aliases are rejected
+[OK] old build package is not invoked
+[OK] stale py launcher path is not used
+[OK] client script records server DBC unchanged
+[OK] client patch writes staging/client output
+[OK] client install copies from staging
+[OK] client script cannot overwrite input/server DBC
+[OK] SHA256SUMS exists
+[OK] package hash: Install-Build-G17R1-Windows.ps1
+[OK] package hash: PACKAGE_METADATA.txt
+[OK] package hash: Prepare-G17R1-Client-Patch.ps1
+[OK] package hash: README_FIRST.txt
+[OK] package hash: Run-G17R1-Prepare-Client-Patch.cmd
+[OK] package hash: Run-G17R1-Windows-Fix.cmd
+[OK] package hash: Test-G17R1-Package.py
+[OK] package hash: original/src/server/scripts/Commands/cs_dragonriding.cpp
+[OK] package hash: payload/src/server/scripts/Commands/cs_dragonriding.cpp
+[OK] package hash: tests/test_g17r1_runtime_fix.py
+[OK] package hash: tools/apply_g17r1_source.py
+[OK] package hash: tools/patch_g17r1_client_spell_dbc.py
+test_client_patch_is_narrow_deterministic_and_verifiable (__main__.ClientDbcPatcherTests.test_client_patch_is_narrow_deterministic_and_verifiable) ... ok
+test_input_and_output_cannot_be_same (__main__.ClientDbcPatcherTests.test_input_and_output_cannot_be_same) ... ok
+test_c4018_signed_unsigned_warning_is_fixed (__main__.SourceFixTests.test_c4018_signed_unsigned_warning_is_fixed) ... ok
+test_controllable_seat_is_discovered_and_verified (__main__.SourceFixTests.test_controllable_seat_is_discovered_and_verified) ... ok
+test_exact_hash_installer_apply_check_and_rollback (__main__.SourceFixTests.test_exact_hash_installer_apply_check_and_rollback) ... ok
+test_immediate_asynchronous_false_failure_is_removed (__main__.SourceFixTests.test_immediate_asynchronous_false_failure_is_removed) ... ok
+test_locked_preimage_and_postimage_hashes (__main__.SourceFixTests.test_locked_preimage_and_postimage_hashes) ... ok
+test_visible_diagnostics_exist (__main__.SourceFixTests.test_visible_diagnostics_exist) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.189s
+
+OK
+G17R1_CLIENT_SPELL_DBC_PATCH=PASS
+INPUT=/tmp/tmpf1yzhlw9/Spell.dbc
+OUTPUT=/tmp/tmpf1yzhlw9/client/DBFilesClient/Spell.dbc
+INPUT_SIZE=936092
+INPUT_SHA256=e1a015a68d67697cdd7599d633cd9265f0a02c30d8621b0646d751db51305a37
+OUTPUT_SIZE=936092
+OUTPUT_SHA256=2b7d9c4c7ebdc74d15b00192aa1b50c237dc6718df03ea97124c8829d5912393
+RECORD_COUNT=1000
+FIELD_COUNT=234
+RECORD_SIZE=936
+PATCHED_ROWS=2
+PROTO_DRAKE_HITS=59961,61294
+SERVER_DBC_MUST_REMAIN_ORIGINAL=True
+CLIENT_ONLY_CAST_GATE_REMOVED=True
+SERVER_G17A_LOCATION_POLICY_REMAINS_AUTHORITATIVE=True
+PATCHED_SPELLS_BEGIN
+59961	Red Proto-Drake
+61294	Green Proto-Drake
+PATCHED_SPELLS_END
+G17R1_CLIENT_SPELL_DBC_PATCH=PASS
+INPUT=/tmp/tmpf1yzhlw9/Spell.dbc
+OUTPUT=/tmp/tmpf1yzhlw9/client/DBFilesClient/Spell.dbc
+INPUT_SIZE=936092
+INPUT_SHA256=e1a015a68d67697cdd7599d633cd9265f0a02c30d8621b0646d751db51305a37
+OUTPUT_SIZE=936092
+OUTPUT_SHA256=2b7d9c4c7ebdc74d15b00192aa1b50c237dc6718df03ea97124c8829d5912393
+RECORD_COUNT=1000
+FIELD_COUNT=234
+RECORD_SIZE=936
+PATCHED_ROWS=2
+PROTO_DRAKE_HITS=59961,61294
+SERVER_DBC_MUST_REMAIN_ORIGINAL=True
+CLIENT_ONLY_CAST_GATE_REMOVED=True
+SERVER_G17A_LOCATION_POLICY_REMAINS_AUTHORITATIVE=True
+PATCHED_SPELLS_BEGIN
+59961	Red Proto-Drake
+61294	Green Proto-Drake
+PATCHED_SPELLS_END
+TARGET=/tmp/tmpsfu2c1t0/src/server/scripts/Commands/cs_dragonriding.cpp
+TARGET_SHA256=c9535dca3390ece6735e6ff6b7418ed99ff206628b5e8febd7b78b05cba999bd
+BACKUP=/tmp/tmpsfu2c1t0/src/server/scripts/Commands/cs_dragonriding.cpp.g17r1_before_20260822.bak
+G17R1_SOURCE_STATE=PREIMAGE
+G17R1_SOURCE_CHECK=PASS
+TARGET=/tmp/tmpsfu2c1t0/src/server/scripts/Commands/cs_dragonriding.cpp
+PRE_APPLY_SHA256=c9535dca3390ece6735e6ff6b7418ed99ff206628b5e8febd7b78b05cba999bd
+BACKUP=/tmp/tmpsfu2c1t0/src/server/scripts/Commands/cs_dragonriding.cpp.g17r1_before_20260822.bak
+BACKUP_SHA256=c9535dca3390ece6735e6ff6b7418ed99ff206628b5e8febd7b78b05cba999bd
+POST_APPLY_SHA256=10a7002db4c173e441836870da01dd3009a7ba470369ca1a89bdb399ee9b2f45
+G17R1_SOURCE_APPLY=PASS
+TARGET=/tmp/tmpsfu2c1t0/src/server/scripts/Commands/cs_dragonriding.cpp
+TARGET_SHA256=10a7002db4c173e441836870da01dd3009a7ba470369ca1a89bdb399ee9b2f45
+BACKUP=/tmp/tmpsfu2c1t0/src/server/scripts/Commands/cs_dragonriding.cpp.g17r1_before_20260822.bak
+BACKUP_SHA256=c9535dca3390ece6735e6ff6b7418ed99ff206628b5e8febd7b78b05cba999bd
+G17R1_SOURCE_STATE=POSTIMAGE
+G17R1_SOURCE_CHECK=PASS
+TARGET=/tmp/tmpsfu2c1t0/src/server/scripts/Commands/cs_dragonriding.cpp
+PRE_APPLY_SHA256=10a7002db4c173e441836870da01dd3009a7ba470369ca1a89bdb399ee9b2f45
+G17R1_SOURCE_APPLY=ALREADY_CURRENT
+POST_APPLY_SHA256=10a7002db4c173e441836870da01dd3009a7ba470369ca1a89bdb399ee9b2f45
+G17R1_SOURCE_ROLLBACK=PASS
+ROLLED_BACK_SHA256=c9535dca3390ece6735e6ff6b7418ed99ff206628b5e8febd7b78b05cba999bd
+
+[OK] embedded 8-test suite
+G17R1_WINDOWS_PACKAGE_SELFTEST=PASS

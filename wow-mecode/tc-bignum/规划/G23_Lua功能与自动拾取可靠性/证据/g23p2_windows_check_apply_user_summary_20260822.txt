@@ -1,0 +1,30 @@
+G23-P2 Windows Check/Apply 用户回传摘要
+记录日期：2026-08-22（Asia/Shanghai）
+
+用户回传的Check关键输出：
+G23P2_ROOT=D:\TC-Build\bin\RelWithDebInfo
+6个既有文件 state=PRE
+3个新增文件 state=ABSENT
+G23P2_STATE=READY_TO_APPLY
+G23P2_SQL=IMPORT_sql/G23P2_daily_reward_atomic.sql_BEFORE_STARTUP
+G23P2_COMPILE_REQUIRED=False
+G23P2_RELOAD_ELUNA_ALLOWED=False
+
+随后用户明确确认：“G23P2 cmd的两个文件都已经执行，非常成功”。按安装包语义，这两个安装动作文件记录为G23P2_Check.cmd与G23P2_Apply.cmd；G23P2_Rollback.cmd不是安装步骤且未据此推定执行。
+
+后续用户在正常进入游戏后报告：`.tp 暴风城`可用，但`.tp` UI点击“东部王国”等分类误报会话超时。这证明P2后Lua已加载并进入运行路径，同时构成P2R1热修的真实缺陷证据；不能把含此已知缺陷的P2写成完整运行PASS。
+
+状态边界：
+G23P2_WINDOWS_CHECK=PASS_RAW_OUTPUT
+G23P2_WINDOWS_APPLY=PASS_USER_CONFIRMED
+G23P2_WINDOWS_SQL=NOT_CONFIRMED
+G23P2_RUNTIME=RUNNING_WITH_TP_MENU_BUG
+G23P2_ROLLBACK=NOT_RUN_EXPECTED
+G23P2R1_WINDOWS_CHECK=PASS_USER_CONFIRMED
+G23P2R1_WINDOWS_APPLY=PASS_USER_CONFIRMED
+G23P2R1_RUNTIME=PASS_USER_CONFIRMED_TP_MENU
+G23P3A_WINDOWS_CHECK=NOT_RUN
+G23P3A_WINDOWS_APPLY=NOT_RUN
+G23P3A_RUNTIME=NOT_RUN
+
+后续结果：用户在P2R1后确认`.tp`菜单“可以了”，P2R1专项链关闭，当前转P3A Windows安装。本摘要仍不把未回传的HeidiSQL末尾summary_table/claim_table结果补写为PASS。

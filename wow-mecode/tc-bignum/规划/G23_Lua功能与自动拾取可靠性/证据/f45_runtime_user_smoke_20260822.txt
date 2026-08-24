@@ -1,0 +1,16 @@
+F45 runtime user smoke — 2026-08-22 (Asia/Shanghai)
+
+用户原始反馈：
+“是的，拾取有信息显示了，而且是多少就拾取多少了，做的非常好”
+
+归档判定：
+F45_RUNTIME=PASS_USER_CONFIRMED_NORMAL_USE
+F45_ANNOUNCE_VISIBLE=PASS_USER_CONFIRMED
+F45_OBSERVED_LOOT_COUNT_MATCH=PASS_USER_CONFIRMED
+F45_REPEAT_CHECK_APPLY_BUILD=False
+
+证据边界：
+- 本记录只按用户正常使用反馈确认：F45新二进制已经实际运行、群体拾取信息可见、观察到的拾取数量与播报数量一致。
+- 用户未提供PID、worldserver.exe哈希、逐行播报、组队roll、背包满、邮件或崩服矩阵；不得补造这些未回传项目。
+- R1–R4结构化尸体计数仍保持取消，不要求重复。
+- F45继续随正常游戏被动观察；Lua后续批次不得改写或掩盖F45 C++主链。

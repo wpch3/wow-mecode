@@ -1,0 +1,43 @@
+G17-A 第19B步部分真实回传（预检PASS、定性行为、后检PASS）
+日期：2026-08-21（Asia/Shanghai）
+来源：用户Windows真实环境
+性质：第19B部分证据；尚未满足完整关闭门槛
+
+=== 19B.1 用户原样回传 ===
+
+[OK] active exe size=36699136 utc=2026-08-21T07:48:22.1245419Z sha256=02bfe1e6373bf8f21b136863280ad12290407d5450ea2f844647c19f2cf7a5dd
+
+[OK] active pdb size=432877568 utc=2026-08-21T07:48:22.1578476Z
+
+[OK] source postimage sha256=537e5c350baa5f4a90bd0ec38c6b6858360e287aeabd75ab54050b4432e50755
+
+[OK] conf default-off sha256=a96afb09409f1a3080c62e2df7f6f02d91efc17270106b64339efa1529d30f17; WorldFlight.Enable=0 unique
+
+[OK] G17-A STEP19B_PREFLIGHT_PASS=True
+
+[NEXT] 现在按既有正常方式启动该RunDir中的worldserver.exe；不要修改conf。
+
+PS C:\Users\Administrator> & {
+
+=== 19B.2 用户陈述 ===
+
+19b2验证，主世界还是无法飞行，外域能飞，跟你说的一样
+
+=== 19B.3 用户原样回传 ===
+
+[OK] stopped; exe sha256=02bfe1e6373bf8f21b136863280ad12290407d5450ea2f844647c19f2cf7a5dd
+
+[OK] conf unchanged sha256=a96afb09409f1a3080c62e2df7f6f02d91efc17270106b64339efa1529d30f17; WorldFlight.Enable=0 unique
+
+[OK] G17-A STEP19B_POSTFLIGHT_PASS=True
+
+[STOP] 当前到此为止；不要Enable=1，先完整回传19B.1/19B.2/19B.3结果。
+
+PS C:\Users\Administrator>
+
+当前证据判定：
+- 19B.1只读预检通过：新exe/PDB、postimage及默认关闭conf均符合锁定值。
+- 用户定性确认Enable=0时主世界无法飞、外域能飞，行为方向符合A0与外域对照预期。
+- 19B.3后检通过：进程已停止，exe/conf未漂移，Enable仍为0。
+- 尚缺第19B既定完整门槛中的原始loaded-conf行、原始ready行、启动错误计数、map/zone/area/mount-spell实际值及正常停服明确标志。
+- 因此第19B暂不关闭，不得Enable=1；当前仅补齐缺失证据，不重复编译或旧Apply步骤。

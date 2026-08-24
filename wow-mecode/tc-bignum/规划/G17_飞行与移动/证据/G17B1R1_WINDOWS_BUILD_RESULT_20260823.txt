@@ -1,0 +1,52 @@
+G17B1R1_WINDOWS_BUILD_START
+SCOPE=G17B1R1_NATIVE_RUNNER_FIX_PLUS_G17B1_ALL_MOUNT_INTERCEPT
+RUNS_SQL=False
+MODIFIES_CLIENT=False
+R5_CLIENT_STATE_MODIFIED=False
+SOURCE_SHA256_BEFORE=10a7002db4c173e441836870da01dd3009a7ba470369ca1a89bdb399ee9b2f45
+PYTHON=C:\Users\Administrator\AppData\Local\Programs\Python\Python312\python.exe
+NATIVE_SELFTEST|G17B1R1_NATIVE_STDOUT
+NATIVE_SELFTEST|G17B1R1_NATIVE_STDERR 
+NATIVE_SELFTEST_EXIT=0
+SOURCE_APPLY|G17B1_SOURCE_STATE=READY_PREIMAGE
+SOURCE_APPLY|TARGET_SHA256=10a7002db4c173e441836870da01dd3009a7ba470369ca1a89bdb399ee9b2f45
+SOURCE_APPLY|BACKUP=D:\TrinityCore\src\server\scripts\Commands\cs_dragonriding.cpp.g17b1.preimage
+SOURCE_APPLY|G17B1_SOURCE_APPLY=PASS
+SOURCE_APPLY_EXIT=0
+SOURCE_SHA256_AFTER=2c7594d0f1428a767570063ac90c5f816991bf1d883fe61e45a1a28902a68199
+G17B1_SOURCE_APPLY_GATE=PASS
+MSBUILD=D:\vs\MSBuild\Current\Bin\MSBuild.exe
+DRAGONRIDING_VCXPROJ_HITS=1
+BEFORE_EXE_SHA256=15005e8fe90425261ebeb58bd3c0ae432a9ea1798e56d1056e10f3885d0172a9
+BEFORE_EXE_UTC=2026-08-23T05:46:01.0182468Z
+BUILD_START_UTC=2026-08-23T08:23:44.9793377Z
+MSBUILD|閫傜敤浜?.NET Framework MSBuild 鐗堟湰 18.8.2+ce25c0108
+MSBUILD|
+MSBUILD|  gsoap.vcxproj -> D:\TC-Build\dep\gsoap\RelWithDebInfo\gsoap.lib
+MSBUILD|  efsw.vcxproj -> D:\TC-Build\dep\efsw\RelWithDebInfo\efsw.lib
+MSBUILD|  sfmt.vcxproj -> D:\TC-Build\dep\SFMT\RelWithDebInfo\sfmt.lib
+MSBUILD|  fmt.vcxproj -> D:\TC-Build\dep\fmt\RelWithDebInfo\fmt.lib
+MSBUILD|  lualib.vcxproj -> D:\TC-Build\bin\RelWithDebInfo\lua52.dll
+MSBUILD|  zlib.vcxproj -> D:\TC-Build\dep\zlib\RelWithDebInfo\zlib.lib
+MSBUILD|  argon2.vcxproj -> D:\TC-Build\dep\argon2\RelWithDebInfo\argon2.lib
+MSBUILD|  Detour.vcxproj -> D:\TC-Build\dep\recastnavigation\Detour\RelWithDebInfo\Detour.lib
+MSBUILD|  g3dlib.vcxproj -> D:\TC-Build\dep\g3dlite\RelWithDebInfo\g3dlib.lib
+MSBUILD|  common.vcxproj -> D:\TC-Build\src\common\RelWithDebInfo\common.lib
+MSBUILD|  database.vcxproj -> D:\TC-Build\src\server\database\RelWithDebInfo\database.lib
+MSBUILD|  shared.vcxproj -> D:\TC-Build\src\server\shared\RelWithDebInfo\shared.lib
+MSBUILD|  game.vcxproj -> D:\TC-Build\src\server\game\RelWithDebInfo\game.lib
+MSBUILD|  cs_dragonriding.cpp
+MSBUILD|  scripts.vcxproj -> D:\TC-Build\src\server\scripts\RelWithDebInfo\scripts.lib
+MSBUILD|    姝ｅ湪鍒涘缓搴?D:/TC-Build/src/server/worldserver/RelWithDebInfo/worldserver.lib 鍜屽璞?D:/TC-Build/src/server/worldserver/RelWithDebInfo/worldserver.exp
+MSBUILD|  worldserver.vcxproj -> D:\TC-Build\bin\RelWithDebInfo\worldserver.exe
+MSBUILD_EXIT=0
+DRAGONRIDING_FRESH_OBJECTS=1
+FRESH_OBJECT=D:\TC-Build\src\server\scripts\scripts.dir\RelWithDebInfo\cs_dragonriding.obj;size=2197559
+AFTER_EXE_SHA256=dc85bd9306646a00ff3a2be7cc6fb13b80880d20bb37da468620b7d9b88a2581
+AFTER_EXE_SIZE=36783616
+AFTER_EXE_UTC=2026-08-23T08:24:42.5828880Z
+AFTER_PDB_UTC=2026-08-23T08:24:42.6318007Z
+G17B1R1_WINDOWS_BUILD_ERROR=exe/pdb timestamp did not advance
+G17B1R1_WINDOWS_BUILD_RESULT=FAIL
+STOP_DO_NOT_START_WORLDSERVER
+RESULT_FILE=C:\Users\Administrator\Downloads\workspace\uploads\G17B1R1_WINDOWS_BUILD_RESULT.txt

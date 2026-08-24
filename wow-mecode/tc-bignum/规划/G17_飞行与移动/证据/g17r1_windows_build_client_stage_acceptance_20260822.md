@@ -1,0 +1,47 @@
+# G17-R1 Windows构建与客户端staging验收
+
+日期：2026-08-22（Asia/Shanghai）
+
+原始合并结果：`G17R1_WINDOWS_AND_CLIENT_STAGE_RESULT_20260822.txt`
+
+- 原始文件大小：16135 bytes
+- 原始文件SHA-256：`2d3b25a5052e8bb9ea8f7d11388d2f5c919af4b0560520b3cb793491a0458f1e`
+
+## Windows源码与构建
+
+```text
+G17R1_WINDOWS_SOURCE_APPLY=PASS
+G17R1_WINDOWS_CMAKE_EXIT=0
+G17R1_WINDOWS_SOURCE_MEMBERSHIP=PASS
+G17R1_WINDOWS_MSBUILD_EXIT=0
+G17R1_WINDOWS_FRESH_OBJECTS=1
+G17R1_WINDOWS_C4018_HITS=0
+G17R1_WINDOWS_BUILD_RESULT=PASS
+```
+
+`worldserver.exe`由`59491e97426dc059e2f440b6ca17f28ffdc6eb296e3f8d04fc428b59099b5881`变为`e74d9304476b3935fd5ae1316f8f913eb4edbd6821ade7aedc20d031a7d08148`，并有fresh `cs_dragonriding.cpp.obj`；因此G17-R1源码已进入新的Windows二进制，C4018修复也已由真实MSBuild证明。
+
+## 客户端DBC准备
+
+```text
+G17R1_CLIENT_SPELL_DBC_PATCH=PASS
+G17R1_CLIENT_SPELL_DBC_VERIFY=PASS
+G17R1_CLIENT_DBC_STAGE=PASS
+G17R1_CLIENT_PREPARE_RESULT=PASS
+PATCHED_ROWS=110
+SERVER_DBC_MODIFIED=False
+G17R1_CLIENT_LOOSE_PATCH=NOT_INSTALLED_NO_CLIENT_ROOT
+```
+
+输入服务端DBC仍为SHA-256 `df44e75e...d10f`；客户端专用输出为`dd250911...64ea`，大小均48956359，10个始祖幼龙法术全部命中。该结果只证明staging生成与反向验证通过；因为脚本没有收到ClientRoot，`D:\WOW`尚未安装任何补丁，不能声称客户端已生效。
+
+## 当前边界
+
+```text
+G17R1_WINDOWS_BUILD=PASS
+G17R1_CLIENT_DBC_STAGE=PASS
+G17R1_CLIENT_INSTALLED=NOT_YET
+G17R1_RUNTIME=NOT_YET_EXECUTED_AFTER_FIX
+```
+
+旧Source Apply、world SQL及旧v1/v2/v3构建包继续禁止重跑。下一步只安装新的真实packed MPQ到`D:\WOW`空闲高优先级槽，然后使用新worldserver执行御龙入座、`controlled=true`、4格动作条和始祖幼龙召唤Runtime。

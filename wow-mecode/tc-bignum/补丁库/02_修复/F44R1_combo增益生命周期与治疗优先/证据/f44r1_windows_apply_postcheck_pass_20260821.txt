@@ -1,0 +1,33 @@
+F44R1 Windows真实Apply/postcheck回传
+日期：2026-08-21（Asia/Shanghai）
+执行环境：用户Windows PowerShell 5.1
+目标源码：D:\TrinityCore
+
+二进制前像备份：
+[OK] binary backup=D:\TC-Build\bin\RelWithDebInfo\worldserver.exe.before_f44r1_20260821_222608.bak
+[OK] binary backup=D:\TC-Build\bin\RelWithDebInfo\worldserver.pdb.before_f44r1_20260821_222608.bak
+
+Apply真实输出：
+[OK] applied cs_combathelper.cpp sha256=209cd709d3f649261032a22f54407601dd30953984c23c8464cea6a939c4d4fc
+[OK] applied CombatSpecData.h sha256=2f471943f67b4188ddee240114d0b9d6056225f1a81c45e73618098a3b49b74d
+[OK] applied CombatSpecData.cpp sha256=d7bc0532ba16f2ead2ff5af81ee12329d70e172a0005afac302fa575cf224e56
+[OK] APPLY_CHANGED_FILES=3
+[OK] F44R1_APPLY_PASS=True
+
+Apply后真实Check：
+[OK] cs_combathelper.cpp state=applied sha256=209cd709d3f649261032a22f54407601dd30953984c23c8464cea6a939c4d4fc
+[OK] CombatSpecData.h state=applied sha256=2f471943f67b4188ddee240114d0b9d6056225f1a81c45e73618098a3b49b74d
+[OK] CombatSpecData.cpp state=applied sha256=d7bc0532ba16f2ead2ff5af81ee12329d70e172a0005afac302fa575cf224e56
+[OK] CHECK_STATE=applied
+[OK] SOURCE_EDITS=0
+[OK] F44R1_APPLY_POSTCHECK_PASS=True
+
+判定：
+- F44R1_WINDOWS_APPLY_POSTCHECK=PASS
+- 三个真实源码已从锁定旧F44 preimage切换为F44R1 postimage。
+- Apply后二次检查无额外漂移（SOURCE_EDITS=0）。
+- 两个旧二进制已按时间戳完成备份。
+- 当前源码状态是applied，不是rollback；用户消息中的“回滚正确”与实际输出标签不一致，应以真实输出为准。
+- 尚无VS2022真实编译、新二进制启动或修复后真人验收结果。
+
+注：用户在同一消息中重复粘贴了同一组输出，本证据仅归档一次，不重复计数。

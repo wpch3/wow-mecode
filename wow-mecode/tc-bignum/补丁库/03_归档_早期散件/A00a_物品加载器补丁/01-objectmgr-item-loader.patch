@@ -1,0 +1,52 @@
+diff --git a/src/server/game/Globals/ObjectMgr.cpp b/src/server/game/Globals/ObjectMgr.cpp
+index 4ad26020..56da3f21 100644
+--- a/src/server/game/Globals/ObjectMgr.cpp
++++ b/src/server/game/Globals/ObjectMgr.cpp
+@@ -2998,7 +2998,7 @@ void ObjectMgr::LoadItemTemplates()
+         itemTemplate.InventoryType             = uint32(fields[12].GetUInt8());
+         itemTemplate.AllowableClass            = fields[13].GetInt32();
+         itemTemplate.AllowableRace             = fields[14].GetInt32();
+-        itemTemplate.ItemLevel                 = uint32(fields[15].GetUInt16());
++        itemTemplate.ItemLevel                 = fields[15].GetUInt32();
+         itemTemplate.RequiredLevel             = uint32(fields[16].GetUInt8());
+         itemTemplate.RequiredSkill             = uint32(fields[17].GetUInt16());
+         itemTemplate.RequiredSkillRank         = uint32(fields[18].GetUInt16());
+@@ -3021,7 +3021,7 @@ void ObjectMgr::LoadItemTemplates()
+         for (uint8 i = 0; i < itemTemplate.StatsCount; ++i)
+         {
+             itemTemplate.ItemStat[i].ItemStatType  = uint32(fields[28 + i*2].GetUInt8());
+-            itemTemplate.ItemStat[i].ItemStatValue = int32(fields[29 + i*2].GetInt16());
++            itemTemplate.ItemStat[i].ItemStatValue = fields[29 + i*2].GetInt32();
+         }
+ 
+         itemTemplate.ScalingStatDistribution = uint32(fields[48].GetUInt16());
+@@ -3034,13 +3034,13 @@ void ObjectMgr::LoadItemTemplates()
+             itemTemplate.Damage[i].DamageType = uint32(fields[52 + i*3].GetUInt8());
+         }
+ 
+-        itemTemplate.Armor          = uint32(fields[56].GetUInt16());
+-        itemTemplate.HolyRes        = uint32(fields[57].GetUInt8());
+-        itemTemplate.FireRes        = uint32(fields[58].GetUInt8());
+-        itemTemplate.NatureRes      = uint32(fields[59].GetUInt8());
+-        itemTemplate.FrostRes       = uint32(fields[60].GetUInt8());
+-        itemTemplate.ShadowRes      = uint32(fields[61].GetUInt8());
+-        itemTemplate.ArcaneRes      = uint32(fields[62].GetUInt8());
++        itemTemplate.Armor          = fields[56].GetUInt32();
++        itemTemplate.HolyRes        = fields[57].GetUInt32();
++        itemTemplate.FireRes        = fields[58].GetUInt32();
++        itemTemplate.NatureRes      = fields[59].GetUInt32();
++        itemTemplate.FrostRes       = fields[60].GetUInt32();
++        itemTemplate.ShadowRes      = fields[61].GetUInt32();
++        itemTemplate.ArcaneRes      = fields[62].GetUInt32();
+         itemTemplate.Delay          = uint32(fields[63].GetUInt16());
+         itemTemplate.AmmoType       = uint32(fields[64].GetUInt8());
+         itemTemplate.RangedModRange = fields[65].GetFloat();
+@@ -3069,7 +3069,7 @@ void ObjectMgr::LoadItemTemplates()
+         itemTemplate.RandomSuffix   = fields[111].GetInt32();
+         itemTemplate.Block          = fields[112].GetUInt32();
+         itemTemplate.ItemSet        = fields[113].GetUInt32();
+-        itemTemplate.MaxDurability  = uint32(fields[114].GetUInt16());
++        itemTemplate.MaxDurability  = fields[114].GetUInt32();
+         itemTemplate.Area           = fields[115].GetUInt32();
+         itemTemplate.Map            = uint32(fields[116].GetUInt16());
+         itemTemplate.BagFamily      = fields[117].GetUInt32();

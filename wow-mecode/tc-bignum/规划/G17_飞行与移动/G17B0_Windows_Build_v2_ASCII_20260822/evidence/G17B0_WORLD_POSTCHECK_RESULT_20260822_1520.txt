@@ -1,0 +1,3 @@
+|G17B0_RESULT          |database_name|source_rows|source_vehicle70_rows|target_rows|target_exact|action_rows|action_exact|movement_exact|script_rows|script_exact|
+|----------------------|-------------|-----------|---------------------|-----------|------------|-----------|------------|--------------|-----------|------------|
+|G17B0_WORLD_CHECK_PASS|world        |1          |1                    |1          |1           |4          |4           |1             |4          |4           |

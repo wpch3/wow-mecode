@@ -1,0 +1,21 @@
+F44R1 Windows VS2022真实增量编译回传
+日期：2026-08-21（Asia/Shanghai）
+配置：RelWithDebInfo|x64
+目标：worldserver
+
+用户回传：
+[OK] compiled cs_combathelper.cpp=True
+[OK] compiled CombatSpecData.cpp=True
+[OK] build log=C:\Users\Administrator\Downloads\workspace\uploads\f44r1_build_20260821_230631.txt
+[OK] exe size=36734464 sha256=07a8f95259a6d46ab5d46720e5b919fc5cc60f7e81086b81e2748e7d1e1a86c1 utc=2026-08-21T15:06:55.8489718Z
+[OK] pdb size=433344512 utc=2026-08-21T15:06:55.8742977Z
+[OK] F44R1_WINDOWS_BUILD_PASS=True
+
+判定：
+- F44R1_WINDOWS_BUILD=PASS
+- 两个F44R1 cpp均由真实MSBuild编译。
+- worldserver.exe和worldserver.pdb时间均前进；exe哈希已变化并锁定为07a8f95259a6d46ab5d46720e5b919fc5cc60f7e81086b81e2748e7d1e1a86c1。
+- 尚无新二进制启动或修复后真人功能验收结果。
+
+编码说明：
+用户报告构建过程末尾出现“宸叉垚鍔熺敓鎴愩€?”、“0 涓鍛?”、“0 涓敊璇?”、“宸茬敤鏃堕棿 00:00:24.50”。这是UTF-8中文被GBK/控制台代码页错误解码的典型显示，分别对应“已成功生成”、“0 个警告”、“0 个错误”、“已用时间 00:00:24.50”。结合MSBuild退出码门槛、两个cpp命中、新exe/PDB及最终PASS标志，判定只影响控制台/日志可读性，不影响本次编译产物；不得为此重复编译。

@@ -1,0 +1,44 @@
+G23 R1–R4真人矩阵：地点字段阶段性回传
+日期：2026-08-22（Asia/Shanghai）
+状态：只收到GPS/拾取方式地点信息，尚无击杀与拾取前后计数；不能判PASS/FAIL
+
+【野外候选；拟用于R1】
+outdoors
+Map=0 东部王国
+Zone=12 艾尔文森林
+Area=12 艾尔文森林
+Phase=1
+X=-9163.321289 Y=58.866058 Z=77.885696
+InstanceID=0
+说明：用户本条只标“野外”，未明确是否单人/无NPCBot；R1角色组队状态仍待确认。
+
+【高级副本；R4地点已锁定】
+loot-method=需求优先
+indoors
+Map=600 达克萨隆要塞
+Zone=4196 达克萨隆要塞
+Area=4196 达克萨隆要塞
+Phase=1
+X=-461.058624 Y=-606.772278 Z=1.025729
+InstanceID=3
+
+【纯小队自由拾取候选；R3地点已锁定】
+loot-method=自由拾取
+outdoors
+Map=0 东部王国
+Zone=33 荆棘谷
+Area=101 库尔森的营地
+Phase=1
+X=-11574.576172 Y=-594.963501 Z=27.980013
+InstanceID=0
+
+【尚缺】
+- R1是否单人且无NPCBot；killed/lootable-before/AoE-message/lootable-after/duplicate/crash。
+- R2同类普通野外、纯NPCBot队、需求优先的上述结果。
+- R3自由拾取的上述结果。
+- R4高级副本10只普通小怪的上述结果、roll-window及剩余绿蓝物品。
+
+不要求重复上述三个地点的.gps；只补游戏内拾取观察。
+
+G23_REPRO_LOCATIONS_RECEIVED=True
+G23_REPRO_BEHAVIOR_RESULTS_RECEIVED=False

@@ -1,0 +1,36 @@
+G23-P3A API/设计审计与本地验收
+日期：2026-08-22（Asia/Shanghai）
+
+关键审计：
+- _chk/hooks/PlayerHooks.cpp的Eluna::OnCommand默认返回true，只有Lua回调返回false才拦截；
+- PLAYER_EVENT_ON_COMMAND为WORLD事件，控制台player=nil；P3A对nil直接透传；
+- TrinityCore原生.server是命令树，含info/motd/restart/shutdown/set等；
+- G23Core新增唯一PASS_THROUGH哨兵，`.server`未知/原生子命令返回nil给核心继续处理；
+- RegisterPlayerGossipEvent为MAP事件，因此gmhelp菜单不保存WORLD命令state中的局部session，sender/intid可在任意map state重建；
+- world.command真实表至少提供name/help；只在执行gmhelp搜索/verify时查询，不在脚本顶层查询。
+
+GM帮助目录：
+- 静态项目/常用核心条目=153；
+- 分类=11；
+- 条目去重门槛PASS；
+- 当前项目识别顶层命令覆盖门槛PASS；
+- 额外核心命令从world.command按需搜索，不再受旧C++固定69条限制；
+- 高危命令仅显示详情，不自动执行。
+
+本地结果：
+G23P3A_LUAC_5_2_ALL=PASS
+G23P3A_STATIC=PASS catalog=153
+G23P3A_COMMAND_PASS_THROUGH_MOCK=PASS
+G23P3A_GMHELP_DYNAMIC_AND_STATELESS_MOCK=PASS
+G23P3A_NO_TOP_LEVEL_DB=PASS
+G23P3A_FULL_LOAD_MOCK_WORLD=PASS
+G23P3A_FULL_LOAD_MOCK_MAP=PASS
+G23P3A_FULL_P2R1_INTEGRATION=PASS
+G23P3A_INSTALLER_SELFTEST=PASS
+G23P3A_INSTALLER_SELFTEST_OPTIMIZED=PASS
+G23P3A_CMD_CRLF=PASS
+
+Windows边界：
+G23P3A_WINDOWS_CHECK=NOT_RUN
+G23P3A_WINDOWS_APPLY=NOT_RUN
+G23P3A_RUNTIME=NOT_RUN

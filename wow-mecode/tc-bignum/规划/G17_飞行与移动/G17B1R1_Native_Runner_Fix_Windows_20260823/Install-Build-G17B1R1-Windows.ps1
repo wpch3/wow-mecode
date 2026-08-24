@@ -1,0 +1,43 @@
+#requires -Version 5.1
+param([string]$Workspace="C:\Users\Administrator\Downloads\workspace",[string]$SourceRoot="D:\TrinityCore",[string]$BuildRoot="D:\TC-Build")
+$ErrorActionPreference="Stop"
+$UploadDir=Join-Path $Workspace "uploads";$Result=Join-Path $UploadDir "G17B1R1_WINDOWS_BUILD_RESULT.txt";$Utf8NoBom=New-Object System.Text.UTF8Encoding($false)
+$Target=Join-Path $SourceRoot "src\server\scripts\Commands\cs_dragonriding.cpp";$Tool=Join-Path $PSScriptRoot "tools\apply_g17b1_source.py"
+$Solution=Join-Path $BuildRoot "TrinityCore.sln";$RunDir=Join-Path $BuildRoot "bin\RelWithDebInfo";$Exe=Join-Path $RunDir "worldserver.exe";$Pdb=Join-Path $RunDir "worldserver.pdb"
+$Pre="10a7002db4c173e441836870da01dd3009a7ba470369ca1a89bdb399ee9b2f45";$Post="2c7594d0f1428a767570063ac90c5f816991bf1d883fe61e45a1a28902a68199"
+New-Item -ItemType Directory -Path $UploadDir -Force|Out-Null;[IO.File]::WriteAllText($Result,"",$Utf8NoBom)
+function W([string]$x){Write-Host $x;[IO.File]::AppendAllText($Result,$x+[Environment]::NewLine,$Utf8NoBom)}
+function Invoke-NativeLogged {
+ param([Parameter(Mandatory=$true)][string]$FilePath,[Parameter(Mandatory=$true)][string[]]$NativeArgs,[Parameter(Mandatory=$true)][string]$Prefix)
+ $old=$ErrorActionPreference;$out=@();$rc=9009
+ try{$ErrorActionPreference="Continue";$out=@(& $FilePath @NativeArgs 2>&1);$rc=$LASTEXITCODE}
+ finally{$ErrorActionPreference=$old}
+ foreach($line in $out){W ($Prefix+"|"+$line.ToString())}
+ return [int]$rc
+}
+function FindPython(){
+ $c=@((Join-Path $env:LOCALAPPDATA "Programs\Python\Python312\python.exe"),(Join-Path $env:LOCALAPPDATA "Programs\Python\Python310\python.exe"));$p=@($c|Where-Object{Test-Path -LiteralPath $_ -PathType Leaf})[0]
+ if(-not $p){$cmd=Get-Command python.exe -ErrorAction SilentlyContinue;if(-not $cmd){$cmd=Get-Command python -ErrorAction SilentlyContinue};if($cmd -and $cmd.Source -notmatch "\\WindowsApps\\"){$p=$cmd.Source}}
+ return $p
+}
+try{
+ W "G17B1R1_WINDOWS_BUILD_START";W "SCOPE=G17B1R1_NATIVE_RUNNER_FIX_PLUS_G17B1_ALL_MOUNT_INTERCEPT";W "RUNS_SQL=False";W "MODIFIES_CLIENT=False";W "R5_CLIENT_STATE_MODIFIED=False"
+ if(Get-Process worldserver -ErrorAction SilentlyContinue){throw "worldserver is running; stop it normally first"}
+ foreach($d in @($SourceRoot,$BuildRoot,$RunDir)){if(-not(Test-Path -LiteralPath $d -PathType Container)){throw "directory missing: $d"}}
+ foreach($f in @($Target,$Tool,$Solution,$Exe,$Pdb)){if(-not(Test-Path -LiteralPath $f -PathType Leaf)){throw "file missing: $f"}}
+ $before=(Get-FileHash -LiteralPath $Target -Algorithm SHA256).Hash.ToLowerInvariant();W "SOURCE_SHA256_BEFORE=$before";if($before -cne $Pre -and $before -cne $Post){throw "dragonriding source is not locked R1 preimage or B1 postimage"};$first=($before -ceq $Pre)
+ $python=FindPython;if(-not $python){throw "Python312/Python310 not found; py.exe and WindowsApps aliases are not used"};W "PYTHON=$python"
+ $com=$env:ComSpec;if(-not $com){throw "ComSpec missing"};$NativeSelfTestArgs=@('/d','/c','echo G17B1R1_NATIVE_STDOUT& echo G17B1R1_NATIVE_STDERR 1>&2& exit /b 0');$rc=Invoke-NativeLogged -FilePath $com -NativeArgs $NativeSelfTestArgs -Prefix 'NATIVE_SELFTEST';W "NATIVE_SELFTEST_EXIT=$rc";if($rc-ne 0){throw "native runner selftest failed"}
+ $SourceApplyArgs=@($Tool,'apply','--source-root',$SourceRoot);$rc=Invoke-NativeLogged -FilePath $python -NativeArgs $SourceApplyArgs -Prefix 'SOURCE_APPLY';W "SOURCE_APPLY_EXIT=$rc";if($rc-ne 0){throw "source apply failed"}
+ $after=(Get-FileHash -LiteralPath $Target -Algorithm SHA256).Hash.ToLowerInvariant();W "SOURCE_SHA256_AFTER=$after";if($after-cne $Post){throw "B1 postimage SHA mismatch"};W "G17B1_SOURCE_APPLY_GATE=PASS"
+ $vswhere=Join-Path ${env:ProgramFiles(x86)} "Microsoft Visual Studio\Installer\vswhere.exe";if(-not(Test-Path -LiteralPath $vswhere -PathType Leaf)){throw "vswhere missing"}
+ $msbuild=@(& $vswhere -latest -products * -requires Microsoft.Component.MSBuild -find "MSBuild\**\Bin\MSBuild.exe"|Where-Object{$_})[0];if(-not $msbuild){throw "MSBuild not found"};W "MSBUILD=$msbuild"
+ $hits=@(Get-ChildItem -LiteralPath $BuildRoot -Filter *.vcxproj -File -Recurse|Select-String -SimpleMatch "cs_dragonriding.cpp");W "DRAGONRIDING_VCXPROJ_HITS=$($hits.Count)";if($hits.Count-lt 1){throw "cs_dragonriding.cpp absent from generated projects"}
+ $be=Get-Item $Exe;$bp=Get-Item $Pdb;$beh=(Get-FileHash $Exe -Algorithm SHA256).Hash.ToLowerInvariant();W "BEFORE_EXE_SHA256=$beh";W "BEFORE_EXE_UTC=$($be.LastWriteTimeUtc.ToString('o'))"
+ [IO.File]::SetLastWriteTimeUtc($Target,[DateTime]::UtcNow);Start-Sleep -Milliseconds 150;$start=[DateTime]::UtcNow;W "BUILD_START_UTC=$($start.ToString('o'))"
+ $MSBuildArgs=@($Solution,'/m','/t:worldserver','/p:Configuration=RelWithDebInfo','/p:Platform=x64','/verbosity:minimal');$rc=Invoke-NativeLogged -FilePath $msbuild -NativeArgs $MSBuildArgs -Prefix 'MSBUILD';W "MSBUILD_EXIT=$rc";if($rc-ne 0){throw "MSBuild failed"}
+ $objs=@(Get-ChildItem -LiteralPath $BuildRoot -File -Recurse -Filter '*dragonriding*.obj'|Where-Object{$_.LastWriteTimeUtc-ge $start});W "DRAGONRIDING_FRESH_OBJECTS=$($objs.Count)";foreach($o in $objs){W ("FRESH_OBJECT="+$o.FullName+";size="+$o.Length)};if($objs.Count-lt 1){throw "fresh dragonriding object not proven"}
+ $ae=Get-Item $Exe;$ap=Get-Item $Pdb;$aeh=(Get-FileHash $Exe -Algorithm SHA256).Hash.ToLowerInvariant();W "AFTER_EXE_SHA256=$aeh";W "AFTER_EXE_SIZE=$($ae.Length)";W "AFTER_EXE_UTC=$($ae.LastWriteTimeUtc.ToString('o'))";W "AFTER_PDB_UTC=$($ap.LastWriteTimeUtc.ToString('o'))"
+ if($ae.LastWriteTimeUtc-le $be.LastWriteTimeUtc -or $ap.LastWriteTimeUtc-le $bp.LastWriteTimeUtc){throw "exe/pdb timestamp did not advance"};if($first -and $aeh-ceq $beh){throw "first B1 build did not change worldserver.exe SHA"}
+ W "G17B1R1_WINDOWS_BUILD_RESULT=PASS";W "STOP_DO_NOT_RUN_SQL";W "NEXT=Start worldserver normally; use normal owned mount buttons with default auto=on";W "RESULT_FILE=$Result";exit 0
+}catch{W ("G17B1R1_WINDOWS_BUILD_ERROR="+$_.Exception.Message);W "G17B1R1_WINDOWS_BUILD_RESULT=FAIL";W "STOP_DO_NOT_START_WORLDSERVER";W "RESULT_FILE=$Result";exit 1}

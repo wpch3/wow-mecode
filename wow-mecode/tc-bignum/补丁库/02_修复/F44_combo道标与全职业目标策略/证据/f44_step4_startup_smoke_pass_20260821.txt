@@ -1,0 +1,15 @@
+F44新worldserver启动烟雾证据
+日期：2026-08-21（Asia/Shanghai）
+
+用户回传活动进程：
+- process id=12284
+- process path=D:\TC-Build\bin\RelWithDebInfo\worldserver.exe
+- process exe SHA-256=d32ee2cf8de82f0987affa7a915122d6087673db2b7cbbd6a1365d39c164bcfe
+- F44_STEP4_STARTUP_PROCESS_PASS=True
+
+用户明确确认：服务器启动成功，回传正确。
+
+证据边界：
+- 证明活动进程唯一检查通过、路径为F44新编译运行目录、exe哈希与第3步锁定值一致，且用户确认服务器成功启动。
+- 本次消息未单独附最终ready原始控制台行，也未逐项给出combathelper/F44/Commands错误计数；不得补造这些原始字段。
+- 新二进制启动烟雾按用户确认接受并关闭，不要求为了补抄已缺失原始行而重启；服务器保持运行，下一步直接做F44限定真人验收。

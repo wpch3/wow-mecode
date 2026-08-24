@@ -1,0 +1,56 @@
+G17-A 第17步用户聊天回传转录
+日期：2026-08-21（Asia/Shanghai）
+性质：用户在聊天中粘贴的完整PowerShell输出；不是原始附件。
+转录说明：聊天界面自动把“.md”与“.py”片段渲染成链接，以下恢复为实际文件名；不改变任何结果字段。
+
+[OK] ZIP SHA256=f33d485153108927accbf236b426e34aa0d61f574e37c512269630543beb2275
+[OK] package hash g17_world_flight.conf = a96afb09409f1a3080c62e2df7f6f02d91efc17270106b64339efa1529d30f17
+[OK] package hash 源文件\SpellInfo.cpp = 537e5c350baa5f4a90bd0ec38c6b6858360e287aeabd75ab54050b4432e50755
+[OK] package hash 04-G17A_安全全世界飞行_安装验收与回滚.md = 812a288295d9cc604a798ab12c7bfff4b9cb0af6eda2e4a896596700fc991cc3
+[OK] package hash SpellInfo.cpp.g17a.patch = 79226a47d420e8b42017e60f62b60a4871c7c64184edc466bc4ad32eb0f99f81
+[OK] package hash install_g17a_world_flight.py = 926585da6a363b7c2ae4b2340d5227f1a6d444a1ff1e6297dd939508111893c4
+
+[OK] Created backup: C:\Users\Administrator\AppData\Local\Temp\g17a_installer_rfv1_6el\src\server\game\Spells\SpellInfo.cpp.g17a.bak
+[OK] Applied G17-A SpellInfo.cpp: size=182275 sha256=537e5c350baa5f4a90bd0ec38c6b6858360e287aeabd75ab54050b4432e50755
+[OK] APPLY_CHANGED_FILES=1
+[INFO] DBC/MPQ/config/database edits=0
+[OK] G17-A is already applied exactly; no files changed.
+[OK] APPLY_ALREADY_APPLIED=True
+[OK] Rolled back G17-A SpellInfo.cpp: size=180195 sha256=78dbc810f8afa080275d7fabcb2bc75ff52652295a25677b447cbe5f3ca89753
+[OK] ROLLBACK_CHANGED_FILES=1
+[INFO] Verified backup retained: C:\Users\Administrator\AppData\Local\Temp\g17a_installer_rfv1_6el\src\server\game\Spells\SpellInfo.cpp.g17a.bak
+[OK] Package full-source/preimage/postimage hashes and CRLF passed.
+[OK] Exact apply/already-applied/rollback fixture passed.
+[OK] Duplicate/changed-anchor negative fixtures did not false-pass.
+[OK] G17-A installer self-test passed.
+
+[OK] Created backup: C:\Users\Administrator\AppData\Local\Temp\g17a_installer_fvvgp247\src\server\game\Spells\SpellInfo.cpp.g17a.bak
+[OK] Applied G17-A SpellInfo.cpp: size=182275 sha256=537e5c350baa5f4a90bd0ec38c6b6858360e287aeabd75ab54050b4432e50755
+[OK] APPLY_CHANGED_FILES=1
+[INFO] DBC/MPQ/config/database edits=0
+[OK] G17-A is already applied exactly; no files changed.
+[OK] APPLY_ALREADY_APPLIED=True
+[OK] Rolled back G17-A SpellInfo.cpp: size=180195 sha256=78dbc810f8afa080275d7fabcb2bc75ff52652295a25677b447cbe5f3ca89753
+[OK] ROLLBACK_CHANGED_FILES=1
+[INFO] Verified backup retained: C:\Users\Administrator\AppData\Local\Temp\g17a_installer_fvvgp247\src\server\game\Spells\SpellInfo.cpp.g17a.bak
+[OK] Package full-source/preimage/postimage hashes and CRLF passed.
+[OK] Exact apply/already-applied/rollback fixture passed.
+[OK] Duplicate/changed-anchor negative fixtures did not false-pass.
+[OK] G17-A installer self-test passed.
+
+[OK] G17-A 普通 SELF_TEST_PASS=True
+[OK] G17-A -O SELF_TEST_PASS=True
+[OK] Package SpellInfo.cpp: size=182275 sha256=537e5c350baa5f4a90bd0ec38c6b6858360e287aeabd75ab54050b4432e50755
+[OK] Target SpellInfo.cpp state=ready: size=180195 sha256=78dbc810f8afa080275d7fabcb2bc75ff52652295a25677b447cbe5f3ca89753
+[OK] CHECK_READY_TO_APPLY=True
+[OK] Source/config/database edits: 0
+[OK] G17-A SELF_TEST_AND_CHECK_PASS=True
+[OK] SpellInfo.cpp unchanged sha256=78dbc810f8afa080275d7fabcb2bc75ff52652295a25677b447cbe5f3ca89753
+[STOP] 当前到此为止；不要Apply、不要编译，先完整回传本窗口输出。
+
+验收结论：
+STEP17_ACCEPTED=True
+REAL_SOURCE_EDIT_COUNT=0
+REAL_CONFIG_EDIT_COUNT=0
+REAL_DATABASE_EDIT_COUNT=0
+NEXT_GATE=Step18 controlled apply and default-off conf staging

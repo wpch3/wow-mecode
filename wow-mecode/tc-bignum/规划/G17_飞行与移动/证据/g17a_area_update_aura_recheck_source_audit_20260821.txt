@@ -1,0 +1,55 @@
+G17-A 进入禁区时飞行光环复检链源码审计
+日期：2026-08-21（Asia/Shanghai）
+目的：确认G17-A不仅在召唤/施法时检查SpellInfo::CheckLocation，也会在玩家跨Area时复检已有光环，从而为A3/A4/BlockedAreaIds“飞入后移除光环”验收提供源码依据。
+
+架构基础：
+https://github.com/328950225/TrinityCore-NPCBOT-Eluna-zhCN
+分支：NPCBOT-Eluna-zhCN-2026
+文件：src/server/game/Entities/Player/Player.cpp
+原始URL：
+https://raw.githubusercontent.com/328950225/TrinityCore-NPCBOT-Eluna-zhCN/NPCBOT-Eluna-zhCN-2026/src/server/game/Entities/Player/Player.cpp
+抓取大小：991044字节
+SHA-256：f76088ec45e70e4759d2eccf3ef9287b62297164894c3c00427993cc905a814e
+
+关键原文：
+
+24080: void Player::UpdateZoneDependentAuras(uint32 newZone)
+24081: {
+24082:     // Some spells applied at enter into zone (with subzones), aura removed in UpdateAreaDependentAuras that called always at zone->area update
+24083:     SpellAreaForAreaMapBounds saBounds = sSpellMgr->GetSpellAreaForAreaMapBounds(newZone);
+24084:     for (SpellAreaForAreaMap::const_iterator itr = saBounds.first; itr != saBounds.second; ++itr)
+24085:         if (itr->second->autocast && itr->second->IsFitToRequirements(this, newZone, 0))
+24086:             if (!HasAura(itr->second->spellId))
+24087:                 CastSpell(this, itr->second->spellId, true);
+24088: }
+24089:
+24090: void Player::UpdateAreaDependentAuras(uint32 newArea)
+24091: {
+24092:     // remove auras from spells with area limitations
+24093:     for (AuraMap::iterator iter = m_ownedAuras.begin(); iter != m_ownedAuras.end();)
+24094:     {
+24095:         // use m_zoneUpdateId for speed: UpdateArea called from UpdateZone or instead UpdateZone in both cases m_zoneUpdateId up-to-date
+24096:         if (iter->second->GetSpellInfo()->CheckLocation(GetMapId(), m_zoneUpdateId, newArea, this, false) != SPELL_CAST_OK)
+24097:             RemoveOwnedAura(iter);
+24098:         else
+24099:             ++iter;
+24100:     }
+
+24963: bool Player::CanFlyInZone(uint32 mapid, uint32 zone, SpellInfo const* bySpell) const
+24964: {
+24965:     // continent checked in SpellInfo::CheckLocation at cast and area update
+24966:     uint32 v_map = GetVirtualMapForMapAndZone(mapid, zone);
+24967:     if (v_map == 571 && !bySpell->HasAttribute(SPELL_ATTR7_IGNORE_COLD_WEATHER_FLYING))
+24968:         if (!HasSpell(54197)) // 54197 = Cold Weather Flying
+24969:             return false;
+24970:
+24971:     return true;
+24972: }
+
+审计结论：
+1. Player::UpdateAreaDependentAuras会遍历m_ownedAuras。
+2. 每个已有光环在Area变化时会以strict=false调用其SpellInfo::CheckLocation。
+3. 若G17-A的CheckLocation在新Area返回非SPELL_CAST_OK，核心会执行RemoveOwnedAura。
+4. 因此A3主城、A4室内及A12 BlockedAreaIds不仅应阻止在禁区内召唤；从许可户外飞入相应禁区时，受位置限制的飞行/坐骑光环也应在Area更新后被核心移除。
+5. 这仍必须由真实游戏矩阵验证；源码链存在不能代替A3/A4/A12运行证据。
+6. 北裂境54197逻辑保持在Player::CanFlyInZone，G17-A没有将其改恒真。

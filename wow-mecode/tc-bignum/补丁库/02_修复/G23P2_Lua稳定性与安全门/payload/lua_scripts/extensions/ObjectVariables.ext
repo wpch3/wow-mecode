@@ -1,0 +1,14 @@
+-- G23-P2 safety quarantine for the legacy ObjectVariables extension.
+--
+-- The deployed extension called methods such as GetGUIDLow/GetMapId from
+-- creature-delete event 31 after Eluna had invalidated the userdata. That
+-- produced "calling GetGUIDLow on bad self" repeatedly. P0R proved that none
+-- of the deployed project Lua files uses Object:GetData/Object:SetData.
+--
+-- This same-path quarantine intentionally registers no object methods and no
+-- delete callbacks. The byte-exact legacy file is included under original/
+-- and can be restored by G23P2_Rollback.cmd.
+
+if type(GetStateMapId) == "function" and GetStateMapId() == -1 then
+    print("[G23-P2] ObjectVariables.ext 已安全隔离：未注册失效对象删除回调")
+end

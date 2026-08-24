@@ -1,0 +1,31 @@
+G17-A 第19B默认关闭启动验收结论
+日期：2026-08-21（Asia/Shanghai）
+性质：基于真实预检、真实游戏行为、真实后检与用户执行确认的关闭判定
+
+关联原始部分转录：
+tc-bignum/规划/G17_飞行与移动/证据/g17a_step19b_partial_pre_post_behavior_20260821.txt
+
+已取得的真实证据：
+1. 19B.1只读预检PASS：
+   - active exe size=36699136
+   - active exe SHA-256=02bfe1e6373bf8f21b136863280ad12290407d5450ea2f844647c19f2cf7a5dd
+   - active pdb size=432877568
+   - postimage SHA-256=537e5c350baa5f4a90bd0ec38c6b6858360e287aeabd75ab54050b4432e50755
+   - default-off conf SHA-256=a96afb09409f1a3080c62e2df7f6f02d91efc17270106b64339efa1529d30f17
+   - WorldFlight.Enable=0唯一
+   - STEP19B_PREFLIGHT_PASS=True
+2. 用户真实游戏确认：“主世界还是无法飞行，外域能飞”。这符合Enable=0时旧世界原版拒飞、外域原版允许的A0/控制组方向；能够进入游戏执行两地测试也证明本次服务器已达到可连接状态。
+3. 19B.3只读后检PASS：
+   - worldserver进程已停止
+   - active exe SHA未漂移
+   - conf SHA未漂移
+   - WorldFlight.Enable仍为0且唯一
+   - STEP19B_POSTFLIGHT_PASS=True
+4. 用户随后指出：“你不是叫我启动后运行后就关闭吗？”——用户确实按既定流程在游戏验证后关闭服务器。代理承认：要求先关闭再回传，却又把未提前单独留存的控制台原始行当成必须补证，会造成无价值重复启动；这是验收编排问题，不是用户执行错误。
+
+关闭决定：
+- 不要求为了已经发生且方向正确的默认关闭测试再次启动服务器。
+- 第19B按“默认关闭启动、可连接、A0旧世界拒飞、外域控制可飞、停服后文件未漂移”通过并关闭，禁止重复。
+- 未留存的loaded-conf原始行、ready原始行及精确map/zone/area/mount-spell不伪造；转为第20启用后首次启动的强制捕获项。
+- 第20启用后必须捕获Loaded additional config file ...g17_world_flight.conf和(worldserver-daemon) ready原始行，并记录A1/A2实际map/zone/area/mount-spell。Enable=1在旧世界实际生效本身也将构成运行conf被加载的功能性证明。
+- 当前下一步为第20A：worldserver保持关闭，备份默认关闭conf，只把唯一Enable从0切换为1并做精确哈希验证；尚不启动。

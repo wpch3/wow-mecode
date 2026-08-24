@@ -1,0 +1,43 @@
+F44 Windows真实Apply、源码/二进制备份及postcheck证据
+日期：2026-08-21（Asia/Shanghai）
+用户环境：Windows PowerShell 5.1 / Python 3.12
+真实源码根：D:\TrinityCore
+
+安装器：
+- SHA-256=438842af667ce2426af2ed710f2308e3ddcab7ee9b471a46adad70918b283021
+
+Apply前锁定preimage：
+- cs_combathelper.cpp=2805de88e7a51bd20db1511b8b7e344d5abbe4216aaee357360ca29ad566e72d
+- CombatSpecData.h=c01ab4cbe40b12cfd7f4ddf9916998ec43e6ea7bebf8f836f06dd14c4651ca9d
+- CombatSpecData.cpp=cd0d172eb3546b36665174ea155bd8a99e5f245bb6ed3059ce7cec3a87c1ebfd
+
+编译产物备份：
+- worldserver.exe.before_f44_20260821_210657.bak
+  size=36699136
+  SHA-256=02bfe1e6373bf8f21b136863280ad12290407d5450ea2f844647c19f2cf7a5dd
+- worldserver.pdb.before_f44_20260821_210657.bak
+  size=432877568
+  SHA-256=e825271be26abd969c48798c09d7ba120e3908f7d1cd0a0551d8d71c1be1923e
+
+真实Apply结果：
+- APPLY_CHANGED_FILES=3
+- F44_APPLY_PASS=True
+
+Apply后锁定postimage：
+- cs_combathelper.cpp=5f31a5b97fa0ffe99d1472b370660dc86164ddf3f402bc16b030ee47418f31da
+- CombatSpecData.h=af3e9c2575b725fa50e7bee921d1f7612546e04b967cb2da149e4fe6a2bdd4a7
+- CombatSpecData.cpp=1cdd6d3a8b07a4915de60746c04848f00bae2608a9c9cd25982d6f6e6a14272e
+- CHECK_STATE=applied
+- SOURCE_EDITS=0（Apply后的--check本身只读）
+
+三个源码备份：
+- cs_combathelper.cpp.before_f44.bak=2805de88e7a51bd20db1511b8b7e344d5abbe4216aaee357360ca29ad566e72d
+- CombatSpecData.h.before_f44.bak=c01ab4cbe40b12cfd7f4ddf9916998ec43e6ea7bebf8f836f06dd14c4651ca9d
+- CombatSpecData.cpp.before_f44.bak=cd0d172eb3546b36665174ea155bd8a99e5f245bb6ed3059ce7cec3a87c1ebfd
+
+最终标志：F44_STEP2_REAL_APPLY_PASS=True
+
+判定：
+1. 真实Apply完整成功，三文件均为锁定postimage。
+2. 三个源码preimage备份和同时间戳exe/PDB备份齐全且哈希通过。
+3. 第2步关闭，禁止重复Apply；当前保持worldserver关闭，下一步仅做VS2022 RelWithDebInfo/x64增量编译。

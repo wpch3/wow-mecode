@@ -1,0 +1,22 @@
+G17-R1 isolated C++ syntax/warning compile evidence
+Date: 2026-08-22 Asia/Shanghai
+Upstream repository: https://github.com/328950225/TrinityCore-NPCBOT-Eluna-zhCN
+Upstream HEAD: 4e8762ee2b00948fa103d0cd1afd78ccdf4364fb
+Compiler: g++ (Debian 14.2.0-19) 14.2.0
+Source under test SHA256: 10a7002db4c173e441836870da01dd3009a7ba470369ca1a89bdb399ee9b2f45
+Source destination: src/server/scripts/Commands/cs_dragonriding.cpp
+
+The G17-R1 payload replaced the upstream command file in a clean shallow clone.
+The compile used the repository source/header tree plus its bundled fmt/g3dlite/etc. headers:
+
+g++ -std=c++20 -fsyntax-only -Wall -Wextra -Wsign-compare -DTRINITY_API_USE_DYNAMIC_LINKING=0 <repository include paths> cs_dragonriding.cpp
+
+Exit code: 0
+Compiler stdout/stderr bytes: 0
+Compiler warning/error lines: 0
+
+G17R1_CPP_SYNTAX_COMPILE=PASS
+G17R1_CPP_WALL_WEXTRA_SIGN_COMPARE=PASS
+G17R1_C4018_STATIC_RECHECK=PASS
+
+Boundary: this is a real isolated translation-unit compile against the designated upstream headers. It does not replace the required user's Windows MSBuild of worldserver or runtime acceptance.

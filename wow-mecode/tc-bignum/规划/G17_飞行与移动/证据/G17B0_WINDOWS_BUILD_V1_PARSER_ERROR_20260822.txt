@@ -1,0 +1,20 @@
+G17-B0 Windows构建包v1真实启动错误
+日期：2026-08-22 Asia/Shanghai
+
+用户运行：G17B0_Windows_Build_20260822/Run-G17B0-Windows-Build.cmd
+真实结果：Windows PowerShell在加载Build-G17B0-Windows.ps1时立即ParserError。
+可见特征：
+- 中文字符串显示为“鎵句笉鍒...”等乱码；
+- UnexpectedToken、字符串缺少终止符、缺少右花括号、Try缺少Catch等级联解析错误；
+- CMD最终ExitCode=1。
+
+根因：
+v1 PS1由UTF-8无BOM写入并包含中文字符串。Windows PowerShell 5.1按本机ANSI代码页读取无BOM脚本，导致文本错误解码并在解析阶段失败。
+
+执行边界：
+错误发生在PowerShell脚本解析阶段，脚本主体未开始执行；没有运行CMake、MSBuild、SQL或worldserver。
+
+处置：
+- v1构建包降级为失败历史，禁止重跑。
+- 替代包的所有可执行脚本（PS1/CMD）必须是纯ASCII字节，且离线测试必须断言每个可执行脚本所有字节<0x80。
+- 不把这次ParserError计为真实编译PASS或FAIL；构建本身仍为NOT_RUN。

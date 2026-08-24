@@ -1,0 +1,31 @@
+G17B0_WINDOWS_BUILD_START
+SOURCE_ROOT=D:\TrinityCore
+BUILD_ROOT=D:\TC-Build
+CONFIGURATION=RelWithDebInfo
+PLATFORM=x64
+LOADER_SHA256=5502e5b4e22535957f3db81083530b048ec33f6852f4697fbe55795628cee5cc
+PAYLOAD_SHA256=c9535dca3390ece6735e6ff6b7418ed99ff206628b5e8febd7b78b05cba999bd
+G17B0_BUILD_SOURCE_GATE=PASS
+CMAKE=C:\Program Files\CMake\bin\cmake.exe
+MSBUILD=D:\vs\MSBuild\Current\Bin\MSBuild.exe
+BEFORE_EXE_SIZE=36739072
+BEFORE_EXE_UTC=2026-08-21T17:40:03.3149646Z
+BEFORE_EXE_SHA256=a43fcf10567db83ef8b96ed9b47567860fd786dd40f6aeb0841e6d643583cb80
+BEFORE_PDB_SIZE=433344512
+BEFORE_PDB_UTC=2026-08-21T17:40:03.3534431Z
+G17B0_CMAKE_RECONFIGURE_START
+CMAKE|-- Detected 64-bit platform
+CMAKE|-- Detected amd64 processor architecture
+CMAKE|-- MSVC: Minimum version required is 19.32, found 19.44.35228.0 - ok!
+CMAKE|-- MSVC: Enabled increased number of sections in object files
+CMAKE|-- MSVC: Overloaded standard names
+CMAKE|-- MSVC: Disabled NON-SECURE warnings
+CMAKE|-- MSVC: Disabled POSIX warnings
+CMAKE|-- MSVC: Disabled generic compiletime warnings
+CMAKE|-- Found MySQL:   found components: binary
+CMAKE|-- Found MySQL executable: C:/Program Files/MySQL/MySQL Server 8.0/bin/mysql.exe
+G17B0_WINDOWS_BUILD_ERROR=
+G17B0_WINDOWS_BUILD_PASS=False
+G17B0_WINDOWS_BUILD_RESULT=FAIL
+STOP_DO_NOT_START_WORLDSERVER
+RESULT_FILE=C:\Users\Administrator\Downloads\workspace\uploads\G17B0_WINDOWS_BUILD_RESULT.txt

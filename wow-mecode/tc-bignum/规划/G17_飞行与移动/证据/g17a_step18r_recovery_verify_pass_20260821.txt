@@ -1,0 +1,28 @@
+G17-A 第18R步真实只读恢复验证回传
+日期：2026-08-21（Asia/Shanghai）
+来源：用户在 Windows PowerShell / C:\Users\Administrator 回传
+性质：真实环境只读证据；第18步Apply后状态确认；未编译、未启动
+
+[INFO] WorldFlight.Enable key count=1 exact-default-off count=1
+
+[OK] binary backup exists size=36696576 path=D:\TC-Build\bin\RelWithDebInfo\worldserver.exe.before_g17a_20260821_151724.bak
+
+[OK] binary backup exists size=432328704 path=D:\TC-Build\bin\RelWithDebInfo\worldserver.pdb.before_g17a_20260821_151724.bak
+
+[OK] postimage sha256=537e5c350baa5f4a90bd0ec38c6b6858360e287aeabd75ab54050b4432e50755
+
+[OK] source backup sha256=78dbc810f8afa080275d7fabcb2bc75ff52652295a25677b447cbe5f3ca89753
+
+[OK] conf sha256=a96afb09409f1a3080c62e2df7f6f02d91efc17270106b64339efa1529d30f17; UTF8_BOM=0; WorldFlight.Enable=0 unique
+
+[OK] G17-A STEP18_RECOVERY_VERIFY_PASS=True
+
+[STOP] 当前到此为止；不要编译、不要启动，先完整回传本窗口输出。
+
+PS C:\Users\Administrator>
+
+证据判定：
+- 第18R步通过并关闭，禁止重复。
+- 第18步真实Apply状态完整恢复确认：postimage、source backup、exe/PDB backups、运行conf均符合锁定值。
+- 默认关闭键唯一，运行conf无UTF-8 BOM。
+- 此证据不包含VS2022编译或worldserver启动结果；下一步另行执行第19步编译。

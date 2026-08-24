@@ -1,0 +1,13 @@
+G17B2R1_VISUAL_KIT_AUDIT=PASS
+REFERENCE_SCOPE=AzerothCore_current_WotLK_client_data_auxiliary
+SpellVisualKit.dbc_SHA256=2a2e4ceb9817020b38df4e62389b871f490cf8d51b5f561a58a459e4e9c2f997
+SpellVisualEffectName.dbc_SHA256=74cb815a73785cb0a76534f6703dc9ea4513a51350861e5299f93bfeb2fa2e00
+SpellVisualKitModelAttach.dbc_SHA256=656ae44e63e02c592d24f5a2763d39ee8300dfa21cc9be16392b361f437e66ab
+KIT=44;SOUND=3330;SHAKE=0;FLAGS=0;EFFECTS=634:Charge Trail Cast:Spells\ChargeTrail.mdx|1303:DustCloud Land:Spells\DustCloud_Land.mdx;ATTACHES=none
+KIT=696;SOUND=1577;SHAKE=0;FLAGS=0;EFFECTS=545:Ribbon Trail:Spells\RibbonTrail.mdx;ATTACHES=none
+KIT=13709;SOUND=17201;SHAKE=0;FLAGS=0;EFFECTS=6068:Wind Shear Impact:spells\shaman_windshear.mdx;ATTACHES=none
+KIT=13481;SOUND=17429;SHAKE=0;FLAGS=0;EFFECTS=none;ATTACHES=6135:JetPack Flame Only:spells\jetpack_flame.mdx:attach=16
+KIT=1066;SOUND=0;SHAKE=0;FLAGS=0;EFFECTS=1303:DustCloud Land:Spells\DustCloud_Land.mdx;ATTACHES=none
+REJECTED_KIT=14475:contains_DragonBreath_Fire_model_attach
+REJECTED_STATE_KIT=11818:Cyclone_Caster_State_not_used_to_avoid_persistent_state_risk
+CONTRACT=no_spell_cast_no_damage_no_aura_no_loop_flag;mechanical_flame_is_type_gated

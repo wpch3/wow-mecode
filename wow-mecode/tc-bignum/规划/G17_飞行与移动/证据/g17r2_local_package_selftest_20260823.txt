@@ -1,0 +1,22 @@
+G17R2_LOCAL_SELFTEST_DATE=2026-08-23
+PYTHON=Python 3.13.14
+test_cpp_policy_expression_compiles_and_runs (__main__.G17R2Tests.test_cpp_policy_expression_compiles_and_runs) ... ok
+test_exact_scope_and_markers (__main__.G17R2Tests.test_exact_scope_and_markers) ... ok
+test_feature_disabled_restores_original_rejection (__main__.G17R2Tests.test_feature_disabled_restores_original_rejection) ... ok
+test_hard_boundaries_cannot_be_disabled (__main__.G17R2Tests.test_hard_boundaries_cannot_be_disabled) ... ok
+test_installer_apply_idempotent_rollback (__main__.G17R2Tests.test_installer_apply_idempotent_rollback) ... ok
+test_installer_rejects_unknown_target (__main__.G17R2Tests.test_installer_rejects_unknown_target) ... ok
+test_locked_hashes (__main__.G17R2Tests.test_locked_hashes) ... ok
+test_old_world_safety_boundaries_reject (__main__.G17R2Tests.test_old_world_safety_boundaries_reject) ... ok
+test_outland_northrend_original_rules_do_not_regress (__main__.G17R2Tests.test_outland_northrend_original_rules_do_not_regress) ... ok
+test_wetlands_and_old_world_safe_outdoor_pass_both_paths (__main__.G17R2Tests.test_wetlands_and_old_world_safe_outdoor_pass_both_paths) ... ok
+
+----------------------------------------------------------------------
+Ran 10 tests in 0.210s
+
+OK
+G17R2_LOCAL_AUTOTESTS=10/10_PASS
+G17R2_CPP_POLICY_COMPILE_RUN=PASS
+G17R2_POWERSHELL_7_6_5_PARSE_ERRORS=0
+G17R2_WINDOWS_BUILD=NOT_RUN
+G17R2_RUNTIME_59961=NOT_RUN

@@ -1,0 +1,76 @@
+static void TryAcceptGroup(Player* bot)
+{
+    Group* group = bot->GetGroupInvite();       // Player.h:2153 public(904段)
+    if (!group)
+        return;
+
+    // ---- 以下逐行对应 GroupHandler.cpp:219-268 ----
+
+    group->RemoveInvite(bot);                   // Group.h:206 public(185段)
+
+    // GroupHandler.cpp:228  不能接受自己发起的队伍
+    if (group->GetLeaderGUID() == bot->GetGUID())   // Group.h:228 public
+        return;
+
+    // GroupHandler.cpp:235  队伍满了
+    if (group->IsFull())                        // Group.h:222 public
+        return;
+
+    Player* leader = ObjectAccessor::FindPlayer(group->GetLeaderGUID());
+
+    // GroupHandler.cpp:247  队伍还没真正建立（第一个人加入时才建）
+    if (!group->IsCreated())                    // Group.h:227 public
+    {
+        if (!leader)
+        {
+            group->RemoveAllInvites();
+            return;
+        }
+        group->RemoveInvite(leader);
+        group->Create(leader);                  // Group.h:192 public
+        sGroupMgr->AddGroup(group);
+    }
+
+    // GroupHandler.cpp:265
+    if (!group->AddMember(bot))                 // Group.h:209 public
+    return;
+
+    group->BroadcastGroupUpdate();              // Group.h:350 public
+
+// A40: bot 不该当队长。
+// Player.cpp:24268 规定队长不能被踢，bot 当了队长你就没法用右键菜单
+// 把它移出队伍（.pbot kick 能绕过，但那不算"完整UI"）。
+// 顺带：bot 当队长还会导致改不了副本难度、转不了团队。
+    if (leader && group->IsLeader(bot->GetGUID()) && leader != bot)
+    group->ChangeLeader(leader->GetGUID());
+
+    if (leader && leader->GetSession())
+    ChatHandler(leader->GetSession()).PSendSysMessage(
+        "|cff00ff00[%s]|r 接受了你的组队邀请。", bot->GetName().c_str());
+
+// ------------------------------------------------------------------
+//  公会邀请
+// ------------------------------------------------------------------
+//  这个最干净：GuildHandler.cpp:60 的参数被注释掉了，
+//  函数体就三行，直接照抄。
+static void TryAcceptGuild(Player* bot)
+{
+    // GuildHandler.cpp:63  已经有公会就不处理
+    if (bot->GetGuildId())                      // Player.h:1601 public
+        return;
+
+    ObjectGuid::LowType invitedTo = bot->GetGuildIdInvited();   // Player.h:1604 public
+    if (!invitedTo)
+        return;
+
+    Guild* guild = sGuildMgr->GetGuildById(invitedTo);          // GuildMgr.h:41
+    if (!guild)
+    {
+        // 公会没了（比如解散了），把邀请状态清掉，免得一直卡着
+        bot->SetGuildIdInvited(0);              // Player.h:1600 public
+        return;
+    }
+
+    // GuildHandler.cpp:65
+    guild->HandleAcceptMember(bot->GetSession());   // Guild.h:661 public(627段)
+}

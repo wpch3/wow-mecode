@@ -1,0 +1,30 @@
+F45 Windows Check / Apply / VS2022编译用户摘要验收
+日期：2026-08-22（Asia/Shanghai）
+
+用户原始摘要：
+“两项都成功了，输出一致，编译也成功了”
+
+按当前07号与F45安装说明解释：
+- 两项：F45_Check.cmd 与 F45_Apply.cmd；
+- 两项均成功，输出状态一致；
+- 随后的worldserver编译成功。
+
+证据粒度：
+- 用户未粘贴Check/Apply原始逐行输出；
+- 用户未提供本次MSBuild原始日志、worldserver.exe大小/SHA-256或PDB时间；
+- 因而只按“用户明确确认Check、Apply、编译成功”归档，不补造具体输出或二进制哈希；
+- 没有确认新二进制已启动，运行状态仍未知。
+
+状态：
+F45_WINDOWS_CHECK=PASS_USER_CONFIRMED
+F45_WINDOWS_APPLY=PASS_USER_CONFIRMED
+F45_WINDOWS_BUILD=PASS_USER_CONFIRMED
+F45_RUNTIME=NOT_CONFIRMED
+F45_R1_R4_REQUIRED=False
+F45_REPEAT_CHECK_APPLY_BUILD=False
+
+结论：
+- F45安装/编译链关闭，禁止无故要求重复Check、Apply或编译；
+- 不再要求结构化尸体计数矩阵；
+- 新worldserver启动后按平常方式使用即可，若异常只回传当次F45原因播报或第一条错误；
+- 当前可直接转入独立G23-P2 Lua稳定性批次，不能把Lua和F45混成同一回滚单元。

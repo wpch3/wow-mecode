@@ -1,0 +1,41 @@
+G23-P2 local acceptance — 2026-08-22 (Asia/Shanghai)
+
+Scope:
+- 6 modified runtime preimages locked: five deployed Lua files plus CRLF ObjectVariables.ext.
+- 3 new runtime files: custom_diag.lua, extensions/G23Core.ext, zz_g23_p2_eluna_security.conf.
+- Additive atomic daily-reward SQL and read-only pending diagnostic.
+- F45 C++ files are not in this batch.
+
+Results:
+G23P2_LUAC_5_2_ALL=PASS
+G23P2_WORLD_STATE_LOAD_MOCK=PASS
+G23P2_MAP_STATE_LOAD_MOCK=PASS
+G23P2_NO_TOP_LEVEL_DB=PASS
+G23P2_ANNOUNCE_SINGLE_WORLD_TIMER=PASS
+G23P2_UNAUTHORIZED_DIAG_NO_DB=PASS
+G23P2_DAILY_ATOMIC_LUA_MOCK=PASS
+G23P2_DAILY_NO_DUPLICATE_SECOND_STATE=PASS
+G23P2_DAILY_FAILURE_COMPENSATION_MOCK=PASS
+G23P2_TELEPORT_SAFETY_LUA_MOCK=PASS
+G23P2_TELEPORT_EXPIRED_SESSION_MOCK=PASS
+G23P2_STATIC_AND_MODEL=PASS
+G23P2_SQL_NO_PROCEDURE_DELIMITER_CURSOR=PASS
+G23P2_INSTALLER_SELFTEST=PASS
+G23P2_INSTALLER_SELFTEST_OPTIMIZED=PASS
+G23P2_INSTALLER_UNKNOWN_TREE_REJECT=PASS
+G23P2_CMD_CRLF=PASS
+G23P2_PYTHON_WARNINGS_AND_COMPILE=PASS
+G23P2_CANONICAL_SOURCE_SYNC=PASS
+
+Lua parser/runtime used locally:
+- Lua/luac 5.2.4 built from the project-compatible upstream dep/lua source under /tmp/f45-upstream.
+- Temporary build products are not included in the delivery.
+
+Evidence boundary:
+G23P2_LOCAL_ACCEPTANCE=PASS
+G23P2_WINDOWS_CHECK=NOT_RUN
+G23P2_WINDOWS_SQL=NOT_RUN
+G23P2_WINDOWS_APPLY=NOT_RUN
+G23P2_RUNTIME=NOT_RUN
+
+Local parser/mock/model/install tests are not Windows deployment or live worldserver proof.

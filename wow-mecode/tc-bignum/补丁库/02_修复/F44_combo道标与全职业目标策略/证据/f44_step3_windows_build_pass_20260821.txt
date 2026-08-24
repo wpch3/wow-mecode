@@ -1,0 +1,33 @@
+F44 Windows VS2022 RelWithDebInfo/x64真实编译证据
+日期：2026-08-21（Asia/Shanghai）
+MSBuild：D:\vs\MSBuild\Current\Bin\MSBuild.exe
+版本：18.8.2+ce25c0108
+解决方案：D:\TC-Build\TrinityCore.sln
+目标：worldserver
+完整日志：C:\Users\Administrator\Desktop\f44_build_20260821_211433.log
+
+编译前源码/备份门槛：三文件postimage与三份.before_f44.bak全部哈希正确。
+编译前产物：
+- worldserver.exe size=36699136 SHA-256=02bfe1e6373bf8f21b136863280ad12290407d5450ea2f844647c19f2cf7a5dd
+- worldserver.pdb size=432877568 SHA-256=e825271be26abd969c48798c09d7ba120e3908f7d1cd0a0551d8d71c1be1923e
+
+MSBuild真实输出包含：
+- CombatSpecData.cpp
+- cs_combathelper.cpp
+- scripts.vcxproj -> scripts.lib
+- worldserver.vcxproj -> D:\TC-Build\bin\RelWithDebInfo\worldserver.exe
+
+编译后产物：
+- worldserver.exe size=36730368
+  UTC=2026-08-21T13:15:00.8776295Z
+  SHA-256=d32ee2cf8de82f0987affa7a915122d6087673db2b7cbbd6a1365d39c164bcfe
+- worldserver.pdb size=433311744
+  UTC=2026-08-21T13:15:00.9072909Z
+  SHA-256=4b1dd7e710f8d6b96b3c5985c13faf1857974dc38a0ccea051772efd52ff0606
+
+最终标志：F44_STEP3_WINDOWS_BUILD_PASS=True
+
+判定：
+1. 两个F44 cpp均由真实MSBuild编译并进入scripts.lib/worldserver链接链。
+2. exe/PDB大小、时间和哈希均变化；不是旧二进制。
+3. 第3步PASS并关闭，禁止重复编译；下一步为新二进制启动烟雾和F44限定真人验收。

@@ -1,0 +1,186 @@
+-- G23-P2 shared Eluna safety layer.
+-- Loaded before normal .lua files; contains no top-level database query.
+
+local G23 = {
+    VERSION = "G23-P2-20260822",
+    commands = {},
+    help = {},
+    runtime = {},
+}
+
+local logTimes = {}
+
+local function now()
+    if type(GetGameTime) == "function" then
+        local ok, value = pcall(GetGameTime)
+        if ok and type(value) == "number" then
+            return value
+        end
+    end
+    return 0
+end
+
+function G23.Now()
+    return now()
+end
+
+function G23.Log(level, key, message, cooldown)
+    level = tostring(level or "INFO")
+    key = tostring(key or message or "unknown")
+    message = tostring(message or "")
+    cooldown = tonumber(cooldown) or 60
+
+    local stamp = now()
+    local previous = logTimes[key]
+    if previous and stamp > 0 and stamp - previous < cooldown then
+        return false
+    end
+    logTimes[key] = stamp
+    print("[G23-P2][" .. level .. "] " .. message)
+    return true
+end
+
+local function traceError(err)
+    local text = tostring(err)
+    if type(debug) == "table" and type(debug.traceback) == "function" then
+        return debug.traceback(text, 2)
+    end
+    return text
+end
+
+function G23.Safe(label, fn)
+    if type(fn) ~= "function" then
+        G23.Log("ERROR", "safe:" .. tostring(label), "Safe调用缺少函数: " .. tostring(label), 60)
+        return false, nil
+    end
+    local ok, a, b, c = xpcall(fn, traceError)
+    if not ok then
+        G23.Log("ERROR", "safe:" .. tostring(label), tostring(label) .. " 执行失败: " .. tostring(a), 60)
+        return false, nil
+    end
+    return true, a, b, c
+end
+
+function G23.CharQuery(sql, label, nilIsError)
+    if type(CharDBQuery) ~= "function" then
+        G23.Log("ERROR", "api:CharDBQuery", "缺少必须API CharDBQuery", 300)
+        return nil
+    end
+    local ok, result = pcall(CharDBQuery, sql)
+    if not ok then
+        G23.Log("ERROR", "db:char:" .. tostring(label), tostring(label) .. " 查询异常: " .. tostring(result), 60)
+        return nil
+    end
+    if nilIsError and not result then
+        G23.Log("ERROR", "db:char:nil:" .. tostring(label), tostring(label) .. " 未返回结果；请检查characters库和G23-P2 SQL", 60)
+    end
+    return result
+end
+
+-- Synchronous DML gate: CharDBQuery is synchronous in this Eluna build. DML
+-- returns nil even on success, so every caller MUST verify with a SELECT.
+function G23.CharExecVerified(sql, label)
+    if type(CharDBQuery) ~= "function" then
+        G23.Log("ERROR", "api:CharDBQuery", "缺少必须API CharDBQuery", 300)
+        return false
+    end
+    local ok, err = pcall(CharDBQuery, sql)
+    if not ok then
+        G23.Log("ERROR", "db:exec:" .. tostring(label), tostring(label) .. " 执行异常: " .. tostring(err), 60)
+        return false
+    end
+    return true
+end
+
+function G23.WorldQuery(sql, label, nilIsError)
+    if type(WorldDBQuery) ~= "function" then
+        G23.Log("ERROR", "api:WorldDBQuery", "缺少必须API WorldDBQuery", 300)
+        return nil
+    end
+    local ok, result = pcall(WorldDBQuery, sql)
+    if not ok then
+        G23.Log("ERROR", "db:world:" .. tostring(label), tostring(label) .. " 查询异常: " .. tostring(result), 60)
+        return nil
+    end
+    if nilIsError and not result then
+        G23.Log("ERROR", "db:world:nil:" .. tostring(label), tostring(label) .. " 未返回结果", 60)
+    end
+    return result
+end
+
+function G23.AddHelp(name, description, category)
+    name = tostring(name or ""):lower()
+    if name == "" then return end
+    G23.help[name] = {
+        name = name,
+        description = tostring(description or ""),
+        category = tostring(category or "Lua功能"),
+    }
+end
+
+function G23.RegisterCommand(name, description, category, minRank, handler)
+    name = tostring(name or ""):lower()
+    if name == "" or type(handler) ~= "function" then
+        error("G23.RegisterCommand参数无效")
+    end
+    if G23.commands[name] then
+        error("G23命令重复注册: " .. name)
+    end
+    G23.commands[name] = {
+        name = name,
+        description = tostring(description or ""),
+        category = tostring(category or "Lua功能"),
+        minRank = tonumber(minRank) or 0,
+        handler = handler,
+    }
+    G23.AddHelp(name, description, category)
+end
+
+function G23.GetHelpEntries()
+    local out = {}
+    for _, entry in pairs(G23.help) do
+        out[#out + 1] = entry
+    end
+    table.sort(out, function(a, b)
+        if a.category == b.category then return a.name < b.name end
+        return a.category < b.category
+    end)
+    return out
+end
+
+local function commandDispatcher(event, player, command)
+    local text = tostring(command or "")
+    local head, args = text:match("^(%S+)%s*(.-)%s*$")
+    head = head and head:lower() or ""
+    local entry = G23.commands[head]
+    if not entry then
+        return
+    end
+
+    local rank = 0
+    if player and type(player.GetGMRank) == "function" then
+        local ok, value = pcall(player.GetGMRank, player)
+        if ok then rank = tonumber(value) or 0 end
+    end
+    if rank < entry.minRank then
+        player:SendBroadcastMessage("|cffff0000权限不足：." .. entry.name .. " 需要GM等级 " .. entry.minRank .. "|r")
+        return false
+    end
+
+    local ok, result = G23.Safe("command:." .. entry.name, function()
+        return entry.handler(player, args or "", text)
+    end)
+    if not ok then
+        player:SendBroadcastMessage("|cffff0000命令执行失败，错误已写入服务端日志。|r")
+        return false
+    end
+    if result == nil then return false end
+    return result
+end
+
+_G.G23 = G23
+RegisterPlayerEvent(42, commandDispatcher)
+
+if type(GetStateMapId) == "function" and GetStateMapId() == -1 then
+    print("[G23-P2] G23Core.ext 已加载 -- shared safety layer " .. G23.VERSION)
+end

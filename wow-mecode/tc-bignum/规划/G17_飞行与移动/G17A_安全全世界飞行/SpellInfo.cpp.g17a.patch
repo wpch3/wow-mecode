@@ -1,0 +1,96 @@
+--- a/src/server/game/Spells/SpellInfo.cpp
++++ b/src/server/game/Spells/SpellInfo.cpp
+@@ -16,6 +16,9 @@
+  */
+ 
+ #include "SpellInfo.h"
++#include "Config.h"
++#include "StringConvert.h"
++#include "Util.h"
+ #include "Battleground.h"
+ #include "Corpse.h"
+ #include "Creature.h"
+@@ -36,6 +39,52 @@
+ #include "botmgr.h"
+ #include "botspell.h"
+ //end npcbot
++
++// G17-WORLD-FLIGHT-BEGIN
++namespace
++{
++bool G17IsBlockedArea(uint32 zoneId, uint32 areaId)
++{
++    std::string const blockedAreaIds = sConfigMgr->GetStringDefault("WorldFlight.BlockedAreaIds", "");
++    for (std::string_view token : Trinity::Tokenize(blockedAreaIds, ',', false))
++    {
++        if (Optional<uint32> blockedAreaId = Trinity::StringTo<uint32>(token))
++            if (*blockedAreaId == zoneId || *blockedAreaId == areaId)
++                return true;
++    }
++
++    return false;
++}
++
++bool G17IsOldWorldFlightAllowed(uint32 mapId, uint32 zoneId, uint32 areaId, AreaTableEntry const* areaEntry)
++{
++    if (!sConfigMgr->GetBoolDefault("WorldFlight.Enable", false) ||
++        !sConfigMgr->GetBoolDefault("WorldFlight.AllowOldWorld", true) || !areaEntry)
++        return false;
++
++    MapEntry const* mapEntry = sMapStore.LookupEntry(mapId);
++    if (!mapEntry || !mapEntry->IsWorldMap() || (mapId != 0 && mapId != 1))
++        return false;
++
++    AreaTableEntry const* zoneEntry = sAreaTableStore.LookupEntry(zoneId);
++    uint32 areaFlags = areaEntry->Flags | (zoneEntry ? zoneEntry->Flags : 0);
++
++    // These are hard safety boundaries and cannot be disabled from configuration.
++    if (areaFlags & (AREA_FLAG_NO_FLY_ZONE | AREA_FLAG_ARENA | AREA_FLAG_ARENA_INSTANCE))
++        return false;
++
++    if (sConfigMgr->GetBoolDefault("WorldFlight.BlockIndoorAreas", true) &&
++        (areaFlags & AREA_FLAG_INSIDE))
++        return false;
++
++    if (sConfigMgr->GetBoolDefault("WorldFlight.BlockCapitalAreas", true) &&
++        (areaFlags & (AREA_FLAG_SLAVE_CAPITAL | AREA_FLAG_SLAVE_CAPITAL2 | AREA_FLAG_CAPITAL | AREA_FLAG_CITY)))
++        return false;
++
++    return !G17IsBlockedArea(zoneId, areaId);
++}
++}
++// G17-WORLD-FLIGHT-END
+ 
+ uint32 GetTargetFlagMask(SpellTargetObjectTypes objType)
+ {
+@@ -1584,20 +1633,24 @@
+     // continent limitation (virtual continent)
+     if (HasAttribute(SPELL_ATTR4_CAST_ONLY_IN_OUTLAND))
+     {
++        AreaTableEntry const* areaEntry = sAreaTableStore.LookupEntry(area_id);
++        if (!areaEntry)
++            areaEntry = sAreaTableStore.LookupEntry(zone_id);
++
++        bool const g17OldWorldAllowed = G17IsOldWorldFlightAllowed(map_id, zone_id, area_id, areaEntry);
+         if (strict)
+         {
+-            AreaTableEntry const* areaEntry = sAreaTableStore.LookupEntry(area_id);
+-            if (!areaEntry)
+-                areaEntry = sAreaTableStore.LookupEntry(zone_id);
+-
+-            if (!areaEntry || !areaEntry->IsFlyable() || !player->CanFlyInZone(map_id, zone_id, this))
++            if (!areaEntry || (!areaEntry->IsFlyable() && !g17OldWorldAllowed) ||
++                !player->CanFlyInZone(map_id, zone_id, this))
+                 return SPELL_FAILED_INCORRECT_AREA;
+         }
+         else
+         {
+             uint32 const v_map = GetVirtualMapForMapAndZone(map_id, zone_id);
+             MapEntry const* mapEntry = sMapStore.LookupEntry(v_map);
+-            if (!mapEntry || mapEntry->Expansion() < 1 || !mapEntry->IsContinent())
++            bool const originalContinentAllowed =
++                mapEntry && mapEntry->Expansion() >= 1 && mapEntry->IsContinent();
++            if (!originalContinentAllowed && !g17OldWorldAllowed)
+                 return SPELL_FAILED_INCORRECT_AREA;
+         }
+     }

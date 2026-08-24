@@ -1,0 +1,25 @@
+Third-party provenance: mpqcli
+
+Project: mpqcli
+Version: v0.10.2
+Release date: 2026-07-03
+Project URL: https://github.com/thegraydot/mpqcli
+Release URL: https://github.com/thegraydot/mpqcli/releases/tag/v0.10.2
+Asset URL: https://github.com/thegraydot/mpqcli/releases/download/v0.10.2/mpqcli-windows-amd64.exe
+Asset name: mpqcli-windows-amd64.exe
+Asset size: 970752 bytes
+GitHub release asset digest: sha256:5dc56b130432098d18e911fdf4b3464adf850432b7fbb35003a2feff7c30a79f
+Locally verified SHA-256: 5dc56b130432098d18e911fdf4b3464adf850432b7fbb35003a2feff7c30a79f
+Binary format: PE32+ x86-64 console application
+License: MIT; full text in third_party\mpqcli-LICENSE.txt
+
+The upstream documentation states that mpqcli creates, lists, extracts and
+inspects MPQ archives through StormLib, supports a wow-wotlk game profile,
+retains directory structure with Windows-style archive paths, and adds a
+(listfile) automatically. This package additionally verifies the generated
+archive by listing the internal target, checking format-version/file-count,
+extracting DBFilesClient\Spell.dbc, and matching its exact SHA-256.
+
+A same-version Linux AMD64 upstream binary was separately used for local
+behavior validation of create --game wow-wotlk, list, info and extract. That
+Linux binary is not shipped in this Windows package.

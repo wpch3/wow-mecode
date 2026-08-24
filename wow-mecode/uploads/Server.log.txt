@@ -1,0 +1,1215 @@
+TrinityCore rev. ae60f5b6f6ff+ 2026-07-29 23:54:13 +0800 (bignum-mod branch) (Windows, AMD64, RelWithDebInfo, Static) (worldserver-daemon)
+<Ctrl-C> to stop.
+
+ ______                       __
+/\__  _\       __          __/\ \__
+\/_/\ \/ _ __ /\_\    ___ /\_\ \, _\  __  __
+   \ \ \/\`'__\/\ \ /' _ `\/\ \ \ \/ /\ \/\ \
+    \ \ \ \ \/ \ \ \/\ \/\ \ \ \ \ \_\ \ \_\ \
+     \ \_\ \_\  \ \_\ \_\ \_\ \_\ \__\\/`____ \
+      \/_/\/_/   \/_/\/_/\/_/\/_/\/__/ `/___/> \
+                                 C O R E  /\___/
+https://TrinityCore.org                   \/__/
+
+Using configuration file D:/TC-Build/bin/RelWithDebInfo/worldserver.conf.
+Using SSL version: OpenSSL 3.6.3 9 Jun 2026 (library: OpenSSL 3.6.3 9 Jun 2026)
+Using Boost version: 1.84.0
+Updating Auth database...
+>> Auth database is up-to-date! Containing 14 new and 121 archived updates.
+Updating Character database...
+>> Character database is up-to-date! Containing 1 new and 92 archived updates.
+Updating World database...
+>> World database is up-to-date! Containing 87 new and 6854 archived updates.
+Realm running as realm ID 1
+Using World DB: TDB 335.25101
+Will clear `logs` table of entries older than 1209600 seconds every 10 minutes.
+Client cache version set to: 25101
+Using DataDir D:/TC-Build/bin/RelWithDebInfo/
+WORLD: MMap data directory is: D:/TC-Build/bin/RelWithDebInfo/mmaps
+VMap support included. LineOfSight: true, getHeight: true, indoorCheck: true
+VMap data directory is: D:/TC-Build/bin/RelWithDebInfo/vmaps
+Missing name Speed.Cast.Class1 in config file D:/TC-Build/bin/RelWithDebInfo/worldserver.conf, add "Speed.Cast.Class1 = 0" to this file
+Missing name Speed.Cast.Class3 in config file D:/TC-Build/bin/RelWithDebInfo/worldserver.conf, add "Speed.Cast.Class3 = 0" to this file
+Missing name Speed.Cast.Class4 in config file D:/TC-Build/bin/RelWithDebInfo/worldserver.conf, add "Speed.Cast.Class4 = 0" to this file
+Missing name Speed.Cast.Class6 in config file D:/TC-Build/bin/RelWithDebInfo/worldserver.conf, add "Speed.Cast.Class6 = 0" to this file
+Missing name Speed.Gcd.Class10 in config file D:/TC-Build/bin/RelWithDebInfo/worldserver.conf, add "Speed.Gcd.Class10 = 0" to this file
+Missing name Speed.Cast.Class10 in config file D:/TC-Build/bin/RelWithDebInfo/worldserver.conf, add "Speed.Cast.Class10 = 0" to this file
+Missing name Speed.Gcd.Class12 in config file D:/TC-Build/bin/RelWithDebInfo/worldserver.conf, add "Speed.Gcd.Class12 = 0" to this file
+Missing name Speed.Cast.Class12 in config file D:/TC-Build/bin/RelWithDebInfo/worldserver.conf, add "Speed.Cast.Class12 = 0" to this file
+Missing name Speed.Gcd.Class13 in config file D:/TC-Build/bin/RelWithDebInfo/worldserver.conf, add "Speed.Gcd.Class13 = 0" to this file
+Missing name Speed.Cast.Class13 in config file D:/TC-Build/bin/RelWithDebInfo/worldserver.conf, add "Speed.Cast.Class13 = 0" to this file
+Missing name Speed.Gcd.Class14 in config file D:/TC-Build/bin/RelWithDebInfo/worldserver.conf, add "Speed.Gcd.Class14 = 0" to this file
+Missing name Speed.Cast.Class14 in config file D:/TC-Build/bin/RelWithDebInfo/worldserver.conf, add "Speed.Cast.Class14 = 0" to this file
+Missing name Speed.Gcd.Class15 in config file D:/TC-Build/bin/RelWithDebInfo/worldserver.conf, add "Speed.Gcd.Class15 = 0" to this file
+Missing name Speed.Cast.Class15 in config file D:/TC-Build/bin/RelWithDebInfo/worldserver.conf, add "Speed.Cast.Class15 = 0" to this file
+Missing name Speed.Gcd.Class16 in config file D:/TC-Build/bin/RelWithDebInfo/worldserver.conf, add "Speed.Gcd.Class16 = 0" to this file
+Missing name Speed.Cast.Class16 in config file D:/TC-Build/bin/RelWithDebInfo/worldserver.conf, add "Speed.Cast.Class16 = 0" to this file
+Missing name Speed.Gcd.Class17 in config file D:/TC-Build/bin/RelWithDebInfo/worldserver.conf, add "Speed.Gcd.Class17 = 0" to this file
+Missing name Speed.Cast.Class17 in config file D:/TC-Build/bin/RelWithDebInfo/worldserver.conf, add "Speed.Cast.Class17 = 0" to this file
+Missing name Speed.Gcd.Class18 in config file D:/TC-Build/bin/RelWithDebInfo/worldserver.conf, add "Speed.Gcd.Class18 = 0" to this file
+Missing name Speed.Cast.Class18 in config file D:/TC-Build/bin/RelWithDebInfo/worldserver.conf, add "Speed.Cast.Class18 = 0" to this file
+Missing name Speed.Gcd.Class19 in config file D:/TC-Build/bin/RelWithDebInfo/worldserver.conf, add "Speed.Gcd.Class19 = 0" to this file
+Missing name Speed.Cast.Class19 in config file D:/TC-Build/bin/RelWithDebInfo/worldserver.conf, add "Speed.Cast.Class19 = 0" to this file
+Missing name Speed.Gcd.Class20 in config file D:/TC-Build/bin/RelWithDebInfo/worldserver.conf, add "Speed.Gcd.Class20 = 0" to this file
+Missing name Speed.Cast.Class20 in config file D:/TC-Build/bin/RelWithDebInfo/worldserver.conf, add "Speed.Cast.Class20 = 0" to this file
+Missing name Speed.Gcd.Class21 in config file D:/TC-Build/bin/RelWithDebInfo/worldserver.conf, add "Speed.Gcd.Class21 = 0" to this file
+Missing name Speed.Cast.Class21 in config file D:/TC-Build/bin/RelWithDebInfo/worldserver.conf, add "Speed.Cast.Class21 = 0" to this file
+Missing name Speed.Gcd.Class22 in config file D:/TC-Build/bin/RelWithDebInfo/worldserver.conf, add "Speed.Gcd.Class22 = 0" to this file
+Missing name Speed.Cast.Class22 in config file D:/TC-Build/bin/RelWithDebInfo/worldserver.conf, add "Speed.Cast.Class22 = 0" to this file
+Missing name Speed.Gcd.Class23 in config file D:/TC-Build/bin/RelWithDebInfo/worldserver.conf, add "Speed.Gcd.Class23 = 0" to this file
+Missing name Speed.Cast.Class23 in config file D:/TC-Build/bin/RelWithDebInfo/worldserver.conf, add "Speed.Cast.Class23 = 0" to this file
+Missing name Speed.Gcd.Class24 in config file D:/TC-Build/bin/RelWithDebInfo/worldserver.conf, add "Speed.Gcd.Class24 = 0" to this file
+Missing name Speed.Cast.Class24 in config file D:/TC-Build/bin/RelWithDebInfo/worldserver.conf, add "Speed.Cast.Class24 = 0" to this file
+Missing name Speed.Gcd.Class25 in config file D:/TC-Build/bin/RelWithDebInfo/worldserver.conf, add "Speed.Gcd.Class25 = 0" to this file
+Missing name Speed.Cast.Class25 in config file D:/TC-Build/bin/RelWithDebInfo/worldserver.conf, add "Speed.Cast.Class25 = 0" to this file
+Missing name Speed.Gcd.Class26 in config file D:/TC-Build/bin/RelWithDebInfo/worldserver.conf, add "Speed.Gcd.Class26 = 0" to this file
+Missing name Speed.Cast.Class26 in config file D:/TC-Build/bin/RelWithDebInfo/worldserver.conf, add "Speed.Cast.Class26 = 0" to this file
+Missing name Speed.Gcd.Class27 in config file D:/TC-Build/bin/RelWithDebInfo/worldserver.conf, add "Speed.Gcd.Class27 = 0" to this file
+Missing name Speed.Cast.Class27 in config file D:/TC-Build/bin/RelWithDebInfo/worldserver.conf, add "Speed.Cast.Class27 = 0" to this file
+Missing name Speed.Gcd.Class28 in config file D:/TC-Build/bin/RelWithDebInfo/worldserver.conf, add "Speed.Gcd.Class28 = 0" to this file
+Missing name Speed.Cast.Class28 in config file D:/TC-Build/bin/RelWithDebInfo/worldserver.conf, add "Speed.Cast.Class28 = 0" to this file
+Missing name Speed.Gcd.Class29 in config file D:/TC-Build/bin/RelWithDebInfo/worldserver.conf, add "Speed.Gcd.Class29 = 0" to this file
+Missing name Speed.Cast.Class29 in config file D:/TC-Build/bin/RelWithDebInfo/worldserver.conf, add "Speed.Cast.Class29 = 0" to this file
+Missing name Speed.Gcd.Class30 in config file D:/TC-Build/bin/RelWithDebInfo/worldserver.conf, add "Speed.Gcd.Class30 = 0" to this file
+Missing name Speed.Cast.Class30 in config file D:/TC-Build/bin/RelWithDebInfo/worldserver.conf, add "Speed.Cast.Class30 = 0" to this file
+Missing name Speed.Gcd.Class31 in config file D:/TC-Build/bin/RelWithDebInfo/worldserver.conf, add "Speed.Gcd.Class31 = 0" to this file
+Missing name Speed.Cast.Class31 in config file D:/TC-Build/bin/RelWithDebInfo/worldserver.conf, add "Speed.Cast.Class31 = 0" to this file
+>> 战斗节奏优化已启用：GCD 60% / 读条 75% / CD 100% (地板 300ms/500ms/3000ms，急速影响近战=是，PVP恢复原版=是)
+Missing name Speed.Cast.Class1 in config file D:/TC-Build/bin/RelWithDebInfo/worldserver.conf, add "Speed.Cast.Class1 = 0" to this file
+Missing name Speed.Cast.Class3 in config file D:/TC-Build/bin/RelWithDebInfo/worldserver.conf, add "Speed.Cast.Class3 = 0" to this file
+Missing name Speed.Cast.Class4 in config file D:/TC-Build/bin/RelWithDebInfo/worldserver.conf, add "Speed.Cast.Class4 = 0" to this file
+Missing name Speed.Cast.Class6 in config file D:/TC-Build/bin/RelWithDebInfo/worldserver.conf, add "Speed.Cast.Class6 = 0" to this file
+Missing name Speed.Gcd.Class10 in config file D:/TC-Build/bin/RelWithDebInfo/worldserver.conf, add "Speed.Gcd.Class10 = 0" to this file
+Missing name Speed.Cast.Class10 in config file D:/TC-Build/bin/RelWithDebInfo/worldserver.conf, add "Speed.Cast.Class10 = 0" to this file
+Missing name Speed.Gcd.Class12 in config file D:/TC-Build/bin/RelWithDebInfo/worldserver.conf, add "Speed.Gcd.Class12 = 0" to this file
+Missing name Speed.Cast.Class12 in config file D:/TC-Build/bin/RelWithDebInfo/worldserver.conf, add "Speed.Cast.Class12 = 0" to this file
+Missing name Speed.Gcd.Class13 in config file D:/TC-Build/bin/RelWithDebInfo/worldserver.conf, add "Speed.Gcd.Class13 = 0" to this file
+Missing name Speed.Cast.Class13 in config file D:/TC-Build/bin/RelWithDebInfo/worldserver.conf, add "Speed.Cast.Class13 = 0" to this file
+Missing name Speed.Gcd.Class14 in config file D:/TC-Build/bin/RelWithDebInfo/worldserver.conf, add "Speed.Gcd.Class14 = 0" to this file
+Missing name Speed.Cast.Class14 in config file D:/TC-Build/bin/RelWithDebInfo/worldserver.conf, add "Speed.Cast.Class14 = 0" to this file
+Missing name Speed.Gcd.Class15 in config file D:/TC-Build/bin/RelWithDebInfo/worldserver.conf, add "Speed.Gcd.Class15 = 0" to this file
+Missing name Speed.Cast.Class15 in config file D:/TC-Build/bin/RelWithDebInfo/worldserver.conf, add "Speed.Cast.Class15 = 0" to this file
+Missing name Speed.Gcd.Class16 in config file D:/TC-Build/bin/RelWithDebInfo/worldserver.conf, add "Speed.Gcd.Class16 = 0" to this file
+Missing name Speed.Cast.Class16 in config file D:/TC-Build/bin/RelWithDebInfo/worldserver.conf, add "Speed.Cast.Class16 = 0" to this file
+Missing name Speed.Gcd.Class17 in config file D:/TC-Build/bin/RelWithDebInfo/worldserver.conf, add "Speed.Gcd.Class17 = 0" to this file
+Missing name Speed.Cast.Class17 in config file D:/TC-Build/bin/RelWithDebInfo/worldserver.conf, add "Speed.Cast.Class17 = 0" to this file
+Missing name Speed.Gcd.Class18 in config file D:/TC-Build/bin/RelWithDebInfo/worldserver.conf, add "Speed.Gcd.Class18 = 0" to this file
+Missing name Speed.Cast.Class18 in config file D:/TC-Build/bin/RelWithDebInfo/worldserver.conf, add "Speed.Cast.Class18 = 0" to this file
+Missing name Speed.Gcd.Class19 in config file D:/TC-Build/bin/RelWithDebInfo/worldserver.conf, add "Speed.Gcd.Class19 = 0" to this file
+Missing name Speed.Cast.Class19 in config file D:/TC-Build/bin/RelWithDebInfo/worldserver.conf, add "Speed.Cast.Class19 = 0" to this file
+Missing name Speed.Gcd.Class20 in config file D:/TC-Build/bin/RelWithDebInfo/worldserver.conf, add "Speed.Gcd.Class20 = 0" to this file
+Missing name Speed.Cast.Class20 in config file D:/TC-Build/bin/RelWithDebInfo/worldserver.conf, add "Speed.Cast.Class20 = 0" to this file
+Missing name Speed.Gcd.Class21 in config file D:/TC-Build/bin/RelWithDebInfo/worldserver.conf, add "Speed.Gcd.Class21 = 0" to this file
+Missing name Speed.Cast.Class21 in config file D:/TC-Build/bin/RelWithDebInfo/worldserver.conf, add "Speed.Cast.Class21 = 0" to this file
+Missing name Speed.Gcd.Class22 in config file D:/TC-Build/bin/RelWithDebInfo/worldserver.conf, add "Speed.Gcd.Class22 = 0" to this file
+Missing name Speed.Cast.Class22 in config file D:/TC-Build/bin/RelWithDebInfo/worldserver.conf, add "Speed.Cast.Class22 = 0" to this file
+Missing name Speed.Gcd.Class23 in config file D:/TC-Build/bin/RelWithDebInfo/worldserver.conf, add "Speed.Gcd.Class23 = 0" to this file
+Missing name Speed.Cast.Class23 in config file D:/TC-Build/bin/RelWithDebInfo/worldserver.conf, add "Speed.Cast.Class23 = 0" to this file
+Missing name Speed.Gcd.Class24 in config file D:/TC-Build/bin/RelWithDebInfo/worldserver.conf, add "Speed.Gcd.Class24 = 0" to this file
+Missing name Speed.Cast.Class24 in config file D:/TC-Build/bin/RelWithDebInfo/worldserver.conf, add "Speed.Cast.Class24 = 0" to this file
+Missing name Speed.Gcd.Class25 in config file D:/TC-Build/bin/RelWithDebInfo/worldserver.conf, add "Speed.Gcd.Class25 = 0" to this file
+Missing name Speed.Cast.Class25 in config file D:/TC-Build/bin/RelWithDebInfo/worldserver.conf, add "Speed.Cast.Class25 = 0" to this file
+Missing name Speed.Gcd.Class26 in config file D:/TC-Build/bin/RelWithDebInfo/worldserver.conf, add "Speed.Gcd.Class26 = 0" to this file
+Missing name Speed.Cast.Class26 in config file D:/TC-Build/bin/RelWithDebInfo/worldserver.conf, add "Speed.Cast.Class26 = 0" to this file
+Missing name Speed.Gcd.Class27 in config file D:/TC-Build/bin/RelWithDebInfo/worldserver.conf, add "Speed.Gcd.Class27 = 0" to this file
+Missing name Speed.Cast.Class27 in config file D:/TC-Build/bin/RelWithDebInfo/worldserver.conf, add "Speed.Cast.Class27 = 0" to this file
+Missing name Speed.Gcd.Class28 in config file D:/TC-Build/bin/RelWithDebInfo/worldserver.conf, add "Speed.Gcd.Class28 = 0" to this file
+Missing name Speed.Cast.Class28 in config file D:/TC-Build/bin/RelWithDebInfo/worldserver.conf, add "Speed.Cast.Class28 = 0" to this file
+Missing name Speed.Gcd.Class29 in config file D:/TC-Build/bin/RelWithDebInfo/worldserver.conf, add "Speed.Gcd.Class29 = 0" to this file
+Missing name Speed.Cast.Class29 in config file D:/TC-Build/bin/RelWithDebInfo/worldserver.conf, add "Speed.Cast.Class29 = 0" to this file
+Missing name Speed.Gcd.Class30 in config file D:/TC-Build/bin/RelWithDebInfo/worldserver.conf, add "Speed.Gcd.Class30 = 0" to this file
+Missing name Speed.Cast.Class30 in config file D:/TC-Build/bin/RelWithDebInfo/worldserver.conf, add "Speed.Cast.Class30 = 0" to this file
+Missing name Speed.Gcd.Class31 in config file D:/TC-Build/bin/RelWithDebInfo/worldserver.conf, add "Speed.Gcd.Class31 = 0" to this file
+Missing name Speed.Cast.Class31 in config file D:/TC-Build/bin/RelWithDebInfo/worldserver.conf, add "Speed.Cast.Class31 = 0" to this file
+>> 战斗节奏优化已启用：GCD 60% / 读条 75% / CD 100% (地板 300ms/500ms/3000ms，急速影响近战=是，PVP恢复原版=是)
+Loading Eluna config...
+Loading Lua scripts...
+Loading Eluna script reloader...
+Loading Trinity strings...
+>> Loaded 1024 trinity strings in 7 ms
+Initialize data stores...
+>> Initialized 115 data stores in 1191 ms
+Using zhCN DBC Locale as default. All available DBC locales: zhCN 
+>> Loading Cinematic Camera files
+>> Loaded 14 cinematic waypoint sets in 8 ms
+Loading IP Location Database...
+Initializing PlayerDump tables...
+>> Initialized tables for PlayerDump in 59 ms.
+Loading SpellInfo store...
+>> Loaded SpellInfo store in 44 ms
+Loading SpellInfo corrections...
+>> Loaded SpellInfo corrections in 14 ms
+Loading SkillLineAbilityMultiMap Data...
+>> Loaded 10219 SkillLineAbility MultiMap Data in 2 ms
+Loading SpellInfo custom attributes...
+>> Loaded 277 spell custom attributes from DB in 3 ms
+>> Loaded SpellInfo custom attributes in 48 ms
+Loading SpellInfo diminishing infos...
+>> Loaded SpellInfo diminishing infos in 9 ms
+Loading SpellInfo immunity infos...
+>> Loaded SpellInfo immunity infos in 18 ms
+Loading GM stat persistence...
+>> 载入 15 条 GM 属性修改（1 名角色），耗时 5 ms
+Applying custom class spell tweaks...
+>> 老职业技能强化：应用 66 条，跳过 0 条（全局倍率 x1）
+Loading Player Totem models...
+>> Loaded 20 player totem model records in 4 ms
+Loading GameObject models...
+>> Loaded 2321 GameObject models in 2 ms
+Loading Script Names...
+>> Loaded 3428 ScriptNames in 1283 ms
+Loading Instance Template...
+>> Loaded 86 instance templates in 1 ms
+Loading instances...
+>> Loaded instances in 20 ms
+Loading character cache store...
+Loaded character infos for 5 characters in 1 ms
+Loading Broadcast texts...
+>> Loaded 73037 broadcast texts in 284 ms
+>> Loaded 73037 broadcast text locales in 1432 ms
+Loading Localization strings...
+>> Loaded 27254 creature locale strings in 344 ms
+>> Loaded 20444 gameobject_template_locale strings in 226 ms
+>> Loaded 38413 Item locale strings in 627 ms
+>> Loaded 2481 Item set name locale strings in 31 ms
+>> Loaded 9464 Quest locale strings in 677 ms
+>> Loaded 8476 Quest Offer Reward locale strings in 145 ms
+>> Loaded 6413 Quest Request Items locale strings in 82 ms
+>> Loaded 241 NpcText locale strings in 7 ms
+>> Loaded 1946 PageText locale strings in 70 ms
+>> Loaded 1 gossip_menu_option locale strings in 3 ms
+>> Loaded 453 points_of_interest locale strings in 9 ms
+>> Loaded 129 quest greeting locale strings in 6 ms
+>> Localization strings loaded in 2231 ms
+Loading Account Roles and Permissions...
+>> Loaded 721 permission definitions, 703 linked permissions and 4 default permissions in 6 ms
+Loading Page Texts...
+>> Loaded 1951 page texts in 17 ms
+Loading Game Object Templates...
+>> Loaded 21573 game object templates in 105 ms
+Loading Game Object template addons...
+>> Loaded 21500 game object template addons in 36 ms
+Loading Transport templates...
+>> Loaded 30 transport templates in 7 ms
+Loading Transport animations and rotations...
+Loading Spell Rank Data...
+>> Loaded 3467 spell rank records in 8 ms
+Loading Spell Required Data...
+>> Loaded 41 spell required records in 3 ms
+Loading Spell Group types...
+>> Loaded 555 spell group definitions in 3 ms
+Loading Spell Learn Skills...
+>> Loaded 103 Spell Learn Skills from DBC in 3 ms
+Loading SpellInfo SpellSpecific and AuraState...
+>> Loaded SpellInfo SpellSpecific and AuraState in 8 ms
+Loading Spell Learn Spells...
+>> Loaded 8 spell learn spells + 574 found in DBC in 8 ms
+Loading Spell Proc conditions and data...
+>> Loaded 851 spell proc conditions and data in 6 ms
+Generating spell proc data from SpellMap...
+>> Generated spell proc data for 1381 spells in 2 ms
+Loading Spell Bonus Data...
+>> Loaded 216 extra spell bonus data in 6 ms
+Loading Aggro Spells Definitions...
+>> Loaded 106 SpellThreatEntries in 3 ms
+Loading Spell Group Stack Rules...
+>> Loaded 67 spell group stack rules in 3 ms
+>> Parsing SPELL_GROUP_STACK_RULE_EXCLUSIVE_SAME_EFFECT stack rules...
+>> Parsed 16 SPELL_GROUP_STACK_RULE_EXCLUSIVE_SAME_EFFECT stack rules in 0 ms
+Loading NPC Texts...
+>> Loaded 8729 npc texts in 154 ms
+Loading Enchant Spells Proc datas...
+>> Loaded 42 enchant proc data definitions in 7 ms
+Loading Item Random Enchantments Table...
+>> Loaded 28607 Item Enchantment definitions in 48 ms
+Loading Disables
+>> Loaded 853 disables in 3 ms
+Loading Items...
+>> Loaded 38608 item templates in 589 ms
+Loading Item set names...
+>> Loaded 2481 item set names in 10 ms
+Loading Creature Model Based Info Data...
+>> Loaded 24143 creature model based info in 35 ms
+Loading Creature templates...
+>> Loaded 1606 creature template resistances in 5 ms
+>> Loaded 9634 creature template spells in 15 ms
+>> Loaded 30810 creature definitions in 349 ms
+Loading Equipment templates...
+>> Loaded 11687 equipment templates in 22 ms
+Loading Creature template addons...
+>> Loaded 17832 creature template addons in 44 ms
+Loading Reputation Reward Rates...
+>> Loaded 16 reputation_reward_rate in 5 ms
+Loading Creature Reputation OnKill Data...
+>> Loaded 2009 creature award reputation definitions in 8 ms
+Loading Reputation Spillover Data...
+>> Loaded 26 reputation_spillover_template in 3 ms
+Loading Points Of Interest Data...
+>> Loaded 453 Points of Interest definitions in 3 ms
+Loading Creature Base Stats...
+>> Loaded 1000 creature base stats in 11 ms
+Loading Spawn Group Templates...
+>> Loaded 298 spawn group templates in 3 ms
+Loading Creature Data...
+>> Loaded 151771 creatures in 1120 ms
+Loading Temporary Summon Data...
+>> Loaded 1180 temp summons in 10 ms
+Loading pet levelup spells...
+>> Loaded 993 pet levelup and default spells for 39 families in 0 ms
+Loading pet default spells additional to levelup spells...
+>> Loaded addition spells for 111 pet spell data entries in 3 ms
+Loading summonable creature templates...
+>> Loaded 461 summonable creature templates in 8 ms
+Loading Creature Addon Data...
+>> Loaded 32949 creature addons in 95 ms
+Loading Creature Movement Overrides...
+>> Loaded 67 movement overrides in 6 ms
+Loading Gameobject Data...
+>> Loaded 94984 gameobjects in 837 ms
+Loading Spawn Group Data...
+>> Loaded 102107 spawn group members in 91 ms
+Loading instance spawn groups...
+>> Loaded 253 instance spawn groups in 6 ms
+Loading GameObject Addon Data...
+>> Loaded 59735 gameobject addons in 122 ms
+Loading GameObject faction and flags overrides...
+>> Loaded 20 gameobject faction and flags overrides in 3 ms
+Loading GameObject Quest Items...
+>> Loaded 857 gameobject quest items in 5 ms
+Loading Creature Quest Items...
+>> Loaded 4391 creature quest items in 10 ms
+Loading Creature Linked Respawn...
+>> Loaded 0 linked respawns. DB table `linked_respawn` is empty.
+Loading Weather Data...
+>> Loaded 35 weather definitions in 1 ms
+Loading Quests...
+>> Loaded 9464 quests definitions in 284 ms
+Checking Quest Disables
+>> Checked 693 quest disables in 0 ms
+Loading Quest POI
+>> Loaded 8955 quest POI definitions in 146 ms
+Loading Quests Starters and Enders...
+Loading GO Start Quest Data...
+>> Loaded 449 quest relations from gameobject_queststarter in 4 ms
+Loading GO End Quest Data...
+>> Loaded 457 quest relations from gameobject_questender in 3 ms
+Loading Creature Start Quest Data...
+>> Loaded 7430 quest relations from creature_queststarter in 11 ms
+Loading Creature End Quest Data...
+>> Loaded 7859 quest relations from creature_questender in 13 ms
+Loading Quests Greetings...
+>> Loaded 190 quest_greeting in 5 ms
+Loading Objects Pooling Data...
+>> Loaded 3669 objects pools in 11 ms
+Loading Creatures Pooling Data...
+>> Loaded 1601 creatures in pools in 3 ms
+Loading Gameobject Pooling Data...
+>> Loaded 26390 gameobject in pools in 35 ms
+Loading Mother Pooling Data...
+>> Loaded 2588 pools in mother pools in 4 ms
+Starting objects pooling system...
+Loading Quest Pooling Data...
+>> Loaded 35 daily, 7 weekly and 0 monthly quest pools in 9 ms
+Loading Game Event Data...
+>> Loaded 190 holiday dates in 3 ms
+>> Loaded 84 game events in 1 ms.
+Loading Game Event Saves Data...
+>> Loaded 0 game event saves in game events. DB table `game_event_save` is empty.
+Loading Game Event Prerequisite Data...
+>> Loaded 0 game event prerequisites in game events. DB table `game_event_prerequisite` is empty.
+Loading Game Event Creature Data...
+>> Loaded 10066 creatures in game events in 12 ms.
+Loading Game Event GO Data...
+>> Loaded 33295 gameobjects in game events in 26 ms.
+Loading Game Event Model/Equipment Change Data...
+>> Loaded 9 model/equipment changes in game events in 2 ms.
+Loading Game Event Quest Data...
+>> Loaded 222 quests additions in game events in 2 ms.
+Loading Game Event GO Quest Data...
+>> Loaded 78 quests additions in game events in 4 ms.
+Loading Game Event Quest Condition Data...
+>> Loaded 0 quest event conditions in game events. DB table `game_event_quest_condition` is empty.
+Loading Game Event Condition Data...
+>> Loaded 0 conditions in game events. DB table `game_event_condition` is empty.
+Loading Game Event Condition Save Data...
+>> Loaded 0 condition saves in game events. DB table `game_event_condition_save` is empty.
+Loading Game Event NPCflag Data...
+>> Loaded 5 npcflags in game events in 3 ms.
+Loading Game Event Seasonal Quest Relations...
+>> Loaded 690 quests additions in game events in 4 ms.
+Loading Game Event Vendor Additions Data...
+>> Loaded 106 vendor additions in game events in 3 ms.
+Loading Game Event Battleground Holiday Data...
+>> Loaded 6 battleground holidays in game events in 4 ms.
+Loading Game Event Pool Data...
+>> Loaded 9 pools for game events in 1 ms.
+Loading UNIT_NPC_FLAG_SPELLCLICK Data...
+>> Loaded 327 spellclick definitions in 7 ms
+Loading Vehicle Templates...
+>> Loaded 0 vehicle template. DB table `vehicle_template` is empty.
+Loading Vehicle Template Accessories...
+>> Loaded 202 Vehicle Template Accessories in 4 ms
+Loading Vehicle Accessories...
+>> Loaded 0 Vehicle Accessories in 3 ms
+Loading Vehicle Seat Addon Data...
+>> Loaded 17 Vehicle Seat Addon entries in 4 ms
+Loading SpellArea Data...
+>> Loaded 786 spell area requirements in 5 ms
+Loading Area Trigger Teleports definitions...
+>> Loaded 275 area trigger teleport definitions in 6 ms
+Loading Access Requirements...
+>> Loaded 121 access requirement definitions in 3 ms
+Loading Quest Area Triggers...
+>> Loaded 64 quest trigger points in 3 ms
+Loading Tavern Area Triggers...
+>> Loaded 115 tavern triggers in 3 ms
+Loading AreaTrigger script names...
+>> Loaded 214 areatrigger scripts in 2 ms
+Loading LFG entrance positions...
+>> Loaded 20 lfg dungeon templates in 4 ms
+Loading Dungeon boss data...
+>> Loaded 612 instance encounters in 5 ms
+Loading LFG rewards...
+>> Loaded 15 lfg dungeon rewards in 5 ms
+Loading Graveyard-zone links...
+>> Loaded 702 graveyard-zone links in 3 ms
+Loading spell pet auras...
+>> Loaded 47 spell pet auras in 4 ms
+Loading Spell target coordinates...
+>> Loaded 644 spell teleport coordinates in 5 ms
+Loading enchant custom attributes...
+>> Loaded 32 custom enchant attributes in 1 ms
+Loading linked spells...
+>> Loaded 272 linked spells in 4 ms
+Loading Player Create Data...
+>> Loaded 62 player create definitions in 6 ms
+Loading Player Create Items Data...
+>> Loaded 1 custom player create items in 4 ms
+Loading Player Create Skill Data...
+>> Loaded 1094 player create skills in 4 ms
+Loading Player Create Spell Data...
+>> Loaded 2680 custom player create spells in 6 ms
+Loading Player Create Cast Spell Data...
+>> Loaded 19 player create cast spells in 10 ms
+Loading Player Create Action Data...
+>> Loaded 325 player create actions in 5 ms
+Loading Player Create Level HP/Mana Data...
+>> Loaded 800 level health/mana definitions in 5 ms
+Loading Player Create Level Stats Data...
+>> Loaded 4960 level stats definitions in 9 ms
+Loading Player Create XP Data...
+>> Loaded 79 xp for level definitions in 4 ms
+Loading Exploration BaseXP Data...
+>> Loaded 80 BaseXP definitions in 3 ms
+Loading Pet Name Parts...
+>> Loaded 313 pet name parts in 8 ms
+Loading the max pet number...
+>> Loaded the max pet number: 6 in 2 ms
+Loading pet level stats...
+>> Loaded 2560 level pet stats definitions in 10 ms
+Loading Player level dependent mail rewards...
+>> Loaded 25 level dependent mail rewards in 3 ms
+Loading creature loot templates...
+>> Loaded 316586 creature loot templates in 580 ms
+Loading fishing loot templates...
+>> Loaded 281 fishing loot templates in 5 ms
+Loading gameobject loot templates...
+>> Loaded 16650 gameobject loot templates in 43 ms
+Loading item loot templates...
+>> Loaded 4998 item loot templates in 22 ms
+Loading mail loot templates...
+>> Loaded 117 mail loot templates in 3 ms
+Loading milling loot templates...
+>> Loaded 45 milling loot templates in 9 ms
+Loading pickpocketing loot templates...
+>> Loaded 11046 pickpocketing loot templates in 30 ms
+Loading skinning loot templates...
+>> Loaded 700 skinning loot templates in 10 ms
+Loading disenchanting loot templates...
+>> Loaded 124 disenchanting loot templates in 11 ms
+Loading prospecting loot templates...
+>> Loaded 41 prospecting loot templates in 9 ms
+Loading spell loot templates...
+>> Loaded 166 spell loot templates in 8 ms
+Loading reference loot templates...
+>> Loaded reference loot templates in 63 ms
+Loading Skill Discovery Table...
+>> Loaded 347 skill discovery definitions in 9 ms.
+Loading Skill Extra Item Table...
+>> Loaded 225 spell specialization definitions in 5 ms
+Loading Skill Perfection Data Table...
+>> Loaded 72 spell perfection definitions in 4 ms.
+Loading Skill Fishing base level requirements...
+>> Loaded 115 areas for fishing base skill level in 5 ms
+Loading Achievements...
+>> Loaded 43 achievement references in 0 ms.
+Loading Achievement Criteria Lists...
+>> Loaded 7494 achievement criteria in 3 ms.
+Loading Achievement Criteria Data...
+>> Loaded 2695 additional achievement criteria data in 9 ms
+Loading Achievement Rewards...
+>> Loaded 112 achievement rewards in 8 ms.
+Loading Achievement Reward Locales...
+>> Loaded 32 achievement reward locale strings in 5 ms.
+Loading Completed Achievements...
+>> Loaded 43 realm first completed achievements in 2 ms.
+Loading Item Auctions...
+>> Loaded 956 auction items in 17 ms
+Loading Auctions...
+>> Loaded 956 auctions with 0 bidders in 9 ms
+Loading Guilds...
+Loading guilds definitions...
+>> Loaded 0 guild definitions. DB table `guild` is empty.
+Loading ArenaTeams...
+>> Loaded 0 arena teams. DB table `arena_team` is empty!
+Loading Groups...
+>> Loaded 3 group definitions in 12 ms
+Loading Group members...
+>> Loaded 4 group members in 3 ms
+Loading Group instance saves...
+>> Loaded 0 group-instance saves. DB table `group_instance` is empty!
+Loading ReservedNames...
+>> Loaded 0 reserved player names. DB table `reserved_name` is empty!
+Loading GameObjects for quests...
+>> Loaded 1788 GameObjects for quests in 6 ms
+Loading BattleMasters...
+>> Loaded 157 battlemaster entries in 10 ms
+Loading GameTeleports...
+>> Loaded 1493 GameTeleports in 13 ms
+Loading Trainers...
+>> Loaded 126 Trainers in 27 ms
+Loading Creature default trainers...
+>> Loaded 806 default trainers in 4 ms
+Loading Gossip menu...
+>> Loaded 6124 gossip_menu IDs in 12 ms
+Loading Gossip menu options...
+>> Loaded 4464 gossip_menu_option entries in 25 ms
+Loading Vendors...
+>> Loaded 37573 Vendors in 99 ms
+Loading Waypoints...
+>> Loaded 148877 waypoints in 645 ms
+Loading Creature Formations...
+>> Loaded 2177 creatures in formations in 8 ms
+Loading World States...
+>> Loaded 81 world states in 2 ms
+Loading Conditions...
+>> Loaded 15118 conditions in 57 ms
+Loading faction change achievement pairs...
+>> Loaded 125 faction change achievement pairs in 3 ms
+Loading faction change spell pairs...
+>> Loaded 111 faction change spell pairs in 3 ms
+Loading faction change quest pairs...
+>> Loaded 290 faction change quest pairs in 4 ms
+Loading faction change item pairs...
+>> Loaded 1355 faction change item pairs in 6 ms
+Loading faction change reputation pairs...
+>> Loaded 16 faction change reputation pairs in 2 ms
+Loading faction change title pairs...
+>> Loaded 22 faction change title pairs in 2 ms
+Loading GM tickets...
+>> Loaded 0 GM tickets. DB table `gm_ticket` is empty!
+Loading GM surveys...
+>> Loaded GM Survey count from database in 2 ms
+Loading client addons...
+>> Loaded 23 known addons in 1 ms
+Returning old mails...
+>> No expired mails found.
+Loading Autobroadcasts...
+>> Loaded 0 autobroadcasts definitions. DB table `autobroadcast` is empty for this realm!
+Loading event_scripts...
+>> Loaded 535 script definitions in 7 ms
+Loading waypoint_scripts...
+>> Loaded 709 script definitions in 3 ms
+Loading spell script names...
+>> Loaded 2832 spell script names in 11 ms
+Loading Creature Texts...
+>> Loaded 17366 creature texts for 3883 creatures in 74 ms
+Loading Creature Text Locales...
+>> Loaded 21 creature localized texts in 4 ms
+Starting Eluna world state...
+Initializing Scripts...
+>> Loaded spline chain data for 124 chains, consisting of 325 splines with 1684 waypoints in 12 ms
+Loading C++ scripts
+>> Loaded 3495 C++ scripts in 71 ms
+>> NPCBots config loaded.
+>> NPCBots system enabled
+Validating spell scripts...
+>> Validated 3454 scripts in 6 ms
+Loading SmartAI scripts...
+>> Loaded SmartAIMgr Helpers in 8 ms
+>> Loaded 13856 SmartAI scripts in 213 ms
+Loading Calendar data...
+>> Loaded 0 calendar events in 2 ms
+>> Loaded 0 calendar invites in 2 ms
+Loading Petitions...
+>> Loaded 1 petitions in: 1 ms.
+Loading Signatures...
+>> Loaded 0 Petition signs!
+Loading Item loot...
+>> Loaded 0 stored item loots
+>> Loaded 0 stored item money
+Loading Transmogrification...
+Missing name Transmog.PreviewSeconds in config file D:/TC-Build/bin/RelWithDebInfo/worldserver.conf, add "Transmog.PreviewSeconds = 15" to this file
+>> 载入 0 条幻化记录（0 名角色），耗时 4 ms
+Initialize query data...
+>> Initialized query cache data in 265 ms
+Initialize commands...
+Initialize game time and timers
+Mail timer set to: 1380, mail return is called every 1440 minutes
+Starting Map System
+Starting NpcBot system...
+>> Bot spellInfo overrides generated for 55 spells
+>> Bot spell proc overrides generated for 1 spells
+>> Bot appearance data loaded
+>> Bot race data loaded
+>> Bots transmog data is not loaded. Table `characters_npcbot_transmog` is empty!
+>> Loaded 14 bot data entries
+MMAP loaded name:卡利姆多, id:1, x:12, y:30 (mmap rep.: x:12, y:30)
+MMAP loaded name:东部王国, id:0, x:27, y:31 (mmap rep.: x:27, y:31)
+MMAP loaded name:东部王国, id:0, x:51, y:34 (mmap rep.: x:51, y:34)
+MMAP loaded name:东部王国, id:0, x:28, y:29 (mmap rep.: x:28, y:29)
+MMAP loaded name:东部王国, id:0, x:39, y:36 (mmap rep.: x:39, y:36)
+MMAP loaded name:东部王国, id:0, x:36, y:36 (mmap rep.: x:36, y:36)
+MMAP loaded name:东部王国, id:0, x:49, y:31 (mmap rep.: x:49, y:31)
+MMAP loaded name:东部王国, id:0, x:41, y:33 (mmap rep.: x:41, y:33)
+MMAP loaded name:东部王国, id:0, x:42, y:32 (mmap rep.: x:42, y:32)
+MMAP loaded name:东部王国, id:0, x:49, y:36 (mmap rep.: x:49, y:36)
+MMAP loaded name:东部王国, id:0, x:48, y:32 (mmap rep.: x:48, y:32)
+>> Spawned 14 npcbot(s) within 11 grid(s) in 525 ms
+>> Loaded 24 npcbot care texts in 6 ms
+>> Loaded 12 npcbot care items in 4 ms
+>> Loaded 17 npcbot inventory entries in 4 ms
+>> Loaded 32 npcbot gift texts in 4 ms
+>> Loaded 17 npcbot request texts in 4 ms
+Setting up wander map...
+>> Loaded 5098 bot wander nodes (0 disabled) on 8 maps (total 499 tops) in 272 ms
+Spawning wandering bots...
+>> Set up spawning of 802 wandering bots in 10 ms
+Sorting wandering bot's gear...
+>> Loaded 60 disabled wandering bots gear items
+>> Sorted wandering bots gear in 17 ms
+Loading NPCBot group members...
+>> Loaded 5 NPCBot group members in 2 ms
+Loading NPCBot items storage...
+>> Loaded 4 NPCBot stored items for 1 bot owners in 1 ms
+Loading NPCBot item sets...
+>> Loaded 0 NPCBot item sets. DB table `characters_npcbot_gear_set` is empty!
+Loading NPCBot managers data...
+>> Loaded NPCBot manager data for 5 bot owners in 2 ms
+Deleting NPCBot log entries older than 30 days...
+Starting Game Event system...
+Initialize AuctionHouseBot...
+Initializing chat channels...
+>> Loaded 1 custom chat channels in 2 ms
+Initializing Opcodes...
+Starting Arena Season...
+Starting Battleground System
+>> Loaded 11 battlegrounds in 1 ms
+Starting Outdoor PvP System
+>> Loaded 6 outdoor PvP definitions in 0 ms
+Starting Battlefield System
+MMAP loaded name:诺森德, id:571, x:22, y:26 (mmap rep.: x:22, y:26)
+MMAP loaded name:诺森德, id:571, x:21, y:26 (mmap rep.: x:21, y:26)
+MMAP loaded name:诺森德, id:571, x:21, y:27 (mmap rep.: x:21, y:27)
+MMAP loaded name:诺森德, id:571, x:22, y:27 (mmap rep.: x:22, y:27)
+MMAP loaded name:诺森德, id:571, x:23, y:25 (mmap rep.: x:23, y:25)
+MMAP loaded name:诺森德, id:571, x:23, y:28 (mmap rep.: x:23, y:28)
+MMAP loaded name:诺森德, id:571, x:23, y:26 (mmap rep.: x:23, y:26)
+>> Loaded 1 battlefields in 179 ms
+Loading Transports...
+MMAP loaded name:卡利姆多, id:1, x:34, y:39 (mmap rep.: x:34, y:39)
+MMAP loaded name:卡利姆多, id:1, x:29, y:41 (mmap rep.: x:29, y:41)
+MMAP loaded name:东部王国, id:0, x:55, y:30 (mmap rep.: x:55, y:30)
+MMAP loaded name:东部王国, id:0, x:39, y:32 (mmap rep.: x:39, y:32)
+MMAP loaded name:卡利姆多, id:1, x:16, y:29 (mmap rep.: x:16, y:29)
+MMAP loaded name:东部王国, id:0, x:48, y:29 (mmap rep.: x:48, y:29)
+MMAP loaded name:卡利姆多, id:1, x:39, y:27 (mmap rep.: x:39, y:27)
+MMAP loaded name:外域, id:530, x:39, y:52 (mmap rep.: x:39, y:52)
+MMAP loaded name:东部王国, id:0, x:38, y:33 (mmap rep.: x:38, y:33)
+MMAP loaded name:诺森德, id:571, x:28, y:43 (mmap rep.: x:28, y:43)
+MMAP loaded name:诺森德, id:571, x:27, y:19 (mmap rep.: x:27, y:19)
+MMAP loaded name:诺森德, id:571, x:29, y:37 (mmap rep.: x:29, y:37)
+MMAP loaded name:诺森德, id:571, x:31, y:39 (mmap rep.: x:31, y:39)
+MMAP loaded name:诺森德, id:571, x:27, y:30 (mmap rep.: x:27, y:30)
+MMAP loaded name:东部王国, id:0, x:47, y:28 (mmap rep.: x:47, y:28)
+MMAP loaded name:卡利姆多, id:1, x:33, y:32 (mmap rep.: x:33, y:32)
+MMAP loaded name:诺森德, id:571, x:17, y:29 (mmap rep.: x:17, y:29)
+MMAP loaded name:诺森德, id:571, x:17, y:28 (mmap rep.: x:17, y:28)
+>> Spawned 20 continent transports in 435 ms
+Loading Warden Checks...
+Loading Warden Action Overrides...
+Deleting expired bans...
+Initializing quest reset times...
+Calculate random battleground reset time...
+Calculate deletion of old calendar events time...
+Calculate guild limitation(s) reset time...
+World initialized in 0 minutes 15 seconds
+Starting up anti-freeze thread (60 seconds max stuck time)...
+TrinityCore rev. ae60f5b6f6ff+ 2026-07-29 23:54:13 +0800 (bignum-mod branch) (Windows, AMD64, RelWithDebInfo, Static) (worldserver-daemon) ready...
+MMAP loaded name:卡利姆多, id:1, x:47, y:41 (mmap rep.: x:47, y:41)
+MMAP loaded name:卡利姆多, id:1, x:40, y:31 (mmap rep.: x:40, y:31)
+MMAP loaded name:卡利姆多, id:1, x:44, y:30 (mmap rep.: x:44, y:30)
+MMAP loaded name:东部王国, id:0, x:32, y:33 (mmap rep.: x:32, y:33)
+MMAP loaded name:卡利姆多, id:1, x:27, y:34 (mmap rep.: x:27, y:34)
+MMAP loaded name:卡利姆多, id:1, x:36, y:35 (mmap rep.: x:36, y:35)
+MMAP loaded name:东部王国, id:0, x:51, y:30 (mmap rep.: x:51, y:30)
+MMAP loaded name:东部王国, id:0, x:33, y:31 (mmap rep.: x:33, y:31)
+MMAP loaded name:诺森德, id:571, x:23, y:21 (mmap rep.: x:23, y:21)
+MMAP loaded name:诺森德, id:571, x:27, y:40 (mmap rep.: x:27, y:40)
+Wanderer bot Llane id 105047 level 4 can't generate req gear in slot 0, generating standard item!
+MMAP loaded name:卡利姆多, id:1, x:36, y:32 (mmap rep.: x:36, y:32)
+MMAP loaded name:外域, id:530, x:36, y:23 (mmap rep.: x:36, y:23)
+MMAP loaded name:卡利姆多, id:1, x:13, y:28 (mmap rep.: x:13, y:28)
+MMAP loaded name:卡利姆多, id:1, x:34, y:31 (mmap rep.: x:34, y:31)
+Wanderer bot Alamma id 105055 level 4 can't generate req gear in slot 0, generating standard item!
+MMAP loaded name:卡利姆多, id:1, x:26, y:32 (mmap rep.: x:26, y:32)
+MMAP loaded name:外域, id:530, x:37, y:27 (mmap rep.: x:37, y:27)
+MMAP loaded name:外域, id:530, x:35, y:15 (mmap rep.: x:35, y:15)
+MMAP loaded name:东部王国, id:0, x:34, y:36 (mmap rep.: x:34, y:36)
+MMAP loaded name:东部王国, id:0, x:36, y:35 (mmap rep.: x:36, y:35)
+MMAP loaded name:卡利姆多, id:1, x:31, y:29 (mmap rep.: x:31, y:29)
+MMAP loaded name:东部王国, id:0, x:42, y:37 (mmap rep.: x:42, y:37)
+MMAP loaded name:东部王国, id:0, x:46, y:36 (mmap rep.: x:46, y:36)
+MMAP loaded name:东部王国, id:0, x:42, y:38 (mmap rep.: x:42, y:38)
+MMAP loaded name:东部王国, id:0, x:46, y:33 (mmap rep.: x:46, y:33)
+MMAP loaded name:卡利姆多, id:1, x:18, y:36 (mmap rep.: x:18, y:36)
+MMAP loaded name:东部王国, id:0, x:27, y:41 (mmap rep.: x:27, y:41)
+MMAP loaded name:卡利姆多, id:1, x:22, y:40 (mmap rep.: x:22, y:40)
+MMAP loaded name:卡利姆多, id:1, x:40, y:33 (mmap rep.: x:40, y:33)
+MMAP loaded name:东部王国, id:0, x:51, y:38 (mmap rep.: x:51, y:38)
+MMAP loaded name:东部王国, id:0, x:28, y:31 (mmap rep.: x:28, y:31)
+MMAP loaded name:卡利姆多, id:1, x:19, y:40 (mmap rep.: x:19, y:40)
+MMAP loaded name:东部王国, id:0, x:33, y:32 (mmap rep.: x:33, y:32)
+MMAP loaded name:东部王国, id:0, x:49, y:38 (mmap rep.: x:49, y:38)
+MMAP loaded name:卡利姆多, id:1, x:37, y:32 (mmap rep.: x:37, y:32)
+MMAP loaded name:东部王国, id:0, x:33, y:40 (mmap rep.: x:33, y:40)
+MMAP loaded name:东部王国, id:0, x:54, y:37 (mmap rep.: x:54, y:37)
+MMAP loaded name:卡利姆多, id:1, x:32, y:36 (mmap rep.: x:32, y:36)
+MMAP loaded name:诺森德, id:571, x:26, y:20 (mmap rep.: x:26, y:20)
+MMAP loaded name:东部王国, id:0, x:42, y:39 (mmap rep.: x:42, y:39)
+MMAP loaded name:卡利姆多, id:1, x:32, y:27 (mmap rep.: x:32, y:27)
+MMAP loaded name:卡利姆多, id:1, x:45, y:39 (mmap rep.: x:45, y:39)
+MMAP loaded name:外域, id:530, x:32, y:27 (mmap rep.: x:32, y:27)
+MMAP loaded name:外域, id:530, x:33, y:24 (mmap rep.: x:33, y:24)
+MMAP loaded name:诺森德, id:571, x:25, y:19 (mmap rep.: x:25, y:19)
+MMAP loaded name:东部王国, id:0, x:29, y:38 (mmap rep.: x:29, y:38)
+MMAP loaded name:外域, id:530, x:34, y:18 (mmap rep.: x:34, y:18)
+MMAP loaded name:卡利姆多, id:1, x:18, y:40 (mmap rep.: x:18, y:40)
+MMAP loaded name:外域, id:530, x:28, y:21 (mmap rep.: x:28, y:21)
+MMAP loaded name:诺森德, id:571, x:31, y:40 (mmap rep.: x:31, y:40)
+MMAP loaded name:卡利姆多, id:1, x:40, y:25 (mmap rep.: x:40, y:25)
+Wanderer bot Llane id 105114 level 2 can't generate req gear in slot 0, generating standard item!
+MMAP loaded name:卡利姆多, id:1, x:32, y:32 (mmap rep.: x:32, y:32)
+MMAP loaded name:东部王国, id:0, x:33, y:38 (mmap rep.: x:33, y:38)
+MMAP loaded name:卡利姆多, id:1, x:30, y:41 (mmap rep.: x:30, y:41)
+MMAP loaded name:卡利姆多, id:1, x:30, y:30 (mmap rep.: x:30, y:30)
+MMAP loaded name:东部王国, id:0, x:31, y:29 (mmap rep.: x:31, y:29)
+MMAP loaded name:外域, id:530, x:26, y:25 (mmap rep.: x:26, y:25)
+Wanderer bot Shalannius id 105127 level 5 can't generate req gear in slot 0, generating standard item!
+MMAP loaded name:外域, id:530, x:25, y:26 (mmap rep.: x:25, y:26)
+MMAP loaded name:诺森德, id:571, x:30, y:41 (mmap rep.: x:30, y:41)
+MMAP loaded name:卡利姆多, id:1, x:27, y:36 (mmap rep.: x:27, y:36)
+MMAP loaded name:东部王国, id:0, x:59, y:31 (mmap rep.: x:59, y:31)
+MMAP loaded name:外域, id:530, x:31, y:26 (mmap rep.: x:31, y:26)
+MMAP loaded name:东部王国, id:0, x:31, y:36 (mmap rep.: x:31, y:36)
+MMAP loaded name:卡利姆多, id:1, x:13, y:30 (mmap rep.: x:13, y:30)
+Wanderer bot Llane id 105140 level 4 can't generate req gear in slot 0, generating standard item!
+MMAP loaded name:东部王国, id:0, x:43, y:31 (mmap rep.: x:43, y:31)
+Wanderer bot Maxan id 105143 level 2 can't generate req gear in slot 0, generating standard item!
+MMAP loaded name:外域, id:530, x:28, y:19 (mmap rep.: x:28, y:19)
+MMAP loaded name:外域, id:530, x:39, y:27 (mmap rep.: x:39, y:27)
+Wanderer bot Meela id 105147 level 3 can't generate req gear in slot 0, generating standard item!
+Wanderer bot Llane id 105148 level 3 can't generate req gear in slot 0, generating standard item!
+MMAP loaded name:卡利姆多, id:1, x:29, y:40 (mmap rep.: x:29, y:40)
+Wanderer bot Llane id 105151 level 4 can't generate req gear in slot 0, generating standard item!
+MMAP loaded name:东部王国, id:0, x:26, y:31 (mmap rep.: x:26, y:31)
+MMAP loaded name:外域, id:530, x:28, y:23 (mmap rep.: x:28, y:23)
+MMAP loaded name:卡利姆多, id:1, x:17, y:35 (mmap rep.: x:17, y:35)
+MMAP loaded name:卡利姆多, id:1, x:40, y:37 (mmap rep.: x:40, y:37)
+MMAP loaded name:卡利姆多, id:1, x:25, y:30 (mmap rep.: x:25, y:30)
+Wanderer bot Llane id 105159 level 3 can't generate req gear in slot 0, generating standard item!
+MMAP loaded name:东部王国, id:0, x:53, y:32 (mmap rep.: x:53, y:32)
+MMAP loaded name:卡利姆多, id:1, x:42, y:36 (mmap rep.: x:42, y:36)
+Wanderer bot Llane id 105166 level 3 can't generate req gear in slot 0, generating standard item!
+MMAP loaded name:卡利姆多, id:1, x:33, y:38 (mmap rep.: x:33, y:38)
+MMAP loaded name:诺森德, id:571, x:28, y:38 (mmap rep.: x:28, y:38)
+Wanderer bot Llane id 105177 level 4 can't generate req gear in slot 0, generating standard item!
+MMAP loaded name:卡利姆多, id:1, x:26, y:39 (mmap rep.: x:26, y:39)
+MMAP loaded name:东部王国, id:0, x:44, y:36 (mmap rep.: x:44, y:36)
+MMAP loaded name:卡利姆多, id:1, x:22, y:32 (mmap rep.: x:22, y:32)
+Wanderer bot Llane id 105184 level 1 can't generate req gear in slot 0, generating standard item!
+MMAP loaded name:卡利姆多, id:1, x:25, y:40 (mmap rep.: x:25, y:40)
+Wanderer bot Llane id 105196 level 4 can't generate req gear in slot 0, generating standard item!
+MMAP loaded name:诺森德, id:571, x:26, y:24 (mmap rep.: x:26, y:24)
+MMAP loaded name:外域, id:530, x:37, y:22 (mmap rep.: x:37, y:22)
+MMAP loaded name:诺森德, id:571, x:30, y:37 (mmap rep.: x:30, y:37)
+MMAP loaded name:诺森德, id:571, x:28, y:42 (mmap rep.: x:28, y:42)
+MMAP loaded name:东部王国, id:0, x:44, y:34 (mmap rep.: x:44, y:34)
+MMAP loaded name:东部王国, id:0, x:47, y:37 (mmap rep.: x:47, y:37)
+MMAP loaded name:外域, id:530, x:27, y:20 (mmap rep.: x:27, y:20)
+MMAP loaded name:东部王国, id:0, x:28, y:33 (mmap rep.: x:28, y:33)
+MMAP loaded name:东部王国, id:0, x:52, y:38 (mmap rep.: x:52, y:38)
+MMAP loaded name:东部王国, id:0, x:48, y:30 (mmap rep.: x:48, y:30)
+MMAP loaded name:卡利姆多, id:1, x:26, y:38 (mmap rep.: x:26, y:38)
+MMAP loaded name:卡利姆多, id:1, x:43, y:34 (mmap rep.: x:43, y:34)
+MMAP loaded name:外域, id:530, x:36, y:18 (mmap rep.: x:36, y:18)
+Wanderer bot Ogromm id 105254 level 1 can't generate req gear in slot 0, generating standard item!
+Wanderer bot Ogromm id 105254 level 1 can't generate req gear in slot 2, generating standard item!
+Wanderer bot Llane id 105259 level 3 can't generate req gear in slot 0, generating standard item!
+MMAP loaded name:卡利姆多, id:1, x:26, y:29 (mmap rep.: x:26, y:29)
+Wanderer bot Llane id 105277 level 5 can't generate req gear in slot 0, generating standard item!
+MMAP loaded name:外域, id:530, x:31, y:17 (mmap rep.: x:31, y:17)
+Wanderer bot Llane id 105283 level 2 can't generate req gear in slot 0, generating standard item!
+MMAP loaded name:诺森德, id:571, x:25, y:20 (mmap rep.: x:25, y:20)
+Wanderer bot Kondra id 105292 level 4 can't generate req gear in slot 0, generating standard item!
+Wanderer bot Kondra id 105292 level 4 can't generate req gear in slot 2, generating standard item!
+MMAP loaded name:东部王国, id:0, x:52, y:31 (mmap rep.: x:52, y:31)
+Wanderer bot Llane id 105306 level 2 can't generate req gear in slot 0, generating standard item!
+MMAP loaded name:卡利姆多, id:1, x:38, y:40 (mmap rep.: x:38, y:40)
+Wanderer bot Llane id 105309 level 1 can't generate req gear in slot 0, generating standard item!
+Wanderer bot Mirror Image (Blademaster) id 105312 level 4 can't generate req gear in slot 0, generating standard item!
+Wanderer bot Isabella id 105319 level 1 can't generate req gear in slot 0, generating standard item!
+Wanderer bot Llane id 105321 level 1 can't generate req gear in slot 0, generating standard item!
+MMAP loaded name:东部王国, id:0, x:33, y:33 (mmap rep.: x:33, y:33)
+MMAP loaded name:东部王国, id:0, x:29, y:33 (mmap rep.: x:29, y:33)
+MMAP loaded name:外域, id:530, x:28, y:22 (mmap rep.: x:28, y:22)
+MMAP loaded name:东部王国, id:0, x:31, y:32 (mmap rep.: x:31, y:32)
+MMAP loaded name:东部王国, id:0, x:32, y:32 (mmap rep.: x:32, y:32)
+MMAP loaded name:东部王国, id:0, x:31, y:31 (mmap rep.: x:31, y:31)
+MMAP loaded name:诺森德, id:571, x:24, y:19 (mmap rep.: x:24, y:19)
+MMAP loaded name:外域, id:530, x:32, y:21 (mmap rep.: x:32, y:21)
+Wanderer bot Llane id 105341 level 4 can't generate req gear in slot 0, generating standard item!
+MMAP loaded name:诺森德, id:571, x:31, y:43 (mmap rep.: x:31, y:43)
+Wanderer bot Llane id 105350 level 2 can't generate req gear in slot 0, generating standard item!
+MMAP loaded name:外域, id:530, x:37, y:24 (mmap rep.: x:37, y:24)
+MMAP loaded name:卡利姆多, id:1, x:19, y:31 (mmap rep.: x:19, y:31)
+Wanderer bot Tai'jin id 105368 level 3 can't generate req gear in slot 0, generating standard item!
+MMAP loaded name:外域, id:530, x:32, y:23 (mmap rep.: x:32, y:23)
+MMAP loaded name:外域, id:530, x:37, y:30 (mmap rep.: x:37, y:30)
+MMAP loaded name:卡利姆多, id:1, x:20, y:35 (mmap rep.: x:20, y:35)
+Wanderer bot Llane id 105412 level 1 can't generate req gear in slot 0, generating standard item!
+MMAP loaded name:外域, id:530, x:39, y:29 (mmap rep.: x:39, y:29)
+MMAP loaded name:卡利姆多, id:1, x:34, y:26 (mmap rep.: x:34, y:26)
+MMAP loaded name:外域, id:530, x:26, y:20 (mmap rep.: x:26, y:20)
+MMAP loaded name:诺森德, id:571, x:28, y:37 (mmap rep.: x:28, y:37)
+Wanderer bot Narinth id 105433 level 3 can't generate req gear in slot 0, generating standard item!
+Wanderer bot Llane id 105439 level 2 can't generate req gear in slot 0, generating standard item!
+Wanderer bot Llane id 105441 level 5 can't generate req gear in slot 0, generating standard item!
+MMAP loaded name:诺森德, id:571, x:27, y:22 (mmap rep.: x:27, y:22)
+MMAP loaded name:东部王国, id:0, x:30, y:34 (mmap rep.: x:30, y:34)
+MMAP loaded name:诺森德, id:571, x:25, y:24 (mmap rep.: x:25, y:24)
+MMAP loaded name:卡利姆多, id:1, x:30, y:31 (mmap rep.: x:30, y:31)
+Wanderer bot Llane id 105464 level 1 can't generate req gear in slot 0, generating standard item!
+MMAP loaded name:东部王国, id:0, x:53, y:36 (mmap rep.: x:53, y:36)
+MMAP loaded name:外域, id:530, x:31, y:23 (mmap rep.: x:31, y:23)
+Wanderer bot Llane id 105477 level 1 can't generate req gear in slot 0, generating standard item!
+Wanderer bot Swart id 105486 level 5 can't generate req gear in slot 0, generating standard item!
+Wanderer bot Llane id 105488 level 5 can't generate req gear in slot 0, generating standard item!
+Wanderer bot Gorkramato id 105491 level 4 can't generate req gear in slot 0, generating standard item!
+Wanderer bot Fahrad id 105497 level 5 can't generate req gear in slot 0, generating standard item!
+Wanderer bot Fahrad id 105497 level 5 can't generate req gear in slot 1, generating standard item!
+Wanderer bot Fahrad id 105497 level 5 can't generate req gear in slot 2, generating standard item!
+Wanderer bot Llane id 105504 level 1 can't generate req gear in slot 0, generating standard item!
+Wanderer bot Llane id 105507 level 1 can't generate req gear in slot 0, generating standard item!
+Wanderer bot Holt id 105518 level 4 can't generate req gear in slot 0, generating standard item!
+Wanderer bot Holt id 105518 level 4 can't generate req gear in slot 2, generating standard item!
+MMAP loaded name:外域, id:530, x:26, y:28 (mmap rep.: x:26, y:28)
+Wanderer bot Llane id 105528 level 1 can't generate req gear in slot 0, generating standard item!
+Wanderer bot Llane id 105534 level 2 can't generate req gear in slot 0, generating standard item!
+Wanderer bot Josetta id 105543 level 5 can't generate req gear in slot 0, generating standard item!
+Wanderer bot Beldruk id 105562 level 4 can't generate req gear in slot 0, generating standard item!
+Wanderer bot Llane id 105566 level 3 can't generate req gear in slot 0, generating standard item!
+MMAP loaded name:外域, id:530, x:26, y:21 (mmap rep.: x:26, y:21)
+MMAP loaded name:卡利姆多, id:1, x:37, y:37 (mmap rep.: x:37, y:37)
+Wanderer bot Thorgas id 105579 level 1 can't generate req gear in slot 0, generating standard item!
+Wanderer bot Thorgas id 105579 level 1 can't generate req gear in slot 2, generating standard item!
+Wanderer bot Llane id 105583 level 3 can't generate req gear in slot 0, generating standard item!
+MMAP loaded name:外域, id:530, x:33, y:26 (mmap rep.: x:33, y:26)
+Wanderer bot Inethven id 105593 level 1 can't generate req gear in slot 0, generating standard item!
+Wanderer bot Marryk id 105596 level 4 can't generate req gear in slot 0, generating standard item!
+Wanderer bot Astarii id 105598 level 2 can't generate req gear in slot 0, generating standard item!
+MMAP loaded name:外域, id:530, x:39, y:21 (mmap rep.: x:39, y:21)
+Wanderer bot Llane id 105610 level 4 can't generate req gear in slot 0, generating standard item!
+Wanderer bot Llane id 105628 level 3 can't generate req gear in slot 0, generating standard item!
+Wanderer bot Zelanis id 105636 level 4 can't generate req gear in slot 0, generating standard item!
+Wanderer bot Zelanis id 105636 level 4 can't generate req gear in slot 1, generating standard item!
+Wanderer bot Zelanis id 105636 level 4 can't generate req gear in slot 2, generating standard item!
+MMAP loaded name:东部王国, id:0, x:48, y:31 (mmap rep.: x:48, y:31)
+MMAP loaded name:卡利姆多, id:1, x:13, y:27 (mmap rep.: x:13, y:27)
+MMAP loaded name:卡利姆多, id:1, x:19, y:30 (mmap rep.: x:19, y:30)
+MMAP loaded name:诺森德, id:571, x:31, y:41 (mmap rep.: x:31, y:41)
+Wanderer bot Llane id 105668 level 3 can't generate req gear in slot 0, generating standard item!
+Wanderer bot Arthur id 105675 level 2 can't generate req gear in slot 0, generating standard item!
+MMAP loaded name:东部王国, id:0, x:55, y:31 (mmap rep.: x:55, y:31)
+Wanderer bot Kelv id 105688 level 2 can't generate req gear in slot 0, generating standard item!
+Wanderer bot Ruada id 105706 level 1 can't generate req gear in slot 0, generating standard item!
+Wanderer bot Llane id 105708 level 2 can't generate req gear in slot 0, generating standard item!
+Wanderer bot Zevrost id 105730 level 2 can't generate req gear in slot 0, generating standard item!
+Wanderer bot Llane id 105749 level 2 can't generate req gear in slot 0, generating standard item!
+Wanderer bot Llane id 105757 level 1 can't generate req gear in slot 0, generating standard item!
+MMAP loaded name:诺森德, id:571, x:27, y:41 (mmap rep.: x:27, y:41)
+Wanderer bot Lotheolan id 105773 level 1 can't generate req gear in slot 0, generating standard item!
+Wanderer bot Lazarus id 105796 level 2 can't generate req gear in slot 0, generating standard item!
+Wanderer bot Kore id 105797 level 5 can't generate req gear in slot 0, generating standard item!
+Wanderer bot Llane id 105798 level 2 can't generate req gear in slot 0, generating standard item!
+MMAP loaded name:卡利姆多, id:1, x:24, y:34 (mmap rep.: x:24, y:34)
+MMAP loaded name:诺森德, id:571, x:27, y:37 (mmap rep.: x:27, y:37)
+Wanderer bot Llane id 105811 level 4 can't generate req gear in slot 0, generating standard item!
+Wanderer bot Llane id 105814 level 5 can't generate req gear in slot 0, generating standard item!
+MMAP loaded name:诺森德, id:571, x:24, y:22 (mmap rep.: x:24, y:22)
+Wanderer bot Llane id 105837 level 3 can't generate req gear in slot 0, generating standard item!
+MMAP loaded name:外域, id:530, x:33, y:27 (mmap rep.: x:33, y:27)
+MMAP loaded name:东部王国, id:0, x:28, y:28 (mmap rep.: x:28, y:28)
+MMAP loaded name:东部王国, id:0, x:49, y:32 (mmap rep.: x:49, y:32)
+MMAP loaded name:诺森德, id:571, x:31, y:42 (mmap rep.: x:31, y:42)
+MMAP loaded name:外域, id:530, x:39, y:28 (mmap rep.: x:39, y:28)
+MMAP loaded name:卡利姆多, id:1, x:31, y:32 (mmap rep.: x:31, y:32)
+MMAP loaded name:东部王国, id:0, x:37, y:35 (mmap rep.: x:37, y:35)
+MMAP loaded name:外域, id:530, x:33, y:23 (mmap rep.: x:33, y:23)
+MMAP loaded name:东部王国, id:0, x:52, y:34 (mmap rep.: x:52, y:34)
+MMAP loaded name:卡利姆多, id:1, x:17, y:36 (mmap rep.: x:17, y:36)
+MMAP loaded name:东部王国, id:0, x:39, y:33 (mmap rep.: x:39, y:33)
+MMAP loaded name:卡利姆多, id:1, x:36, y:36 (mmap rep.: x:36, y:36)
+MMAP loaded name:东部王国, id:0, x:52, y:30 (mmap rep.: x:52, y:30)
+MMAP loaded name:卡利姆多, id:1, x:33, y:36 (mmap rep.: x:33, y:36)
+MMAP loaded name:外域, id:530, x:28, y:20 (mmap rep.: x:28, y:20)
+MMAP loaded name:卡利姆多, id:1, x:27, y:29 (mmap rep.: x:27, y:29)
+MMAP loaded name:东部王国, id:0, x:28, y:38 (mmap rep.: x:28, y:38)
+MMAP loaded name:东部王国, id:0, x:30, y:29 (mmap rep.: x:30, y:29)
+MMAP loaded name:卡利姆多, id:1, x:25, y:39 (mmap rep.: x:25, y:39)
+MMAP loaded name:诺森德, id:571, x:29, y:38 (mmap rep.: x:29, y:38)
+MMAP loaded name:东部王国, id:0, x:31, y:33 (mmap rep.: x:31, y:33)
+MMAP loaded name:东部王国, id:0, x:46, y:35 (mmap rep.: x:46, y:35)
+MMAP loaded name:诺森德, id:571, x:26, y:40 (mmap rep.: x:26, y:40)
+MMAP loaded name:东部王国, id:0, x:51, y:37 (mmap rep.: x:51, y:37)
+MMAP loaded name:东部王国, id:0, x:34, y:38 (mmap rep.: x:34, y:38)
+MMAP loaded name:卡利姆多, id:1, x:35, y:35 (mmap rep.: x:35, y:35)
+MMAP loaded name:卡利姆多, id:1, x:32, y:37 (mmap rep.: x:32, y:37)
+MMAP loaded name:东部王国, id:0, x:28, y:41 (mmap rep.: x:28, y:41)
+MMAP loaded name:东部王国, id:0, x:50, y:31 (mmap rep.: x:50, y:31)
+MMAP loaded name:卡利姆多, id:1, x:35, y:32 (mmap rep.: x:35, y:32)
+MMAP loaded name:东部王国, id:0, x:42, y:40 (mmap rep.: x:42, y:40)
+MMAP loaded name:外域, id:530, x:36, y:15 (mmap rep.: x:36, y:15)
+MMAP loaded name:东部王国, id:0, x:32, y:40 (mmap rep.: x:32, y:40)
+MMAP loaded name:卡利姆多, id:1, x:13, y:29 (mmap rep.: x:13, y:29)
+MMAP loaded name:东部王国, id:0, x:32, y:31 (mmap rep.: x:32, y:31)
+MMAP loaded name:外域, id:530, x:31, y:27 (mmap rep.: x:31, y:27)
+MMAP loaded name:卡利姆多, id:1, x:45, y:38 (mmap rep.: x:45, y:38)
+MMAP loaded name:东部王国, id:0, x:58, y:31 (mmap rep.: x:58, y:31)
+Could not load MMAP name:诺森德, id:571, x:32, y:32 (mmap rep.: x:32, y:32)
+Could not load MMAP name:诺森德, id:571, x:31, y:32 (mmap rep.: x:31, y:32)
+MMAP loaded name:诺森德, id:571, x:27, y:20 (mmap rep.: x:27, y:20)
+MMAP loaded name:诺森德, id:571, x:25, y:21 (mmap rep.: x:25, y:21)
+MMAP loaded name:东部王国, id:0, x:53, y:31 (mmap rep.: x:53, y:31)
+MMAP loaded name:东部王国, id:0, x:51, y:29 (mmap rep.: x:51, y:29)
+MMAP loaded name:东部王国, id:0, x:31, y:35 (mmap rep.: x:31, y:35)
+MMAP loaded name:外域, id:530, x:38, y:30 (mmap rep.: x:38, y:30)
+MMAP loaded name:卡利姆多, id:1, x:27, y:32 (mmap rep.: x:27, y:32)
+MMAP loaded name:东部王国, id:0, x:50, y:38 (mmap rep.: x:50, y:38)
+MMAP loaded name:卡利姆多, id:1, x:27, y:28 (mmap rep.: x:27, y:28)
+MMAP loaded name:卡利姆多, id:1, x:25, y:29 (mmap rep.: x:25, y:29)
+MMAP loaded name:外域, id:530, x:37, y:18 (mmap rep.: x:37, y:18)
+MMAP loaded name:卡利姆多, id:1, x:36, y:33 (mmap rep.: x:36, y:33)
+MMAP loaded name:卡利姆多, id:1, x:35, y:31 (mmap rep.: x:35, y:31)
+MMAP loaded name:外域, id:530, x:32, y:22 (mmap rep.: x:32, y:22)
+MMAP loaded name:外域, id:530, x:37, y:23 (mmap rep.: x:37, y:23)
+MMAP loaded name:卡利姆多, id:1, x:28, y:36 (mmap rep.: x:28, y:36)
+MMAP loaded name:东部王国, id:0, x:51, y:33 (mmap rep.: x:51, y:33)
+MMAP loaded name:外域, id:530, x:36, y:22 (mmap rep.: x:36, y:22)
+MMAP loaded name:东部王国, id:0, x:49, y:35 (mmap rep.: x:49, y:35)
+MMAP loaded name:卡利姆多, id:1, x:30, y:40 (mmap rep.: x:30, y:40)
+MMAP loaded name:东部王国, id:0, x:32, y:34 (mmap rep.: x:32, y:34)
+MMAP loaded name:东部王国, id:0, x:52, y:29 (mmap rep.: x:52, y:29)
+MMAP loaded name:东部王国, id:0, x:52, y:28 (mmap rep.: x:52, y:28)
+MMAP loaded name:东部王国, id:0, x:51, y:28 (mmap rep.: x:51, y:28)
+MMAP loaded name:东部王国, id:0, x:50, y:29 (mmap rep.: x:50, y:29)
+MMAP loaded name:东部王国, id:0, x:50, y:30 (mmap rep.: x:50, y:30)
+MMAP loaded name:卡利姆多, id:1, x:26, y:37 (mmap rep.: x:26, y:37)
+MMAP loaded name:卡利姆多, id:1, x:35, y:26 (mmap rep.: x:35, y:26)
+MMAP loaded name:东部王国, id:0, x:33, y:30 (mmap rep.: x:33, y:30)
+MMAP loaded name:东部王国, id:0, x:44, y:31 (mmap rep.: x:44, y:31)
+MMAP loaded name:卡利姆多, id:1, x:38, y:37 (mmap rep.: x:38, y:37)
+MMAP loaded name:东部王国, id:0, x:29, y:35 (mmap rep.: x:29, y:35)
+MMAP loaded name:东部王国, id:0, x:30, y:35 (mmap rep.: x:30, y:35)
+MMAP loaded name:东部王国, id:0, x:43, y:30 (mmap rep.: x:43, y:30)
+MMAP loaded name:诺森德, id:571, x:29, y:42 (mmap rep.: x:29, y:42)
+MMAP loaded name:诺森德, id:571, x:27, y:21 (mmap rep.: x:27, y:21)
+MMAP loaded name:卡利姆多, id:1, x:33, y:27 (mmap rep.: x:33, y:27)
+MMAP loaded name:外域, id:530, x:32, y:28 (mmap rep.: x:32, y:28)
+MMAP loaded name:外域, id:530, x:27, y:22 (mmap rep.: x:27, y:22)
+MMAP loaded name:外域, id:530, x:38, y:21 (mmap rep.: x:38, y:21)
+MMAP loaded name:东部王国, id:0, x:41, y:37 (mmap rep.: x:41, y:37)
+MMAP loaded name:卡利姆多, id:1, x:20, y:31 (mmap rep.: x:20, y:31)
+MMAP loaded name:外域, id:530, x:33, y:22 (mmap rep.: x:33, y:22)
+MMAP loaded name:卡利姆多, id:1, x:39, y:31 (mmap rep.: x:39, y:31)
+MMAP loaded name:卡利姆多, id:1, x:46, y:39 (mmap rep.: x:46, y:39)
+MMAP loaded name:东部王国, id:0, x:27, y:42 (mmap rep.: x:27, y:42)
+MMAP loaded name:外域, id:530, x:31, y:16 (mmap rep.: x:31, y:16)
+MMAP loaded name:外域, id:530, x:36, y:16 (mmap rep.: x:36, y:16)
+MMAP loaded name:卡利姆多, id:1, x:39, y:40 (mmap rep.: x:39, y:40)
+MMAP loaded name:东部王国, id:0, x:28, y:34 (mmap rep.: x:28, y:34)
+MMAP loaded name:外域, id:530, x:30, y:17 (mmap rep.: x:30, y:17)
+MMAP loaded name:东部王国, id:0, x:34, y:35 (mmap rep.: x:34, y:35)
+MMAP loaded name:东部王国, id:0, x:54, y:31 (mmap rep.: x:54, y:31)
+MMAP loaded name:东部王国, id:0, x:41, y:32 (mmap rep.: x:41, y:32)
+MMAP loaded name:外域, id:530, x:34, y:17 (mmap rep.: x:34, y:17)
+MMAP loaded name:卡利姆多, id:1, x:21, y:32 (mmap rep.: x:21, y:32)
+MMAP loaded name:诺森德, id:571, x:30, y:40 (mmap rep.: x:30, y:40)
+MMAP loaded name:东部王国, id:0, x:28, y:30 (mmap rep.: x:28, y:30)
+MMAP loaded name:东部王国, id:0, x:34, y:32 (mmap rep.: x:34, y:32)
+MMAP loaded name:卡利姆多, id:1, x:32, y:26 (mmap rep.: x:32, y:26)
+MMAP loaded name:卡利姆多, id:1, x:19, y:35 (mmap rep.: x:19, y:35)
+MMAP loaded name:卡利姆多, id:1, x:29, y:39 (mmap rep.: x:29, y:39)
+MMAP loaded name:东部王国, id:0, x:50, y:32 (mmap rep.: x:50, y:32)
+MMAP loaded name:卡利姆多, id:1, x:27, y:37 (mmap rep.: x:27, y:37)
+MMAP loaded name:卡利姆多, id:1, x:18, y:41 (mmap rep.: x:18, y:41)
+MMAP loaded name:卡利姆多, id:1, x:19, y:41 (mmap rep.: x:19, y:41)
+MMAP loaded name:卡利姆多, id:1, x:44, y:39 (mmap rep.: x:44, y:39)
+MMAP loaded name:东部王国, id:0, x:26, y:32 (mmap rep.: x:26, y:32)
+MMAP loaded name:卡利姆多, id:1, x:41, y:25 (mmap rep.: x:41, y:25)
+MMAP loaded name:卡利姆多, id:1, x:38, y:39 (mmap rep.: x:38, y:39)
+MMAP loaded name:外域, id:530, x:31, y:24 (mmap rep.: x:31, y:24)
+MMAP loaded name:外域, id:530, x:36, y:24 (mmap rep.: x:36, y:24)
+MMAP loaded name:卡利姆多, id:1, x:33, y:39 (mmap rep.: x:33, y:39)
+MMAP loaded name:卡利姆多, id:1, x:24, y:30 (mmap rep.: x:24, y:30)
+MMAP loaded name:诺森德, id:571, x:29, y:39 (mmap rep.: x:29, y:39)
+MMAP loaded name:东部王国, id:0, x:37, y:34 (mmap rep.: x:37, y:34)
+MMAP loaded name:诺森德, id:571, x:28, y:39 (mmap rep.: x:28, y:39)
+MMAP loaded name:东部王国, id:0, x:34, y:37 (mmap rep.: x:34, y:37)
+MMAP loaded name:东部王国, id:0, x:44, y:33 (mmap rep.: x:44, y:33)
+MMAP loaded name:卡利姆多, id:1, x:33, y:26 (mmap rep.: x:33, y:26)
+MMAP loaded name:外域, id:530, x:34, y:26 (mmap rep.: x:34, y:26)
+MMAP loaded name:卡利姆多, id:1, x:33, y:37 (mmap rep.: x:33, y:37)
+MMAP loaded name:卡利姆多, id:1, x:27, y:35 (mmap rep.: x:27, y:35)
+MMAP loaded name:东部王国, id:0, x:32, y:36 (mmap rep.: x:32, y:36)
+MMAP loaded name:东部王国, id:0, x:27, y:29 (mmap rep.: x:27, y:29)
+MMAP loaded name:卡利姆多, id:1, x:48, y:40 (mmap rep.: x:48, y:40)
+MMAP loaded name:卡利姆多, id:1, x:21, y:40 (mmap rep.: x:21, y:40)
+MMAP loaded name:东部王国, id:0, x:44, y:30 (mmap rep.: x:44, y:30)
+MMAP loaded name:东部王国, id:0, x:47, y:32 (mmap rep.: x:47, y:32)
+MMAP loaded name:卡利姆多, id:1, x:32, y:31 (mmap rep.: x:32, y:31)
+MMAP loaded name:卡利姆多, id:1, x:31, y:31 (mmap rep.: x:31, y:31)
+MMAP loaded name:东部王国, id:0, x:28, y:39 (mmap rep.: x:28, y:39)
+MMAP loaded name:卡利姆多, id:1, x:36, y:34 (mmap rep.: x:36, y:34)
+MMAP loaded name:卡利姆多, id:1, x:48, y:41 (mmap rep.: x:48, y:41)
+MMAP loaded name:卡利姆多, id:1, x:37, y:33 (mmap rep.: x:37, y:33)
+Could not load MMAP name:东部王国, id:0, x:18, y:36 (mmap rep.: x:18, y:36)
+MMAP loaded name:卡利姆多, id:1, x:45, y:37 (mmap rep.: x:45, y:37)
+MMAP loaded name:卡利姆多, id:1, x:35, y:36 (mmap rep.: x:35, y:36)
+MMAP loaded name:卡利姆多, id:1, x:40, y:32 (mmap rep.: x:40, y:32)
+MMAP loaded name:东部王国, id:0, x:27, y:32 (mmap rep.: x:27, y:32)
+MMAP loaded name:东部王国, id:0, x:52, y:37 (mmap rep.: x:52, y:37)
+MMAP loaded name:卡利姆多, id:1, x:40, y:30 (mmap rep.: x:40, y:30)
+MMAP loaded name:卡利姆多, id:1, x:28, y:37 (mmap rep.: x:28, y:37)
+MMAP loaded name:卡利姆多, id:1, x:40, y:38 (mmap rep.: x:40, y:38)
+MMAP loaded name:卡利姆多, id:1, x:22, y:33 (mmap rep.: x:22, y:33)
+MMAP loaded name:诺森德, id:571, x:23, y:20 (mmap rep.: x:23, y:20)
+MMAP loaded name:卡利姆多, id:1, x:27, y:33 (mmap rep.: x:27, y:33)
+MMAP loaded name:外域, id:530, x:34, y:19 (mmap rep.: x:34, y:19)
+MMAP loaded name:东部王国, id:0, x:53, y:37 (mmap rep.: x:53, y:37)
+MMAP loaded name:东部王国, id:0, x:53, y:38 (mmap rep.: x:53, y:38)
+MMAP loaded name:卡利姆多, id:1, x:38, y:32 (mmap rep.: x:38, y:32)
+MMAP loaded name:卡利姆多, id:1, x:27, y:38 (mmap rep.: x:27, y:38)
+MMAP loaded name:卡利姆多, id:1, x:39, y:37 (mmap rep.: x:39, y:37)
+MMAP loaded name:东部王国, id:0, x:43, y:32 (mmap rep.: x:43, y:32)
+MMAP loaded name:卡利姆多, id:1, x:43, y:33 (mmap rep.: x:43, y:33)
+MMAP loaded name:外域, id:530, x:30, y:26 (mmap rep.: x:30, y:26)
+MMAP loaded name:卡利姆多, id:1, x:32, y:29 (mmap rep.: x:32, y:29)
+MMAP loaded name:东部王国, id:0, x:43, y:37 (mmap rep.: x:43, y:37)
+MMAP loaded name:东部王国, id:0, x:35, y:36 (mmap rep.: x:35, y:36)
+MMAP loaded name:卡利姆多, id:1, x:45, y:30 (mmap rep.: x:45, y:30)
+MMAP loaded name:卡利姆多, id:1, x:26, y:33 (mmap rep.: x:26, y:33)
+MMAP loaded name:卡利姆多, id:1, x:46, y:38 (mmap rep.: x:46, y:38)
+MMAP loaded name:东部王国, id:0, x:35, y:37 (mmap rep.: x:35, y:37)
+MMAP loaded name:东部王国, id:0, x:38, y:34 (mmap rep.: x:38, y:34)
+MMAP loaded name:外域, id:530, x:31, y:21 (mmap rep.: x:31, y:21)
+MMAP loaded name:东部王国, id:0, x:27, y:30 (mmap rep.: x:27, y:30)
+MMAP loaded name:外域, id:530, x:30, y:16 (mmap rep.: x:30, y:16)
+MMAP loaded name:卡利姆多, id:1, x:41, y:26 (mmap rep.: x:41, y:26)
+MMAP loaded name:卡利姆多, id:1, x:45, y:40 (mmap rep.: x:45, y:40)
+MMAP loaded name:诺森德, id:571, x:24, y:18 (mmap rep.: x:24, y:18)
+MMAP loaded name:卡利姆多, id:1, x:29, y:30 (mmap rep.: x:29, y:30)
+MMAP loaded name:卡利姆多, id:1, x:25, y:31 (mmap rep.: x:25, y:31)
+MMAP loaded name:东部王国, id:0, x:50, y:37 (mmap rep.: x:50, y:37)
+MMAP loaded name:卡利姆多, id:1, x:22, y:41 (mmap rep.: x:22, y:41)
+MMAP loaded name:卡利姆多, id:1, x:32, y:30 (mmap rep.: x:32, y:30)
+MMAP loaded name:卡利姆多, id:1, x:47, y:40 (mmap rep.: x:47, y:40)
+MMAP loaded name:诺森德, id:571, x:27, y:39 (mmap rep.: x:27, y:39)
+MMAP loaded name:东部王国, id:0, x:48, y:36 (mmap rep.: x:48, y:36)
+MMAP loaded name:东部王国, id:0, x:55, y:32 (mmap rep.: x:55, y:32)
+MMAP loaded name:东部王国, id:0, x:30, y:30 (mmap rep.: x:30, y:30)
+MMAP loaded name:卡利姆多, id:1, x:32, y:39 (mmap rep.: x:32, y:39)
+MMAP loaded name:诺森德, id:571, x:29, y:40 (mmap rep.: x:29, y:40)
+MMAP loaded name:东部王国, id:0, x:35, y:35 (mmap rep.: x:35, y:35)
+MMAP loaded name:卡利姆多, id:1, x:19, y:39 (mmap rep.: x:19, y:39)
+MMAP loaded name:卡利姆多, id:1, x:39, y:32 (mmap rep.: x:39, y:32)
+MMAP loaded name:东部王国, id:0, x:58, y:30 (mmap rep.: x:58, y:30)
+MMAP loaded name:卡利姆多, id:1, x:20, y:41 (mmap rep.: x:20, y:41)
+MMAP loaded name:卡利姆多, id:1, x:31, y:33 (mmap rep.: x:31, y:33)
+MMAP loaded name:卡利姆多, id:1, x:18, y:35 (mmap rep.: x:18, y:35)
+MMAP loaded name:卡利姆多, id:1, x:32, y:35 (mmap rep.: x:32, y:35)
+MMAP loaded name:诺森德, id:571, x:25, y:23 (mmap rep.: x:25, y:23)
+MMAP loaded name:外域, id:530, x:38, y:27 (mmap rep.: x:38, y:27)
+MMAP loaded name:卡利姆多, id:1, x:38, y:33 (mmap rep.: x:38, y:33)
+MMAP loaded name:卡利姆多, id:1, x:44, y:34 (mmap rep.: x:44, y:34)
+MMAP loaded name:卡利姆多, id:1, x:40, y:34 (mmap rep.: x:40, y:34)
+MMAP loaded name:卡利姆多, id:1, x:12, y:29 (mmap rep.: x:12, y:29)
+MMAP loaded name:诺森德, id:571, x:26, y:23 (mmap rep.: x:26, y:23)
+MMAP loaded name:卡利姆多, id:1, x:34, y:38 (mmap rep.: x:34, y:38)
+MMAP loaded name:卡利姆多, id:1, x:20, y:40 (mmap rep.: x:20, y:40)
+MMAP loaded name:卡利姆多, id:1, x:44, y:40 (mmap rep.: x:44, y:40)
+MMAP loaded name:东部王国, id:0, x:46, y:37 (mmap rep.: x:46, y:37)
+MMAP loaded name:卡利姆多, id:1, x:21, y:41 (mmap rep.: x:21, y:41)
+MMAP loaded name:外域, id:530, x:32, y:17 (mmap rep.: x:32, y:17)
+MMAP loaded name:东部王国, id:0, x:34, y:31 (mmap rep.: x:34, y:31)
+MMAP loaded name:外域, id:530, x:28, y:18 (mmap rep.: x:28, y:18)
+MMAP loaded name:卡利姆多, id:1, x:41, y:30 (mmap rep.: x:41, y:30)
+MMAP loaded name:东部王国, id:0, x:31, y:37 (mmap rep.: x:31, y:37)
+MMAP loaded name:东部王国, id:0, x:31, y:34 (mmap rep.: x:31, y:34)
+MMAP loaded name:诺森德, id:571, x:25, y:22 (mmap rep.: x:25, y:22)
+MMAP loaded name:卡利姆多, id:1, x:34, y:37 (mmap rep.: x:34, y:37)
+MMAP loaded name:卡利姆多, id:1, x:25, y:34 (mmap rep.: x:25, y:34)
+MMAP loaded name:卡利姆多, id:1, x:30, y:39 (mmap rep.: x:30, y:39)
+MMAP loaded name:东部王国, id:0, x:42, y:33 (mmap rep.: x:42, y:33)
+MMAP loaded name:卡利姆多, id:1, x:32, y:38 (mmap rep.: x:32, y:38)
+MMAP loaded name:卡利姆多, id:1, x:31, y:30 (mmap rep.: x:31, y:30)
+MMAP loaded name:外域, id:530, x:39, y:30 (mmap rep.: x:39, y:30)
+MMAP loaded name:外域, id:530, x:37, y:26 (mmap rep.: x:37, y:26)
+MMAP loaded name:东部王国, id:0, x:47, y:33 (mmap rep.: x:47, y:33)
+MMAP loaded name:外域, id:530, x:27, y:21 (mmap rep.: x:27, y:21)
+MMAP loaded name:卡利姆多, id:1, x:35, y:27 (mmap rep.: x:35, y:27)
+MMAP loaded name:外域, id:530, x:38, y:29 (mmap rep.: x:38, y:29)
+MMAP loaded name:外域, id:530, x:38, y:28 (mmap rep.: x:38, y:28)
+MMAP loaded name:卡利姆多, id:1, x:44, y:31 (mmap rep.: x:44, y:31)
+MMAP loaded name:外域, id:530, x:35, y:19 (mmap rep.: x:35, y:19)
+MMAP loaded name:卡利姆多, id:1, x:21, y:33 (mmap rep.: x:21, y:33)
+MMAP loaded name:卡利姆多, id:1, x:44, y:33 (mmap rep.: x:44, y:33)
+MMAP loaded name:东部王国, id:0, x:42, y:36 (mmap rep.: x:42, y:36)
+MMAP loaded name:东部王国, id:0, x:54, y:32 (mmap rep.: x:54, y:32)
+MMAP loaded name:东部王国, id:0, x:43, y:39 (mmap rep.: x:43, y:39)
+MMAP loaded name:东部王国, id:0, x:32, y:41 (mmap rep.: x:32, y:41)
+MMAP loaded name:东部王国, id:0, x:43, y:33 (mmap rep.: x:43, y:33)
+MMAP loaded name:诺森德, id:571, x:29, y:41 (mmap rep.: x:29, y:41)
+MMAP loaded name:东部王国, id:0, x:34, y:39 (mmap rep.: x:34, y:39)
+MMAP loaded name:东部王国, id:0, x:28, y:37 (mmap rep.: x:28, y:37)
+MMAP loaded name:卡利姆多, id:1, x:32, y:33 (mmap rep.: x:32, y:33)
+MMAP loaded name:卡利姆多, id:1, x:33, y:31 (mmap rep.: x:33, y:31)
+MMAP loaded name:东部王国, id:0, x:29, y:29 (mmap rep.: x:29, y:29)
+MMAP loaded name:卡利姆多, id:1, x:37, y:35 (mmap rep.: x:37, y:35)
+MMAP loaded name:东部王国, id:0, x:47, y:35 (mmap rep.: x:47, y:35)
+MMAP loaded name:外域, id:530, x:33, y:17 (mmap rep.: x:33, y:17)
+MMAP loaded name:东部王国, id:0, x:51, y:39 (mmap rep.: x:51, y:39)
+MMAP loaded name:诺森德, id:571, x:30, y:39 (mmap rep.: x:30, y:39)
+MMAP loaded name:卡利姆多, id:1, x:12, y:28 (mmap rep.: x:12, y:28)
+MMAP loaded name:诺森德, id:571, x:24, y:21 (mmap rep.: x:24, y:21)
+MMAP loaded name:卡利姆多, id:1, x:28, y:40 (mmap rep.: x:28, y:40)
+MMAP loaded name:卡利姆多, id:1, x:37, y:39 (mmap rep.: x:37, y:39)
+MMAP loaded name:卡利姆多, id:1, x:25, y:41 (mmap rep.: x:25, y:41)
+MMAP loaded name:卡利姆多, id:1, x:20, y:30 (mmap rep.: x:20, y:30)
+MMAP loaded name:卡利姆多, id:1, x:26, y:40 (mmap rep.: x:26, y:40)
+MMAP loaded name:外域, id:530, x:25, y:20 (mmap rep.: x:25, y:20)
+MMAP loaded name:外域, id:530, x:35, y:18 (mmap rep.: x:35, y:18)
+MMAP loaded name:东部王国, id:0, x:32, y:30 (mmap rep.: x:32, y:30)
+MMAP loaded name:卡利姆多, id:1, x:28, y:35 (mmap rep.: x:28, y:35)
+MMAP loaded name:卡利姆多, id:1, x:39, y:41 (mmap rep.: x:39, y:41)
+MMAP loaded name:外域, id:530, x:31, y:22 (mmap rep.: x:31, y:22)
+MMAP loaded name:卡利姆多, id:1, x:46, y:40 (mmap rep.: x:46, y:40)
+MMAP loaded name:外域, id:530, x:29, y:19 (mmap rep.: x:29, y:19)
+MMAP loaded name:诺森德, id:571, x:30, y:42 (mmap rep.: x:30, y:42)
+MMAP loaded name:东部王国, id:0, x:37, y:36 (mmap rep.: x:37, y:36)
+MMAP loaded name:卡利姆多, id:1, x:45, y:31 (mmap rep.: x:45, y:31)
+MMAP loaded name:卡利姆多, id:1, x:43, y:30 (mmap rep.: x:43, y:30)
+MMAP loaded name:东部王国, id:0, x:43, y:36 (mmap rep.: x:43, y:36)
+MMAP loaded name:东部王国, id:0, x:33, y:37 (mmap rep.: x:33, y:37)
+MMAP loaded name:卡利姆多, id:1, x:41, y:36 (mmap rep.: x:41, y:36)
+MMAP loaded name:外域, id:530, x:40, y:29 (mmap rep.: x:40, y:29)
+MMAP loaded name:卡利姆多, id:1, x:32, y:28 (mmap rep.: x:32, y:28)
+MMAP loaded name:东部王国, id:0, x:50, y:35 (mmap rep.: x:50, y:35)
+MMAP loaded name:卡利姆多, id:1, x:23, y:40 (mmap rep.: x:23, y:40)
+MMAP loaded name:外域, id:530, x:34, y:15 (mmap rep.: x:34, y:15)
+MMAP loaded name:东部王国, id:0, x:33, y:36 (mmap rep.: x:33, y:36)
+MMAP loaded name:外域, id:530, x:32, y:24 (mmap rep.: x:32, y:24)
+MMAP loaded name:卡利姆多, id:1, x:20, y:29 (mmap rep.: x:20, y:29)
+MMAP loaded name:卡利姆多, id:1, x:31, y:35 (mmap rep.: x:31, y:35)
+MMAP loaded name:东部王国, id:0, x:26, y:41 (mmap rep.: x:26, y:41)
+MMAP loaded name:东部王国, id:0, x:41, y:39 (mmap rep.: x:41, y:39)
+MMAP loaded name:卡利姆多, id:1, x:44, y:37 (mmap rep.: x:44, y:37)
+MMAP loaded name:外域, id:530, x:26, y:22 (mmap rep.: x:26, y:22)
+MMAP loaded name:诺森德, id:571, x:27, y:23 (mmap rep.: x:27, y:23)
+MMAP loaded name:东部王国, id:0, x:30, y:33 (mmap rep.: x:30, y:33)
+MMAP loaded name:卡利姆多, id:1, x:26, y:31 (mmap rep.: x:26, y:31)
+MMAP loaded name:诺森德, id:571, x:32, y:42 (mmap rep.: x:32, y:42)
+MMAP loaded name:卡利姆多, id:1, x:19, y:29 (mmap rep.: x:19, y:29)
+MMAP loaded name:东部王国, id:0, x:44, y:37 (mmap rep.: x:44, y:37)
+MMAP loaded name:东部王国, id:0, x:41, y:38 (mmap rep.: x:41, y:38)
+MMAP loaded name:卡利姆多, id:1, x:46, y:30 (mmap rep.: x:46, y:30)
+MMAP loaded name:卡利姆多, id:1, x:45, y:29 (mmap rep.: x:45, y:29)
+MMAP loaded name:诺森德, id:571, x:26, y:21 (mmap rep.: x:26, y:21)
+MMAP loaded name:东部王国, id:0, x:28, y:32 (mmap rep.: x:28, y:32)
+MMAP loaded name:东部王国, id:0, x:42, y:31 (mmap rep.: x:42, y:31)
+MMAP loaded name:卡利姆多, id:1, x:35, y:39 (mmap rep.: x:35, y:39)
+MMAP loaded name:外域, id:530, x:27, y:25 (mmap rep.: x:27, y:25)
+MMAP loaded name:东部王国, id:0, x:40, y:37 (mmap rep.: x:40, y:37)
+MMAP loaded name:东部王国, id:0, x:49, y:30 (mmap rep.: x:49, y:30)
+MMAP loaded name:卡利姆多, id:1, x:44, y:29 (mmap rep.: x:44, y:29)
+MMAP loaded name:卡利姆多, id:1, x:33, y:28 (mmap rep.: x:33, y:28)
+MMAP loaded name:卡利姆多, id:1, x:40, y:26 (mmap rep.: x:40, y:26)
+MMAP loaded name:卡利姆多, id:1, x:27, y:31 (mmap rep.: x:27, y:31)
+MMAP loaded name:卡利姆多, id:1, x:43, y:29 (mmap rep.: x:43, y:29)
+MMAP loaded name:东部王国, id:0, x:41, y:36 (mmap rep.: x:41, y:36)
+MMAP loaded name:卡利姆多, id:1, x:31, y:40 (mmap rep.: x:31, y:40)
+MMAP loaded name:东部王国, id:0, x:31, y:40 (mmap rep.: x:31, y:40)
+MMAP loaded name:卡利姆多, id:1, x:46, y:29 (mmap rep.: x:46, y:29)
+MMAP loaded name:东部王国, id:0, x:32, y:29 (mmap rep.: x:32, y:29)
+MMAP loaded name:东部王国, id:0, x:28, y:36 (mmap rep.: x:28, y:36)
+Could not load MMAP name:诺森德, id:571, x:32, y:31 (mmap rep.: x:32, y:31)
+Could not load MMAP name:诺森德, id:571, x:31, y:31 (mmap rep.: x:31, y:31)
+MMAP loaded name:东部王国, id:0, x:51, y:31 (mmap rep.: x:51, y:31)
+MMAP loaded name:东部王国, id:0, x:46, y:34 (mmap rep.: x:46, y:34)
+MMAP loaded name:卡利姆多, id:1, x:32, y:34 (mmap rep.: x:32, y:34)
+MMAP loaded name:外域, id:530, x:25, y:25 (mmap rep.: x:25, y:25)
+MMAP loaded name:外域, id:530, x:31, y:28 (mmap rep.: x:31, y:28)
+MMAP loaded name:东部王国, id:0, x:50, y:33 (mmap rep.: x:50, y:33)
+MMAP loaded name:卡利姆多, id:1, x:41, y:34 (mmap rep.: x:41, y:34)
+MMAP loaded name:卡利姆多, id:1, x:41, y:33 (mmap rep.: x:41, y:33)
+MMAP loaded name:卡利姆多, id:1, x:29, y:36 (mmap rep.: x:29, y:36)
+MMAP loaded name:卡利姆多, id:1, x:26, y:30 (mmap rep.: x:26, y:30)
+MMAP loaded name:外域, id:530, x:25, y:22 (mmap rep.: x:25, y:22)
+MMAP loaded name:东部王国, id:0, x:50, y:36 (mmap rep.: x:50, y:36)
+MMAP loaded name:卡利姆多, id:1, x:44, y:38 (mmap rep.: x:44, y:38)
+MMAP loaded name:东部王国, id:0, x:28, y:40 (mmap rep.: x:28, y:40)
+MMAP loaded name:东部王国, id:0, x:31, y:30 (mmap rep.: x:31, y:30)
+MMAP loaded name:卡利姆多, id:1, x:19, y:36 (mmap rep.: x:19, y:36)
+MMAP loaded name:东部王国, id:0, x:49, y:37 (mmap rep.: x:49, y:37)
+MMAP loaded name:外域, id:530, x:34, y:25 (mmap rep.: x:34, y:25)
+MMAP loaded name:东部王国, id:0, x:29, y:30 (mmap rep.: x:29, y:30)
+MMAP loaded name:卡利姆多, id:1, x:24, y:33 (mmap rep.: x:24, y:33)
+MMAP loaded name:卡利姆多, id:1, x:14, y:28 (mmap rep.: x:14, y:28)
+MMAP loaded name:东部王国, id:0, x:60, y:31 (mmap rep.: x:60, y:31)
+MMAP loaded name:东部王国, id:0, x:27, y:40 (mmap rep.: x:27, y:40)
+MMAP loaded name:外域, id:530, x:37, y:29 (mmap rep.: x:37, y:29)
+MMAP loaded name:外域, id:530, x:38, y:23 (mmap rep.: x:38, y:23)
+MMAP loaded name:卡利姆多, id:1, x:18, y:30 (mmap rep.: x:18, y:30)
+MMAP loaded name:东部王国, id:0, x:38, y:35 (mmap rep.: x:38, y:35)
+MMAP loaded name:外域, id:530, x:35, y:17 (mmap rep.: x:35, y:17)
+MMAP loaded name:卡利姆多, id:1, x:35, y:37 (mmap rep.: x:35, y:37)
+MMAP loaded name:卡利姆多, id:1, x:31, y:38 (mmap rep.: x:31, y:38)
+MMAP loaded name:卡利姆多, id:1, x:46, y:37 (mmap rep.: x:46, y:37)
+MMAP loaded name:东部王国, id:0, x:52, y:39 (mmap rep.: x:52, y:39)
+MMAP loaded name:卡利姆多, id:1, x:20, y:39 (mmap rep.: x:20, y:39)
+MMAP loaded name:诺森德, id:571, x:27, y:38 (mmap rep.: x:27, y:38)
+MMAP loaded name:卡利姆多, id:1, x:45, y:28 (mmap rep.: x:45, y:28)
+MMAP loaded name:卡利姆多, id:1, x:17, y:41 (mmap rep.: x:17, y:41)
+MMAP loaded name:东部王国, id:0, x:30, y:28 (mmap rep.: x:30, y:28)
+MMAP loaded name:东部王国, id:0, x:32, y:39 (mmap rep.: x:32, y:39)
+MMAP loaded name:外域, id:530, x:26, y:26 (mmap rep.: x:26, y:26)
+MMAP loaded name:东部王国, id:0, x:47, y:36 (mmap rep.: x:47, y:36)
+MMAP loaded name:东部王国, id:0, x:37, y:33 (mmap rep.: x:37, y:33)
+MMAP loaded name:东部王国, id:0, x:33, y:35 (mmap rep.: x:33, y:35)
+MMAP loaded name:卡利姆多, id:1, x:40, y:36 (mmap rep.: x:40, y:36)
+MMAP loaded name:卡利姆多, id:1, x:31, y:39 (mmap rep.: x:31, y:39)
+MMAP loaded name:卡利姆多, id:1, x:24, y:41 (mmap rep.: x:24, y:41)
+MMAP loaded name:东部王国, id:0, x:26, y:40 (mmap rep.: x:26, y:40)
+MMAP loaded name:外域, id:530, x:40, y:28 (mmap rep.: x:40, y:28)
+MMAP loaded name:卡利姆多, id:1, x:39, y:33 (mmap rep.: x:39, y:33)
+MMAP loaded name:外域, id:530, x:27, y:19 (mmap rep.: x:27, y:19)

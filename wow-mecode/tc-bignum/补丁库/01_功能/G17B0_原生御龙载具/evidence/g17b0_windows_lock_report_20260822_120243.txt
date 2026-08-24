@@ -1,0 +1,226 @@
+G17B0_LOCK_SCHEMA=1
+SOURCE_ROOT=D:\TrinityCore
+PROBE_TIME_LOCAL=2026-08-22T12:02:43.632900+08:00
+
+--- GIT_BRANCH ---
+RC=0
+bignum-mod
+
+--- GIT_HEAD ---
+RC=0
+ae60f5b6f6ffe9a0426dfeb6e227712de7d6c8b7
+
+--- GIT_STATUS_SHORT ---
+RC=0
+ M src/server/game/AI/NpcBots/bot_ai.cpp
+ M src/server/game/AI/NpcBots/bot_ai.h
+ M src/server/game/AI/NpcBots/botcommands.cpp
+ M src/server/game/AI/NpcBots/botcommon.h
+ M src/server/game/AI/NpcBots/botconfig.cpp
+ M src/server/game/AI/NpcBots/botconfig.h
+ M src/server/game/AI/NpcBots/botdatamgr.cpp
+ M src/server/game/AI/NpcBots/botgossip.h
+ M src/server/game/AI/NpcBots/botmgr.cpp
+ M src/server/game/AI/NpcBots/bottext.h
+ M src/server/game/AI/NpcBots/bpet_ai.cpp
+ M src/server/game/AI/NpcBots/bpet_ai.h
+ M src/server/game/Accounts/RBAC.h
+ M src/server/game/Chat/ChatCommands/ChatCommand.cpp
+ M src/server/game/Entities/Player/Player.cpp
+ M src/server/game/Entities/Unit/Unit.cpp
+ M src/server/game/Entities/Unit/Unit.h
+ M src/server/game/Globals/ObjectMgr.cpp
+ M src/server/game/Groups/Group.cpp
+ M src/server/game/Handlers/GroupHandler.cpp
+ M src/server/game/Handlers/LootHandler.cpp
+ M src/server/game/Handlers/PetitionsHandler.cpp
+ M src/server/game/Handlers/TradeHandler.cpp
+ M src/server/game/Maps/Map.cpp
+ M src/server/game/Server/WorldSession.cpp
+ M src/server/game/Server/WorldSession.h
+ M src/server/game/Spells/SpellEffects.cpp
+ M src/server/game/Spells/SpellInfo.cpp
+ M src/server/game/World/World.cpp
+ M src/server/game/World/World.h
+ M src/server/scripts/Commands/cs_gearset.cpp
+ M src/server/scripts/Commands/cs_modify.cpp
+ M src/server/scripts/Commands/cs_script_loader.cpp
+ M src/server/scripts/ScriptLoader.h
+?? src/server/game/AI/NpcBots/bot_companion.cpp
+?? src/server/game/AI/NpcBots/bot_companion.h
+?? src/server/game/Custom/
+?? src/server/game/Entities/Player/CustomStatPersist.cpp
+?? src/server/game/Entities/Player/CustomStatPersist.h
+?? src/server/game/Spells/CustomSpellTweak.cpp
+?? src/server/game/Spells/CustomSpellTweak.h
+?? src/server/scripts/Commands/CombatSpecData.cpp
+?? src/server/scripts/Commands/CombatSpecData.h
+?? src/server/scripts/Commands/cs_appearance.cpp
+?? src/server/scripts/Commands/cs_botdiag.cpp
+?? src/server/scripts/Commands/cs_botfind.cpp
+?? src/server/scripts/Commands/cs_botpersist.cpp
+?? src/server/scripts/Commands/cs_botrename.cpp
+?? src/server/scripts/Commands/cs_combathelper.cpp
+?? src/server/scripts/Commands/cs_dummy.cpp
+?? src/server/scripts/Commands/cs_emote.cpp
+?? src/server/scripts/Commands/cs_gmhelper.cpp
+?? src/server/scripts/Commands/cs_itemforge.cpp
+?? src/server/scripts/Commands/cs_modelfind.cpp
+?? src/server/scripts/Commands/cs_npcstate.cpp
+?? src/server/scripts/Commands/cs_playerbot.cpp
+?? src/server/scripts/Commands/cs_reloaditem.cpp
+?? src/server/scripts/Commands/cs_say.cpp
+?? src/server/scripts/Commands/cs_scene.cpp
+?? src/server/scripts/Commands/cs_spellclean.cpp
+?? src/server/scripts/Commands/cs_worldtools.cpp
+?? src/server/scripts/Commands/pbot_autoaccept.cpp
+?? src/server/scripts/Commands/pbot_autoaccept.h
+?? src/server/scripts/Custom/statpersist_hook.cpp
+
+--- LOADER_DIFF_AGAINST_HEAD ---
+RC=0
+diff --git a/src/server/scripts/Commands/cs_script_loader.cpp b/src/server/scripts/Commands/cs_script_loader.cpp
+index ae18fbe57e..2f89b9d6da 100644
+--- a/src/server/scripts/Commands/cs_script_loader.cpp
++++ b/src/server/scripts/Commands/cs_script_loader.cpp
+@@ -32,19 +32,41 @@ void AddSC_disable_commandscript();
+ void AddSC_event_commandscript();
+ void AddSC_gm_commandscript();
+ void AddSC_go_commandscript();
++void AddSC_dummy_commandscript();
++void AddSC_worldtools_commandscript();
+ void AddSC_gobject_commandscript();
++void AddSC_npcstate_commandscript();
++void AddSC_scene_commandscript();
+ void AddSC_group_commandscript();
+ void AddSC_guild_commandscript();
++void AddSC_statpersist_hook();
++void AddSC_appearance_commandscript();
++void AddSC_botdiag_commandscript();
++void AddSC_botfind_commandscript();
++void AddSC_modelfind_commandscript();
++void AddSC_wp_commandscript();
++void AddSC_botrename_commandscript();
++void AddSC_botpersist_commandscript();     // step49 游荡bot永久化
++void AddSC_pbot_autoaccept();
+ void AddSC_honor_commandscript();
+ void AddSC_instance_commandscript();
++void AddSC_playerbot_commandscript();
+ void AddSC_learn_commandscript();
+ void AddSC_lfg_commandscript();
++void AddSC_emote_commandscript();
++void AddSC_say_commandscript();
+ void AddSC_list_commandscript();
+ void AddSC_lookup_commandscript();
++void AddSC_combathelper_commandscript();
+ void AddSC_message_commandscript();
+ void AddSC_misc_commandscript();
+ void AddSC_mmaps_commandscript();
+ void AddSC_modify_commandscript();
++void AddSC_itemforge_commandscript();
++void AddSC_transmog_commandscript();
++void AddSC_spellclean_commandscript();
++void AddSC_reloaditem_commandscript();
++void AddSC_gmhelper_commandscript();
+ void AddSC_gearset_commandscript();
+ void AddSC_smartadd_commandscript();
+ void AddSC_npc_commandscript();
+@@ -58,7 +80,6 @@ void AddSC_server_commandscript();
+ void AddSC_tele_commandscript();
+ void AddSC_ticket_commandscript();
+ void AddSC_titles_commandscript();
+-void AddSC_wp_commandscript();
+ 
+ // The name of this function should match:
+ // void Add${NameOfDirectory}Scripts()
+@@ -75,18 +96,40 @@ void AddCommandsScripts()
+     AddSC_character_commandscript();
+     AddSC_cheat_commandscript();
+     AddSC_debug_commandscript();
++    AddSC_playerbot_commandscript();
++    AddSC_wp_commandscript();
++    AddSC_botrename_commandscript();
++    AddSC_botpersist_commandscript();      // step49 游荡bot永久化
++    AddSC_pbot_autoaccept();           // step42 PlayerBot自动接受
+     AddSC_deserter_commandscript();
++    AddSC_botfind_commandscript();
++    AddSC_modelfind_commandscript();
++    AddSC_botdiag_commandscript();
+     AddSC_disable_commandscript();
++    AddSC_say_commandscript();
++    AddSC_appearance_commandscript();
++    AddSC_worldtools_commandscript();
+     AddSC_event_commandscript();
+     AddSC_gm_commandscript();
+     AddSC_go_commandscript();
++    AddSC_emote_commandscript();
+     AddSC_gobject_commandscript();
+     AddSC_group_commandscript();
++    AddSC_npcstate_commandscript();
++    AddSC_scene_commandscript();
+     AddSC_guild_commandscript();
++    AddSC_statpersist_hook();
++    AddSC_dummy_commandscript();
+     AddSC_honor_commandscript();
++    AddSC_combathelper_commandscript();
+     AddSC_instance_commandscript();
+     AddSC_learn_commandscript();
++    AddSC_itemforge_commandscript();
+     AddSC_lookup_commandscript();
++    AddSC_transmog_commandscript();
++    AddSC_spellclean_commandscript();
++    AddSC_reloaditem_commandscript();
++    AddSC_gmhelper_commandscript();
+     AddSC_lfg_commandscript();
+     AddSC_list_commandscript();
+     AddSC_message_commandscript();
+@@ -106,5 +149,4 @@ void AddCommandsScripts()
+     AddSC_tele_commandscript();
+     AddSC_ticket_commandscript();
+     AddSC_titles_commandscript();
+-    AddSC_wp_commandscript();
+ }
+diff --git a/src/server/scripts/ScriptLoader.h b/src/server/scripts/ScriptLoader.h
+index b6b12065a1..7ef3cb8e1a 100644
+--- a/src/server/scripts/ScriptLoader.h
++++ b/src/server/scripts/ScriptLoader.h
+@@ -19,5 +19,10 @@
+ #define SC_SCRIPTLOADER_H
+ 
+ void AddScripts();
++void AddSC_emote_commandscript();
++void AddSC_say_commandscript();
++void AddSC_botfind_commandscript();
++void AddSC_botdiag_commandscript();
++void AddSC_playerbot_commandscript();
+ 
+ #endif
+FILE=src/server/scripts/Commands/cs_script_loader.cpp;SIZE=5589;SHA256=2a4895a32532f3c6c2c6dc3096fced4bff6d53c39dd3787bd81a76653d42f3f7;BOM=False;EOL=CRLF
+FILE=src/server/scripts/ScriptLoader.h;SIZE=1031;SHA256=6b617f0aafa6218a618e10bbff49b054991406e7ee195c12c744423418f6a0ee;BOM=False;EOL=CRLF
+FILE=src/server/scripts/CMakeLists.txt;SIZE=9923;SHA256=fdf785cdc99e125ee0dd7cffd4c924c6343f88924cd79e3c8d0f78d6b6bbbfbe;BOM=False;EOL=CRLF
+FILE=src/server/game/AI/CoreAI/CombatAI.h;SIZE=3663;SHA256=43b5650727ab7978cf7091498237acba54506571e815e947395df3243ba5780f;BOM=False;EOL=CRLF
+FILE=src/server/game/Scripting/ScriptMgr.h;SIZE=44641;SHA256=60c4dda3bc2753fdbdbc951ce417d14016d56c8b0e3521d388d80dba8276e6d3;BOM=False;EOL=CRLF
+FILE=src/server/game/Entities/Unit/Unit.h;SIZE=106442;SHA256=aaf9e8348ace53c5944e95b6a0e7ae02fd0f376bf5af709eedd3f864b340cfff;BOM=False;EOL=CRLF
+FILE=src/server/game/Maps/Map.h;SIZE=44138;SHA256=e5a731410d2b21fb614aed6a79b4bce29449ac1608593e68de102ff8c58bd65b;BOM=False;EOL=CRLF
+FILE=sql/base/dev/world_database.sql;SIZE=208925;SHA256=f766eac917bcbc1483f6f875b13733b54415ddcf11a45f4ff9e12684f646ea00;BOM=False;EOL=CRLF
+TARGET_NEW=src/server/scripts/Commands/cs_dragonriding.cpp;STATE=ABSENT;COPIED=False
+ANCHOR=loader_decl_wp;COUNT=1;NEEDLE=void AddSC_wp_commandscript();
+ANCHOR=loader_call_wp;COUNT=1;NEEDLE=    AddSC_wp_commandscript();
+ANCHOR=loader_decl_g17b0;COUNT=0;NEEDLE=void AddSC_dragonriding_commandscript();
+ANCHOR=loader_call_g17b0;COUNT=0;NEEDLE=    AddSC_dragonriding_commandscript();
+ANCHOR=vehicle_ai;COUNT=1;NEEDLE=struct TC_GAME_API VehicleAI
+ANCHOR=player_map_hook;COUNT=1;NEEDLE=virtual void OnMapChanged(Player* player);
+ANCHOR=player_zone_hook;COUNT=1;NEEDLE=virtual void OnUpdateZone(Player* player, uint32 newZone, uint32 newArea);
+ANCHOR=enter_vehicle;COUNT=1;NEEDLE=void EnterVehicle(Unit* base, int8 seatId = -1);
+ANCHOR=map_dungeon;COUNT=1;NEEDLE=bool IsDungeon() const;
+ANCHOR=map_bg_arena;COUNT=1;NEEDLE=bool IsBattlegroundOrArena() const;
+ANCHOR=db_creature_template;COUNT=1;NEEDLE=CREATE TABLE `creature_template`
+ANCHOR=db_creature_spell;COUNT=1;NEEDLE=CREATE TABLE `creature_template_spell`
+ANCHOR=db_creature_movement;COUNT=1;NEEDLE=CREATE TABLE `creature_template_movement`
+ANCHOR=db_spell_scripts;COUNT=1;NEEDLE=CREATE TABLE `spell_script_names`
+G17B0_LOADER_STATE=PRE
+G17B0_LOADER_WP_ANCHORS_READY=True
+G17B0_NEW_SOURCE_ABSENT=True
+G17B0_LIVE_DB_NOT_QUERIED=True
+G17B0_PROBE_WRITES_SOURCE=False
+G17B0_NARROW_SOURCE_LOCK_READY=True

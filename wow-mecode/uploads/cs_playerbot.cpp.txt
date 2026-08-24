@@ -1,0 +1,1345 @@
+/*
+ * ============================================================================
+ *  step40  .pbot ?? ?? Player ? Bot??1??????????
+ * ============================================================================
+ *
+ *  ??????TrinityCore ???????????? Player ???
+ *
+ *  ??????????????????
+ *
+ *    WorldSession.h:495   ????? std::shared_ptr<WorldSocket>??? nullptr
+ *    WorldSession.h:503   bool PlayerDisconnected() const { return !m_Socket; }
+ *                         -> ????????"?socket??"????
+ *    WorldSession.cpp:211 void WorldSession::SendPacket(...)
+ *                         { if (!m_Socket) return; }
+ *                         -> ??????????
+ *
+ *  ?????????? + ?? Player ?? = ?????????????? bot?
+ *  ??? playerbot ????
+ *
+ *  ????????
+ *
+ *    ?1  LoginQueryHolder ??? CharacterHandler.cpp:58????????
+ *         -> ???????????? HandlePlayerLogin()
+ *         -> ????? CMSG_PLAYER_LOGIN ?? QueuePacket()??????
+ *
+ *    ?2  _legitCharacters ????WorldSession.h:1285?
+ *         ???????????????bot ???? -> ???? -> ????
+ *         -> ???? WorldSession ??? public ? AddLegitCharacter()
+ *
+ *    ?3  WorldSession.cpp:298  m_Socket->CloseSocket();   ?????
+ *         IsConnectionIdle() ???? -> ?????
+ *         -> ?????? SEC_ADMINISTRATOR?
+ *            HasPermission(RBAC_PERM_IGNORE_IDLE_CONNECTION) ???????
+ *
+ *  ??????
+ *    - ??????ID/??GUID????????
+ *    - SQL ???? {} ?? %u
+ *    - ? API ???????
+ *
+ *  ???rbac::RBAC_PERM_COMMAND_WORLDTOOLS?step21 ?? = 71012?
+ * ============================================================================
+ */
+
+#include "pbot_autoaccept.h"    // step42: PBotEntry / PBotAutoFlags / g_pbots
+
+#include "ScriptMgr.h"
+#include "Chat.h"
+#include "Common.h"             // AccountTypes / SEC_ADMINISTRATOR (common/Common.h:38,43)
+#include "DatabaseEnv.h"
+#include "Duration.h"           // Minutes (common/Utilities/Duration.h:30)
+#include "Group.h"              // Group::IsMember / IsLeader / ChangeLeader / AddMember
+#include "GroupMgr.h"           // sGroupMgr->AddGroup (invite ??????)
+#include "Map.h"                // Map::IsDungeon / IsBattlegroundOrArena / GetInstanceId
+#include "MotionMaster.h"       // MoveFollow / MoveIdle
+#include "ObjectAccessor.h"
+#include "ObjectGuid.h"
+#include "ObjectMgr.h"
+#include "Opcodes.h"            // CMSG_PLAYER_LOGIN (Opcodes.h:90)
+#include "Player.h"
+#include "RBAC.h"
+#include "World.h"
+#include "WorldPacket.h"
+#include "WorldSession.h"
+
+#include <cstdio>
+#include <string>
+#include <vector>
+
+// ============================================================================
+//  ???
+// ============================================================================
+static std::vector<std::string> Tok(char const* args)
+{
+    std::vector<std::string> out;
+    if (!args)
+        return out;
+    std::string s(args);
+    size_t i = 0;
+    while (i < s.size())
+    {
+        while (i < s.size() && (s[i] == ' ' || s[i] == '\t'))
+            ++i;
+        if (i >= s.size())
+            break;
+        size_t j = i;
+        while (j < s.size() && s[j] != ' ' && s[j] != '\t')
+            ++j;
+        out.push_back(s.substr(i, j - i));
+        i = j;
+    }
+    return out;
+}
+
+static std::string Lower(std::string s)
+{
+    for (char& c : s)
+        if (c >= 'A' && c <= 'Z')
+            c = char(c - 'A' + 'a');
+    return s;
+}
+
+// ============================================================================
+//  bot ???
+// ============================================================================
+//  ?step42 ??struct PBotEntry ?? pbot_autoaccept.h?
+//  ??????????????????????? extern ???
+//  ????????? -> .pbot auto ?????????????
+std::vector<PBotEntry> g_pbots;
+
+// ============================================================================
+
+//  A41 ?spawn ?????? ChatHandler?????????
+
+// ============================================================================
+
+//  ? SpawnBot ?"??+??+??"?"??????"?????
+
+//  ??????? ChatHandler??????????????
+
+//  ???? :252-300 ???? UI ???
+
+// ============================================================================
+
+bool PBotSpawnCore(uint32 accountId, ObjectGuid charGuid,
+
+                std::string const& charName, uint32 autoFlags,
+
+                std::string* reason)
+
+{
+
+// ????
+
+    if (ObjectAccessor::FindPlayer(charGuid))
+
+    {
+
+        if (reason) *reason = "????";
+
+        return false;
+
+    }
+
+    // ??????
+
+    if (sWorld->FindSession(accountId))
+
+    {
+
+        if (reason) *reason = "????????";
+
+        return false;
+
+    }
+
+    // ???????? SpawnBot :263?
+
+    std::string sessName = charName;
+
+    WorldSession* sess = new WorldSession(
+
+        accountId,
+
+        std::move(sessName),
+
+        nullptr,                    // ? socket
+
+        SEC_ADMINISTRATOR,
+
+        2,                          // WotLK
+
+        0,
+
+        Minutes(0),
+
+        LOCALE_zhCN,
+
+        0,
+
+        false);
+
+    sess->SetBotSession(true);
+
+    sess->AddLegitCharacter(charGuid);
+
+    sWorld->AddSession(sess);
+
+    WorldPacket* pkt = new WorldPacket(CMSG_PLAYER_LOGIN, 8);
+
+    *pkt << charGuid;
+
+    sess->QueuePacket(pkt);
+
+    // ????????????? guid ?????
+
+    for (PBotEntry const& e : g_pbots)
+
+        if (e.CharGuid == charGuid)
+
+            return true;
+
+    g_pbots.push_back({ accountId, charGuid, charName, autoFlags });
+
+    return true;
+
+}
+
+// ============================================================================
+
+//  A41 ?????
+
+// ============================================================================
+
+void PBotLoadRoster(ObjectGuid ownerGuid, std::vector<PBotEntry>& out)
+
+{
+
+    out.clear();
+
+    QueryResult res = CharacterDatabase.PQuery(
+
+        "SELECT bot_account, bot_guid, bot_name, auto_flags "
+
+        "FROM playerbot_roster WHERE owner_guid = {} AND enabled = 1",
+
+        ownerGuid.GetCounter());
+
+    if (!res)
+
+        return;
+
+    do
+
+    {
+
+        Field* f = res->Fetch();
+
+        PBotEntry e;
+
+        e.AccountId = f[0].GetUInt32();
+
+        e.CharGuid  = ObjectGuid::Create<HighGuid::Player>(f[1].GetUInt32());
+
+        e.CharName  = f[2].GetString();
+
+        e.AutoFlags = f[3].GetUInt32();
+
+        out.push_back(e);
+
+    } while (res->NextRow());
+
+}
+
+void PBotRosterAdd(ObjectGuid ownerGuid, PBotEntry const& e)
+
+{
+
+    CharacterDatabase.PExecute(
+
+        "REPLACE INTO playerbot_roster "
+
+        "(owner_guid, bot_account, bot_guid, bot_name, auto_flags, enabled) "
+
+        "VALUES ({}, {}, {}, '{}', {}, 1)",
+
+        ownerGuid.GetCounter(), e.AccountId, e.CharGuid.GetCounter(),
+
+        e.CharName, e.AutoFlags);
+
+}
+
+void PBotRosterRemove(ObjectGuid ownerGuid, ObjectGuid botGuid)
+
+{
+
+    CharacterDatabase.PExecute(
+
+        "DELETE FROM playerbot_roster WHERE owner_guid = {} AND bot_guid = {}",
+
+        ownerGuid.GetCounter(), botGuid.GetCounter());
+
+}
+
+// ============================================================================
+//  ?????bot ????????????
+//    ?? = ????????????
+//    ?? = ??"???"
+//    2.0 ? ? ??????????
+// ============================================================================
+static constexpr float PBOT_COME_DIST = 2.0f;
+
+// ============================================================================
+//  .pbot ??
+// ============================================================================
+class playerbot_commandscript : public CommandScript
+{
+public:
+    playerbot_commandscript() : CommandScript("playerbot_commandscript") { }
+
+    std::vector<ChatCommand> GetCommands() const override
+    {
+        static std::vector<ChatCommand> commandTable =
+        {
+            { "pbot", rbac::RBAC_PERM_COMMAND_WORLDTOOLS, false, &HandlePBot, "" },
+        };
+        return commandTable;
+    }
+
+    static void SendHelp(ChatHandler* handler)
+    {
+        handler->SendSysMessage("|cff00ff00[.pbot ??Player?Bot]|r");
+        handler->SendSysMessage("  .pbot spawn <???> <???>   ??????bot????");
+        handler->SendSysMessage("  .pbot list                      ??????bot");
+        handler->SendSysMessage("  .pbot despawn <???>          ????");
+        handler->SendSysMessage("  .pbot come <???>             ????????");
+        handler->SendSysMessage("  .pbot goto <???>             ???????");
+        handler->SendSysMessage("|cff00ff00--- ?????step42?---|r");
+        handler->SendSysMessage("  .pbot auto                      ???bot???");
+        handler->SendSysMessage("  .pbot auto <???|all> <??> <on|off>");
+        handler->SendSysMessage("      ??: group/guild/duel/res/summon/trade/release/all");
+        handler->SendSysMessage("  .pbot auto master <on|off>      ?????????");
+        handler->SendSysMessage("  .pbot accept <???|all>       ?????????");
+        handler->SendSysMessage("|cff00ff00--- ??????A39?---|r");
+        handler->SendSysMessage("  .pbot invite <???|all>       ????????");
+        handler->SendSysMessage("  .pbot kick [???]             ?????????=???");
+        handler->SendSysMessage("  .pbot follow <???|all>       ??????");
+        handler->SendSysMessage("  .pbot stay <???|all>         ??????");
+        handler->SendSysMessage("  .pbot give <???> <??ID> [??]  ???????");
+        handler->SendSysMessage("|cffffff00 ???: ??/??/??/??/??|r");
+        handler->SendSysMessage("|cffffff00 ???: ?????????????????|r");
+        handler->SendSysMessage("|cffffff00--- ?????????---|r");
+        handler->SendSysMessage("  .pbot ?? <??> <??>  |  .pbot ??");
+        handler->SendSysMessage("  .pbot ?? <???>       |  .pbot ?? <???>");
+        handler->SendSysMessage("  .pbot ?? <???>       |  .pbot ?? / .pbot ??");
+        handler->SendSysMessage("|cffff0000 ???????????????|r");
+    }
+
+    // ------------------------------------------------------------------
+    //  ???ID????????????
+    // ------------------------------------------------------------------
+    static uint32 LookupAccountId(std::string const& accName)
+    {
+        std::string safe = accName;
+        LoginDatabase.EscapeString(safe);
+
+        // ??5???? DirectPExecute/PQuery ? fmt????? {} ?? %u
+        QueryResult res = LoginDatabase.PQuery(
+            "SELECT id FROM account WHERE username = '{}'", safe);
+        if (!res)
+            return 0;
+        return (*res)[0].GetUInt32();
+    }
+
+    // ------------------------------------------------------------------
+    //  ?????? guid??????????????
+    // ------------------------------------------------------------------
+    static ObjectGuid LookupChar(std::string const& charName, uint32& outAccount, std::string& outName)
+    {
+        std::string safe = charName;
+        CharacterDatabase.EscapeString(safe);
+
+        QueryResult res = CharacterDatabase.PQuery(
+            "SELECT guid, account, name FROM characters WHERE name = '{}'", safe);
+        if (!res)
+            return ObjectGuid::Empty;
+
+        Field* f = res->Fetch();
+        uint32 low  = f[0].GetUInt32();
+        outAccount  = f[1].GetUInt32();
+        outName     = f[2].GetString();
+
+        // ObjectGuid ?? (HighGuid, low) ???????
+        // ??? explicit ??? ObjectGuid(uint64)?ObjectGuid.h:254??
+        // ??????????ObjectGuid.h:224??
+        //   TicketMgr.cpp:71  ObjectGuid::Create<HighGuid::Player>(fields[..].GetUInt32())
+        return ObjectGuid::Create<HighGuid::Player>(low);
+    }
+
+    // ------------------------------------------------------------------
+    //  ?????????????????
+    // ------------------------------------------------------------------
+    static bool SpawnBot(ChatHandler* handler, std::string const& accName, std::string const& charName)
+    {
+        char buf[512];
+
+        // ---- 1. ??? ----
+        uint32 accountId = LookupAccountId(accName);
+        if (!accountId)
+        {
+            snprintf(buf, sizeof(buf), "|cffff0000 ????? %s|r", accName.c_str());
+            handler->SendSysMessage(buf);
+            handler->SendSysMessage("|cffffff00 ???.account create <?> <??>|r");
+            return false;
+        }
+
+        // ---- 2. ??? ----
+        uint32 charAccount = 0;
+        std::string realName;
+        ObjectGuid charGuid = LookupChar(charName, charAccount, realName);
+        if (!charGuid)
+        {
+            snprintf(buf, sizeof(buf), "|cffff0000 ????? %s|r", charName.c_str());
+            handler->SendSysMessage(buf);
+            return false;
+        }
+
+        // ---- 3. ????????? ----
+        if (charAccount != accountId)
+        {
+            snprintf(buf, sizeof(buf),
+                     "|cffff0000 ?? %s ????? %s??????ID %u?|r",
+                     realName.c_str(), accName.c_str(), charAccount);
+            handler->SendSysMessage(buf);
+            return false;
+        }
+
+        // ---- 4. ????????? ----
+        if (ObjectAccessor::FindPlayer(charGuid))
+        {
+            snprintf(buf, sizeof(buf), "|cffff0000 %s ?????|r", realName.c_str());
+            handler->SendSysMessage(buf);
+            return false;
+        }
+
+        // ---- 5. ????????? ----
+        if (sWorld->FindSession(accountId))
+        {
+            snprintf(buf, sizeof(buf),
+                     "|cffff0000 ?? %s ???????? .pbot despawn|r", accName.c_str());
+            handler->SendSysMessage(buf);
+            return false;
+        }
+
+        // ---- 6. ?????? ----
+        // WorldSession.h:495
+        //   WorldSession(uint32 id, std::string&& name, std::shared_ptr<WorldSocket> sock,
+        //                AccountTypes sec, uint8 expansion, time_t mute_time,
+        //                Minutes timezoneOffset, LocaleConstant locale,
+        //                uint32 recruiter, bool isARecruiter);
+        //
+        // sock ? nullptr ?? ??????????
+        // sec ? SEC_ADMINISTRATOR?? HasPermission(RBAC_PERM_IGNORE_IDLE_CONNECTION)
+        // ??????? WorldSession.cpp:298 ?????? m_Socket->CloseSocket()?
+        std::string sessName = accName;
+        WorldSession* sess = new WorldSession(
+            accountId,
+            std::move(sessName),
+            nullptr,                    // <- ? socket
+            SEC_ADMINISTRATOR,          // <- ?3 ??
+            2,                          // expansion: 2 = WotLK
+            0,                          // mute_time
+            Minutes(0),                 // timezoneOffset
+            LOCALE_zhCN,
+            0,                          // recruiter
+            false);                     // isARecruiter
+
+        // ---- 6.5 ??? bot ?? ----
+        // ????WorldSession::Update ?????? while (m_Socket && ...)?cpp:312??
+        // ? socket ??????????????????
+        // ? cpp:512 ? if (!m_Socket) return false; ?????????
+        // ??????????????"??-??????.md"?
+        sess->SetBotSession(true);
+
+        // ---- 7. ?2????????? ----
+        // ???? WorldSession ? public ?? AddLegitCharacter()
+        // ???????? public ??577? QueuePacket ????
+        // ???? IsLegitCharacterForAccount(1285) ?? ?? ??? private ?
+        sess->AddLegitCharacter(charGuid);
+
+        // ---- 8. ????? ----
+        sWorld->AddSession(sess);
+
+        // ---- 9. ?1??? CMSG_PLAYER_LOGIN???????? ----
+        // CharacterHandler.cpp:698  recvData >> playerGuid;
+        // ObjectGuid.cpp:136        operator<< ???? uint64 ????????
+        WorldPacket* pkt = new WorldPacket(CMSG_PLAYER_LOGIN, 8);
+        *pkt << charGuid;
+        sess->QueuePacket(pkt);         // WorldSession.h:577  public
+
+        // step42: ?4???????????
+        // ????????? ?? ?"?bot?????"???????????
+        g_pbots.push_back({ accountId, charGuid, realName, PBOT_AUTO_DEFAULT });
+
+        // A41: ???????????????
+        if (Player* owner = handler->GetSession() ? handler->GetSession()->GetPlayer() : nullptr)
+        {
+            PBotEntry ent{ accountId, charGuid, realName, PBOT_AUTO_DEFAULT };
+            PBotRosterAdd(owner->GetGUID(), ent);
+            handler->SendSysMessage("|cff00ff00 ?????????|r");
+        }
+
+        snprintf(buf, sizeof(buf), "|cff00ff00 ???? %s ...|r", realName.c_str());
+        handler->SendSysMessage(buf);
+        handler->SendSysMessage("|cffffff00 ????????1-3??? .pbot list ???|r");
+        return true;
+    }
+
+    // ------------------------------------------------------------------
+    static bool HandlePBot(ChatHandler* handler, char const* args)
+    {
+        Player* player = handler->GetSession() ? handler->GetSession()->GetPlayer() : nullptr;
+        if (!player)
+            return false;
+
+        std::vector<std::string> tok = Tok(args);
+        if (tok.empty())
+        {
+            SendHelp(handler);
+            return true;
+        }
+
+        char buf[512];
+        std::string s0 = Lower(tok[0]);
+
+        // ---------- spawn ----------
+        if (s0 == "spawn" || tok[0] == "??" || tok[0] == "??")
+        {
+            if (tok.size() < 3)
+            {
+                handler->SendSysMessage("|cffff0000 ??: .pbot spawn <???> <???>|r");
+                handler->SendSysMessage("|cffffff00 ?: .pbot spawn botcc1 Evirstara|r");
+                handler->SetSentErrorMessage(true);
+                return false;
+            }
+            return SpawnBot(handler, tok[1], tok[2]);
+        }
+
+        // ---------- list ----------
+        if (s0 == "list" || tok[0] == "??")
+        {
+            if (g_pbots.empty())
+            {
+                handler->SendSysMessage("|cffffff00 ?????? PlayerBot|r");
+                return true;
+            }
+
+            snprintf(buf, sizeof(buf), "|cff00ff00[PlayerBot ? %u ?]|r", uint32(g_pbots.size()));
+            handler->SendSysMessage(buf);
+
+            for (PBotEntry const& e : g_pbots)
+            {
+                Player* p = ObjectAccessor::FindPlayer(e.CharGuid);
+                if (p)
+                {
+                    // step42: ????????????????? .pbot auto
+                    snprintf(buf, sizeof(buf),
+                             "  |cff00ff00%s|r  %u?  ??%u  |cff888888??|r  ??:%s",
+                             e.CharName.c_str(), uint32(p->GetLevel()), p->GetMapId(),
+                             PBotFlagsToText(e.AutoFlags).c_str());
+                }
+                else
+                {
+                    snprintf(buf, sizeof(buf),
+                             "  |cffff0000%s|r  |cffff0000??????????????|r",
+                             e.CharName.c_str());
+                }
+                handler->SendSysMessage(buf);
+            }
+            return true;
+        }
+
+        // ---------- despawn ----------
+        if (s0 == "despawn" || tok[0] == "??")
+        {
+            if (tok.size() < 2)
+            {
+                handler->SendSysMessage("|cffff0000 ??: .pbot despawn <???>|r");
+                handler->SetSentErrorMessage(true);
+                return false;
+            }
+
+            for (auto it = g_pbots.begin(); it != g_pbots.end(); ++it)
+            {
+                if (Lower(it->CharName) != Lower(tok[1]))
+                    continue;
+
+                if (WorldSession* s = sWorld->FindSession(it->AccountId))
+                {
+                    // ??????????
+                    s->LogoutPlayer(true);
+                    s->KickPlayer("pbot despawn");
+                }
+
+                snprintf(buf, sizeof(buf), "|cff00ff00 %s ???|r", it->CharName.c_str());
+                handler->SendSysMessage(buf);
+                // A41: ???????
+                if (Player* owner = handler->GetSession() ? handler->GetSession()->GetPlayer() : nullptr)
+                    PBotRosterRemove(owner->GetGUID(), it->CharGuid);
+                g_pbots.erase(it);
+                return true;
+            }
+
+            handler->SendSysMessage("|cffff0000 ?????bot|r");
+            handler->SetSentErrorMessage(true);
+            return false;
+        }
+
+        // ---------- come ----------
+        if (s0 == "come" || tok[0] == "??" || tok[0] == "??")
+        {
+            if (tok.size() < 2)
+            {
+                handler->SendSysMessage("|cffff0000 ??: .pbot come <???>|r");
+                handler->SetSentErrorMessage(true);
+                return false;
+            }
+
+            for (PBotEntry const& e : g_pbots)
+            {
+                if (Lower(e.CharName) != Lower(tok[1]))
+                    continue;
+
+                Player* p = ObjectAccessor::FindPlayer(e.CharGuid);
+                if (!p)
+                {
+                    handler->SendSysMessage("|cffff0000 ??????|r");
+                    handler->SetSentErrorMessage(true);
+                    return false;
+                }
+
+                // ---- ???? .summon ??????cs_misc.cpp:517??----
+                // ?????? TeleportTo????/??/????????
+
+                if (p->IsBeingTeleported())      // Player.h:1802 public
+                {
+                    handler->SendSysMessage("|cffff0000 ?????????|r");
+                    handler->SetSentErrorMessage(true);
+                    return false;
+                }
+
+                Map* map = player->GetMap();
+
+                if (map->IsBattlegroundOrArena() && !player->IsGameMaster())
+                {
+                    handler->SendSysMessage("|cffff0000 ??/??????GM???|r");
+                    handler->SetSentErrorMessage(true);
+                    return false;
+                }
+                else if (map->IsDungeon())
+                {
+                    // ?????????????????????bot????
+                    // ???????????????????
+                    Map* targetMap = p->GetMap();
+                    if (targetMap->GetId() != map->GetId() ||
+                        targetMap->GetInstanceId() != map->GetInstanceId())
+                    {
+                        handler->SendSysMessage("|cffff0000 ???????bot????|r");
+                        handler->SendSysMessage("|cffffff00 ??????????|r");
+                        handler->SetSentErrorMessage(true);
+                        return false;
+                    }
+                }
+
+                // ??????????????????
+                if (player->IsInFlight())        // Unit.h:1120 public
+                    player->FinishTaxiFlight();  // Player.h:964  public
+
+                // ============================================================
+                //  ???????????????????
+                // ============================================================
+                //  ?? .summon ? GetClosePoint(x,y,z, reach)?
+                //  relAngle ?? 0 -> ???????????????
+                //  ?? = distance2d(0) + size(reach) ?? ???????????
+                //
+                //  ?????????????????
+                //    distance2d = PBOT_COME_DIST(2?)??????????
+                //    GetFirstCollisionPosition ?? raycast?
+                //    ????????/????Object.cpp:3574 MovePositionToFirstCollision?
+                bool sameMap = (p->GetMapId() == player->GetMapId());
+
+                Position dest = player->GetFirstCollisionPosition(PBOT_COME_DIST, 0.0f);
+                //                                                ^^^^^^^^^^^^^^  ^^^^
+                //                        Object.h:370 public     ??           relAngle=0=???
+
+                float x = dest.GetPositionX();
+                float y = dest.GetPositionY();
+                float z = dest.GetPositionZ();
+
+                // ? bot ???????????????????
+                // Position.h:128 GetAbsoluteAngle ?? struct ?? public
+                float o = dest.GetAbsoluteAngle(player->GetPositionX(), player->GetPositionY());
+
+                if (!p->TeleportTo(player->GetMapId(), x, y, z, o))
+                {
+                    handler->SendSysMessage("|cffff0000 ?????????????????|r");
+                    handler->SetSentErrorMessage(true);
+                    return false;
+                }
+
+                // ============================================================
+                //  ?????????"??"?? ?? bot ????????
+                // ============================================================
+                //  ?????TeleportTo ?????????????? ACK?
+                //            ???? ACK ????????
+                //
+                //  bot ????? -> ????? ACK -> ???????????
+                //  ???"????????????????"??????
+                //  bot ?????????????????/??????
+                //
+                //  ??????????Player.cpp:1557 TeleportTo ? if/else??
+                //
+                //  1) ??????????Player.cpp:1660
+                //       SetSemaphoreTeleportNear(IsMovedByClient());
+                //       -> bot ??? WorldSession.cpp:157 ? new ? GameClient?
+                //          ??? Player.cpp:22776 SetMovedUnit(this,true) ???
+                //          ?? IsMovedByClient() == true -> ?????? -> ???
+                //       ????????? MSG_MOVE_TELEPORT_ACK
+                //          -> MovementHandler.cpp:356 HandleMoveTeleportAck
+                //          -> UpdatePosition(dest, true)
+                //       ????????
+                //
+                //  2) ??????????Player.cpp:1793
+                //       SetSemaphoreTeleportFar(true);
+                //       ????????? MSG_MOVE_WORLDPORT_ACK
+                //          -> HandleMoveWorldportAck()
+                //       ????????????????
+                //          WorldSession.h:829  "// for server-side calls"
+                //          WorldSession.cpp:524 / :589
+                //             while (_player->IsBeingTeleportedFar())
+                //                 HandleMoveWorldportAck();
+                //       ???????????
+
+                if (p->IsBeingTeleportedFar())
+                {
+                    // ???????????WorldSession.cpp:589?
+                    // ? while ??? HandleMoveWorldportAck ?????
+                    // ??? TeleportTo ? homebind???????
+                    uint8 guard = 0;
+                    while (p->IsBeingTeleportedFar() && guard++ < 5)
+                        p->GetSession()->HandleMoveWorldportAck();   // WorldSession.h:829 public(706?)
+                }
+                else if (p->IsBeingTeleportedNear())
+                {
+                    // ?????? MovementHandler.cpp:356 HandleMoveTeleportAck ???
+                    p->SetSemaphoreTeleportNear(false);              // Player.h:1805 public(904?)
+
+                    uint32 oldZone = p->GetZoneId();
+
+                    WorldLocation const& tdest = p->GetTeleportDest();   // Player.h:1800 public
+                    p->UpdatePosition(tdest, true);                      // Unit.h:1205 public(811?)
+                    p->SetFallInformation(0, p->GetPositionZ());         // Player.h:2045 public
+
+                    uint32 newZone, newArea;
+                    p->GetZoneAndAreaId(newZone, newArea);               // Object.h:381 public(356?)
+                    p->UpdateZone(newZone, newArea);                     // Player.h:1568 public
+
+                    if (oldZone != newZone)
+                    {
+                        // ??????? honorless target / PvP ??
+                        if (p->pvpInfo.IsHostile)                        // Player.h:1563 public
+                            p->CastSpell(p, 2479, true);
+                        else if (p->IsPvP() && !p->HasFlag(PLAYER_FLAGS, PLAYER_FLAGS_IN_PVP))
+                            p->UpdatePvP(false, false);                  // Player.h:1567 public
+                    }
+
+                    p->ResummonPetTemporaryUnSummonedIfAny();            // Player.h:2111 public
+                    p->ProcessDelayedOperations();                       // Player.h:1807 public
+                }
+
+                // ?????????????????
+                // Object.h:385 InSamePhase ?????????
+                p->SetPhaseMask(player->GetPhaseMask(), true);         // Object.h:383 public
+
+                // ??????????????????????
+                p->StopMoving();                                       // Unit.h:1684 public(811?)
+
+                snprintf(buf, sizeof(buf), "|cff00ff00 %s ??????|r?%s?",
+                         e.CharName.c_str(), sameMap ? "???" : "???");
+                handler->SendSysMessage(buf);
+                return true;
+            }
+
+            handler->SendSysMessage("|cffff0000 ?????bot|r");
+            handler->SetSentErrorMessage(true);
+            return false;
+        }
+
+        // ---------- goto ----------
+        //  ? come ???????????
+        //  ?????? ?? ??????????????????? ACK?
+        //  ??????????????????? ACK ??????
+        //
+        //  ??????step35 ???`.bf come` ???????
+        //  ????????? bug???4??????????
+        //  ??????goto?????????come????
+        if (s0 == "goto" || tok[0] == "??" || tok[0] == "??")
+        {
+            if (tok.size() < 2)
+            {
+                handler->SendSysMessage("|cffff0000 ??: .pbot goto <???>|r");
+                handler->SetSentErrorMessage(true);
+                return false;
+            }
+
+            for (PBotEntry const& e : g_pbots)
+            {
+                if (Lower(e.CharName) != Lower(tok[1]))
+                    continue;
+
+                Player* p = ObjectAccessor::FindPlayer(e.CharGuid);
+                if (!p)
+                {
+                    handler->SendSysMessage("|cffff0000 ??????|r");
+                    handler->SetSentErrorMessage(true);
+                    return false;
+                }
+
+                if (p->IsBeingTeleported())
+                {
+                    handler->SendSysMessage("|cffff0000 ?????????|r");
+                    handler->SetSentErrorMessage(true);
+                    return false;
+                }
+
+                // ??????????
+                if (player->IsInFlight())        // Unit.h:1120 public
+                    player->FinishTaxiFlight();  // Player.h:964  public
+                else
+                    player->SaveRecallPosition(); // ????????? .appear ??
+
+                // ?????
+                Position dest = p->GetFirstCollisionPosition(PBOT_COME_DIST, 0.0f);
+                float o = dest.GetAbsoluteAngle(p->GetPositionX(), p->GetPositionY());
+
+                player->TeleportTo(p->GetMapId(),
+                                   dest.GetPositionX(), dest.GetPositionY(), dest.GetPositionZ(), o);
+
+                // ????
+                player->SetPhaseMask(p->GetPhaseMask(), true);
+
+                snprintf(buf, sizeof(buf), "|cff00ff00 ???? %s|r", e.CharName.c_str());
+                handler->SendSysMessage(buf);
+                return true;
+            }
+
+            handler->SendSysMessage("|cffff0000 ?????bot|r");
+            handler->SetSentErrorMessage(true);
+            return false;
+        }
+
+        // ---------- auto ----------
+        //  .pbot auto                          ???bot?????
+        //  .pbot auto <???>                 ???bot???
+        //  .pbot auto <???> <??> <on/off> ???????
+        //  .pbot auto all <??> <on/off>      ?????bot
+        //
+        //  ???group / guild / duel / res / summon / all
+        if (s0 == "auto" || tok[0] == "??")
+        {
+            // ---- ?? .pbot auto????? ----
+            if (tok.size() < 2)
+            {
+                if (g_pbots.empty())
+                {
+                    handler->SendSysMessage("|cffffff00 ??? PlayerBot|r");
+                    return true;
+                }
+
+                handler->SendSysMessage("|cff00ff00[???? ????]|r");
+                snprintf(buf, sizeof(buf), "  ???: %s",
+                         g_pbotAutoMasterSwitch ? "|cff00ff00?|r" : "|cffff0000?|r");
+                handler->SendSysMessage(buf);
+
+                for (PBotEntry const& e : g_pbots)
+                {
+                    snprintf(buf, sizeof(buf), "  |cff00ff00%s|r : %s",
+                             e.CharName.c_str(), PBotFlagsToText(e.AutoFlags).c_str());
+                    handler->SendSysMessage(buf);
+                }
+                handler->SendSysMessage("|cffffff00 ??: .pbot auto <???|all> <??> <on|off>|r");
+                handler->SendSysMessage("|cffffff00 ??: group/guild/duel/res/summon/trade/release/all|r");
+                return true;
+            }
+
+            // ---- .pbot auto master on/off???? ----
+            if (Lower(tok[1]) == "master" || tok[1] == "???")
+            {
+                if (tok.size() < 3)
+                {
+                    snprintf(buf, sizeof(buf), " ?????: %s",
+                             g_pbotAutoMasterSwitch ? "|cff00ff00?|r" : "|cffff0000?|r");
+                    handler->SendSysMessage(buf);
+                    return true;
+                }
+                std::string v = Lower(tok[2]);
+                g_pbotAutoMasterSwitch = (v == "on" || v == "1" || tok[2] == "?");
+                snprintf(buf, sizeof(buf), "|cff00ff00 ????%s|r",
+                         g_pbotAutoMasterSwitch ? "??" : "??");
+                handler->SendSysMessage(buf);
+                return true;
+            }
+
+            // ---- ????????????? ----
+            if (tok.size() < 3)
+            {
+                for (PBotEntry const& e : g_pbots)
+                {
+                    if (Lower(e.CharName) != Lower(tok[1]))
+                        continue;
+                    snprintf(buf, sizeof(buf), "|cff00ff00%s|r ?????: %s",
+                             e.CharName.c_str(), PBotFlagsToText(e.AutoFlags).c_str());
+                    handler->SendSysMessage(buf);
+                    return true;
+                }
+                handler->SendSysMessage("|cffff0000 ?????bot|r");
+                handler->SetSentErrorMessage(true);
+                return false;
+            }
+
+            // ---- ???? ----
+            std::string what = Lower(tok[2]);
+            uint32 mask = 0;
+            if (what == "group"  || tok[2] == "??")  mask = PBOT_AUTO_GROUP;
+            else if (what == "guild"  || tok[2] == "??")  mask = PBOT_AUTO_GUILD;
+            else if (what == "duel"   || tok[2] == "??")  mask = PBOT_AUTO_DUEL;
+            else if (what == "res"    || what == "resurrect" || tok[2] == "??")
+                                                            mask = PBOT_AUTO_RESURRECT;
+            else if (what == "summon" || tok[2] == "??")  mask = PBOT_AUTO_SUMMON;
+            else if (what == "trade"  || tok[2] == "??")  mask = PBOT_AUTO_TRADE;
+            else if (what == "release"|| tok[2] == "??")  mask = PBOT_AUTO_RELEASE;
+            else if (what == "all"    || tok[2] == "??")  mask = PBOT_AUTO_ALL;
+            else
+            {
+                handler->SendSysMessage(
+                    "|cffff0000 ?????: group/guild/duel/res/summon/trade/release/all|r");
+                handler->SetSentErrorMessage(true);
+                return false;
+            }
+
+            // ????????? ?? ?????????????
+            if ((mask & PBOT_AUTO_TRADE) && tok.size() >= 4 &&
+                Lower(tok[3]) != "off" && tok[3] != "?" && tok[3] != "0")
+            {
+                handler->SendSysMessage(
+                    "|cffffff00 ??: ???????????????????????|r");
+            }
+
+            // ---- ?? on/off????? on?----
+            bool turnOn = true;
+            if (tok.size() >= 4)
+            {
+                std::string v = Lower(tok[3]);
+                turnOn = !(v == "off" || v == "0" || tok[3] == "?");
+            }
+
+            // ---- all????bot ----
+            bool applyAll = (Lower(tok[1]) == "all" || tok[1] == "??");
+            uint32 changed = 0;
+
+            for (PBotEntry& e : g_pbots)
+            {
+                if (!applyAll && Lower(e.CharName) != Lower(tok[1]))
+                    continue;
+
+                if (turnOn)
+                    e.AutoFlags |= mask;
+                else
+                    e.AutoFlags &= ~mask;
+
+                ++changed;
+
+                if (!applyAll)
+                {
+                    snprintf(buf, sizeof(buf), "|cff00ff00%s|r ??: %s",
+                             e.CharName.c_str(), PBotFlagsToText(e.AutoFlags).c_str());
+                    handler->SendSysMessage(buf);
+                    return true;
+                }
+            }
+
+            if (!changed)
+            {
+                handler->SendSysMessage("|cffff0000 ?????bot|r");
+                handler->SetSentErrorMessage(true);
+                return false;
+            }
+
+            snprintf(buf, sizeof(buf), "|cff00ff00 ?%s %u ?bot?[%s]|r",
+                     turnOn ? "??" : "??", changed, tok[2].c_str());
+            handler->SendSysMessage(buf);
+            return true;
+        }
+
+        // ---------- accept ----------
+        //  ???bot????????????????????
+        //  ????????????????????????
+        if (s0 == "accept" || tok[0] == "??")
+        {
+            if (tok.size() < 2)
+            {
+                handler->SendSysMessage("|cffff0000 ??: .pbot accept <???|all>|r");
+                handler->SetSentErrorMessage(true);
+                return false;
+            }
+
+            bool applyAll = (Lower(tok[1]) == "all" || tok[1] == "??");
+            uint32 done = 0;
+
+            for (PBotEntry const& e : g_pbots)
+            {
+                if (!applyAll && Lower(e.CharName) != Lower(tok[1]))
+                    continue;
+
+                Player* p = ObjectAccessor::FindPlayer(e.CharGuid);
+                if (!p || !p->IsInWorld() || !p->GetSession())
+                    continue;
+
+                // ????????????????
+                PBotForceAcceptAll(p);
+                ++done;
+
+                if (!applyAll)
+                {
+                    snprintf(buf, sizeof(buf), "|cff00ff00 %s ????????|r",
+                             e.CharName.c_str());
+                    handler->SendSysMessage(buf);
+                    return true;
+                }
+            }
+
+            if (!done)
+            {
+                handler->SendSysMessage("|cffff0000 ??????bot|r");
+                handler->SetSentErrorMessage(true);
+                return false;
+            }
+
+            snprintf(buf, sizeof(buf), "|cff00ff00 ??? %u ?bot?????|r", done);
+            handler->SendSysMessage(buf);
+            return true;
+        }
+
+                // ---------- kick ???? ----------
+        if (s0 == "kick" || tok[0] == "??" || tok[0] == "??")
+        {
+            Group* grp = player->GetGroup();
+            if (!grp)
+            {
+                handler->SendSysMessage("|cffff0000 ??????|r");
+                handler->SetSentErrorMessage(true);
+                return false;
+            }
+
+            std::vector<ObjectGuid> toKick;
+            for (PBotEntry const& e : g_pbots)
+            {
+                if (!grp->IsMember(e.CharGuid))
+                    continue;
+                if (tok.size() >= 2 && Lower(e.CharName) != Lower(tok[1]))
+                    continue;
+                toKick.push_back(e.CharGuid);
+            }
+
+            if (toKick.empty())
+            {
+                handler->SendSysMessage("|cffff0000 ???????? pbot|r");
+                handler->SetSentErrorMessage(true);
+                return false;
+            }
+
+            uint32 kicked = 0;
+            for (ObjectGuid kguid : toKick)
+            {
+                if (grp->IsLeader(kguid))
+                {
+                    grp->ChangeLeader(player->GetGUID());
+                    handler->SendSysMessage("|cffffff00 bot ???????????|r");
+                }
+                Player::RemoveFromGroup(grp, kguid, GROUP_REMOVEMETHOD_KICK, player->GetGUID(), "pbot kick");
+                ++kicked;
+            }
+
+            snprintf(buf, sizeof(buf), "|cff00ff00 ?? %u ? pbot ????|r", kicked);
+            handler->SendSysMessage(buf);
+            return true;
+        }
+
+        // ---------- invite ???? ----------
+        if (s0 == "invite" || tok[0] == "??" || tok[0] == "??")
+        {
+            if (tok.size() < 2)
+            {
+                handler->SendSysMessage("|cffff0000 ??: .pbot invite <???|all>|r");
+                handler->SetSentErrorMessage(true);
+                return false;
+            }
+
+            bool wantAll = (Lower(tok[1]) == "all" || tok[1] == "??");
+            uint32 added = 0;
+            uint32 failed = 0;
+
+            for (PBotEntry const& e : g_pbots)
+            {
+                if (!wantAll && Lower(e.CharName) != Lower(tok[1]))
+                    continue;
+
+                Player* p = ObjectAccessor::FindPlayer(e.CharGuid);
+                if (!p || !p->IsInWorld())
+                {
+                    ++failed;
+                    continue;
+                }
+                if (p->GetGroup())
+                {
+                    ++failed;
+                    continue;
+                }
+
+                Group* grp = player->GetGroup();
+                if (!grp)
+                {
+                    grp = new Group();
+                    if (!grp->Create(player))
+                    {
+                        delete grp;
+                        handler->SendSysMessage("|cffff0000 ??????|r");
+                        handler->SetSentErrorMessage(true);
+                        return false;
+                    }
+                    sGroupMgr->AddGroup(grp);
+                }
+
+                if (grp->IsFull())
+                {
+                    handler->SendSysMessage("|cffff0000 ????|r");
+                    break;
+                }
+
+                if (grp->AddMember(p))
+                    ++added;
+                else
+                    ++failed;
+            }
+
+            snprintf(buf, sizeof(buf), "|cff00ff00 ???? %u ?|r|cffff0000  ?? %u ?|r", added, failed);
+            handler->SendSysMessage(buf);
+            return true;
+        }
+
+        // ---------- follow ?? ----------
+        if (s0 == "follow" || tok[0] == "??" || tok[0] == "??")
+        {
+            if (tok.size() < 2)
+            {
+                handler->SendSysMessage("|cffff0000 ??: .pbot follow <???|all>|r");
+                handler->SetSentErrorMessage(true);
+                return false;
+            }
+
+            bool wantAll = (Lower(tok[1]) == "all" || tok[1] == "??");
+            uint32 cnt = 0;
+
+            for (PBotEntry const& e : g_pbots)
+            {
+                if (!wantAll && Lower(e.CharName) != Lower(tok[1]))
+                    continue;
+
+                Player* p = ObjectAccessor::FindPlayer(e.CharGuid);
+                if (!p || !p->IsInWorld())
+                    continue;
+                if (p->GetMapId() != player->GetMapId())
+                    continue;
+
+                p->GetMotionMaster()->Clear();
+                p->GetMotionMaster()->MoveFollow(player, 2.0f, float(M_PI));
+                ++cnt;
+            }
+
+            snprintf(buf, sizeof(buf), "|cff00ff00 %u ? pbot ????|r", cnt);
+            handler->SendSysMessage(buf);
+            return true;
+        }
+
+        // ---------- stay ???? ----------
+        if (s0 == "stay" || tok[0] == "??" || tok[0] == "??")
+        {
+            if (tok.size() < 2)
+            {
+                handler->SendSysMessage("|cffff0000 ??: .pbot stay <???|all>|r");
+                handler->SetSentErrorMessage(true);
+                return false;
+            }
+
+            bool wantAll = (Lower(tok[1]) == "all" || tok[1] == "??");
+            uint32 cnt = 0;
+
+            for (PBotEntry const& e : g_pbots)
+            {
+                if (!wantAll && Lower(e.CharName) != Lower(tok[1]))
+                    continue;
+
+                Player* p = ObjectAccessor::FindPlayer(e.CharGuid);
+                if (!p || !p->IsInWorld())
+                    continue;
+
+                p->GetMotionMaster()->Clear();
+                p->GetMotionMaster()->MoveIdle();
+                ++cnt;
+            }
+
+            snprintf(buf, sizeof(buf), "|cff00ff00 %u ? pbot ????|r", cnt);
+            handler->SendSysMessage(buf);
+            return true;
+        }
+
+            if (s0 == "kick" || tok[0] == "??" || tok[0] == "??")
+        {
+            Group* grp = player->GetGroup();
+            if (!grp)
+            {
+                handler->SendSysMessage("|cffff0000 ??????|r");
+                handler->SetSentErrorMessage(true);
+                return false;
+            }
+
+            std::vector<ObjectGuid> toKick;
+            for (PBotEntry const& e : g_pbots)
+            {
+                if (!grp->IsMember(e.CharGuid))
+                    continue;
+                if (tok.size() >= 2 && Lower(e.CharName) != Lower(tok[1]))
+                    continue;
+                toKick.push_back(e.CharGuid);
+            }
+
+            if (toKick.empty())
+            {
+                handler->SendSysMessage("|cffff0000 ???????? pbot|r");
+                handler->SetSentErrorMessage(true);
+                return false;
+            }
+
+            uint32 kicked = 0;
+            for (ObjectGuid guid : toKick)
+            {
+                if (grp->IsLeader(guid))
+                {
+                    grp->ChangeLeader(player->GetGUID());
+                    handler->SendSysMessage("|cffffff00 bot ???????????|r");
+                }
+                Player::RemoveFromGroup(grp, guid, GROUP_REMOVEMETHOD_KICK, player->GetGUID(), "pbot kick");
+                ++kicked;
+            }
+
+            char kbuf[128];
+            snprintf(kbuf, sizeof(kbuf), "|cff00ff00 ?? %u ? pbot ????|r", kicked);
+            handler->SendSysMessage(kbuf);
+            return true;
+        }
+
+                // ---------- give ?bot???? ----------
+        if (s0 == "give" || tok[0] == "??" || tok[0] == "??")
+        {
+            if (tok.size() < 3)
+            {
+                handler->SendSysMessage("|cffff0000 ??: .pbot give <???> <??ID> [??]|r");
+                handler->SetSentErrorMessage(true);
+                return false;
+            }
+
+            uint32 itemId = uint32(atoi(tok[2].c_str()));
+            uint32 count = (tok.size() >= 4) ? uint32(atoi(tok[3].c_str())) : 1;
+            if (!itemId || !count)
+            {
+                handler->SendSysMessage("|cffff0000 ??ID?????|r");
+                handler->SetSentErrorMessage(true);
+                return false;
+            }
+
+            for (PBotEntry const& e : g_pbots)
+            {
+                if (Lower(e.CharName) != Lower(tok[1]))
+                    continue;
+
+                Player* p = ObjectAccessor::FindPlayer(e.CharGuid);
+                if (!p || !p->IsInWorld())
+                {
+                    handler->SendSysMessage("|cffff0000 ??????|r");
+                    handler->SetSentErrorMessage(true);
+                    return false;
+                }
+
+                if (!p->HasItemCount(itemId, count, true))
+                {
+                    snprintf(buf, sizeof(buf), "|cffff0000 %s ???????????|r", e.CharName.c_str());
+                    handler->SendSysMessage(buf);
+                    handler->SetSentErrorMessage(true);
+                    return false;
+                }
+
+                ItemPosCountVec dest;
+                InventoryResult msg = player->CanStoreNewItem(NULL_BAG, NULL_SLOT, dest, itemId, count);
+                if (msg != EQUIP_ERR_OK)
+                {
+                    handler->SendSysMessage("|cffff0000 ???????|r");
+                    handler->SetSentErrorMessage(true);
+                    return false;
+                }
+
+                p->DestroyItemCount(itemId, count, true);
+                Item* newItem = player->StoreNewItem(dest, itemId, true);
+                if (newItem)
+                    player->SendNewItem(newItem, count, true, false);
+
+                snprintf(buf, sizeof(buf), "|cff00ff00 %s ??????|r", e.CharName.c_str());
+                handler->SendSysMessage(buf);
+                return true;
+            }
+
+            handler->SendSysMessage("|cffff0000 ????? pbot|r");
+            handler->SetSentErrorMessage(true);
+            return false;
+        }
+
+        SendHelp(handler);
+        return true;
+    }
+};
+
+void AddSC_playerbot_commandscript()
+{
+    new playerbot_commandscript();
+}
+
+/* ============================================================================
+ *  API ????????????
+ * ============================================================================
+ *  WorldSession.h:495   ?????public 494??
+ *  WorldSession.h:503   PlayerDisconnected()             public
+ *  WorldSession.h:577   void QueuePacket(WorldPacket*)   public(494?)
+ *  WorldSession.h:1285  IsLegitCharacterForAccount()  ?private!?(1274?)
+ *                       -> AddLegitCharacter() ???? public ??577?????
+ *                          ??1285??? C2248??????
+ *  WorldSession.cpp:211 SendPacket: if (!m_Socket) return;   <- ??
+ *  WorldSession.cpp:298 m_Socket->CloseSocket();             <- ?3???
+ *  WorldSession.cpp:764 IsConnectionIdle()
+ *  World.h:582          void AddSession(WorldSession* s)
+ *  Opcodes.h:90         CMSG_PLAYER_LOGIN = 0x03D
+ *  ObjectGuid.cpp:136   operator<<(ByteBuffer&, ObjectGuid const&) ? uint64
+ *  CharacterHandler.cpp:698  recvData >> playerGuid;   ???????
+ *  CharacterHandler.cpp:58   class LoginQueryHolder    <- ??cpp???1
+ *  Common.h:38/43       enum AccountTypes / SEC_ADMINISTRATOR = 3
+ *  Duration.h:30        typedef std::chrono::minutes Minutes;
+ * ============================================================================
+ */

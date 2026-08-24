@@ -1,0 +1,27 @@
+G17-B0 Windows构建v2真实日志验收
+日期：2026-08-22 Asia/Shanghai
+用户文件：G17B0_WINDOWS_BUILD_RESULT.txt
+字节数：1430
+SHA256=49dfcfe0f6de0ad9ff64b927bbb2e7eb1d728005a85a777638f636c2a85fc567
+
+已通过：
+- loader/payload SHA精确匹配；
+- 源码门PASS；
+- cmake.exe和MSBuild.exe均已找到；
+- 旧exe/PDB前像已记录；
+- CMake确实开始并输出到Found MySQL executable。
+
+关键边界：
+- 没有CMAKE_EXIT行；
+- 没有DRAGONRIDING_VCXPROJ_HITS行；
+- 没有G17B0_MSBUILD_START_UTC行；
+- 没有MSBUILD_EXIT行；
+- 因此MSBuild没有开始，不能算真实C++编译PASS或FAIL。
+
+根因：
+脚本全局ErrorActionPreference=Stop，同时用“2>&1 | ForEach-Object”直接消费native CMake输出。Windows PowerShell 5.1把native stderr包装为ErrorRecord，Stop策略在输出管道中触发catch；异常文本为空。CMake可能已经部分或完整重新生成，但结果未到CMAKE_EXIT门，必须重新安全执行。
+
+处置：
+- v2 ASCII包关闭并禁止重跑。
+- v3保留纯ASCII，新增Invoke-NativeLogged：仅在native命令局部把ErrorActionPreference设为Continue，先完整收集stdout/stderr并立即捕获LASTEXITCODE，再恢复Stop；不再用native输出直连ForEach管道。
+- Windows真实构建仍为NOT_RUN，Runtime仍为NOT_RUN。

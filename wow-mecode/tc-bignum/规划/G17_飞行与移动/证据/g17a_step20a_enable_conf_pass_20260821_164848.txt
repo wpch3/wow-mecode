@@ -1,0 +1,21 @@
+G17-A 第20A步真实Enable=1配置切换回传
+日期：2026-08-21 16:48:48（Asia/Shanghai）
+来源：用户Windows PowerShell真实环境
+性质：worldserver停服状态；仅备份并切换运行conf；未启动、未编译
+
+[OK] enable0 backup=D:\TC-Build\bin\RelWithDebInfo\worldserver.conf.d\g17_world_flight.conf.enable0_before_g17a_20260821_164848.bak sha256=a96afb09409f1a3080c62e2df7f6f02d91efc17270106b64339efa1529d30f17
+
+[OK] enabled conf sha256=712784428878560d51d6235591f23f9a46df6c36679e1505e6b0b513d9d59de1; UTF8_BOM=0; WorldFlight.Enable=1 unique
+
+[OK] G17-A STEP20A_ENABLE_CONF_PASS=True
+
+[STOP] 当前到此为止；不要启动worldserver，先完整回传本窗口输出。
+
+PS C:\Users\Administrator>
+
+证据判定：
+- 第20A步通过并关闭，禁止重复配置切换。
+- 默认关闭原件备份已创建，SHA-256精确等于锁定Enable=0镜像。
+- 当前运行conf精确等于锁定Enable=1镜像；无UTF-8 BOM；Enable=1唯一。
+- 本步未启动worldserver，未编译，未修改源码/数据库/DBC/MPQ。
+- 下一步为第20B启用后首次启动；必须补抓loaded additional conf与ready原始行，并先执行A1/A2启用烟雾验收。

@@ -1,0 +1,15 @@
+G23-P2R1 Windows运行用户确认摘要
+日期：2026-08-22（Asia/Shanghai）
+
+前置现场：P2 `.tp`分类UI点击时误报跨state会话超时，`.tp 暴风城`直接传送正常。
+P2R1修复：分类/页码无状态编码，目标按game_tele.id重查。
+用户回传：“可以了，开始下一批lua制作吧”。
+
+按该回传粒度记录：
+G23P2R1_WINDOWS_CHECK=PASS_USER_CONFIRMED
+G23P2R1_WINDOWS_APPLY=PASS_USER_CONFIRMED
+G23P2R1_RUNTIME=PASS_USER_CONFIRMED_TP_MENU
+G23P2R1_TP_CATEGORY_MENU=PASS_USER_CONFIRMED
+G23P2R1_TP_DIRECT_SEARCH=PASS_PREVIOUSLY_OBSERVED
+
+不扩写为未回传的全部分类、全部页码、全部安全门或完整传送矩阵PASS。P2R1专项链关闭，转G23-P3A Lua服务器助手与GM帮助完善。

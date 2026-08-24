@@ -1,0 +1,137 @@
+Welcome to the TrinityCore Custom Changes wiki!
+
+Here's a list of all branches, a short description about them and a link to the dynamically generated diff (thanks to GitHub branch compare). Feel free to open a PR targeting 3.3.5 or master and asking to include it as branch, or open a PR targeting any existing branch to improve it.
+
+3.3.5-base_patch compare diff changes required by the branches below
+3.3.5-passive_anticheat compare diff Passive Anticheat
+3.3.5-pvpranks compare diff PvP Ranks
+3.3.5-tele_npc_3 compare diff Tele NPC 3
+3.3.5-cfbg compare diff CrossFaction Battleground
+3.3.5-racial-trait compare diff Racial trait swap NPC
+3.3.5-aoe-loot-mail-excess compare diff AoE Loot and Mail
+3.3.5-paymaster compare diff Add Paymaster to get gold, reputation, professions and recipes
+3.3.5-nemesis_anticheat compare diff Passive Anticheat Detection for various hacks (Speedhack, Flyhack, Teleport, Jumphack, Climbhack, ZAxisHack, Waterwalk, Antiswim, IgnoreControl) with detailed Database logging
+3.3.5-lfgsolo compare diff LFG:support solo mode
+3.3.5-vas-autobalance compare diff Dungeon/Raid automatic balance depending on group size
+3.3.5-solocraft compare diff Solocraft with Flexible Values per map with damage and spell scaling to be able to solo dungeons/raids
+3.3.5-skip-dk compare diff Adjustable Module to skip the Death Knight Starter Quest Zone on new player creation so a player can go straight in to adventuring with all appropiate gear, items, and skills
+3.3.5-1vs1 compare diff 1v1 PVP Module is a 1v1 module NPC AI with Conf and Specialization restrictions implemented, Conf adjustable, Cost to fight, Completely module with no alterations of the core
+3.3.5-blink compare diff (old, not updated, not needed anymore) Improves blink so players don't fall anymore under the map
+Clicking on compare will show the modified files and clicking on diff will show a patch version of the changes, updated automatically by GitHub whenever you open the page. That's cool!
+
+https://github.com/TrinityCore/TrinityCore/tree/3.3.5 is merged weekly automatically using https://travis-ci.org/jackpoz/TrinityCoreCron/branches , for example https://travis-ci.org/jackpoz/TrinityCoreCron/builds/503044373 .
+
+   
+
+Here's a link of common TrinityCore forks not hosted here:
+
+ElunaTrinityWotlk
+3.3.5 dress npc
+3.3.5 go move
+3.3.5 multi-trainer
+3.3.5 multi-vendor
+3.3.5 object scale
+3.3.5 player item gossip
+3.3.5 reforging
+3.3.5 transmogrify
+3.3.5 transmogrify vendor
+3.3.5 NPCbots
+The catalogue
+13 projects · TrinityCore · MaNGOS · Eluna
+
+Multitrainer
+Open multiple trainer views from a single NPC on TrinityCore 3.3.5 using gossip tables or C++.
+
+trinity
+cpp
+trainer
+npc
+gossip
+
+Objscale
+Scale individual creature and gameobject spawns persistently through commands or database edits.
+
+trinity
+cpp
+creature
+gameobject
+
+AIO
+Server-client Lua communication system for Eluna that distributes addons and UI without client patches.
+
+eluna
+lua
+client
+
+Player and item gossip
+Enable gossip menus on players and items through TrinityCore C++ scripting APIs.
+
+trinity
+cpp
+gossip
+
+Multivendor
+Access multiple vendor views from one NPC using TrinityCore gossip tables or C++.
+
+trinity
+cpp
+vendor
+gossip
+
+Dress NPCs
+Preview NPC equipment and models on yourself before applying the look, for multiple TrinityCore branches.
+
+trinity
+cpp
+npc
+
+Item enchant visuals
+Add random enchant visuals to looted weapons on TrinityCore or through Eluna Lua scripts.
+
+trinity
+eluna
+lua
+items
+
+Eluna
+Lua scripting engine for World of Warcraft emulators, supporting MaNGOS, CMaNGOS, and TrinityCore.
+
+
+GOMove
+Spawn and move gameobjects remotely with mass editing tools for TrinityCore 3.3.5 through master.
+
+trinity
+cpp
+gameobject
+
+Reforging
+Exchange item stat values on 3.3.5 with a dynamic blizzlike TrinityCore reforging system.
+
+trinity
+cpp
+3.3.5
+
+Transmogrification
+Change item appearances on 3.3.5 with multiple TrinityCore versions including Legion-style account-wide visuals.
+
+trinity
+cpp
+transmog
+3.3.5
+
+Jukebox
+Music-playing NPC script for TrinityCore and MaNGOS with downloadable SQL installs.
+
+sql
+trinity
+mangos
+npc
+
+Portal Master
+SQL teleporter NPC for 3.3.5a with 130+ blizzlike faction-aware teleports for TrinityCore and MaNGOS.
+
+sql
+trinity
+mangos
+npc
+teleport

@@ -1,0 +1,23 @@
+G17-R1 client packed-MPQ target preimage policy
+Date: 2026-08-22 Asia/Shanghai
+
+This batch never overwrites an existing client patch archive or an existing
+loose patch directory. It scans patch-Z.MPQ down through patch-A.MPQ and only
+selects an absent target. Therefore the accepted target preimage is exactly:
+
+TARGET_PREIMAGE=ABSENT
+
+Existing higher-priority custom patches are read-only inspected. If one already
+contains DBFilesClient\Spell.dbc, or cannot be inspected safely, installation
+fails closed. The generated install state records the chosen target, archive
+hash, client root, client DBC hash, server DBC hash and absent-target preimage.
+Rollback removes only that exact state-owned archive after its hash is verified,
+and preserves the removed archive plus install state under uploads.
+
+The original server DBC is not an installation target and must remain:
+D:\TC-Build\bin\RelWithDebInfo\dbc\Spell.dbc
+SHA256=df44e75ef1730e363dc06f1bc5ae064299b08d2d0047e663c0a1782ed4c8d10f
+
+The already verified client-only staged postimage must be:
+SHA256=dd25091167f671764735ce88c78b66485c6d661fadf05d322574c261f6e464ea
+SIZE=48956359

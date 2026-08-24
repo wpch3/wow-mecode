@@ -1,0 +1,77 @@
+G17-A 第20B-S Enable=1启用烟雾真实回传与验收
+日期：2026-08-21（Asia/Shanghai）
+来源：用户真实worldserver与游戏环境
+性质：Enable=1后A1/A2/A9运行烟雾；worldserver已停止
+
+=== 用户回传 ===
+
+20Bs1执行后能飞行了，而且起飞移动降落完全没有问题
+
+20Bs2：
+
+A1：You are outdoors.
+
+Map: 0 (东部王国) Zone: 11 (湿地) Area: 11 (湿地) Phase: 1
+
+X: -3236.153076 Y: -2456.038818 Z: 26.230413
+
+Orientation: 2.120103
+
+grid[25,27]cell[7,3] InstanceID: 0
+
+ZoneX: 49.969711 ZoneY: 39.482506
+
+GroundZ: 15.576012 FloorZ: 15.576012 MinHeight: -500.000000 Have height data (Map: 1 VMap: 1 MMap: 1)
+
+A2：You are outdoors.
+
+Map: 1 (卡利姆多) Zone: 491 (剃刀沼泽) Area: 491 (剃刀沼泽) Phase: 1
+
+X: -4471.106934 Y: -1714.673706 Z: 101.000069
+
+Orientation: 4.281038
+
+grid[23,28]cell[4,6] InstanceID: 0
+
+ZoneX: 248.963379 ZoneY: 600.370056
+
+GroundZ: 87.150635 FloorZ: 99.697739 MinHeight: -500.000000 Have height data (Map: 1 VMap: 1 MMap: 1)
+
+A9：You are outdoors.
+
+Map: 530 (外域) Zone: 3703 (沙塔斯城) Area: 3703 (沙塔斯城) Phase: 1
+
+X: -1846.243042 Y: 5324.477539 Z: -12.428000
+
+Orientation: 0.607065
+
+grid[28,41]cell[4,7] InstanceID: 0
+
+ZoneX: 62.069378 ZoneY: 42.750839
+
+GroundZ: -100000.000000 FloorZ: -12.428153 MinHeight: -150.000000 Have height data (Map: 1 VMap: 1 MMap: 1)
+
+20Bs3：
+
+[OK] stopped; exe sha256=02bfe1e6373bf8f21b136863280ad12290407d5450ea2f844647c19f2cf7a5dd
+
+[OK] enabled conf unchanged sha256=712784428878560d51d6235591f23f9a46df6c36679e1505e6b0b513d9d59de1
+
+[OK] enable0 backup unchanged sha256=a96afb09409f1a3080c62e2df7f6f02d91efc17270106b64339efa1529d30f17
+
+[OK] G17-A STEP20B_SMOKE_POSTFLIGHT_PASS=True
+
+[STOP] 当前到此为止；不要做A3-A12，先完整回传20B-S全部结果。
+
+PS C:\Users\Administrator>
+
+=== 验收判定 ===
+
+1. A1真实位置：map 0、zone 11、area 11、户外、InstanceID 0；Enable=1后能飞，起飞/移动/降落无问题。
+2. A2真实位置：map 1、zone 491、area 491、户外、InstanceID 0；Enable=1后能飞，起飞/移动/降落无问题。
+3. A9真实位置：map 530、zone 3703、area 3703、户外、InstanceID 0；外域原版飞行继续可用。
+4. 第19B相同新二进制在Enable=0时主世界无法飞；第20A只把唯一Enable切换为1；当前map0/map1可飞构成配置生效的差分功能证据。G17源码键默认值为false，因此无需为未留存的loaded-conf控制台行重复启动。
+5. 能进入三个地点执行游戏测试证明服务器达到可连接/可游戏状态。
+6. 20B-S后检确认worldserver已停止，exe、Enable=1运行conf及Enable=0备份均未漂移。
+7. 用户未回传坐骑法术ID、单独preflight总标志及loaded-conf/ready原始行；这些字段不伪造，也不要求为已完成烟雾重启。后续安全矩阵改用实际地点与可观察行为作强制证据。
+8. 第20B-S按A1/A2/A9功能烟雾通过并关闭；禁止重复。下一步分批执行第20C安全边界，不一次混跑全部A3-A12。

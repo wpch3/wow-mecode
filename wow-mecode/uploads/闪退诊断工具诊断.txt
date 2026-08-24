@@ -1,0 +1,61 @@
+Administrator@LAPTOP-FEN36HKQ MINGW64 ~/Downloads
+$ cd /d/TrinityCore
+
+Administrator@LAPTOP-FEN36HKQ MINGW64 /d/TrinityCore (bignum-mod)
+$ bash "C:\Users\Administrator\Downloads\诊断脚本.sh"
+===================================================================
+ 检查目录: /d/TrinityCore/src
+===================================================================
+
+-------------------------------------------------------------------
+ 1. 每个 AddSC 出现几次（>2 就是重复了）
+-------------------------------------------------------------------
+
+  正常情况：声明1次 + 调用1次 = 2 次
+
+  AddSC_botrename_commandscript              2 次  [正常]
+  AddSC_pbot_autoaccept                      2 次  [正常]
+  AddSC_playerbot_commandscript              2 次  [正常]
+
+-------------------------------------------------------------------
+ 2. 具体在哪几行
+-------------------------------------------------------------------
+
+48:void AddSC_botrename_commandscript();
+82:void AddSC_pbot_autoaccept();          // step42 PlayerBot自动接受
+101:    AddSC_botrename_commandscript();
+102:    AddSC_pbot_autoaccept();           // step42 PlayerBot自动接受
+
+-------------------------------------------------------------------
+ 3. 检查是否有【两个文件】注册了同名脚本
+-------------------------------------------------------------------
+
+  botrename_commandscript 出现在这些文件里：
+    /d/TrinityCore/src/server/scripts/Commands/cs_botrename.cpp
+    /d/TrinityCore/src/server/scripts/Commands/cs_script_loader.cpp
+
+  如果出现在【两个以上 .cpp】里，说明文件被复制了两份
+
+-------------------------------------------------------------------
+ 4. 检查命令名冲突（同名命令被两个脚本注册）
+-------------------------------------------------------------------
+
+  命令 "botname" 的注册处：
+    /d/TrinityCore/src/server/scripts/Commands/cs_botrename.cpp:242:            { "botname", rbac::RBAC_PERM_COMMAND_WORLDTOOLS, false, &HandleBotName, "" },
+
+  命令 "pbot" 的注册处：
+    /d/TrinityCore/src/server/scripts/Commands/cs_playerbot.cpp:128:            { "pbot", rbac::RBAC_PERM_COMMAND_WORLDTOOLS, false, &HandlePBot, "" },
+
+
+-------------------------------------------------------------------
+ 5. 源文件编码检查（顺带查 bug2）
+-------------------------------------------------------------------
+
+  botcommands.cpp : 无BOM      [中文别名会失效]
+
+===================================================================
+ 诊断完成
+===================================================================
+
+Administrator@LAPTOP-FEN36HKQ MINGW64 /d/TrinityCore (bignum-mod)
+$

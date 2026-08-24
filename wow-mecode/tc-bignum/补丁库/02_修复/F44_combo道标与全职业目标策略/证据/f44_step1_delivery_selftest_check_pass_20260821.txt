@@ -1,0 +1,34 @@
+F44 Windows交付同步、普通/-O self-test及真实源码只读Check证据
+日期：2026-08-21（Asia/Shanghai）
+用户环境：Windows PowerShell 5.1 / Python 3.12
+
+交付ZIP：
+- 路径：C:\Users\Administrator\Downloads\F44_delivery_20260821.zip
+- SHA-256：d6e6dcb94d28bddbba82658e6ee73ba7d1af4269425e162d7043bbb89a399cae
+
+交付同步：
+- staged installer SHA-256：438842af667ce2426af2ed710f2308e3ddcab7ee9b471a46adad70918b283021
+- 旧F44目录已保留为：F44_combo道标与全职业目标策略.before_delivery_20260821_210005
+- 新F44交付目录安装完成，最终installer SHA一致。
+
+普通self-test：PASS
+- fixture ready -> apply(3) -> applied -> rollback(3) -> ready
+- F44_INSTALLER_SELF_TEST_PASS=True
+
+python -O self-test：PASS
+- fixture ready -> apply(3) -> applied -> rollback(3) -> ready
+- F44_INSTALLER_SELF_TEST_PASS=True
+
+用户真实D:\TrinityCore最终只读Check：
+- cs_combathelper.cpp state=ready SHA-256=2805de88e7a51bd20db1511b8b7e344d5abbe4216aaee357360ca29ad566e72d
+- CombatSpecData.h state=ready SHA-256=c01ab4cbe40b12cfd7f4ddf9916998ec43e6ea7bebf8f836f06dd14c4651ca9d
+- CombatSpecData.cpp state=ready SHA-256=cd0d172eb3546b36665174ea155bd8a99e5f245bb6ed3059ce7cec3a87c1ebfd
+- CHECK_STATE=ready
+- SOURCE_EDITS=0
+- F44_DELIVERY_SELF_TEST_AND_CHECK_PASS=True
+
+判定：
+1. ZIP和安装器身份通过。
+2. 普通与-O正反fixture均通过；输出中的apply/rollback仅发生于安装器临时fixture。
+3. 真实D:\TrinityCore只读Check前后保持锁定preimage，未修改源码。
+4. F44 Windows第1步关闭，禁止重复；下一步为停服、二进制备份和真实Apply。

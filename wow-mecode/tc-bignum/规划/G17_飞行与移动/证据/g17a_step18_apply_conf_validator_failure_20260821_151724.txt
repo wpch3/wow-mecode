@@ -1,0 +1,29 @@
+G17-A 第18步用户聊天回传转录：Apply成功后conf文本行验证未出最终PASS
+日期：2026-08-21 15:17:24（Asia/Shanghai）
+性质：用户在聊天中粘贴的PowerShell输出；不是原始附件。
+
+[OK] binary backup=D:\TC-Build\bin\RelWithDebInfo\worldserver.exe.before_g17a_20260821_151724.bak
+[OK] binary backup=D:\TC-Build\bin\RelWithDebInfo\worldserver.pdb.before_g17a_20260821_151724.bak
+[OK] Created backup: D:\TrinityCore\src\server\game\Spells\SpellInfo.cpp.g17a.bak
+[OK] Applied G17-A SpellInfo.cpp: size=182275 sha256=537e5c350baa5f4a90bd0ec38c6b6858360e287aeabd75ab54050b4432e50755
+[OK] APPLY_CHANGED_FILES=1
+[INFO] DBC/MPQ/config/database edits=0
+
+首次部署必须且只能有一条WorldFlight.Enable = 0
+所在位置 行:58 字符: 9
++         throw "首次部署必须且只能有一条WorldFlight.Enable = 0"
++         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : OperationStopped: (首次部署必须且只能有一条WorldFlight.Enable = 0:String) [], RuntimeException
+    + FullyQualifiedErrorId : 首次部署必须且只能有一条WorldFlight.Enable = 0
+
+状态判定：
+- 真实SpellInfo.cpp Apply已经成功，不能重跑原第18步。
+- 真实源码备份已经创建。
+- 二进制/PDB备份已经创建。
+- 原脚本在抛错前已经完成conf复制并通过SHA-256精确校验；否则会先抛“运行conf哈希不符”。
+- 缺少的是最后的文本行断言和总PASS标志，不应据此回滚或编译。
+- 当前只运行统一入口第18R步只读恢复验证，核对postimage、源码备份、conf哈希/BOM/唯一Enable行。
+
+STEP18_APPLY_EXECUTED=True
+STEP18_FINAL_MARKER_MISSING=True
+NEXT_GATE=Step18R read-only recovery verification

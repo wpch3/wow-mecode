@@ -1,0 +1,44 @@
+G23-P0 Windows真实只读基线首次结果（报告待回传分析）
+日期：2026-08-22（Asia/Shanghai）
+
+【活动进程身份】
+active PID=5304
+worldserver.exe SHA-256=07a8f95259a6d46ab5d46720e5b919fc5cc60f7e81086b81e2748e7d1e1a86c1
+说明：PID由此前16556变为5304，但exe哈希仍是锁定F44R1新二进制；不能仅凭PID变化判定异常或回滚。
+
+【探针self-test】
+G23 probe positive fixture and read-only postcheck passed.
+Missing-source negative fixture did not false-pass.
+Sensitive/unrelated config values are not captured.
+G23 baseline probe self-test passed.
+
+【真实报告】
+path=C:\Users\Administrator\Downloads\workspace\uploads\g23_baseline_20260822_001210.txt
+sha256=c17aac62a3b6f0370b4f441fbcedbb742cc6d8159b93f04d8c8a2cb75b1d6dbe
+G23 source/config/lua/database edits=0
+G23_BASELINE_CAPTURE_PASS=False
+probe exit code=2
+PowerShell包装器按设计停止，未继续复现或修改。
+
+【当前允许结论】
+- 探针自身正反fixture通过。
+- Windows真实报告已成功写出并具备锁定SHA。
+- 本轮没有源码、配置、Lua或数据库修改。
+- 总门槛False属于fail-closed，不代表探针损坏，也不代表服务器或F44R1发生回滚。
+
+【完整报告后续分析】
+- 完整报告已回传并以SHA `c17aac62...d6dbe`归档。
+- 失败子门槛已确定：v1固定要求`src/server/game/Loot/CustomAoELoot.cpp/.h`，真实文件实际位于`src/server/game/Custom/CustomAoELoot.cpp/.h`。
+- `LootHandler.cpp`及五个关键挂点均存在；因此False是探针路径兼容缺口，不是模块文件缺失、回滚或自动拾取运行根因。
+- 报告还证明运行目录有`lua_scripts/extensions/ObjectVariables.ext`相关历史错误，但v1未捕获`.ext`全文且日志被旧错误前300条截断，须用P0R定向补齐。
+
+【下一步】
+禁止重跑v1；只运行新`probe_g23_p0r_actual_paths.py`，自动发现真实Custom路径，并捕获`.lua/.ext`与最新日志。仍不Apply、编译、reload、调整AoELoot配置或执行复现矩阵。
+
+G23_P0_REPORT_CREATED=True
+G23_P0_REPORT_SHA256=c17aac62a3b6f0370b4f441fbcedbb742cc6d8159b93f04d8c8a2cb75b1d6dbe
+G23_P0_BASELINE_CAPTURE_PASS=False
+G23_P0_EDITS=0
+G23_P0_FULL_REPORT_RECEIVED=True
+G23_P0_FALSE_CAUSE=PROBE_FIXED_PATH_MISMATCH
+G23_P0R_REQUIRED=True

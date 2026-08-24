@@ -1,0 +1,120 @@
+G17B2R1_WINDOWS_BUILD_START
+SCOPE=SKILL2_FOUR_PHASE_FEEDBACK_SKILL3_CURVED_HANDOFF_SKILL4_TYPED_SPLINE
+RUNS_SQL=True
+DATABASE=world
+MODIFIES_CLIENT=False
+R5_CLIENT_STATE_MODIFIED=False
+PYTHON=C:\Users\Administrator\AppData\Local\Programs\Python\Python312\python.exe
+PACKAGE_TEST|G17B2R1_PACKAGE_SELFTEST=PASS
+PACKAGE_TEST|PACKAGE_FILES=18
+PACKAGE_TEST|PRE_SHA256=8b47a5b507bc281198363972e10f91ab0ed3784ad920cf810bd20eacfb6ec1d5
+PACKAGE_TEST|POST_SHA256=ff185d9987b8f4457d8380e1c662cd0313b33a7ae4be6b82974e7702d1fdc4fc
+PACKAGE_TEST|SAFE_ROLLBACK_SHA256=e298a856edcf366b09934c3635ea8493b6d4e529d9fa2dbf2de2bce77b5b0203
+PACKAGE_TEST_EXIT=0
+UNIT_TEST|test_17_launch_feedback_exists (__main__.TestBoostExperience.test_17_launch_feedback_exists) ... ok
+UNIT_TEST|test_18_sustained_feedback_is_periodic (__main__.TestBoostExperience.test_18_sustained_feedback_is_periodic) ... ok
+UNIT_TEST|test_19_top_speed_feedback_exists (__main__.TestBoostExperience.test_19_top_speed_feedback_exists) ... ok
+UNIT_TEST|test_20_shutdown_feedback_exists (__main__.TestBoostExperience.test_20_shutdown_feedback_exists) ... ok
+UNIT_TEST|test_21_recast_is_blocked_while_active (__main__.TestBoostExperience.test_21_recast_is_blocked_while_active) ... ok
+UNIT_TEST|test_22_hard_cap_remains_1200_percent (__main__.TestBoostExperience.test_22_hard_cap_remains_1200_percent) ... ok
+UNIT_TEST|test_23_boost_can_reach_top_phase_before_four_seconds (__main__.TestBoostExperience.test_23_boost_can_reach_top_phase_before_four_seconds) ... ok
+UNIT_TEST|test_24_no_boost_aura_multiplier (__main__.TestBoostExperience.test_24_no_boost_aura_multiplier) ... ok
+UNIT_TEST|test_25_climb_uses_multi_point_spline (__main__.TestCurvedClimbAndSteering.test_25_climb_uses_multi_point_spline) ... ok
+UNIT_TEST|test_26_climb_no_longer_uses_jump (__main__.TestCurvedClimbAndSteering.test_26_climb_no_longer_uses_jump) ... ok
+UNIT_TEST|test_27_first_path_point_is_reserved (__main__.TestCurvedClimbAndSteering.test_27_first_path_point_is_reserved) ... ok
+UNIT_TEST|test_28_yaw_delta_is_bounded (__main__.TestCurvedClimbAndSteering.test_28_yaw_delta_is_bounded) ... ok
+UNIT_TEST|test_29_heading_transition_has_no_corner (__main__.TestCurvedClimbAndSteering.test_29_heading_transition_has_no_corner) ... ok
+UNIT_TEST|test_30_climb_preserves_forward_and_up (__main__.TestCurvedClimbAndSteering.test_30_climb_preserves_forward_and_up) ... ok
+UNIT_TEST|test_31_climb_collision_fallbacks_exist (__main__.TestCurvedClimbAndSteering.test_31_climb_collision_fallbacks_exist) ... ok
+UNIT_TEST|test_32_normal_handoff_does_not_clear_finished_spline (__main__.TestCurvedClimbAndSteering.test_32_normal_handoff_does_not_clear_finished_spline) ... ok
+UNIT_TEST|test_33_high_speed_turn_rate_is_not_amplified (__main__.TestCurvedClimbAndSteering.test_33_high_speed_turn_rate_is_not_amplified) ... ok
+UNIT_TEST|test_01_original_is_exact_b2_preimage (__main__.TestFrozenInputs.test_01_original_is_exact_b2_preimage) ... ok
+UNIT_TEST|test_02_payload_has_frozen_postimage_hash (__main__.TestFrozenInputs.test_02_payload_has_frozen_postimage_hash) ... ok
+UNIT_TEST|test_03_safe_rollback_has_frozen_hash (__main__.TestFrozenInputs.test_03_safe_rollback_has_frozen_hash) ... ok
+UNIT_TEST|test_04_project_dbc_evidence_passes (__main__.TestFrozenInputs.test_04_project_dbc_evidence_passes) ... ok
+UNIT_TEST|test_05_world_collision_evidence_passes (__main__.TestFrozenInputs.test_05_world_collision_evidence_passes) ... ok
+UNIT_TEST|test_06_safe_dummy_is_active_constant (__main__.TestLandingCommand.test_06_safe_dummy_is_active_constant) ... ok
+UNIT_TEST|test_07_dummy_has_no_spell_visual (__main__.TestLandingCommand.test_07_dummy_has_no_spell_visual) ... ok
+UNIT_TEST|test_08_dummy_has_only_dummy_effect (__main__.TestLandingCommand.test_08_dummy_has_only_dummy_effect) ... ok
+UNIT_TEST|test_09_dummy_has_zhcn_landing_name (__main__.TestLandingCommand.test_09_dummy_has_zhcn_landing_name) ... ok
+UNIT_TEST|test_10_known_bad_parachute_id_absent_from_active_source (__main__.TestLandingCommand.test_10_known_bad_parachute_id_absent_from_active_source) ... ok
+UNIT_TEST|test_11_known_bad_parachute_id_absent_from_safe_rollback (__main__.TestLandingCommand.test_11_known_bad_parachute_id_absent_from_safe_rollback) ... ok
+UNIT_TEST|test_12_script_guard_precedes_default_suppression (__main__.TestLandingCommand.test_12_script_guard_precedes_default_suppression) ... ok
+UNIT_TEST|test_13_world_action_bar_migrates_to_dummy (__main__.TestLandingCommand.test_13_world_action_bar_migrates_to_dummy) ... ok
+UNIT_TEST|test_14_world_binding_migrates_to_dummy (__main__.TestLandingCommand.test_14_world_binding_migrates_to_dummy) ... ok
+UNIT_TEST|test_15_world_migration_is_idempotent_and_guarded (__main__.TestLandingCommand.test_15_world_migration_is_idempotent_and_guarded) ... ok
+UNIT_TEST|test_16_rollback_keeps_safety_floor (__main__.TestLandingCommand.test_16_rollback_keeps_safety_floor) ... ok
+UNIT_TEST|test_45_apply_is_strict_and_idempotent (__main__.TestSourceLifecycle.test_45_apply_is_strict_and_idempotent) ... ok
+UNIT_TEST|test_46_apply_preserves_forensic_preimage (__main__.TestSourceLifecycle.test_46_apply_preserves_forensic_preimage) ... ok
+UNIT_TEST|test_47_rollback_uses_safe_floor_and_is_idempotent (__main__.TestSourceLifecycle.test_47_rollback_uses_safe_floor_and_is_idempotent) ... ok
+UNIT_TEST|test_48_reapply_from_safe_floor_succeeds (__main__.TestSourceLifecycle.test_48_reapply_from_safe_floor_succeeds) ... ok
+UNIT_TEST|test_49_unknown_sha_is_rejected_without_writes (__main__.TestSourceLifecycle.test_49_unknown_sha_is_rejected_without_writes) ... ok
+UNIT_TEST|test_34_all_landings_use_custom_spline (__main__.TestTypedLanding.test_34_all_landings_use_custom_spline) ... ok
+UNIT_TEST|test_35_magic_is_orientation_fixed (__main__.TestTypedLanding.test_35_magic_is_orientation_fixed) ... ok
+UNIT_TEST|test_36_dragon_has_longest_slope (__main__.TestTypedLanding.test_36_dragon_has_longest_slope) ... ok
+UNIT_TEST|test_37_mechanical_has_typed_thrust (__main__.TestTypedLanding.test_37_mechanical_has_typed_thrust) ... ok
+UNIT_TEST|test_38_beast_bad_fire_kit_is_absent (__main__.TestTypedLanding.test_38_beast_bad_fire_kit_is_absent) ... ok
+UNIT_TEST|test_39_beast_pounce_has_arc (__main__.TestTypedLanding.test_39_beast_pounce_has_arc) ... ok
+UNIT_TEST|test_40_landing_checks_forward_and_side_options (__main__.TestTypedLanding.test_40_landing_checks_forward_and_side_options) ... ok
+UNIT_TEST|test_41_high_altitude_landing_is_segmented (__main__.TestTypedLanding.test_41_high_altitude_landing_is_segmented) ... ok
+UNIT_TEST|test_42_landing_timeout_restores_control (__main__.TestTypedLanding.test_42_landing_timeout_restores_control) ... ok
+UNIT_TEST|test_43_contact_normalizes_before_exit (__main__.TestTypedLanding.test_43_contact_normalizes_before_exit) ... ok
+UNIT_TEST|test_44_visuals_are_one_shot_kits_not_auras (__main__.TestTypedLanding.test_44_visuals_are_one_shot_kits_not_auras) ... ok
+UNIT_TEST|test_50_legacy_state_migrates_to_single_safe_state (__main__.TestWorldMigrationModel.test_50_legacy_state_migrates_to_single_safe_state) ... ok
+UNIT_TEST|test_51_repeat_execution_is_idempotent (__main__.TestWorldMigrationModel.test_51_repeat_execution_is_idempotent) ... ok
+UNIT_TEST|test_52_foreign_slot_conflict_is_protected_without_writes (__main__.TestWorldMigrationModel.test_52_foreign_slot_conflict_is_protected_without_writes) ... ok
+UNIT_TEST|System.Management.Automation.RemoteException
+UNIT_TEST|----------------------------------------------------------------------
+UNIT_TEST|Ran 52 tests in 4.179s
+UNIT_TEST|System.Management.Automation.RemoteException
+UNIT_TEST|OK
+UNIT_TEST_EXIT=0
+SOURCE_SHA256_BEFORE=8b47a5b507bc281198363972e10f91ab0ed3784ad920cf810bd20eacfb6ec1d5
+SOURCE_APPLY|G17B2R1_SOURCE_STATE=READY_B2_PREIMAGE
+SOURCE_APPLY|TARGET_SHA256=8b47a5b507bc281198363972e10f91ab0ed3784ad920cf810bd20eacfb6ec1d5
+SOURCE_APPLY|FORENSIC_BACKUP=D:\TrinityCore\src\server\scripts\Commands\cs_dragonriding.cpp.g17b2r1.b2-preimage
+SOURCE_APPLY|G17B2R1_SOURCE_APPLY=PASS
+SOURCE_APPLY_EXIT=0
+SOURCE_SHA256_AFTER=ff185d9987b8f4457d8380e1c662cd0313b33a7ae4be6b82974e7702d1fdc4fc
+G17B2R1_SOURCE_APPLY_GATE=PASS
+WORLD_CONF=D:\TC-Build\bin\RelWithDebInfo\worldserver.conf
+MYSQL_CLIENT=C:\Program Files\MySQL\MySQL Server 8.0\bin\mysql.exe
+WORLD_DATABASE=world
+MYSQL|G17B2R1_WORLD_MIGRATION=PASS	1	1	1	0	0
+MYSQL_EXIT=0
+G17B2R1_WORLD_SQL_GATE=PASS
+MSBUILD=D:\vs\MSBuild\Current\Bin\MSBuild.exe
+DRAGONRIDING_VCXPROJ_HITS=1
+BEFORE_EXE_SHA256=3df999e68d87ed4de9405275f250b214819254a67311d5ec069ecf12da69e50f
+BEFORE_EXE_UTC=2026-08-23T11:32:49.5976927Z
+BEFORE_PDB_UTC=2026-08-23T11:32:49.6249549Z
+BUILD_START_UTC=2026-08-24T05:38:38.4918584Z
+MSBUILD|閫傜敤浜?.NET Framework MSBuild 鐗堟湰 18.8.2+ce25c0108
+MSBUILD|
+MSBUILD|  gsoap.vcxproj -> D:\TC-Build\dep\gsoap\RelWithDebInfo\gsoap.lib
+MSBUILD|  efsw.vcxproj -> D:\TC-Build\dep\efsw\RelWithDebInfo\efsw.lib
+MSBUILD|  sfmt.vcxproj -> D:\TC-Build\dep\SFMT\RelWithDebInfo\sfmt.lib
+MSBUILD|  fmt.vcxproj -> D:\TC-Build\dep\fmt\RelWithDebInfo\fmt.lib
+MSBUILD|  lualib.vcxproj -> D:\TC-Build\bin\RelWithDebInfo\lua52.dll
+MSBUILD|  zlib.vcxproj -> D:\TC-Build\dep\zlib\RelWithDebInfo\zlib.lib
+MSBUILD|  argon2.vcxproj -> D:\TC-Build\dep\argon2\RelWithDebInfo\argon2.lib
+MSBUILD|  Detour.vcxproj -> D:\TC-Build\dep\recastnavigation\Detour\RelWithDebInfo\Detour.lib
+MSBUILD|  g3dlib.vcxproj -> D:\TC-Build\dep\g3dlite\RelWithDebInfo\g3dlib.lib
+MSBUILD|  common.vcxproj -> D:\TC-Build\src\common\RelWithDebInfo\common.lib
+MSBUILD|  database.vcxproj -> D:\TC-Build\src\server\database\RelWithDebInfo\database.lib
+MSBUILD|  shared.vcxproj -> D:\TC-Build\src\server\shared\RelWithDebInfo\shared.lib
+MSBUILD|  game.vcxproj -> D:\TC-Build\src\server\game\RelWithDebInfo\game.lib
+MSBUILD|  cs_dragonriding.cpp
+MSBUILD|  scripts.vcxproj -> D:\TC-Build\src\server\scripts\RelWithDebInfo\scripts.lib
+MSBUILD|    姝ｅ湪鍒涘缓搴?D:/TC-Build/src/server/worldserver/RelWithDebInfo/worldserver.lib 鍜屽璞?D:/TC-Build/src/server/worldserver/RelWithDebInfo/worldserver.exp
+MSBUILD|  worldserver.vcxproj -> D:\TC-Build\bin\RelWithDebInfo\worldserver.exe
+MSBUILD_EXIT=0
+DRAGONRIDING_FRESH_OBJECTS=1
+FRESH_OBJECT=D:\TC-Build\src\server\scripts\scripts.dir\RelWithDebInfo\cs_dragonriding.obj;size=2741875
+AFTER_EXE_SHA256=6a3d9d55a35e659418841ff451ccbbae850b06cbb0effc0031eb28594df2f403
+AFTER_EXE_SIZE=36816384
+AFTER_EXE_UTC=2026-08-24T05:39:13.4516077Z
+AFTER_PDB_UTC=2026-08-24T05:39:13.4781455Z
+G17B2R1_WINDOWS_BUILD_RESULT=PASS
+NEXT=Start worldserver normally and perform the short runtime acceptance in README_FIRST.txt
+RESULT_FILE=C:\Users\Administrator\Downloads\workspace\uploads\G17B2R1_WINDOWS_BUILD_RESULT.txt

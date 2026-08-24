@@ -1,0 +1,3217 @@
+﻿G23_PROBE_SCHEMA=1
+CAPTURE_UTC=2026-08-21T16:12:14.835087+00:00
+SOURCE_ROOT=D:\TrinityCore
+RUN_DIR=D:\TC-Build\bin\RelWithDebInfo
+READ_ONLY_DECLARATION=No source/config/database writes; no DB connections
+
+===== 1. GIT AND REQUIRED SOURCE IDENTITY =====
+GIT_BRANCH=bignum-mod
+GIT_HEAD=ae60f5b6f6ffe9a0426dfeb6e227712de7d6c8b7
+GIT_STATUS_BEGIN
+ M src/server/game/AI/NpcBots/bot_ai.cpp
+ M src/server/game/AI/NpcBots/bot_ai.h
+ M src/server/game/AI/NpcBots/botcommands.cpp
+ M src/server/game/AI/NpcBots/botcommon.h
+ M src/server/game/AI/NpcBots/botconfig.cpp
+ M src/server/game/AI/NpcBots/botconfig.h
+ M src/server/game/AI/NpcBots/botdatamgr.cpp
+ M src/server/game/AI/NpcBots/botgossip.h
+ M src/server/game/AI/NpcBots/botmgr.cpp
+ M src/server/game/AI/NpcBots/bottext.h
+ M src/server/game/AI/NpcBots/bpet_ai.cpp
+ M src/server/game/AI/NpcBots/bpet_ai.h
+ M src/server/game/Accounts/RBAC.h
+ M src/server/game/Chat/ChatCommands/ChatCommand.cpp
+ M src/server/game/Entities/Player/Player.cpp
+ M src/server/game/Entities/Unit/Unit.cpp
+ M src/server/game/Entities/Unit/Unit.h
+ M src/server/game/Globals/ObjectMgr.cpp
+ M src/server/game/Groups/Group.cpp
+ M src/server/game/Handlers/GroupHandler.cpp
+ M src/server/game/Handlers/LootHandler.cpp
+ M src/server/game/Handlers/PetitionsHandler.cpp
+ M src/server/game/Handlers/TradeHandler.cpp
+ M src/server/game/Maps/Map.cpp
+ M src/server/game/Server/WorldSession.cpp
+ M src/server/game/Server/WorldSession.h
+ M src/server/game/Spells/SpellEffects.cpp
+ M src/server/game/Spells/SpellInfo.cpp
+ M src/server/game/World/World.cpp
+ M src/server/game/World/World.h
+ M src/server/scripts/Commands/cs_gearset.cpp
+ M src/server/scripts/Commands/cs_modify.cpp
+ M src/server/scripts/Commands/cs_script_loader.cpp
+ M src/server/scripts/ScriptLoader.h
+?? src/server/game/AI/NpcBots/bot_companion.cpp
+?? src/server/game/AI/NpcBots/bot_companion.h
+?? src/server/game/Custom/CustomAoELoot.cpp
+?? src/server/game/Custom/CustomAoELoot.h
+?? src/server/game/Custom/CustomTransmog.cpp
+?? src/server/game/Custom/CustomTransmog.h
+?? src/server/game/Custom/cs_transmog.cpp
+?? src/server/game/Entities/Player/CustomStatPersist.cpp
+?? src/server/game/Entities/Player/CustomStatPersist.h
+?? src/server/game/Spells/CustomSpellTweak.cpp
+?? src/server/game/Spells/CustomSpellTweak.h
+?? src/server/scripts/Commands/CombatSpecData.cpp
+?? src/server/scripts/Commands/CombatSpecData.h
+?? src/server/scripts/Commands/cs_appearance.cpp
+?? src/server/scripts/Commands/cs_botdiag.cpp
+?? src/server/scripts/Commands/cs_botfind.cpp
+?? src/server/scripts/Commands/cs_botpersist.cpp
+?? src/server/scripts/Commands/cs_botrename.cpp
+?? src/server/scripts/Commands/cs_combathelper.cpp
+?? src/server/scripts/Commands/cs_dummy.cpp
+?? src/server/scripts/Commands/cs_emote.cpp
+?? src/server/scripts/Commands/cs_gmhelper.cpp
+?? src/server/scripts/Commands/cs_itemforge.cpp
+?? src/server/scripts/Commands/cs_modelfind.cpp
+?? src/server/scripts/Commands/cs_npcstate.cpp
+?? src/server/scripts/Commands/cs_playerbot.cpp
+?? src/server/scripts/Commands/cs_reloaditem.cpp
+?? src/server/scripts/Commands/cs_say.cpp
+?? src/server/scripts/Commands/cs_scene.cpp
+?? src/server/scripts/Commands/cs_spellclean.cpp
+?? src/server/scripts/Commands/cs_worldtools.cpp
+?? src/server/scripts/Commands/pbot_autoaccept.cpp
+?? src/server/scripts/Commands/pbot_autoaccept.h
+?? src/server/scripts/Custom/statpersist_hook.cpp
+GIT_STATUS_END
+REQUIRED_SOURCE_MISSING=src/server/game/Loot/CustomAoELoot.cpp
+REQUIRED_SOURCE_MISSING=src/server/game/Loot/CustomAoELoot.h
+G23_REQUIRED_SOURCE_FILES=1/3
+HOOK_COUNT #include "CustomAoELoot.h"=1
+HOOK_COUNT HandleAutostoreLootItemOpcode=1
+HOOK_COUNT HandleLootMoneyOpcode=1
+HOOK_COUNT CustomAoELoot::LootAllAround=1
+HOOK_COUNT CustomAoELoot::GatherMoneyAround=1
+HOOK_COUNT player->StoreLootItem(lootSlot, loot)=1
+G23_AOE_HOOK_MARKERS_READY=False
+
+===== 2. FULL REAL AOE LOOT SOURCE/Hooks =====
+FILE label=REAL_SOURCE; path=src/server/game/Handlers/LootHandler.cpp; bytes=20024; sha256=35ef90116a1eaf8f3a847fc4e3b4b5c9815afe6f973433d42a56ccd755d436c5; encoding=UTF-8; newline=CRLF
+----- BEGIN REAL_SOURCE src/server/game/Handlers/LootHandler.cpp -----
+/*
+ * This file is part of the TrinityCore Project. See AUTHORS file for Copyright information
+ *
+ * This program is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU General Public License as published by the
+ * Free Software Foundation; either version 2 of the License, or (at your
+ * option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+ * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+ * more details.
+ *
+ * You should have received a copy of the GNU General Public License along
+ * with this program. If not, see <http://www.gnu.org/licenses/>.
+ */
+
+#include "WorldSession.h"
+#include "Common.h"
+#include "Corpse.h"
+#include "Creature.h"
+#include "GameObject.h"
+#include "Group.h"
+#include "Item.h"
+#include "Log.h"
+#include "LootItemStorage.h"
+#include "LootMgr.h"
+#include "LootPackets.h"
+#include "CustomAoELoot.h"
+#include "Map.h"
+#include "Object.h"
+#include "ObjectAccessor.h"
+#include "Player.h"
+#include "WorldPacket.h"
+#ifdef ELUNA
+		
+#include "LuaEngine.h"
+#endif
+//npcbot
+#include "botconfig.h"
+#include "botmgr.h"
+#include "World.h"
+//end npcbot
+
+void WorldSession::HandleAutostoreLootItemOpcode(WorldPacket& recvData)
+{
+    TC_LOG_DEBUG("network", "WORLD: CMSG_AUTOSTORE_LOOT_ITEM");
+    Player* player = GetPlayer();
+    ObjectGuid lguid = player->GetLootGUID();
+    Loot* loot = nullptr;
+    uint8 lootSlot = 0;
+
+    recvData >> lootSlot;
+
+    if (lguid.IsGameObject())
+    {
+        GameObject* go = player->GetMap()->GetGameObject(lguid);
+
+        // not check distance for GO in case owned GO (fishing bobber case, for example) or Fishing hole GO
+        if (!go || ((go->GetOwnerGUID() != _player->GetGUID() && go->GetGoType() != GAMEOBJECT_TYPE_FISHINGHOLE) && !go->IsWithinDistInMap(_player)))
+        {
+            player->SendLootRelease(lguid);
+            return;
+        }
+
+        loot = &go->loot;
+    }
+    else if (lguid.IsItem())
+    {
+        Item* pItem = player->GetItemByGuid(lguid);
+
+        if (!pItem)
+        {
+            player->SendLootRelease(lguid);
+            return;
+        }
+
+        loot = &pItem->loot;
+    }
+    else if (lguid.IsCorpse())
+    {
+        Corpse* bones = ObjectAccessor::GetCorpse(*player, lguid);
+        if (!bones)
+        {
+            player->SendLootRelease(lguid);
+            return;
+        }
+
+        loot = &bones->loot;
+    }
+    else
+    {
+        Creature* creature = GetPlayer()->GetMap()->GetCreature(lguid);
+
+        bool lootAllowed = creature && creature->IsAlive() == (player->GetClass() == CLASS_ROGUE && creature->loot.loot_type == LOOT_PICKPOCKETING);
+        if (!lootAllowed || !creature->IsWithinDistInMap(_player, INTERACTION_DISTANCE))
+        {
+            player->SendLootError(lguid, lootAllowed ? LOOT_ERROR_TOO_FAR : LOOT_ERROR_DIDNT_KILL);
+            return;
+        }
+
+        loot = &creature->loot;
+    }
+
+    player->StoreLootItem(lootSlot, loot);
+
+    // ---- AoE Loot: 群体拾取周围尸体 ----
+    if (CustomAoELoot::Enabled() && lguid.IsCreatureOrVehicle())
+        if (Creature* aoeOrigin = player->GetMap()->GetCreature(lguid))
+            CustomAoELoot::LootAllAround(player, aoeOrigin);
+    // ---- end AoE Loot ----
+
+    // If player is removing the last LootItem, delete the empty container.
+    if (loot->isLooted() && lguid.IsItem())
+        player->GetSession()->DoLootRelease(lguid);
+}
+
+void WorldSession::HandleLootMoneyOpcode(WorldPacket& /*recvData*/)
+{
+    TC_LOG_DEBUG("network", "WORLD: CMSG_LOOT_MONEY");
+
+    Player* player = GetPlayer();
+    ObjectGuid guid = player->GetLootGUID();
+    if (!guid)
+        return;
+
+    Loot* loot = nullptr;
+    bool shareMoney = true;
+
+    switch (guid.GetHigh())
+    {
+        case HighGuid::GameObject:
+        {
+            GameObject* go = GetPlayer()->GetMap()->GetGameObject(guid);
+
+            // do not check distance for GO if player is the owner of it (ex. fishing bobber)
+            if (go && ((go->GetOwnerGUID() == player->GetGUID() || go->IsWithinDistInMap(player))))
+                loot = &go->loot;
+
+            break;
+        }
+        case HighGuid::Corpse:                               // remove insignia ONLY in BG
+        {
+            Corpse* bones = ObjectAccessor::GetCorpse(*player, guid);
+
+            if (bones && bones->IsWithinDistInMap(player, INTERACTION_DISTANCE))
+            {
+                loot = &bones->loot;
+                shareMoney = false;
+            }
+
+            break;
+        }
+        case HighGuid::Item:
+        {
+            if (Item* item = player->GetItemByGuid(guid))
+            {
+                loot = &item->loot;
+                shareMoney = false;
+            }
+            break;
+        }
+        case HighGuid::Unit:
+        case HighGuid::Vehicle:
+        {
+            Creature* creature = player->GetMap()->GetCreature(guid);
+            bool lootAllowed = creature && creature->IsAlive() == (player->GetClass() == CLASS_ROGUE && creature->loot.loot_type == LOOT_PICKPOCKETING);
+            if (lootAllowed && creature->IsWithinDistInMap(player, INTERACTION_DISTANCE))
+            {
+                loot = &creature->loot;
+                if (creature->IsAlive())
+                    shareMoney = false;
+            }
+            else
+                player->SendLootError(guid, lootAllowed ? LOOT_ERROR_TOO_FAR : LOOT_ERROR_DIDNT_KILL);
+            break;
+        }
+        default:
+            return;                                         // unlootable type
+    }
+
+    if (loot)
+    {
+        loot->NotifyMoneyRemoved();
+        //npcbot
+        if (shareMoney && player->GetGroup() && BotCfg::GetNpcBotMoneyShareEnabled())
+        {
+            Group* group = player->GetGroup();
+            std::vector<Player*> playersNear;
+            uint32 bots_count = 0;
+            for (GroupReference* itr = group->GetFirstMember(); itr != nullptr; itr = itr->next())
+            {
+                Player* member = itr->GetSource();
+                if (!member)
+                    continue;
+
+                if (player->IsAtGroupRewardDistance(member))
+                    playersNear.push_back(member);
+
+                if (!member->HaveBot())
+                    continue;
+
+                BotMap const* botMap = member->GetBotMgr()->GetBotMap();
+                for (auto const& kv : *botMap)
+                {
+                    Creature const* bot = kv.second;
+                    if (bot && bot->IsAlive() && bot->IsInMap(player) && (group->IsMember(kv.first) || !BotCfg::GetNpcBotMoneyShareGroupOnly()) &&
+                        (member->GetMap()->IsDungeon() || player->GetDistance(bot) <= sWorld->getFloatConfig(CONFIG_GROUP_XP_DISTANCE)))
+                        ++bots_count;
+                }
+            }
+
+            uint32 sharers_count = uint32(playersNear.size()) + bots_count;
+            uint32 goldPerPlayer = uint32(loot->gold / sharers_count);
+
+            for (std::vector<Player*>::const_iterator i = playersNear.begin(); i != playersNear.end(); ++i)
+            {
+                (*i)->ModifyMoney(goldPerPlayer);
+                (*i)->UpdateAchievementCriteria(ACHIEVEMENT_CRITERIA_TYPE_LOOT_MONEY, goldPerPlayer);
+
+                WorldPacket data(SMSG_LOOT_MONEY_NOTIFY, 4 + 1);
+                data << uint32(goldPerPlayer);
+                data << uint8(sharers_count <= 1); // Controls the text displayed in chat. 0 is "Your share is..." and 1 is "You loot..."
+                (*i)->SendDirectMessage(&data);
+            }
+        }
+        else
+        //end npcbot
+        if (shareMoney && player->GetGroup())      //item, pickpocket and players can be looted only single player
+        {
+            Group* group = player->GetGroup();
+
+            std::vector<Player*> playersNear;
+            for (GroupReference* itr = group->GetFirstMember(); itr != nullptr; itr = itr->next())
+            {
+                Player* member = itr->GetSource();
+                if (!member)
+                    continue;
+
+                if (player->IsAtGroupRewardDistance(member))
+                    playersNear.push_back(member);
+            }
+
+            uint32 goldPerPlayer = uint32((loot->gold) / (playersNear.size()));
+
+            for (std::vector<Player*>::const_iterator i = playersNear.begin(); i != playersNear.end(); ++i)
+            {
+                (*i)->ModifyMoney(goldPerPlayer);
+                (*i)->UpdateAchievementCriteria(ACHIEVEMENT_CRITERIA_TYPE_LOOT_MONEY, goldPerPlayer);
+
+                WorldPacket data(SMSG_LOOT_MONEY_NOTIFY, 4 + 1);
+                data << uint32(goldPerPlayer);
+                data << uint8(playersNear.size() <= 1); // Controls the text displayed in chat. 0 is "Your share is..." and 1 is "You loot..."
+                (*i)->SendDirectMessage(&data);
+            }
+        }
+        else
+        {
+            // ---- AoE Loot: 汇总周围尸体的金币 ----
+            if (CustomAoELoot::Enabled() && guid.IsCreatureOrVehicle())
+                if (Creature* aoeOrigin = player->GetMap()->GetCreature(guid))
+                    loot->gold += CustomAoELoot::GatherMoneyAround(player, aoeOrigin);
+            // ---- end AoE Loot ----
+
+            player->ModifyMoney(loot->gold);
+            player->UpdateAchievementCriteria(ACHIEVEMENT_CRITERIA_TYPE_LOOT_MONEY, loot->gold);
+
+            WorldPacket data(SMSG_LOOT_MONEY_NOTIFY, 4 + 1);
+            data << uint32(loot->gold);
+            data << uint8(1);   // "You loot..."
+            SendPacket(&data);
+        }
+
+#ifdef ELUNA
+        if (Eluna* e = player->GetEluna())
+            e->OnLootMoney(player, loot->gold);
+#endif			
+        loot->gold = 0;
+
+        // Delete the money loot record from the DB
+        if (loot->containerID > 0)
+            sLootItemStorage->RemoveStoredMoneyForContainer(loot->containerID);
+
+        // Delete container if empty
+        if (loot->isLooted() && guid.IsItem())
+            player->GetSession()->DoLootRelease(guid);
+    }
+}
+
+void WorldSession::HandleLootOpcode(WorldPackets::Loot::LootUnit& packet)
+{
+    TC_LOG_DEBUG("network", "WORLD: CMSG_LOOT");
+
+    // Check possible cheat
+    if (!GetPlayer()->IsAlive() || !packet.Unit.IsCreatureOrVehicle())
+        return;
+
+    // interrupt cast
+    if (GetPlayer()->IsNonMeleeSpellCast(false))
+        GetPlayer()->InterruptNonMeleeSpells(false);
+
+    GetPlayer()->RemoveAurasWithInterruptFlags(AURA_INTERRUPT_FLAG_LOOTING);
+
+    GetPlayer()->SendLoot(packet.Unit, LOOT_CORPSE);
+}
+
+void WorldSession::HandleLootReleaseOpcode(WorldPacket& recvData)
+{
+    TC_LOG_DEBUG("network", "WORLD: CMSG_LOOT_RELEASE");
+
+    // cheaters can modify lguid to prevent correct apply loot release code and re-loot
+    // use internal stored guid
+    ObjectGuid guid;
+    recvData >> guid;
+
+    ObjectGuid lguid = GetPlayer()->GetLootGUID();
+    if (!lguid.IsEmpty())
+        if (lguid == guid)
+            DoLootRelease(lguid);
+}
+
+void WorldSession::DoLootRelease(ObjectGuid lguid)
+{
+    Player  *player = GetPlayer();
+    Loot    *loot;
+
+    player->SetLootGUID(ObjectGuid::Empty);
+    player->SendLootRelease(lguid);
+
+    player->RemoveUnitFlag(UNIT_FLAG_LOOTING);
+
+    if (!player->IsInWorld())
+        return;
+
+    if (lguid.IsGameObject())
+    {
+        GameObject* go = GetPlayer()->GetMap()->GetGameObject(lguid);
+
+        // not check distance for GO in case owned GO (fishing bobber case, for example) or Fishing hole GO
+        if (!go || ((go->GetOwnerGUID() != _player->GetGUID() && go->GetGoType() != GAMEOBJECT_TYPE_FISHINGHOLE) && !go->IsWithinDistInMap(_player)))
+            return;
+
+        loot = &go->loot;
+
+        if (go->GetGoType() == GAMEOBJECT_TYPE_DOOR)
+        {
+            // locked doors are opened with spelleffect openlock, prevent remove its as looted
+            go->UseDoorOrButton();
+        }
+        else if (loot->isLooted() || go->GetGoType() == GAMEOBJECT_TYPE_FISHINGNODE)
+        {
+            if (go->GetGoType() == GAMEOBJECT_TYPE_FISHINGHOLE)
+            {
+                bool allOpensConsumed = false;
+                if (go->GetGOValue()->FishingHole.MaxOpens)
+                {
+                    // The fishing hole used once more
+                    go->AddUse();
+
+                    // If the max usage is reached, will be despawned in next tick
+                    allOpensConsumed = go->GetUseCount() >= go->GetGOValue()->FishingHole.MaxOpens;
+                }
+
+                go->SetLootState(allOpensConsumed ? GO_JUST_DEACTIVATED : GO_READY);
+            }
+            else
+                go->SetLootState(GO_JUST_DEACTIVATED);
+
+            loot->clear();
+        }
+        else
+        {
+            // not fully looted object
+            go->SetLootState(GO_ACTIVATED, player);
+
+            // if the round robin player release, reset it.
+            if (player->GetGUID() == loot->roundRobinPlayer)
+                loot->roundRobinPlayer.Clear();
+        }
+    }
+    else if (lguid.IsCorpse())        // ONLY remove insignia at BG
+    {
+        Corpse* corpse = ObjectAccessor::GetCorpse(*player, lguid);
+        if (!corpse || !corpse->IsWithinDistInMap(_player, INTERACTION_DISTANCE))
+            return;
+
+        loot = &corpse->loot;
+
+        if (loot->isLooted())
+        {
+            loot->clear();
+            corpse->RemoveFlag(CORPSE_FIELD_DYNAMIC_FLAGS, CORPSE_DYNFLAG_LOOTABLE);
+        }
+    }
+    else if (lguid.IsItem())
+    {
+        Item* pItem = player->GetItemByGuid(lguid);
+        if (!pItem)
+            return;
+
+        ItemTemplate const* proto = pItem->GetTemplate();
+
+        // destroy only 5 items from stack in case prospecting and milling
+        if (proto->HasFlag(ITEM_FLAG_IS_PROSPECTABLE) || proto->HasFlag(ITEM_FLAG_IS_MILLABLE))
+        {
+            pItem->m_lootGenerated = false;
+            pItem->loot.clear();
+
+            uint32 count = pItem->GetCount();
+
+            // >=5 checked in spell code, but will work for cheating cases also with removing from another stacks.
+            if (count > 5)
+                count = 5;
+
+            player->DestroyItemCount(pItem, count, true);
+        }
+        else
+        {
+            // Only delete item if no loot or money (unlooted loot is saved to db) or if it isn't an openable item
+            if (pItem->loot.isLooted() || !proto->HasFlag(ITEM_FLAG_HAS_LOOT))
+                player->DestroyItem(pItem->GetBagSlot(), pItem->GetSlot(), true);
+        }
+        return;                                             // item can be looted only single player
+    }
+    else
+    {
+        Creature* creature = GetPlayer()->GetMap()->GetCreature(lguid);
+
+        bool lootAllowed = creature && creature->IsAlive() == (player->GetClass() == CLASS_ROGUE && creature->loot.loot_type == LOOT_PICKPOCKETING);
+        if (!lootAllowed || !creature->IsWithinDistInMap(_player, INTERACTION_DISTANCE))
+            return;
+
+        loot = &creature->loot;
+        if (loot->isLooted())
+        {
+            creature->RemoveDynamicFlag(UNIT_DYNFLAG_LOOTABLE);
+
+            // skip pickpocketing loot for speed, skinning timer reduction is no-op in fact
+            if (!creature->IsAlive())
+                creature->AllLootRemovedFromCorpse();
+
+            loot->clear();
+        }
+        else
+        {
+            // if the round robin player release, reset it.
+            if (player->GetGUID() == loot->roundRobinPlayer)
+            {
+                loot->roundRobinPlayer.Clear();
+
+                if (Group* group = player->GetGroup())
+                    group->SendLooter(creature, nullptr);
+            }
+            // force dynflag update to update looter and lootable info
+            creature->ForceValuesUpdateAtIndex(UNIT_DYNAMIC_FLAGS);
+        }
+    }
+
+    //Player is not looking at loot list, he doesn't need to see updates on the loot list
+    loot->RemoveLooter(player->GetGUID());
+}
+
+void WorldSession::HandleLootMasterGiveOpcode(WorldPacket& recvData)
+{
+    uint8 slotid;
+    ObjectGuid lootguid, target_playerguid;
+
+    recvData >> lootguid >> slotid >> target_playerguid;
+
+    if (!_player->GetGroup() || _player->GetGroup()->GetMasterLooterGuid() != _player->GetGUID() || _player->GetGroup()->GetLootMethod() != MASTER_LOOT)
+    {
+        _player->SendLootError(lootguid, LOOT_ERROR_DIDNT_KILL);
+        return;
+    }
+
+    // player on other map
+    Player* target = ObjectAccessor::GetPlayer(*_player, target_playerguid);
+    if (!target)
+    {
+        _player->SendLootError(lootguid, LOOT_ERROR_PLAYER_NOT_FOUND);
+        return;
+    }
+
+    TC_LOG_DEBUG("network", "WorldSession::HandleLootMasterGiveOpcode (CMSG_LOOT_MASTER_GIVE, 0x02A3) Target = [{}].", target->GetName());
+
+    if (_player->GetLootGUID() != lootguid)
+    {
+        _player->SendLootError(lootguid, LOOT_ERROR_DIDNT_KILL);
+        return;
+    }
+
+    if (!_player->IsInRaidWith(target) || !_player->IsInMap(target))
+    {
+        _player->SendLootError(lootguid, LOOT_ERROR_MASTER_OTHER);
+        TC_LOG_INFO("entities.player.cheat", "MasterLootItem: Player {} tried to give an item to ineligible player {} !", GetPlayer()->GetName(), target->GetName());
+        return;
+    }
+
+    Loot* loot = nullptr;
+
+    if (GetPlayer()->GetLootGUID().IsCreatureOrVehicle())
+    {
+        Creature* creature = GetPlayer()->GetMap()->GetCreature(lootguid);
+        if (!creature)
+            return;
+
+        loot = &creature->loot;
+    }
+    else if (GetPlayer()->GetLootGUID().IsGameObject())
+    {
+        GameObject* pGO = GetPlayer()->GetMap()->GetGameObject(lootguid);
+        if (!pGO)
+            return;
+
+        loot = &pGO->loot;
+    }
+
+    if (!loot)
+        return;
+
+    if (slotid >= loot->items.size() + loot->quest_items.size())
+    {
+        TC_LOG_DEBUG("loot", "MasterLootItem: Player {} might be using a hack! (slot {}, size {})",
+            GetPlayer()->GetName(), slotid, (unsigned long)loot->items.size());
+        return;
+    }
+
+    LootItem& item = slotid >= loot->items.size() ? loot->quest_items[slotid - loot->items.size()] : loot->items[slotid];
+
+    ItemPosCountVec dest;
+    InventoryResult msg = target->CanStoreNewItem(NULL_BAG, NULL_SLOT, dest, item.itemid, item.count);
+    if (!item.AllowedForPlayer(target, true))
+        msg = EQUIP_ERR_CANT_EQUIP_EVER;
+    if (msg != EQUIP_ERR_OK)
+    {
+        if (msg == EQUIP_ERR_ITEM_MAX_COUNT)
+            _player->SendLootError(lootguid, LOOT_ERROR_MASTER_UNIQUE_ITEM);
+        else if (msg == EQUIP_ERR_INV_FULL)
+            _player->SendLootError(lootguid, LOOT_ERROR_MASTER_INV_FULL);
+        else
+            _player->SendLootError(lootguid, LOOT_ERROR_MASTER_OTHER);
+        return;
+    }
+
+    // now move item from loot to target inventory
+    Item* newitem = target->StoreNewItem(dest, item.itemid, true, item.randomPropertyId, item.GetAllowedLooters());
+    target->SendNewItem(newitem, uint32(item.count), false, false, true);
+    target->UpdateAchievementCriteria(ACHIEVEMENT_CRITERIA_TYPE_LOOT_ITEM, item.itemid, item.count);
+    target->UpdateAchievementCriteria(ACHIEVEMENT_CRITERIA_TYPE_LOOT_TYPE, loot->loot_type, item.count);
+    target->UpdateAchievementCriteria(ACHIEVEMENT_CRITERIA_TYPE_LOOT_EPIC_ITEM, item.itemid, item.count);
+
+#ifdef ELUNA
+    if (Eluna* e = target->GetEluna())
+        e->OnLootItem(target, newitem, item.count, lootguid);
+#endif			
+    // mark as looted
+    item.count = 0;
+    item.is_looted = true;
+
+    loot->NotifyItemRemoved(slotid);
+    --loot->unlootedCount;
+}
+----- END REAL_SOURCE src/server/game/Handlers/LootHandler.cpp -----
+
+===== 3. ACTIVE CONFIG KEYS AND SCRIPT PATH RESOLUTION =====
+CONFIG_FILE_COUNT=15
+CONFIG_FILE path=worldserver.conf; bytes=195256; sha256=f720fa0795e05681b0685bdc384c6af0253225d272424e5ccdb748246d5e0659; encoding=UTF-8; newline=CRLF
+CONFIG_KEY file=worldserver.conf; line=4210; Eluna.Enabled=true
+CONFIG_KEY file=worldserver.conf; line=4211; Eluna.TraceBack=true
+CONFIG_KEY file=worldserver.conf; line=4212; Eluna.ScriptReloader=true
+CONFIG_KEY file=worldserver.conf; line=4213; Eluna.ReloadCommand=true
+CONFIG_KEY file=worldserver.conf; line=4214; Eluna.UseUnsafeMethods=true
+CONFIG_KEY file=worldserver.conf; line=4215; Eluna.UseDeprecatedMethods=true
+CONFIG_KEY file=worldserver.conf; line=4216; Eluna.OnlyOnMaps=""
+CONFIG_KEY file=worldserver.conf; line=4217; Eluna.ScriptPath="D:\TC-Build\bin\RelWithDebInfo\lua_scripts"
+CONFIG_KEY file=worldserver.conf; line=4218; Eluna.RequirePaths=""
+CONFIG_KEY file=worldserver.conf; line=4219; Eluna.RequireCPaths=""
+CONFIG_KEY file=worldserver.conf; line=4220; Eluna.ReloadSecurityLevel=0
+CONFIG_FILE path=worldserver.conf.d/ahbot.conf; bytes=11295; sha256=dea17f10160d101c85b4798fe9c9d92a9571320f4ce6a002bca6de99ad2758c6; encoding=UTF-8; newline=LF
+CONFIG_FILE path=worldserver.conf.d/aoeloot.conf; bytes=2706; sha256=62b4fd7b9be98dc193f2541190ed0c0a773f419dbe550321d8679bb8f7758a08; encoding=UTF-8; newline=LF
+CONFIG_KEY file=worldserver.conf.d/aoeloot.conf; line=16; AoELoot.Enable=1
+CONFIG_KEY file=worldserver.conf.d/aoeloot.conf; line=25; AoELoot.Range=60
+CONFIG_KEY file=worldserver.conf.d/aoeloot.conf; line=42; AoELoot.InGroup=1
+CONFIG_KEY file=worldserver.conf.d/aoeloot.conf; line=51; AoELoot.SkipRollItems=1
+CONFIG_KEY file=worldserver.conf.d/aoeloot.conf; line=60; AoELoot.MailExcess=1
+CONFIG_KEY file=worldserver.conf.d/aoeloot.conf; line=66; AoELoot.MaxCorpses=50
+CONFIG_KEY file=worldserver.conf.d/aoeloot.conf; line=72; AoELoot.Announce=1
+CONFIG_FILE path=worldserver.conf.d/customspell.conf; bytes=2874; sha256=d56890ddae31a6dacc96e179c8223a45a0890186f297c917a02d60498e41e978; encoding=UTF-8; newline=LF
+CONFIG_FILE path=worldserver.conf.d/epic.conf; bytes=5347; sha256=833f8c34cd3d9cad55699f524fc1bc0c37c81f9b31eafb812e8d063886963900; encoding=UTF-8; newline=CRLF
+CONFIG_FILE path=worldserver.conf.d/g11_perception.conf; bytes=1258; sha256=7d4b9dba7d90994818433a619d813595d5fe428f5996999707596cbfe9ead5d7; encoding=UTF-8; newline=LF
+CONFIG_FILE path=worldserver.conf.d/g17_world_flight.conf; bytes=1280; sha256=712784428878560d51d6235591f23f9a46df6c36679e1505e6b0b513d9d59de1; encoding=UTF-8; newline=LF
+CONFIG_FILE path=worldserver.conf.d/gearset.conf; bytes=1983; sha256=243fbf2033481f6630d50df75479743125ec4ebe3d89b1c97c1577cfdc64154f; encoding=UTF-8; newline=LF
+CONFIG_FILE path=worldserver.conf.d/npcbot_companion.conf; bytes=2396; sha256=e3d10cd1dfb35ffc3303d15518cfde52818b0353fa8e1fa84c83130daf6848b2; encoding=UTF-8; newline=LF
+CONFIG_FILE path=worldserver.conf.d/npcbot_wandering.conf; bytes=2072; sha256=f139609013745b843a048424cccb9755e000560193c5062aa6dbea254c64f8a1; encoding=UTF-8; newline=LF
+CONFIG_FILE path=worldserver.conf.d/performance.conf; bytes=4864; sha256=59cf1f00e43f943d0d0a40009749b2b74c10f6dd41ddc1cd40ea4b887b2a668e; encoding=UTF-8; newline=CRLF
+CONFIG_FILE path=worldserver.conf.d/playerstat.conf; bytes=1336; sha256=821f41f20d2992c6c314f08fce176e3752fc0f6f4830eacf27a8892c2f58d5ba; encoding=UTF-8; newline=LF
+CONFIG_FILE path=worldserver.conf.d/speed.conf; bytes=5444; sha256=c1e4ca20be235016d5c0c3996737fa8f9c1a30d5c8f01326e8183a32396aa43d; encoding=UTF-8; newline=CRLF
+CONFIG_FILE path=worldserver.conf.d/transmog.conf; bytes=2120; sha256=0fd39e8bfb43e9f405bc84c2468a46fa73197b78c4883d840e3b225e414e3d57; encoding=UTF-8; newline=LF
+CONFIG_FILE path=worldserver.conf.d/unlimited.conf; bytes=5346; sha256=575bede460c1245a55cad3868d93fea679da9de5c7eb6d6745afc04d06698db2; encoding=UTF-8; newline=LF
+SCRIPT_PATH path=D:\TC-Build\bin\RelWithDebInfo\lua_scripts; exists=True; from_config=True
+SCRIPT_PATH path=D:\TC-Build\bin\RelWithDebInfo\data\lua_scripts; exists=False; from_config=False
+G23_SCRIPT_PATH_RESOLVED_COUNT=1
+G23_AOE_CONFIG_KEY_COUNT=7
+
+===== 4. FULL DEPLOYED LUA FILES =====
+G23_DEPLOYED_LUA_FILE_COUNT=5
+FILE label=DEPLOYED_LUA; path=lua_scripts/bignum_selftest.lua; bytes=7813; sha256=7b0ba63fa13ac6ae085deb3d611f9dc69e5d9ac8a7162c79da614d80256270e3; encoding=UTF-8; newline=LF
+----- BEGIN DEPLOYED_LUA lua_scripts/bignum_selftest.lua -----
+--[[
+=====================================================================
+  大数值改造 + Eluna 补丁 —— 自检脚本
+=====================================================================
+  用法：
+    1. 把本文件放进 worldserver.conf 里 Eluna.ScriptPath 指向的目录
+       你的配置是： data\lua_scripts
+       实际路径通常是： D:\TC-Build\bin\RelWithDebInfo\data\lua_scripts\
+    2. 服务端控制台执行： reload eluna
+       （或游戏内 .reload eluna）
+    3. 游戏内输入： .bigtest
+    4. 看聊天框输出
+
+  本脚本只读检测 + 临时改血量后立即还原，不会破坏任何数据。
+=====================================================================
+]]
+
+local COMMAND = "bigtest"
+
+local function say(p, msg) p:SendBroadcastMessage(msg) end
+local function line(p)     p:SendBroadcastMessage("|cff666666================================|r") end
+
+local function try(fn)
+    local ok, res = pcall(fn)
+    return ok, res
+end
+
+local function RunSelfTest(event, player, command)
+    if command ~= COMMAND then return end
+
+    local total, passed = 0, 0
+    local function check(cond, name, detail)
+        total = total + 1
+        if cond then
+            passed = passed + 1
+            say(player, "|cff00ff00 [OK] |r" .. name .. (detail and ("  |cff888888" .. tostring(detail) .. "|r") or ""))
+        else
+            say(player, "|cffff0000 [NG] |r" .. name .. (detail and ("  |cffffff00" .. tostring(detail) .. "|r") or ""))
+        end
+    end
+    local function info(name, val)
+        say(player, "|cff00ccff  *   |r" .. name .. "  |cffffffff" .. tostring(val) .. "|r")
+    end
+
+    line(player)
+    say(player, "|cffffcc00   大数值改造 + Eluna 自检|r")
+    line(player)
+
+    ------------------------------------------------------------------
+    -- 组 1：环境信息
+    ------------------------------------------------------------------
+    say(player, "|cffffcc00[1] 环境|r")
+    info("Lua 版本", _VERSION)
+    if GetLuaEngine then info("Eluna", GetLuaEngine()) end
+    if GetCoreName  then info("核心",  GetCoreName())  end
+
+    ------------------------------------------------------------------
+    -- 组 2：★ 补丁02 核心验证 —— uint64 不再被卡在 42 亿
+    --
+    -- 原版 bug（LuaEngine.cpp:591）：
+    --     CHECKVAL<unsigned long long> 内部错误调用 CHECKVAL<uint32>
+    --     -> 任何 > 4294967295 的 uint64 参数直接报错
+    -- 补丁改成 CHECKVAL<double> 后应能正常接受
+    --
+    -- CreateUint64(n) 正是走这条路径，是最精确的验证入口
+    ------------------------------------------------------------------
+    line(player)
+    say(player, "|cffffcc00[2] 补丁02：uint64 截断修复|r")
+
+    if not CreateUint64 then
+        say(player, "|cffff0000 [NG] |r本 Eluna 版本无 CreateUint64，跳过本组")
+    else
+        -- 基线：42亿以内，修复前后都应成功
+        local okSmall = try(function() return CreateUint64(4000000000) end)
+        check(okSmall, "CreateUint64(40亿)", "基线，应始终通过")
+
+        -- ★ 关键：超过 uint32 上限 4294967295
+        -- 未打补丁 -> 报 "value must be less than or equal to 4294967295"
+        -- 已打补丁 -> 成功
+        local okBig, errBig = pcall(function() return CreateUint64(10000000000) end)
+        check(okBig, "CreateUint64(100亿) ★补丁关键项",
+              okBig and "已突破42亿限制" or "未打补丁: " .. tostring(errBig))
+
+        local okHuge = pcall(function() return CreateUint64(1000000000000) end)
+        check(okHuge, "CreateUint64(1万亿)", okHuge and "uint64 全量可用" or "仍受限")
+
+        -- 字符串方式创建（不受 CHECKVAL 影响，用作对照组）
+        local okStr = try(function() return CreateUint64("18446744073709551615") end)
+        check(okStr, "CreateUint64(字符串最大值)", "对照组")
+    end
+
+    ------------------------------------------------------------------
+    -- 组 3：补丁01 —— 大数值属性读写
+    ------------------------------------------------------------------
+    line(player)
+    say(player, "|cffffcc00[3] 补丁01：大数值属性|r")
+
+    local origMax = player:GetMaxHealth()
+    local origCur = player:GetHealth()
+    info("当前最大生命", origMax)
+
+    local T1 = 1000000000  -- 10亿
+    local ok1 = try(function() player:SetMaxHealth(T1) end)
+    check(ok1 and player:GetMaxHealth() == T1, "SetMaxHealth(10亿)", player:GetMaxHealth())
+
+    local T2 = 4000000000  -- 40亿，接近 uint32 上限
+    local ok2 = try(function() player:SetMaxHealth(T2) end)
+    check(ok2 and player:GetMaxHealth() == T2, "SetMaxHealth(40亿)", player:GetMaxHealth())
+
+    -- 还原
+    player:SetMaxHealth(origMax)
+    player:SetHealth(origCur)
+    say(player, "|cff888888      血量已还原为 " .. origMax .. "|r")
+
+    ------------------------------------------------------------------
+    -- 组 4：数据库 —— 验证扩列后能读到大数值
+    ------------------------------------------------------------------
+    line(player)
+    say(player, "|cffffcc00[4] 数据库大数值|r")
+
+    local okDB, r = try(function()
+        local q = WorldDBQuery("SELECT stat_value1, armor, holy_res, MaxDurability FROM item_template WHERE entry = 900001")
+        if not q then return nil end
+        return { s = q:GetUInt32(0), a = q:GetUInt32(1),
+                 h = q:GetUInt32(2), d = q:GetUInt32(3) }
+    end)
+
+    if okDB and r then
+        check(r.s == 100000000,  "stat_value1 = 1亿",  r.s)
+        check(r.a == 1000000000, "armor = 10亿",       r.a)
+        check(r.h == 500000000,  "holy_res = 5亿",     r.h)
+        check(r.d == 1000000,    "MaxDurability = 100万", r.d)
+    else
+        check(false, "查询测试物品 900001", "未找到，请先执行 03_test_item.sql")
+    end
+
+    ------------------------------------------------------------------
+    -- 组 5：标准库可用性（确认 Eluna 没做沙箱限制）
+    ------------------------------------------------------------------
+    line(player)
+    say(player, "|cffffcc00[5] 标准库（确认无沙箱限制）|r")
+
+    check(type(os)      == "table",    "os 库",      os and ("time=" .. os.time()))
+    check(type(io)      == "table",    "io 库")
+    check(type(require) == "function", "require")
+    check(type(package) == "table",    "package")
+    check(type(string)  == "table",    "string 库")
+    check(type(math)    == "table",    "math 库")
+
+    ------------------------------------------------------------------
+    -- 组 6：Lua 数值精度上限
+    ------------------------------------------------------------------
+    line(player)
+    say(player, "|cffffcc00[6] Lua 数值精度|r")
+
+    -- Lua 5.2 用 double，2^53 以内整数精确
+    local p53 = 9007199254740992
+    check(p53 + 1 ~= p53 or true, "2^53 精度边界",
+          string.format("%.0f", p53) .. " (double 精确整数上限)")
+    info("说明", "属性值用到10亿完全无精度问题")
+
+    ------------------------------------------------------------------
+    -- 汇总
+    ------------------------------------------------------------------
+    line(player)
+    if passed == total then
+        say(player, "|cff00ff00   全部通过： " .. passed .. " / " .. total .. "|r")
+        say(player, "|cff00ff00   大数值改造 + Eluna 工作正常|r")
+    else
+        say(player, "|cffffff00   " .. passed .. " / " .. total .. " 项通过|r")
+        say(player, "|cffffff00   请把未通过项发给助手排查|r")
+    end
+    line(player)
+
+    return false  -- 拦截命令，避免提示"命令不存在"
+end
+
+-- 42 = PLAYER_EVENT_ON_COMMAND
+RegisterPlayerEvent(42, RunSelfTest)
+
+print("[Eluna] bignum_selftest.lua 已加载 -- 游戏内输入 .bigtest 运行自检")
+----- END DEPLOYED_LUA lua_scripts/bignum_selftest.lua -----
+FILE label=DEPLOYED_LUA; path=lua_scripts/custom_announce.lua; bytes=2777; sha256=63b756a638232bc26ed785a0824b6729511d0c69fef03a1624e283245807d238; encoding=UTF-8; newline=LF
+----- BEGIN DEPLOYED_LUA lua_scripts/custom_announce.lua -----
+--[[
+================================================================================
+    自动公告轮播  custom_announce.lua   (v2 修复版)
+================================================================================
+
+    v1 的问题：CreateLuaEvent 在脚本【顶层】直接调用。
+    Eluna 是多状态的（每张地图一个独立 Lua state），脚本加载时
+    某些 state 还没准备好定时器，会执行失败被静默跳过。
+
+    v2 改法：改成在 ON_LOGIN 事件里首次注册，并用标志位保证只注册一次。
+    这样定时器一定在 state 完全就绪之后才创建。
+
+    放置：D:\TC-Build\bin\RelWithDebInfo\lua_scripts\custom_announce.lua
+    生效：.reload eluna
+
+    【重要 · 文件名规则】
+    Eluna 会把文件名开头的数字当成 mapId（ElunaLoader.cpp:225 std::from_chars）。
+    比如 01_xxx.lua 只在 map 1 加载，02_xxx.lua 因为 map 2 不存在而永不加载。
+    所以文件名【不能以数字开头】。
+
+================================================================================
+]]
+
+local INTERVAL = 600000        -- 10 分钟
+local PREFIX   = "|cff00ccff[提示]|r "
+
+local PLAYER_EVENT_ON_LOGIN = 3
+
+-- ---------------------------------------------------------------
+-- 公告内容（改这里即可）
+-- ---------------------------------------------------------------
+local MESSAGES = {
+    "输入 |cffffff00.help2|r 查看本服全部自定义指令",
+    "输入 |cffffff00.gearset|r 打开套装系统，可按职业+装等一键配装",
+    "刷副本可以解锁整套职业套装，输入 |cffffff00.gearset progress|r 查看进度",
+    "本服物品属性上限已提升至 |cffffff0021 亿|r，不再受 32767 限制",
+    "战斗节奏已优化：GCD、读条、技能冷却均已加速，PVP 中保持原版",
+    "输入 |cffffff00.speed|r 查看当前的战斗节奏设置",
+    "可以雇佣 NPCBot 作为队友，支持五人本与团本",
+    "遇到问题或有建议，欢迎随时反馈",
+}
+
+-- ---------------------------------------------------------------
+local index   = 0
+local started = false
+
+local function DoAnnounce()
+    if #MESSAGES == 0 then
+        return
+    end
+    index = index + 1
+    if index > #MESSAGES then
+        index = 1
+    end
+    SendWorldMessage(PREFIX .. MESSAGES[index])
+end
+
+-- 首个玩家登录时才启动定时器，保证 Lua state 已完全就绪
+local function OnLogin(event, player)
+    if started then
+        return
+    end
+    started = true
+    CreateLuaEvent(DoAnnounce, INTERVAL, 0)   -- 0 = 无限重复
+end
+
+RegisterPlayerEvent(PLAYER_EVENT_ON_LOGIN, OnLogin)
+
+print("[Eluna] custom_announce.lua 已加载 -- 共 " .. #MESSAGES ..
+      " 条公告，首位玩家登录后开始轮播")
+----- END DEPLOYED_LUA lua_scripts/custom_announce.lua -----
+FILE label=DEPLOYED_LUA; path=lua_scripts/custom_daily_reward.lua; bytes=4718; sha256=204fe2428f85a3ae648a8c1d0061205e22284c16b2f9b61a0c6e5c611953dafe; encoding=UTF-8; newline=LF
+----- BEGIN DEPLOYED_LUA lua_scripts/custom_daily_reward.lua -----
+--[[
+================================================================================
+    每日登录奖励  custom_daily_reward.lua   (v2 修复版)
+================================================================================
+
+    v1 的问题：用了 os.date() / os.time()。
+    Eluna 的沙箱在某些配置下会限制 os 库，导致脚本执行失败被静默跳过。
+
+    v2 改法：
+      1. 日期改用 MySQL 的 CURDATE() 取，不依赖 Lua 的 os 库
+      2. 连续判定改用 SQL 的 DATEDIFF()，逻辑更可靠
+      3. 整条 SQL 一次搞定，减少往返
+
+    需要建表：sql/13_daily_reward.sql
+
+    放置：D:\TC-Build\bin\RelWithDebInfo\lua_scripts\custom_daily_reward.lua
+    生效：.reload eluna
+
+    【重要 · 文件名规则】
+    Eluna 会把文件名开头的数字当成 mapId（ElunaLoader.cpp:225 std::from_chars）。
+    比如 01_xxx.lua 只在 map 1 加载，02_xxx.lua 因为 map 2 不存在而永不加载。
+    所以文件名【不能以数字开头】。
+
+================================================================================
+]]
+
+local PLAYER_EVENT_ON_LOGIN = 3
+
+-- ---------------------------------------------------------------
+-- 奖励配置
+-- ---------------------------------------------------------------
+local DAILY_GOLD        = 50000    -- 每日基础 5 金（单位铜）
+local STREAK_BONUS_GOLD = 10000    -- 每多连续一天 +1 金
+local MAX_STREAK        = 30       -- 连续天数上限（防止无限叠加）
+local WEEKLY_ITEM       = 0        -- 连续7天额外物品ID，0=不发
+local WEEKLY_ITEM_COUNT = 1
+
+-- ---------------------------------------------------------------
+local function say(player, msg)
+    player:SendBroadcastMessage(msg)
+end
+
+local function line(player)
+    say(player, "|cff00ccff================================================|r")
+end
+
+-- ---------------------------------------------------------------
+local function OnLogin(event, player)
+    local guid = player:GetGUIDLow()
+
+    -- 用 SQL 取日期和天数差，不依赖 Lua 的 os 库
+    --   d0 : 今天是不是已经领过了 (1=领过)
+    --   d1 : 距上次领取过了几天 (NULL=首次)
+    --   st : 上次的连续天数
+    local q = CharDBQuery(
+        "SELECT " ..
+        "  IFNULL(last_date = DATE_FORMAT(CURDATE(),'%Y%m%d'), 0), " ..
+        "  IFNULL(DATEDIFF(CURDATE(), STR_TO_DATE(last_date,'%Y%m%d')), 999), " ..
+        "  IFNULL(streak, 0), " ..
+        "  DATE_FORMAT(CURDATE(),'%Y%m%d') " ..
+        "FROM custom_daily_reward WHERE guid = " .. guid)
+
+    local today   = nil
+    local already = false
+    local daydiff = 999
+    local streak  = 0
+
+    if q then
+        already = (q:GetUInt32(0) == 1)
+        daydiff = q:GetUInt32(1)
+        streak  = q:GetUInt32(2)
+        today   = q:GetString(3)
+    else
+        -- 没有记录 = 首次登录，单独取一次日期
+        local q2 = CharDBQuery("SELECT DATE_FORMAT(CURDATE(),'%Y%m%d')")
+        if q2 then
+            today = q2:GetString(0)
+        end
+    end
+
+    if not today then
+        return   -- 取日期失败，静默跳过，不影响登录
+    end
+
+    if already then
+        return   -- 今天已领
+    end
+
+    -- 连续判定：昨天领过就 +1，否则重置
+    if daydiff == 1 then
+        streak = streak + 1
+        if streak > MAX_STREAK then
+            streak = MAX_STREAK
+        end
+    else
+        streak = 1
+    end
+
+    -- 发放
+    local gold = DAILY_GOLD + (streak - 1) * STREAK_BONUS_GOLD
+    player:ModifyMoney(gold)
+
+    local gotItem = false
+    if WEEKLY_ITEM > 0 and (streak % 7) == 0 then
+        player:AddItem(WEEKLY_ITEM, WEEKLY_ITEM_COUNT)
+        gotItem = true
+    end
+
+    -- 写回记录
+    CharDBExecute(
+        "INSERT INTO custom_daily_reward (guid, last_date, streak, total_days) " ..
+        "VALUES (" .. guid .. ", '" .. today .. "', " .. streak .. ", 1) " ..
+        "ON DUPLICATE KEY UPDATE " ..
+        "  last_date = '" .. today .. "', " ..
+        "  streak = " .. streak .. ", " ..
+        "  total_days = total_days + 1")
+
+    -- 提示
+    line(player)
+    say(player, "|cffffcc00           每日登录奖励|r")
+    line(player)
+    say(player, "  连续登录：|cff00ff00" .. streak .. "|r 天")
+    say(player, "  获得金币：|cffffff00" .. math.floor(gold / 10000) .. "|r 金")
+    if gotItem then
+        say(player, "  |cffa335ee连续 " .. streak .. " 天额外奖励已发放！|r")
+    end
+    if streak < 7 then
+        say(player, "  |cff888888再连续登录 " .. (7 - streak) .. " 天有额外奖励|r")
+    end
+    line(player)
+end
+
+RegisterPlayerEvent(PLAYER_EVENT_ON_LOGIN, OnLogin)
+
+print("[Eluna] custom_daily_reward.lua 已加载 -- 每日登录奖励")
+----- END DEPLOYED_LUA lua_scripts/custom_daily_reward.lua -----
+FILE label=DEPLOYED_LUA; path=lua_scripts/custom_teleport.lua; bytes=12501; sha256=663759959aada88ce596bcef2f2b5a3e6ef8dc5def1dd51b7068a6d2ec8a4f45; encoding=UTF-8; newline=LF
+----- BEGIN DEPLOYED_LUA lua_scripts/custom_teleport.lua -----
+--[[
+================================================================================
+    传送系统  custom_teleport.lua
+================================================================================
+
+    用你数据库里现成的 game_tele 表（TrinityCore 自带 1000+ 个传送点）
+    做一个带中文搜索和分类的传送系统。
+
+    ── 用法 ──────────────────────────────────────────────────────────────
+      .tp                  打开传送菜单（可点击，自动分页）
+      .tp <关键词>         搜索传送点，例如 .tp 暴风
+      .tp home             提示如何回炉石点
+      .tp back             提示如何返回上一位置（用原版 .recall）
+
+    ── 特点 ──────────────────────────────────────────────────────────────
+      · 不用编译，改完 .reload eluna 立刻生效
+      · 中文/英文都能搜
+      · 按大陆/副本自动分类
+      · Gossip 严守 32 条上限，超出自动分页
+
+    ── 文件名规则（重要）─────────────────────────────────────────────────
+      Eluna 会把文件名开头的数字当成 mapId（ElunaLoader.cpp:225）。
+      所以文件名【不能以数字开头】，用 custom_ 前缀。
+
+    放置：D:\TC-Build\bin\RelWithDebInfo\lua_scripts\custom_teleport.lua
+================================================================================
+]]
+
+local PLAYER_EVENT_ON_COMMAND      = 42
+local PLAYER_EVENT_ON_GOSSIP_SELECT = 61   -- 见文件末尾说明
+
+-- Gossip 硬上限 32（GossipDef.cpp:42 有 ASSERT，超了崩服）
+local PER_PAGE  = 28      -- 28 内容 + 最多 4 导航 = 32
+local MENU_ID   = 60500
+
+-- 【重要】套装系统(cs_gearset.cpp)的 OnGossipSelect 只按 sender 过滤，
+-- 它占用 sender 1~11 且不检查 menuId。所以这里必须用高位 sender 避开，
+-- 否则点传送菜单会跳到套装系统去。
+local SENDER_CAT  = 9101
+local SENDER_TELE = 9102
+local SENDER_NAV  = 9109
+
+local NAV_PREV, NAV_NEXT, NAV_BACK, NAV_CLOSE = 1, 2, 3, 4
+
+-- ---------------------------------------------------------------
+-- 分类定义：按 mapId 归类
+-- ---------------------------------------------------------------
+local CATEGORIES = {
+    { name = "东部王国",   maps = { [0]=true } },
+    { name = "卡利姆多",   maps = { [1]=true } },
+    { name = "外域",       maps = { [530]=true } },
+    { name = "诺森德",     maps = { [571]=true } },
+    { name = "副本与团本", maps = nil },   -- nil = 其余全部归这
+}
+
+local function CatOf(mapId)
+    for i, c in ipairs(CATEGORIES) do
+        if c.maps and c.maps[mapId] then
+            return i
+        end
+    end
+    return #CATEGORIES   -- 最后一个 = 副本与团本
+end
+
+-- ---------------------------------------------------------------
+-- 会话
+-- ---------------------------------------------------------------
+local sess = {}
+
+local function S(player)
+    local g = player:GetGUIDLow()
+    if not sess[g] then
+        sess[g] = { cat = 0, page = 0, list = {} }
+    end
+    return sess[g]
+end
+
+local function say(player, msg)
+    player:SendBroadcastMessage(msg)
+end
+
+-- ---------------------------------------------------------------
+-- 查询传送点
+-- ---------------------------------------------------------------
+-- 查询传送点
+--   LEFT JOIN 中文名表：有中文就显示中文，没有就退回英文
+--   排序：有中文的排前面（按 sort），没中文的按英文名排后面
+local function QueryTele(where, limit)
+    local sql =
+        "SELECT t.id, t.name, t.map, t.position_x, t.position_y, t.position_z, " ..
+        "t.orientation, IFNULL(c.name_cn,''), IFNULL(c.sort, 99999) " ..
+        "FROM game_tele t " ..
+        "LEFT JOIN custom_tele_cn c ON c.tele_id = t.id " ..
+        (where or "") ..
+        " ORDER BY IFNULL(c.sort,99999), t.name"
+    if limit then
+        sql = sql .. " LIMIT " .. limit
+    end
+
+    local q = WorldDBQuery(sql)
+    local out = {}
+    if not q then
+        return out
+    end
+    repeat
+        local cn = q:GetString(7)
+        local en = q:GetString(1)
+        out[#out + 1] = {
+            id   = q:GetUInt32(0),
+            en   = en,
+            cn   = cn,
+            -- 显示名：有中文用中文（后面小字标英文），没有就用英文
+            name = (cn ~= "" and cn or en),
+            map  = q:GetUInt32(2),
+            x    = q:GetFloat(3),
+            y    = q:GetFloat(4),
+            z    = q:GetFloat(5),
+            o    = q:GetFloat(6),
+        }
+    until not q:NextRow()
+    return out
+end
+
+-- SQL 转义（防止名字里有单引号出问题）
+local function esc(s)
+    return (tostring(s):gsub("'", "''"))
+end
+
+-- ---------------------------------------------------------------
+-- 分类菜单
+-- ---------------------------------------------------------------
+local function ShowCategories(player)
+    local s = S(player)
+    s.cat  = 0
+    s.page = 0
+
+    player:GossipClearMenu()
+
+    for i, c in ipairs(CATEGORIES) do
+        player:GossipMenuAddItem(2, "【" .. c.name .. "】", SENDER_CAT, i)
+    end
+
+    player:GossipMenuAddItem(0,
+        "|cff888888提示：也可以用 .tp <关键词> 直接搜索|r",
+        SENDER_NAV, NAV_CLOSE)
+    player:GossipMenuAddItem(0, "|cff888888关闭|r", SENDER_NAV, NAV_CLOSE)
+
+    player:GossipSendMenu(100, player, MENU_ID)
+end
+
+-- ---------------------------------------------------------------
+-- 传送点列表（带分页）
+-- ---------------------------------------------------------------
+local function ShowList(player)
+    local s = S(player)
+    local total = #s.list
+    local maxPg = 0
+    if total > 0 then
+        maxPg = math.floor((total - 1) / PER_PAGE)
+    end
+    if s.page > maxPg then
+        s.page = maxPg
+    end
+
+    local first = s.page * PER_PAGE + 1
+    local last  = math.min(first + PER_PAGE - 1, total)
+
+    player:GossipClearMenu()
+
+    for i = first, last do
+        local t = s.list[i]
+        local label = t.name
+        -- 有中文名时，把英文名用灰色小字附在后面，方便对照
+        if t.cn ~= "" and t.cn ~= t.en then
+            label = t.cn .. "  |cff666666" .. t.en .. "|r"
+        end
+        player:GossipMenuAddItem(2, label, SENDER_TELE, i)
+    end
+
+    -- 导航最多 4 条，28 + 4 = 32 正好卡住上限
+    if s.page > 0 then
+        player:GossipMenuAddItem(0, "|cff00ccff<< 上一页|r", SENDER_NAV, NAV_PREV)
+    end
+    if s.page < maxPg then
+        player:GossipMenuAddItem(0, "|cff00ccff下一页 >> (" ..
+            (s.page + 1) .. "/" .. (maxPg + 1) .. ")|r", SENDER_NAV, NAV_NEXT)
+    end
+    player:GossipMenuAddItem(0, "|cff888888返回分类|r", SENDER_NAV, NAV_BACK)
+    player:GossipMenuAddItem(0, "|cff888888关闭|r", SENDER_NAV, NAV_CLOSE)
+
+    player:GossipSendMenu(100, player, MENU_ID)
+end
+
+-- ---------------------------------------------------------------
+-- 搜索
+-- ---------------------------------------------------------------
+local function DoSearch(player, kw)
+    -- 中英双向搜索：中文名 或 英文名 命中都算
+    local k = esc(kw)
+    local list = QueryTele(
+        "WHERE c.name_cn LIKE '%" .. k .. "%' OR t.name LIKE '%" .. k .. "%'", 200)
+
+    if #list == 0 then
+        say(player, "|cffff8800没有找到「" .. kw .. "」相关的传送点|r")
+        say(player, "试试 |cffffff00.tp|r 浏览分类菜单")
+        return
+    end
+
+    -- 只有一个结果就直接传，不用再点
+    if #list == 1 then
+        local t = list[1]
+        say(player, "|cff00ff00传送到|r " .. t.name)
+        player:Teleport(t.map, t.x, t.y, t.z, t.o)
+        return
+    end
+
+    local s = S(player)
+    s.list = list
+    s.page = 0
+    s.cat  = -1
+    say(player, "|cff00ccff找到 " .. #list .. " 个匹配「" .. kw .. "」的地点|r")
+    ShowList(player)
+end
+
+-- ---------------------------------------------------------------
+-- 命令入口
+-- ---------------------------------------------------------------
+local function OnCommand(event, player, command)
+    local cmd = tostring(command or "")
+
+    -- 只处理 tp 开头的
+    local head = cmd:match("^(%S+)")
+    if head ~= "tp" then
+        return
+    end
+
+    local arg = cmd:match("^%S+%s+(.+)$")
+
+    if not arg or arg == "" then
+        ShowCategories(player)
+        return false
+    end
+
+    arg = arg:gsub("^%s+", ""):gsub("%s+$", "")
+
+    -- 注意：这版 Eluna 没有读取炉石点的 API（只有 SetBindPoint 能写不能读），
+    -- 所以 home / back 直接引导用原版命令，不自己实现
+    if arg == "home" then
+        say(player, "回炉石点请用原版命令：|cffffff00.tele home|r 或直接使用炉石")
+        return false
+    end
+
+    if arg == "back" then
+        say(player, "返回上一个位置请用原版命令：|cffffff00.recall|r")
+        return false
+    end
+
+    DoSearch(player, arg)
+    return false   -- 拦截命令，避免提示"命令不存在"
+end
+
+-- ---------------------------------------------------------------
+-- Gossip 回调
+-- ---------------------------------------------------------------
+-- 【真实签名】对照 Eluna 源码 hooks/GossipHooks.cpp:81-88 的实际推参：
+--     HookPush(pPlayer);   -- 参数2 = player
+--     HookPush(pPlayer);   -- 参数3 = 又是 player（源码注释：just not to mess up the amount of args）
+--     HookPush(sender);    -- 参数4 = sender
+--     HookPush(action);    -- 参数5 = intid
+--     HookPush(code);      -- 参数6 = code
+--
+-- 注意：文档里写的第7个 menu_id 【实际没有推送】，永远是 nil。
+--       所以不能用 menu_id 做过滤，改用 sender 区间判断。
+--       （这也是为什么 sender 必须选一个不会撞车的高位区间）
+local function OnGossip(event, player, object, sender, intid, code)
+    -- 用 sender 区间过滤本系统的菜单（menu_id 拿不到）
+    if sender ~= SENDER_CAT and sender ~= SENDER_TELE and sender ~= SENDER_NAV then
+        return
+    end
+
+    local s = S(player)
+
+    if sender == SENDER_CAT then
+        local c = CATEGORIES[intid]
+        if not c then
+            player:GossipComplete()
+            return
+        end
+        s.cat  = intid
+        s.page = 0
+
+        -- 组装 WHERE 条件
+        local where
+        if c.maps then
+            local ids = {}
+            for m, _ in pairs(c.maps) do
+                ids[#ids + 1] = tostring(m)
+            end
+            where = "WHERE t.map IN (" .. table.concat(ids, ",") .. ")"
+        else
+            -- 副本与团本 = 排除前面几个大陆
+            local ex = {}
+            for i = 1, #CATEGORIES - 1 do
+                if CATEGORIES[i].maps then
+                    for m, _ in pairs(CATEGORIES[i].maps) do
+                        ex[#ex + 1] = tostring(m)
+                    end
+                end
+            end
+            where = "WHERE t.map NOT IN (" .. table.concat(ex, ",") .. ")"
+        end
+
+        s.list = QueryTele(where, 500)
+        player:GossipComplete()
+        ShowList(player)
+        return
+    end
+
+    if sender == SENDER_TELE then
+        local t = s.list[intid]
+        player:GossipComplete()
+        if t then
+            say(player, "|cff00ff00传送到|r " .. t.name)
+            player:Teleport(t.map, t.x, t.y, t.z, t.o)
+        end
+        return
+    end
+
+    if sender == SENDER_NAV then
+        if intid == NAV_PREV then
+            if s.page > 0 then s.page = s.page - 1 end
+            player:GossipComplete()
+            ShowList(player)
+        elseif intid == NAV_NEXT then
+            s.page = s.page + 1
+            player:GossipComplete()
+            ShowList(player)
+        elseif intid == NAV_BACK then
+            player:GossipComplete()
+            ShowCategories(player)
+        else
+            player:GossipComplete()
+        end
+        return
+    end
+end
+
+-- 登出清会话
+local function OnLogout(event, player)
+    sess[player:GetGUIDLow()] = nil
+end
+
+RegisterPlayerEvent(PLAYER_EVENT_ON_COMMAND, OnCommand)
+RegisterPlayerEvent(4, OnLogout)   -- 4 = ON_LOGOUT
+RegisterPlayerGossipEvent(MENU_ID, 2, OnGossip)   -- 2 = GOSSIP_EVENT_ON_SELECT
+
+print("[Eluna] custom_teleport.lua 已加载 -- 输入 .tp 打开传送菜单")
+----- END DEPLOYED_LUA lua_scripts/custom_teleport.lua -----
+FILE label=DEPLOYED_LUA; path=lua_scripts/custom_welcome.lua; bytes=4953; sha256=d9ffe19f46ed749c64b7447e8184009679eb0aa4a5f374580263da41b635cdfa; encoding=UTF-8; newline=LF
+----- BEGIN DEPLOYED_LUA lua_scripts/custom_welcome.lua -----
+--[[
+================================================================================
+    登录欢迎与命令导览  custom_welcome.lua
+================================================================================
+
+    作用：
+      1. 玩家登录时显示欢迎信息 + 服务器特色说明
+      2. 提供 .help2 命令，随时查看本服自定义指令清单
+      3. 首次登录的新号给额外提示
+
+    放置：D:\TC-Build\bin\RelWithDebInfo\lua_scripts\custom_welcome.lua
+    生效：游戏内 .reload eluna     （不用重启，不用编译）
+
+    说明：本脚本只用了已在你服务器实测通过的 API
+          （RegisterPlayerEvent / SendBroadcastMessage），不会踩坑。
+================================================================================
+]]
+
+local SERVER_NAME = "艾泽拉斯新纪元"
+
+-- 事件常量（Eluna PlayerEvents）
+local PLAYER_EVENT_ON_LOGIN   = 3
+local PLAYER_EVENT_ON_COMMAND = 42
+
+-- ---------------------------------------------------------------
+-- 工具
+-- ---------------------------------------------------------------
+local function say(player, msg)
+    player:SendBroadcastMessage(msg)
+end
+
+local function line(player)
+    say(player, "|cff00ccff================================================|r")
+end
+
+-- ---------------------------------------------------------------
+-- 命令清单（改这里就能更新导览内容）
+-- ---------------------------------------------------------------
+local COMMANDS = {
+    { cat = "装备与套装", items = {
+        { ".gearset",                  "打开套装主菜单（可点击）" },
+        { ".gearset <职业> <装等>",    "按职业+装等自动配装" },
+        { ".gearset preview <职业>",   "只预览不发放" },
+        { ".gearset tier on",          "开启职业套装（默认关）" },
+        { ".gearset progress",         "查看刷本解锁进度" },
+        { ".gearset book",             "套装收藏册" },
+        { ".gearset weapon <职业>",    "武器套装" },
+        { ".gearset strip",            "卸下全身装备" },
+    }},
+    { cat = "属性调整", items = {
+        { ".modify stat <属性> <值>",  "单项五维直改" },
+        { ".modify allstats <值>",     "五维一起改" },
+    }},
+    { cat = "快速生成", items = {
+        { ".add <名称>",               "智能查找并添加物品" },
+        { ".spawn <名称>",             "智能生成 NPC" },
+        { ".clean",                    "清理生成物" },
+    }},
+    { cat = "战斗节奏", items = {
+        { ".speed",                    "查看当前 GCD/读条/CD 设置" },
+        { ".speed gcd <百分比>",       "临时调整 GCD" },
+        { ".speed reset",              "恢复配置文件的值" },
+    }},
+    { cat = "自检", items = {
+        { ".bigtest",                  "大数值改造自检（17项）" },
+        { ".help2",                    "再次显示本清单" },
+    }},
+}
+
+local function ShowCommands(player)
+    line(player)
+    say(player, "|cffffcc00            " .. SERVER_NAME .. " · 自定义指令|r")
+    line(player)
+    for _, group in ipairs(COMMANDS) do
+        say(player, "|cff00ff00【" .. group.cat .. "】|r")
+        for _, c in ipairs(group.items) do
+            say(player, "  |cffffff00" .. c[1] .. "|r")
+            say(player, "      " .. c[2])
+        end
+    end
+    line(player)
+    say(player, "|cff888888提示：大部分指令支持中文，例如 .gearset 战士 264|r")
+end
+
+-- ---------------------------------------------------------------
+-- 登录事件
+-- ---------------------------------------------------------------
+local function OnLogin(event, player)
+    local name = player:GetName()
+
+    line(player)
+    say(player, "|cffffcc00        欢迎回到 " .. SERVER_NAME .. "|r")
+    line(player)
+    say(player, "  " .. name .. "，你好。")
+    say(player, "")
+    say(player, "  |cff00ff00本服特色|r")
+    say(player, "    · 物品属性上限已提升至 |cffffff0021 亿|r")
+    say(player, "    · 战斗节奏优化：GCD/读条/技能CD 均已加速")
+    say(player, "    · 套装系统：刷副本可解锁整套职业套装")
+    say(player, "    · NPCBot：可雇佣队友，支持副本与团本")
+    say(player, "")
+    say(player, "  输入 |cffffff00.help2|r 查看全部自定义指令")
+    line(player)
+end
+
+-- ---------------------------------------------------------------
+-- 命令拦截
+-- ---------------------------------------------------------------
+local function OnCommand(event, player, command)
+    local cmd = string.lower(command or "")
+    if cmd == "help2" or cmd == "帮助" then
+        ShowCommands(player)
+        return false   -- 拦截，避免提示"命令不存在"
+    end
+end
+
+RegisterPlayerEvent(PLAYER_EVENT_ON_LOGIN,   OnLogin)
+RegisterPlayerEvent(PLAYER_EVENT_ON_COMMAND, OnCommand)
+
+print("[Eluna] custom_welcome.lua 已加载 -- 登录欢迎 + .help2 命令导览")
+----- END DEPLOYED_LUA lua_scripts/custom_welcome.lua -----
+G23_LUA_DUPLICATE_FILENAME_COUNT=0
+LUA_SQL_DEPENDENCIES=custom_daily_reward,custom_tele_cn,game_tele,item_template
+LUA_REGISTRATION file=lua_scripts/bignum_selftest.lua; function=RegisterPlayerEvent; args=42, RunSelfTest)
+LUA_REGISTRATION file=lua_scripts/custom_announce.lua; function=RegisterPlayerEvent; args=PLAYER_EVENT_ON_LOGIN, OnLogin)
+LUA_REGISTRATION file=lua_scripts/custom_daily_reward.lua; function=RegisterPlayerEvent; args=PLAYER_EVENT_ON_LOGIN, OnLogin)
+LUA_REGISTRATION file=lua_scripts/custom_teleport.lua; function=RegisterPlayerEvent; args=PLAYER_EVENT_ON_COMMAND, OnCommand)
+LUA_REGISTRATION file=lua_scripts/custom_teleport.lua; function=RegisterPlayerEvent; args=4, OnLogout)   -- 4 = ON_LOGOUT
+LUA_REGISTRATION file=lua_scripts/custom_teleport.lua; function=RegisterPlayerGossipEvent; args=MENU_ID, 2, OnGossip)   -- 2 = GOSSIP_EVENT_ON_SELECT
+LUA_REGISTRATION file=lua_scripts/custom_welcome.lua; function=RegisterPlayerEvent; args=PLAYER_EVENT_ON_LOGIN,   OnLogin)
+LUA_REGISTRATION file=lua_scripts/custom_welcome.lua; function=RegisterPlayerEvent; args=PLAYER_EVENT_ON_COMMAND, OnCommand)
+
+===== 5. REAL ELUNA API/EVENT SOURCE CONTEXTS =====
+ELUNA_CONTEXT_FILE path=src/server/game/LuaEngine/ElunaConfig.cpp; sha256=d761a91d20c60ab4eefdd17a4cd950e6d89fe4741b813c70a154c38039d47f25; blocks=1
+--- CONTEXT src/server/game/LuaEngine/ElunaConfig.cpp #1 ---
+    40:     SetConfig(CONFIG_ELUNA_ENABLE_RELOAD_COMMAND, "Eluna.ReloadCommand", true);
+    41: 
+    42:     // Load strings
+    43:     SetConfig(CONFIG_ELUNA_SCRIPT_PATH, "Eluna.ScriptPath", "lua_scripts");
+    44:     SetConfig(CONFIG_ELUNA_ONLY_ON_MAPS, "Eluna.OnlyOnMaps", "");
+    45:     SetConfig(CONFIG_ELUNA_REQUIRE_PATH_EXTRA, "Eluna.RequirePaths", "");
+    46:     SetConfig(CONFIG_ELUNA_REQUIRE_CPATH_EXTRA, "Eluna.RequireCPaths", "");
+ELUNA_CONTEXT_FILE path=src/server/game/LuaEngine/hooks/GossipHooks.cpp; sha256=0ed5792f10c604aff1c7bed089a39d0a3737cc7c1264b2a802e461bab7b6c821; blocks=6
+--- CONTEXT src/server/game/LuaEngine/hooks/GossipHooks.cpp #1 ---
+    40: 
+    41: bool Eluna::OnGossipSelect(Player* pPlayer, GameObject* pGameObject, uint32 sender, uint32 action)
+    42: {
+    43:     START_HOOK_WITH_RETVAL(REGTYPE_GAMEOBJECT_GOSSIP, GOSSIP_EVENT_ON_SELECT, pGameObject->GetEntry(), false);
+    44: #if defined ELUNA_CMANGOS && ELUNA_EXPANSION < EXP_CATA
+    45:     pPlayer->GetPlayerMenu()->ClearMenus();
+    46: #else
+--- CONTEXT src/server/game/LuaEngine/hooks/GossipHooks.cpp #2 ---
+    55: 
+    56: bool Eluna::OnGossipSelectCode(Player* pPlayer, GameObject* pGameObject, uint32 sender, uint32 action, const char* code)
+    57: {
+    58:     START_HOOK_WITH_RETVAL(REGTYPE_GAMEOBJECT_GOSSIP, GOSSIP_EVENT_ON_SELECT, pGameObject->GetEntry(), false);
+    59: #if defined ELUNA_CMANGOS && ELUNA_EXPANSION < EXP_CATA
+    60:     pPlayer->GetPlayerMenu()->ClearMenus();
+    61: #else
+--- CONTEXT src/server/game/LuaEngine/hooks/GossipHooks.cpp #3 ---
+    71: 
+    72: void Eluna::HandleGossipSelectOption(Player* pPlayer, uint32 menuId, uint32 sender, uint32 action, const std::string& code)
+    73: {
+    74:     START_HOOK(REGTYPE_PLAYER_GOSSIP, GOSSIP_EVENT_ON_SELECT, menuId);
+    75: #if defined ELUNA_CMANGOS && ELUNA_EXPANSION < EXP_CATA
+    76:     pPlayer->GetPlayerMenu()->ClearMenus();
+    77: #else
+--- CONTEXT src/server/game/LuaEngine/hooks/GossipHooks.cpp #4 ---
+   105: 
+   106: void Eluna::HandleGossipSelectOption(Player* pPlayer, Item* pItem, uint32 sender, uint32 action, const std::string& code)
+   107: {
+   108:     START_HOOK(REGTYPE_ITEM_GOSSIP, GOSSIP_EVENT_ON_SELECT, pItem->GetEntry());
+   109: #if defined ELUNA_CMANGOS && ELUNA_EXPANSION < EXP_CATA
+   110:     pPlayer->GetPlayerMenu()->ClearMenus();
+   111: #else
+--- CONTEXT src/server/game/LuaEngine/hooks/GossipHooks.cpp #5 ---
+   139: 
+   140: bool Eluna::OnGossipSelect(Player* pPlayer, Creature* pCreature, uint32 sender, uint32 action)
+   141: {
+   142:     START_HOOK_WITH_RETVAL(REGTYPE_CREATURE_GOSSIP, GOSSIP_EVENT_ON_SELECT, pCreature->GetEntry(), false);
+   143: #if defined ELUNA_CMANGOS && ELUNA_EXPANSION < EXP_CATA
+   144:     auto original_menu = *pPlayer->GetPlayerMenu();
+   145:     pPlayer->GetPlayerMenu()->ClearMenus();
+--- CONTEXT src/server/game/LuaEngine/hooks/GossipHooks.cpp #6 ---
+   164: 
+   165: bool Eluna::OnGossipSelectCode(Player* pPlayer, Creature* pCreature, uint32 sender, uint32 action, const char* code)
+   166: {
+   167:     START_HOOK_WITH_RETVAL(REGTYPE_CREATURE_GOSSIP, GOSSIP_EVENT_ON_SELECT, pCreature->GetEntry(), false);
+   168: #if defined ELUNA_CMANGOS && ELUNA_EXPANSION < EXP_CATA
+   169:     auto original_menu = *pPlayer->GetPlayerMenu();
+   170:     pPlayer->GetPlayerMenu()->ClearMenus();
+ELUNA_CONTEXT_FILE path=src/server/game/LuaEngine/hooks/Hooks.h; sha256=7b18f807a45adcf7a95faaadb7e0f0d86799b8459317279de3b9ea8289672643; blocks=2
+--- CONTEXT src/server/game/LuaEngine/hooks/Hooks.h #1 ---
+   178:         X(PLAYER_EVENT_ON_LEARN_TALENTS,           39, "on_learn_talents")         \
+   179:         X(PLAYER_EVENT_ON_ENVIRONMENTAL_DEATH,     40, "on_environmental_death")   \
+   180:         X(PLAYER_EVENT_ON_TRADE_ACCEPT,            41, "on_trade_accept")          \
+   181:         X(PLAYER_EVENT_ON_COMMAND,                 42, "on_command")               \
+   182:         X(PLAYER_EVENT_ON_SKILL_CHANGE,            43, "on_skill_change")          \
+   183:         X(PLAYER_EVENT_ON_LEARN_SPELL,             44, "on_learn_spell")           \
+   184:         X(PLAYER_EVENT_ON_ACHIEVEMENT_COMPLETE,    45, "on_achievement_complete")  \
+--- CONTEXT src/server/game/LuaEngine/hooks/Hooks.h #2 ---
+   428:     // GOSSIP EVENTS
+   429:     #define GOSSIP_EVENTS_LIST(X) \
+   430:         X(GOSSIP_EVENT_ON_HELLO,  1, "on_hello") \
+   431:         X(GOSSIP_EVENT_ON_SELECT, 2, "on_select")
+   432: 
+   433:     enum GossipEvents
+   434:     {
+ELUNA_CONTEXT_FILE path=src/server/game/LuaEngine/hooks/PlayerHooks.cpp; sha256=6ac5bce740869f2f36bed4768715445409af741ff858433453d83144cf72be57; blocks=1
+--- CONTEXT src/server/game/LuaEngine/hooks/PlayerHooks.cpp #1 ---
+    93:         }
+    94:     }
+    95: 
+    96:     START_HOOK_WITH_RETVAL(PLAYER_EVENT_ON_COMMAND, true);
+    97:     HookPush(player);
+    98:     HookPush(text);
+    99:     return CallAllFunctionsBool(binding, key, true);
+   100: }
+   101: 
+   102: void Eluna::OnLootItem(Player* pPlayer, Item* pItem, uint32 count, ObjectGuid guid)
+   103: {
+   104:     START_HOOK(PLAYER_EVENT_ON_LOOT_ITEM);
+   105:     HookPush(pPlayer);
+ELUNA_CONTEXT_FILE path=src/server/game/LuaEngine/LuaEngine.h; sha256=0d0e9ac59469b91e52b89dcc190ac16cffc3bce25ea76963d44b06890cf0a99f; blocks=1
+--- CONTEXT src/server/game/LuaEngine/LuaEngine.h #1 ---
+   418:     void OnTimedEvent(int funcRef, uint32 delay, uint32 calls, WorldObject* obj);
+   419:     bool OnCommand(Player* player, const char* text);
+   420:     void OnWorldUpdate(uint32 diff);
+   421:     void OnLootItem(Player* pPlayer, Item* pItem, uint32 count, ObjectGuid guid);
+   422:     void OnLootMoney(Player* pPlayer, uint32 amount);
+   423:     void OnFirstLogin(Player* pPlayer);
+   424:     void OnEquip(Player* pPlayer, Item* pItem, uint8 bag, uint8 slot);
+ELUNA_CONTEXT_FILE path=src/server/game/LuaEngine/methods/AzerothCore/ElunaQueryMethods.h; sha256=498447e474a18f1c14d97ff617892539d2c4d59996de54c779cff3ab7836dd33; blocks=1
+--- CONTEXT src/server/game/LuaEngine/methods/AzerothCore/ElunaQueryMethods.h #1 ---
+    12: /***
+    13:  * The result of a database query.
+    14:  *
+    15:  * E.g. the return value of [Global:WorldDBQuery].
+    16:  *
+    17:  * Inherits all methods from: none
+    18:  */
+ELUNA_CONTEXT_FILE path=src/server/game/LuaEngine/methods/AzerothCore/GlobalMethods.h; sha256=827734b7abd2b393ed3e99eba8a50c7ac0f29e0b8310ee03c88958e7713ff92c; blocks=21
+--- CONTEXT src/server/game/LuaEngine/methods/AzerothCore/GlobalMethods.h #1 ---
+   654:      *
+   655:      * @return function cancel : a function that cancels the binding when called
+   656:      */
+   657:     int RegisterServerEvent(Eluna* E)
+   658:     {
+   659:         return RegisterEventHelper(E, Hooks::REGTYPE_SERVER);
+   660:     }
+--- CONTEXT src/server/game/LuaEngine/methods/AzerothCore/GlobalMethods.h #2 ---
+   728:      *
+   729:      * @return function cancel : a function that cancels the binding when called
+   730:      */
+   731:     int RegisterPlayerEvent(Eluna* E)
+   732:     {
+   733:         return RegisterEventHelper(E, Hooks::REGTYPE_PLAYER);
+   734:     }
+--- CONTEXT src/server/game/LuaEngine/methods/AzerothCore/GlobalMethods.h #3 ---
+  1047:      *
+  1048:      * @return function cancel : a function that cancels the binding when called
+  1049:      */
+  1050:     int RegisterPlayerGossipEvent(Eluna* E)
+  1051:     {
+  1052:         return RegisterEntryHelper(E, Hooks::REGTYPE_PLAYER_GOSSIP);
+  1053:     }
+--- CONTEXT src/server/game/LuaEngine/methods/AzerothCore/GlobalMethods.h #4 ---
+  1263:      * The query is always executed synchronously
+  1264:      *   (i.e. execution halts until the query has finished and then results are returned).
+  1265:      *
+  1266:      *     local Q = WorldDBQuery("SELECT entry, name FROM creature_template LIMIT 10")
+  1267:      *     if Q then
+  1268:      *         repeat
+  1269:      *             local entry, name = Q:GetUInt32(0), Q:GetString(1)
+--- CONTEXT src/server/game/LuaEngine/methods/AzerothCore/GlobalMethods.h #5 ---
+  1276:      * @param string sql : query to execute
+  1277:      * @return [ElunaQuery] results or nil if no rows found or nil if no rows found
+  1278:      */
+  1279:     int WorldDBQuery(Eluna* E)
+  1280:     {
+  1281:         const char* query = E->CHECKVAL<const char*>(1);
+  1282: 
+--- CONTEXT src/server/game/LuaEngine/methods/AzerothCore/GlobalMethods.h #6 ---
+  1293:      * Executes a SQL query on the world database.
+  1294:      *
+  1295:      * The query may be executed *asynchronously* (at a later, unpredictable time).
+  1296:      * If you need to execute the query synchronously, use [Global:WorldDBQuery] instead.
+  1297:      *
+  1298:      * Any results produced are ignored.
+  1299:      * If you need results from the query, use [Global:WorldDBQuery] instead.
+  1300:      *
+  1301:      *     WorldDBExecute("DELETE FROM my_table")
+  1302:      *
+  1303:      * @param string sql : query to execute
+  1304:      */
+  1305:     int WorldDBExecute(Eluna* E)
+  1306:     {
+  1307:         const char* query = E->CHECKVAL<const char*>(1);
+  1308:         WorldDatabase.Execute(query);
+--- CONTEXT src/server/game/LuaEngine/methods/AzerothCore/GlobalMethods.h #7 ---
+  1316:      * The query is executed asynchronously, and the provided Lua function is called when the query completes.
+  1317:      * The callback function parameter is the query result (an [ElunaQuery] or nil if no rows found).
+  1318:      *
+  1319:      *     WorldDBQueryAsync("SELECT entry, name FROM creature_template LIMIT 10", function(results)
+  1320:      *        if results then
+  1321:      *            repeat
+  1322:      *                local entry, name = results:GetUInt32(0), results:GetString(1)
+--- CONTEXT src/server/game/LuaEngine/methods/AzerothCore/GlobalMethods.h #8 ---
+  1328:      * @param string sql : query to execute asynchronously
+  1329:      * @param function callback : the callback function to be called with the query results
+  1330:      */
+  1331:     int WorldDBQueryAsync(Eluna* E)
+  1332:     {
+  1333:         const char* query = E->CHECKVAL<const char*>(1);
+  1334:         luaL_checktype(E->L, 2, LUA_TFUNCTION);
+--- CONTEXT src/server/game/LuaEngine/methods/AzerothCore/GlobalMethods.h #9 ---
+  1370:      * The query is always executed synchronously
+  1371:      *   (i.e. execution halts until the query has finished and then results are returned).
+  1372:      *
+  1373:      * For an example see [Global:WorldDBQuery].
+  1374:      *
+  1375:      * @warning This method is flagged as **unsafe** and is **disabled by default**. Use with caution, or transition to Async queries.
+  1376:      * 
+  1377:      * @param string sql : query to execute
+  1378:      * @return [ElunaQuery] results or nil if no rows found
+  1379:      */
+  1380:     int CharDBQuery(Eluna* E)
+  1381:     {
+  1382:         const char* query = E->CHECKVAL<const char*>(1);
+  1383: 
+--- CONTEXT src/server/game/LuaEngine/methods/AzerothCore/GlobalMethods.h #10 ---
+  1394:      * Executes a SQL query on the character database.
+  1395:      *
+  1396:      * The query may be executed *asynchronously* (at a later, unpredictable time).
+  1397:      * If you need to execute the query synchronously, use [Global:CharDBQuery] instead.
+  1398:      *
+  1399:      * Any results produced are ignored.
+  1400:      * If you need results from the query, use [Global:CharDBQuery] instead.
+  1401:      *
+  1402:      *     CharDBExecute("DELETE FROM my_table")
+  1403:      *
+  1404:      * @param string sql : query to execute
+  1405:      */
+  1406:     int CharDBExecute(Eluna* E)
+  1407:     {
+  1408:         const char* query = E->CHECKVAL<const char*>(1);
+  1409:         CharacterDatabase.Execute(query);
+--- CONTEXT src/server/game/LuaEngine/methods/AzerothCore/GlobalMethods.h #11 ---
+  1416:      * The query is executed asynchronously, and the provided Lua function is called when the query completes.
+  1417:      * The callback function parameter is the query result (an [ElunaQuery] or nil if no rows found).
+  1418:      *
+  1419:      * For an example see [Global:WorldDBQueryAsync].
+  1420:      *
+  1421:      * @param string sql : query to execute asynchronously
+  1422:      * @param function callback : the callback function to be called with the query results
+  1423:      */
+  1424:     int CharDBQueryAsync(Eluna* E)
+  1425:     {
+  1426:         const char* query = E->CHECKVAL<const char*>(1);
+  1427:         luaL_checktype(E->L, 2, LUA_TFUNCTION);
+--- CONTEXT src/server/game/LuaEngine/methods/AzerothCore/GlobalMethods.h #12 ---
+  1463:      * The query is always executed synchronously
+  1464:      *   (i.e. execution halts until the query has finished and then results are returned).
+  1465:      *
+  1466:      * For an example see [Global:WorldDBQuery].
+  1467:      *
+  1468:      * @warning This method is flagged as **unsafe** and is **disabled by default**. Use with caution, or transition to Async queries.
+  1469:      * 
+--- CONTEXT src/server/game/LuaEngine/methods/AzerothCore/GlobalMethods.h #13 ---
+  1509:      * The query is executed asynchronously, and the provided Lua function is called when the query completes.
+  1510:      * The callback function parameter is the query result (an [ElunaQuery] or nil if no rows found).
+  1511:      *
+  1512:      * For an example see [Global:WorldDBQueryAsync].
+  1513:      *
+  1514:      * @param string sql : query to execute asynchronously
+  1515:      * @param function callback : the callback function to be called with the query results
+--- CONTEXT src/server/game/LuaEngine/methods/AzerothCore/GlobalMethods.h #14 ---
+  1568:      * @param uint32 repeats = 1 : how many times for the event to repeat, 0 is infinite
+  1569:      * @return int eventId : unique ID for the timed event used to cancel it or nil
+  1570:      */
+  1571:     int CreateLuaEvent(Eluna* E)
+  1572:     {
+  1573:         luaL_checktype(E->L, 1, LUA_TFUNCTION);
+  1574:         uint32 min, max;
+--- CONTEXT src/server/game/LuaEngine/methods/AzerothCore/GlobalMethods.h #15 ---
+  2945:      *
+  2946:      * @proto ()
+  2947:      * @proto (event_type)
+  2948:      * @param uint32 event_type : the event whose handlers will be cleared, see [Global:RegisterPlayerEvent]
+  2949:      */
+  2950:     int ClearPlayerEvents(Eluna* E)
+  2951:     {
+--- CONTEXT src/server/game/LuaEngine/methods/AzerothCore/GlobalMethods.h #16 ---
+  2974:      * @proto (entry)
+  2975:      * @proto (entry, event_type)
+  2976:      * @param uint32 entry : the low GUID of a [Player] whose handlers will be cleared
+  2977:      * @param uint32 event_type : the event whose handlers will be cleared, see [Global:RegisterPlayerGossipEvent]
+  2978:      */
+  2979:     int ClearPlayerGossipEvents(Eluna* E)
+  2980:     {
+--- CONTEXT src/server/game/LuaEngine/methods/AzerothCore/GlobalMethods.h #17 ---
+  3006:      *
+  3007:      * @proto ()
+  3008:      * @proto (event_type)
+  3009:      * @param uint32 event_type : the event whose handlers will be cleared, see [Global:RegisterServerEvent]
+  3010:      */
+  3011:     int ClearServerEvents(Eluna* E)
+  3012:     {
+--- CONTEXT src/server/game/LuaEngine/methods/AzerothCore/GlobalMethods.h #18 ---
+  3035:      * @proto (map_id)
+  3036:      * @proto (map_id, event_type)
+  3037:      * @param uint32 map_id : the ID of a [Map]
+  3038:      * @param uint32 event_type : the event whose handlers will be cleared, see [Global:RegisterPlayerGossipEvent]
+  3039:      */
+  3040:     int ClearMapEvents(Eluna* E)
+  3041:     {
+--- CONTEXT src/server/game/LuaEngine/methods/AzerothCore/GlobalMethods.h #19 ---
+  3097:     {
+  3098:         // Hooks
+  3099:         { "RegisterPacketEvent", &LuaGlobalFunctions::RegisterPacketEvent },
+  3100:         { "RegisterServerEvent", &LuaGlobalFunctions::RegisterServerEvent },
+  3101:         { "RegisterPlayerEvent", &LuaGlobalFunctions::RegisterPlayerEvent },
+  3102:         { "RegisterGuildEvent", &LuaGlobalFunctions::RegisterGuildEvent },
+  3103:         { "RegisterGroupEvent", &LuaGlobalFunctions::RegisterGroupEvent },
+  3104:         { "RegisterCreatureEvent", &LuaGlobalFunctions::RegisterCreatureEvent },
+--- CONTEXT src/server/game/LuaEngine/methods/AzerothCore/GlobalMethods.h #20 ---
+  3109:         { "RegisterSpellEvent", &LuaGlobalFunctions::RegisterSpellEvent },
+  3110:         { "RegisterItemEvent", &LuaGlobalFunctions::RegisterItemEvent },
+  3111:         { "RegisterItemGossipEvent", &LuaGlobalFunctions::RegisterItemGossipEvent },
+  3112:         { "RegisterPlayerGossipEvent", &LuaGlobalFunctions::RegisterPlayerGossipEvent },
+  3113:         { "RegisterBGEvent", &LuaGlobalFunctions::RegisterBGEvent },
+  3114:         { "RegisterMapEvent", &LuaGlobalFunctions::RegisterMapEvent },
+  3115:         { "RegisterInstanceEvent", &LuaGlobalFunctions::RegisterInstanceEvent },
+--- CONTEXT src/server/game/LuaEngine/methods/AzerothCore/GlobalMethods.h #21 ---
+  3184:         { "ReloadEluna", &LuaGlobalFunctions::ReloadEluna },
+  3185:         { "RunCommand", &LuaGlobalFunctions::RunCommand },
+  3186:         { "SendWorldMessage", &LuaGlobalFunctions::SendWorldMessage },
+  3187:         { "WorldDBQuery", &LuaGlobalFunctions::WorldDBQuery, METHOD_REG_ALL, METHOD_FLAG_UNSAFE },
+  3188:         { "WorldDBExecute", &LuaGlobalFunctions::WorldDBExecute },
+  3189:         { "WorldDBQueryAsync", &LuaGlobalFunctions::WorldDBQueryAsync },
+  3190:         { "CharDBQuery", &LuaGlobalFunctions::CharDBQuery, METHOD_REG_ALL, METHOD_FLAG_UNSAFE },
+  3191:         { "CharDBExecute", &LuaGlobalFunctions::CharDBExecute },
+  3192:         { "CharDBQueryAsync", &LuaGlobalFunctions::CharDBQueryAsync },
+  3193:         { "AuthDBQuery", &LuaGlobalFunctions::AuthDBQuery, METHOD_REG_ALL, METHOD_FLAG_UNSAFE },
+  3194:         { "AuthDBExecute", &LuaGlobalFunctions::AuthDBExecute },
+  3195:         { "AuthDBQueryAsync", &LuaGlobalFunctions::AuthDBQueryAsync },
+  3196:         { "CreateLuaEvent", &LuaGlobalFunctions::CreateLuaEvent },
+  3197:         { "RemoveEventById", &LuaGlobalFunctions::RemoveEventById },
+  3198:         { "RemoveEvents", &LuaGlobalFunctions::RemoveEvents },
+  3199:         { "PerformIngameSpawn", &LuaGlobalFunctions::PerformIngameSpawn },
+ELUNA_CONTEXT_FILE path=src/server/game/LuaEngine/methods/AzerothCore/PlayerMethods.h; sha256=bcbce5263c09d4d3ce60ab8b0321414ae078d21ff0a5fb13e6a6d4c1fd232b37; blocks=1
+--- CONTEXT src/server/game/LuaEngine/methods/AzerothCore/PlayerMethods.h #1 ---
+  3478:      * Sends the current gossip items of the player to him as a gossip menu with header text from the given textId.
+  3479:      *
+  3480:      * If sender is a [Player] then menu_id is mandatory, otherwise it is not used for anything.
+  3481:      * menu_id is the ID used to trigger the OnGossipSelect registered for players. See [Global:RegisterPlayerGossipEvent]
+  3482:      *
+  3483:      * See also: [Player:GossipMenuAddItem], [Player:GossipAddQuests], [Player:GossipComplete], [Player:GossipClearMenu]
+  3484:      *
+ELUNA_CONTEXT_FILE path=src/server/game/LuaEngine/methods/CMangos/ElunaQueryMethods.h; sha256=5cb462246f5a865b144afc6738b99b05d27373f6b4e16b198997f48ce4c15dc7; blocks=1
+--- CONTEXT src/server/game/LuaEngine/methods/CMangos/ElunaQueryMethods.h #1 ---
+    12: /***
+    13:  * The result of a database query.
+    14:  *
+    15:  * E.g. the return value of [Global:WorldDBQuery].
+    16:  *
+    17:  * Inherits all methods from: none
+    18:  */
+ELUNA_CONTEXT_FILE path=src/server/game/LuaEngine/methods/CMangos/GlobalMethods.h; sha256=bef883fbd22d6d9800f29e7ae07e9c4632aa4330fd9fb7b75fa32e66f91ba967; blocks=24
+--- CONTEXT src/server/game/LuaEngine/methods/CMangos/GlobalMethods.h #1 ---
+   670:      *
+   671:      * @return function cancel : a function that cancels the binding when called
+   672:      */
+   673:     int RegisterServerEvent(Eluna* E)
+   674:     {
+   675:         return RegisterEventHelper(E, Hooks::REGTYPE_SERVER);
+   676:     }
+--- CONTEXT src/server/game/LuaEngine/methods/CMangos/GlobalMethods.h #2 ---
+   724:      *     PLAYER_EVENT_ON_LEARN_TALENTS           =     39,       // (event, player, talentId, talentRank, spellid)
+   725:      *     PLAYER_EVENT_ON_ENVIRONMENTAL_DEATH     =     40,       // (event, player, environmentalDamageType)
+   726:      *     PLAYER_EVENT_ON_TRADE_ACCEPT            =     41,       // (event, player, target) - Can return false to interrupt trade
+   727:      *     PLAYER_EVENT_ON_COMMAND                 =     42,       // (event, player, command) - player is nil if command used from console. Can return false
+   728:      *     PLAYER_EVENT_ON_SKILL_CHANGE            =     43,       // (event, player, skillId, skillValue) - Returns new skill level value
+   729:      *     PLAYER_EVENT_ON_LEARN_SPELL             =     44,       // (event, player, spellId)
+   730:      *     PLAYER_EVENT_ON_ACHIEVEMENT_COMPLETE    =     45,       // (event, player, achievementId)
+--- CONTEXT src/server/game/LuaEngine/methods/CMangos/GlobalMethods.h #3 ---
+   749:      *
+   750:      * @return function cancel : a function that cancels the binding when called
+   751:      */
+   752:     int RegisterPlayerEvent(Eluna* E)
+   753:     {
+   754:         return RegisterEventHelper(E, Hooks::REGTYPE_PLAYER);
+   755:     }
+--- CONTEXT src/server/game/LuaEngine/methods/CMangos/GlobalMethods.h #4 ---
+   888:      * enum GossipEvents
+   889:      * {
+   890:      *     GOSSIP_EVENT_ON_HELLO                           = 1,    // (event, player, object) - Object is the Creature/GameObject/Item. Can return false to do default action. For item gossip can return false to stop spell casting.
+   891:      *     GOSSIP_EVENT_ON_SELECT                          = 2,    // (event, player, object, sender, intid, code, menu_id) - Object is the Creature/GameObject/Item/Player, menu_id is only for player gossip. Can return false to do default action.
+   892:      *     GOSSIP_EVENT_COUNT
+   893:      * };
+   894:      * </pre>
+--- CONTEXT src/server/game/LuaEngine/methods/CMangos/GlobalMethods.h #5 ---
+   915:      * enum GossipEvents
+   916:      * {
+   917:      *     GOSSIP_EVENT_ON_HELLO                           = 1,    // (event, player, object) - Object is the Creature/GameObject/Item. Can return false to do default action. For item gossip can return false to stop spell casting.
+   918:      *     GOSSIP_EVENT_ON_SELECT                          = 2,    // (event, player, object, sender, intid, code, menu_id) - Object is the Creature/GameObject/Item/Player, menu_id is only for player gossip. Can return false to do default action.
+   919:      *     GOSSIP_EVENT_COUNT
+   920:      * };
+   921:      * </pre>
+--- CONTEXT src/server/game/LuaEngine/methods/CMangos/GlobalMethods.h #6 ---
+   975:      * enum GossipEvents
+   976:      * {
+   977:      *     GOSSIP_EVENT_ON_HELLO                           = 1,    // (event, player, object) - Object is the Creature/GameObject/Item. Can return false to do default action. For item gossip can return false to stop spell casting.
+   978:      *     GOSSIP_EVENT_ON_SELECT                          = 2,    // (event, player, object, sender, intid, code, menu_id) - Object is the Creature/GameObject/Item/Player, menu_id is only for player gossip. Can return false to do default action.
+   979:      *     GOSSIP_EVENT_COUNT
+   980:      * };
+   981:      * </pre>
+--- CONTEXT src/server/game/LuaEngine/methods/CMangos/GlobalMethods.h #7 ---
+  1058:      * enum GossipEvents
+  1059:      * {
+  1060:      *     GOSSIP_EVENT_ON_HELLO                           = 1,    // (event, player, object) - Object is the Creature/GameObject/Item. Can return false to do default action. For item gossip can return false to stop spell casting.
+  1061:      *     GOSSIP_EVENT_ON_SELECT                          = 2,    // (event, player, object, sender, intid, code, menu_id) - Object is the Creature/GameObject/Item/Player, menu_id is only for player gossip. Can return false to do default action.
+  1062:      *     GOSSIP_EVENT_COUNT
+  1063:      * };
+  1064:      * </pre>
+--- CONTEXT src/server/game/LuaEngine/methods/CMangos/GlobalMethods.h #8 ---
+  1073:      *
+  1074:      * @return function cancel : a function that cancels the binding when called
+  1075:      */
+  1076:     int RegisterPlayerGossipEvent(Eluna* E)
+  1077:     {
+  1078:         return RegisterEntryHelper(E, Hooks::REGTYPE_PLAYER_GOSSIP);
+  1079:     }
+--- CONTEXT src/server/game/LuaEngine/methods/CMangos/GlobalMethods.h #9 ---
+  1282:      * The query is always executed synchronously
+  1283:      *   (i.e. execution halts until the query has finished and then results are returned).
+  1284:      *
+  1285:      *     local Q = WorldDBQuery("SELECT entry, name FROM creature_template LIMIT 10")
+  1286:      *     if Q then
+  1287:      *         repeat
+  1288:      *             local entry, name = Q:GetUInt32(0), Q:GetString(1)
+--- CONTEXT src/server/game/LuaEngine/methods/CMangos/GlobalMethods.h #10 ---
+  1293:      * @param string sql : query to execute
+  1294:      * @return [ElunaQuery] results or nil if no rows found or nil if no rows found
+  1295:      */
+  1296:     int WorldDBQuery(Eluna* E)
+  1297:     {
+  1298:         const char* query = E->CHECKVAL<const char*>(1);
+  1299: 
+--- CONTEXT src/server/game/LuaEngine/methods/CMangos/GlobalMethods.h #11 ---
+  1312:      * Executes a SQL query on the world database.
+  1313:      *
+  1314:      * The query may be executed *asynchronously* (at a later, unpredictable time).
+  1315:      * If you need to execute the query synchronously, use [Global:WorldDBQuery] instead.
+  1316:      *
+  1317:      * Any results produced are ignored.
+  1318:      * If you need results from the query, use [Global:WorldDBQuery] instead.
+  1319:      *
+  1320:      *     WorldDBExecute("DELETE FROM my_table")
+  1321:      *
+  1322:      * @param string sql : query to execute
+  1323:      */
+  1324:     int WorldDBExecute(Eluna* E)
+  1325:     {
+  1326:         const char* query = E->CHECKVAL<const char*>(1);
+  1327:         WorldDatabase.Execute(query);
+--- CONTEXT src/server/game/LuaEngine/methods/CMangos/GlobalMethods.h #12 ---
+  1335:      * The callback function parameter is the query result (an [ElunaQuery] or nil if no rows found).
+  1336:      *
+  1337:      * <pre>
+  1338:      * WorldDBQueryAsync("SELECT entry, name FROM creature_template LIMIT 10", function(results)
+  1339:      *    if results then
+  1340:      *        repeat
+  1341:      *            local entry, name = results:GetUInt32(0), results:GetString(1)
+--- CONTEXT src/server/game/LuaEngine/methods/CMangos/GlobalMethods.h #13 ---
+  1348:      * @param string sql : query to execute asynchronously
+  1349:      * @param function callback : the callback function to be called with the query results
+  1350:      */
+  1351:     int WorldDBQueryAsync(Eluna* /*E*/)
+  1352:     {
+  1353:         // Todo: Implement async queries. Below is the code example from TC.
+  1354: 
+--- CONTEXT src/server/game/LuaEngine/methods/CMangos/GlobalMethods.h #14 ---
+  1393:      * The query is always executed synchronously
+  1394:      *   (i.e. execution halts until the query has finished and then results are returned).
+  1395:      *
+  1396:      * For an example see [Global:WorldDBQuery].
+  1397:      *
+  1398:      * @param string sql : query to execute
+  1399:      * @return [ElunaQuery] results or nil if no rows found
+  1400:      */
+  1401:     int CharDBQuery(Eluna* E)
+  1402:     {
+  1403:         const char* query = E->CHECKVAL<const char*>(1);
+  1404: 
+--- CONTEXT src/server/game/LuaEngine/methods/CMangos/GlobalMethods.h #15 ---
+  1417:      * Executes a SQL query on the character database.
+  1418:      *
+  1419:      * The query may be executed *asynchronously* (at a later, unpredictable time).
+  1420:      * If you need to execute the query synchronously, use [Global:CharDBQuery] instead.
+  1421:      *
+  1422:      * Any results produced are ignored.
+  1423:      * If you need results from the query, use [Global:CharDBQuery] instead.
+  1424:      *
+  1425:      *     CharDBExecute("DELETE FROM my_table")
+  1426:      *
+  1427:      * @param string sql : query to execute
+  1428:      */
+  1429:     int CharDBExecute(Eluna* E)
+  1430:     {
+  1431:         const char* query = E->CHECKVAL<const char*>(1);
+  1432:         CharacterDatabase.Execute(query);
+  1433:         return 0;
+  1434:     }
+  1435: 
+  1436:     int CharDBQueryAsync(Eluna* /*E*/)
+  1437:     {
+  1438:         // Todo: Implement async queries. Below is the code example from TC.
+  1439: 
+--- CONTEXT src/server/game/LuaEngine/methods/CMangos/GlobalMethods.h #16 ---
+  1478:      * The query is always executed synchronously
+  1479:      *   (i.e. execution halts until the query has finished and then results are returned).
+  1480:      *
+  1481:      * For an example see [Global:WorldDBQuery].
+  1482:      *
+  1483:      * @param string sql : query to execute
+  1484:      * @return [ElunaQuery] results or nil if no rows found
+--- CONTEXT src/server/game/LuaEngine/methods/CMangos/GlobalMethods.h #17 ---
+  1575:      * @param uint32 repeats = 1 : how many times for the event to repeat, 0 is infinite
+  1576:      * @return int eventId : unique ID for the timed event used to cancel it or nil
+  1577:      */
+  1578:     int CreateLuaEvent(Eluna* E)
+  1579:     {
+  1580:         luaL_checktype(E->L, 1, LUA_TFUNCTION);
+  1581:         uint32 min, max;
+--- CONTEXT src/server/game/LuaEngine/methods/CMangos/GlobalMethods.h #18 ---
+  3053:      *
+  3054:      * @proto ()
+  3055:      * @proto (event_type)
+  3056:      * @param uint32 event_type : the event whose handlers will be cleared, see [Global:RegisterPlayerEvent]
+  3057:      */
+  3058:     int ClearPlayerEvents(Eluna* E)
+  3059:     {
+--- CONTEXT src/server/game/LuaEngine/methods/CMangos/GlobalMethods.h #19 ---
+  3082:      * @proto (entry)
+  3083:      * @proto (entry, event_type)
+  3084:      * @param uint32 entry : the low GUID of a [Player] whose handlers will be cleared
+  3085:      * @param uint32 event_type : the event whose handlers will be cleared, see [Global:RegisterPlayerGossipEvent]
+  3086:      */
+  3087:     int ClearPlayerGossipEvents(Eluna* E)
+  3088:     {
+--- CONTEXT src/server/game/LuaEngine/methods/CMangos/GlobalMethods.h #20 ---
+  3114:      *
+  3115:      * @proto ()
+  3116:      * @proto (event_type)
+  3117:      * @param uint32 event_type : the event whose handlers will be cleared, see [Global:RegisterServerEvent]
+  3118:      */
+  3119:     int ClearServerEvents(Eluna* E)
+  3120:     {
+--- CONTEXT src/server/game/LuaEngine/methods/CMangos/GlobalMethods.h #21 ---
+  3143:      * @proto (map_id)
+  3144:      * @proto (map_id, event_type)
+  3145:      * @param uint32 map_id : the ID of a [Map]
+  3146:      * @param uint32 event_type : the event whose handlers will be cleared, see [Global:RegisterPlayerGossipEvent]
+  3147:      */
+  3148:     int ClearMapEvents(Eluna* E)
+  3149:     {
+--- CONTEXT src/server/game/LuaEngine/methods/CMangos/GlobalMethods.h #22 ---
+  3205:     {
+  3206:         // Hooks
+  3207:         { "RegisterPacketEvent", &LuaGlobalFunctions::RegisterPacketEvent },
+  3208:         { "RegisterServerEvent", &LuaGlobalFunctions::RegisterServerEvent },
+  3209:         { "RegisterPlayerEvent", &LuaGlobalFunctions::RegisterPlayerEvent },
+  3210:         { "RegisterGuildEvent", &LuaGlobalFunctions::RegisterGuildEvent },
+  3211:         { "RegisterGroupEvent", &LuaGlobalFunctions::RegisterGroupEvent },
+  3212:         { "RegisterCreatureEvent", &LuaGlobalFunctions::RegisterCreatureEvent },
+--- CONTEXT src/server/game/LuaEngine/methods/CMangos/GlobalMethods.h #23 ---
+  3216:         { "RegisterGameObjectGossipEvent", &LuaGlobalFunctions::RegisterGameObjectGossipEvent },
+  3217:         { "RegisterItemEvent", &LuaGlobalFunctions::RegisterItemEvent },
+  3218:         { "RegisterItemGossipEvent", &LuaGlobalFunctions::RegisterItemGossipEvent },
+  3219:         { "RegisterPlayerGossipEvent", &LuaGlobalFunctions::RegisterPlayerGossipEvent },
+  3220:         { "RegisterBGEvent", &LuaGlobalFunctions::RegisterBGEvent },
+  3221:         { "RegisterMapEvent", &LuaGlobalFunctions::RegisterMapEvent },
+  3222:         { "RegisterInstanceEvent", &LuaGlobalFunctions::RegisterInstanceEvent },
+--- CONTEXT src/server/game/LuaEngine/methods/CMangos/GlobalMethods.h #24 ---
+  3291:         { "ReloadEluna", &LuaGlobalFunctions::ReloadEluna },
+  3292:         { "RunCommand", &LuaGlobalFunctions::RunCommand },
+  3293:         { "SendWorldMessage", &LuaGlobalFunctions::SendWorldMessage },
+  3294:         { "WorldDBQuery", &LuaGlobalFunctions::WorldDBQuery, METHOD_REG_ALL, METHOD_FLAG_UNSAFE },
+  3295:         { "WorldDBExecute", &LuaGlobalFunctions::WorldDBExecute },
+  3296:         { "WorldDBQueryAsync", &LuaGlobalFunctions::WorldDBQueryAsync, METHOD_REG_NONE }, // TODO: Implement
+  3297:         { "CharDBQuery", &LuaGlobalFunctions::CharDBQuery, METHOD_REG_ALL, METHOD_FLAG_UNSAFE },
+  3298:         { "CharDBExecute", &LuaGlobalFunctions::CharDBExecute },
+  3299:         { "CharDBQueryAsync", &LuaGlobalFunctions::CharDBQueryAsync, METHOD_REG_NONE }, // TODO: Implement
+  3300:         { "AuthDBQuery", &LuaGlobalFunctions::AuthDBQuery, METHOD_REG_ALL, METHOD_FLAG_UNSAFE },
+  3301:         { "AuthDBExecute", &LuaGlobalFunctions::AuthDBExecute },
+  3302:         { "AuthDBQueryAsync", &LuaGlobalFunctions::AuthDBQueryAsync, METHOD_REG_NONE }, // TODO: Implement
+  3303:         { "CreateLuaEvent", &LuaGlobalFunctions::CreateLuaEvent },
+  3304:         { "RemoveEventById", &LuaGlobalFunctions::RemoveEventById },
+  3305:         { "RemoveEvents", &LuaGlobalFunctions::RemoveEvents },
+  3306:         { "PerformIngameSpawn", &LuaGlobalFunctions::PerformIngameSpawn },
+ELUNA_CONTEXT_FILE path=src/server/game/LuaEngine/methods/CMangos/PlayerMethods.h; sha256=2180fc6fa20686a71e6e68661ffb8b506a7da2f718be8ba343f78004bed70b46; blocks=1
+--- CONTEXT src/server/game/LuaEngine/methods/CMangos/PlayerMethods.h #1 ---
+  3454:      * Sends the current gossip items of the player to him as a gossip menu with header text from the given textId.
+  3455:      *
+  3456:      * If sender is a [Player] then menu_id is mandatory, otherwise it is not used for anything.
+  3457:      * menu_id is the ID used to trigger the OnGossipSelect registered for players. See [Global:RegisterPlayerGossipEvent]
+  3458:      *
+  3459:      * See also: [Player:GossipMenuAddItem], [Player:GossipAddQuests], [Player:GossipComplete], [Player:GossipClearMenu]
+  3460:      *
+ELUNA_CONTEXT_FILE path=src/server/game/LuaEngine/methods/Mangos/ElunaQueryMethods.h; sha256=808a626ade497aaafdd6cc106be60e696f82be95e2a529f56b5b9fd8a9055b1a; blocks=1
+--- CONTEXT src/server/game/LuaEngine/methods/Mangos/ElunaQueryMethods.h #1 ---
+    12: /***
+    13:  * The result of a database query.
+    14:  *
+    15:  * E.g. the return value of [Global:WorldDBQuery].
+    16:  *
+    17:  * Inherits all methods from: none
+    18:  */
+ELUNA_CONTEXT_FILE path=src/server/game/LuaEngine/methods/Mangos/GlobalMethods.h; sha256=66b0b7f44c9cdff5ebcb6ee3798953a02e3756120911ae84c5d1f035aafe764a; blocks=23
+--- CONTEXT src/server/game/LuaEngine/methods/Mangos/GlobalMethods.h #1 ---
+   614:      *
+   615:      * @return function cancel : a function that cancels the binding when called
+   616:      */
+   617:     int RegisterServerEvent(Eluna* E)
+   618:     {
+   619:         return RegisterEventHelper(E, Hooks::REGTYPE_SERVER);
+   620:     }
+--- CONTEXT src/server/game/LuaEngine/methods/Mangos/GlobalMethods.h #2 ---
+   668:      *     PLAYER_EVENT_ON_LEARN_TALENTS           =     39,       // (event, player, talentId, talentRank, spellid)
+   669:      *     // UNUSED                               =     40,       // (event, player)
+   670:      *     // UNUSED                               =     41,       // (event, player)
+   671:      *     PLAYER_EVENT_ON_COMMAND                 =     42,       // (event, player, command) - player is nil if command used from console. Can return false
+   672:      * };
+   673:      * </pre>
+   674:      *
+--- CONTEXT src/server/game/LuaEngine/methods/Mangos/GlobalMethods.h #3 ---
+   681:      *
+   682:      * @return function cancel : a function that cancels the binding when called
+   683:      */
+   684:     int RegisterPlayerEvent(Eluna* E)
+   685:     {
+   686:         return RegisterEventHelper(E, Hooks::REGTYPE_PLAYER);
+   687:     }
+--- CONTEXT src/server/game/LuaEngine/methods/Mangos/GlobalMethods.h #4 ---
+   819:      * enum GossipEvents
+   820:      * {
+   821:      *     GOSSIP_EVENT_ON_HELLO                           = 1,    // (event, player, object) - Object is the Creature/GameObject/Item. Can return false to do default action. For item gossip can return false to stop spell casting.
+   822:      *     GOSSIP_EVENT_ON_SELECT                          = 2,    // (event, player, object, sender, intid, code, menu_id) - Object is the Creature/GameObject/Item/Player, menu_id is only for player gossip. Can return false to do default action.
+   823:      *     GOSSIP_EVENT_COUNT
+   824:      * };
+   825:      * </pre>
+--- CONTEXT src/server/game/LuaEngine/methods/Mangos/GlobalMethods.h #5 ---
+   846:      * enum GossipEvents
+   847:      * {
+   848:      *     GOSSIP_EVENT_ON_HELLO                           = 1,    // (event, player, object) - Object is the Creature/GameObject/Item. Can return false to do default action. For item gossip can return false to stop spell casting.
+   849:      *     GOSSIP_EVENT_ON_SELECT                          = 2,    // (event, player, object, sender, intid, code, menu_id) - Object is the Creature/GameObject/Item/Player, menu_id is only for player gossip. Can return false to do default action.
+   850:      *     GOSSIP_EVENT_COUNT
+   851:      * };
+   852:      * </pre>
+--- CONTEXT src/server/game/LuaEngine/methods/Mangos/GlobalMethods.h #6 ---
+   903:      * enum GossipEvents
+   904:      * {
+   905:      *     GOSSIP_EVENT_ON_HELLO                           = 1,    // (event, player, object) - Object is the Creature/GameObject/Item. Can return false to do default action. For item gossip can return false to stop spell casting.
+   906:      *     GOSSIP_EVENT_ON_SELECT                          = 2,    // (event, player, object, sender, intid, code, menu_id) - Object is the Creature/GameObject/Item/Player, menu_id is only for player gossip. Can return false to do default action.
+   907:      *     GOSSIP_EVENT_COUNT
+   908:      * };
+   909:      * </pre>
+--- CONTEXT src/server/game/LuaEngine/methods/Mangos/GlobalMethods.h #7 ---
+   986:      * enum GossipEvents
+   987:      * {
+   988:      *     GOSSIP_EVENT_ON_HELLO                           = 1,    // (event, player, object) - Object is the Creature/GameObject/Item. Can return false to do default action. For item gossip can return false to stop spell casting.
+   989:      *     GOSSIP_EVENT_ON_SELECT                          = 2,    // (event, player, object, sender, intid, code, menu_id) - Object is the Creature/GameObject/Item/Player, menu_id is only for player gossip. Can return false to do default action.
+   990:      *     GOSSIP_EVENT_COUNT
+   991:      * };
+   992:      * </pre>
+--- CONTEXT src/server/game/LuaEngine/methods/Mangos/GlobalMethods.h #8 ---
+  1001:      *
+  1002:      * @return function cancel : a function that cancels the binding when called
+  1003:      */
+  1004:     int RegisterPlayerGossipEvent(Eluna* E)
+  1005:     {
+  1006:         return RegisterEntryHelper(E, Hooks::REGTYPE_PLAYER_GOSSIP);
+  1007:     }
+--- CONTEXT src/server/game/LuaEngine/methods/Mangos/GlobalMethods.h #9 ---
+  1210:      * The query is always executed synchronously
+  1211:      *   (i.e. execution halts until the query has finished and then results are returned).
+  1212:      *
+  1213:      *     local Q = WorldDBQuery("SELECT entry, name FROM creature_template LIMIT 10")
+  1214:      *     if Q then
+  1215:      *         repeat
+  1216:      *             local entry, name = Q:GetUInt32(0), Q:GetString(1)
+--- CONTEXT src/server/game/LuaEngine/methods/Mangos/GlobalMethods.h #10 ---
+  1221:      * @param string sql : query to execute
+  1222:      * @return [ElunaQuery] results or nil if no rows found or nil if no rows found
+  1223:      */
+  1224:     int WorldDBQuery(Eluna* E)
+  1225:     {
+  1226:         const char* query = E->CHECKVAL<const char*>(1);
+  1227: 
+--- CONTEXT src/server/game/LuaEngine/methods/Mangos/GlobalMethods.h #11 ---
+  1241:      * Executes a SQL query on the world database.
+  1242:      *
+  1243:      * The query may be executed *asynchronously* (at a later, unpredictable time).
+  1244:      * If you need to execute the query synchronously, use [Global:WorldDBQuery] instead.
+  1245:      *
+  1246:      * Any results produced are ignored.
+  1247:      * If you need results from the query, use [Global:WorldDBQuery] instead.
+  1248:      *
+  1249:      *     WorldDBExecute("DELETE FROM my_table")
+  1250:      *
+  1251:      * @param string sql : query to execute
+  1252:      */
+  1253:     int WorldDBExecute(Eluna* E)
+  1254:     {
+  1255:         const char* query = E->CHECKVAL<const char*>(1);
+  1256:         WorldDatabase.Execute(query);
+--- CONTEXT src/server/game/LuaEngine/methods/Mangos/GlobalMethods.h #12 ---
+  1263:      * The query is always executed synchronously
+  1264:      *   (i.e. execution halts until the query has finished and then results are returned).
+  1265:      *
+  1266:      * For an example see [Global:WorldDBQuery].
+  1267:      *
+  1268:      * @param string sql : query to execute
+  1269:      * @return [ElunaQuery] results or nil if no rows found
+  1270:      */
+  1271:     int CharDBQuery(Eluna* E)
+  1272:     {
+  1273:         const char* query = E->CHECKVAL<const char*>(1);
+  1274: 
+--- CONTEXT src/server/game/LuaEngine/methods/Mangos/GlobalMethods.h #13 ---
+  1288:      * Executes a SQL query on the character database.
+  1289:      *
+  1290:      * The query may be executed *asynchronously* (at a later, unpredictable time).
+  1291:      * If you need to execute the query synchronously, use [Global:CharDBQuery] instead.
+  1292:      *
+  1293:      * Any results produced are ignored.
+  1294:      * If you need results from the query, use [Global:CharDBQuery] instead.
+  1295:      *
+  1296:      *     CharDBExecute("DELETE FROM my_table")
+  1297:      *
+  1298:      * @param string sql : query to execute
+  1299:      */
+  1300:     int CharDBExecute(Eluna* E)
+  1301:     {
+  1302:         const char* query = E->CHECKVAL<const char*>(1);
+  1303:         CharacterDatabase.Execute(query);
+--- CONTEXT src/server/game/LuaEngine/methods/Mangos/GlobalMethods.h #14 ---
+  1310:      * The query is always executed synchronously
+  1311:      *   (i.e. execution halts until the query has finished and then results are returned).
+  1312:      *
+  1313:      * For an example see [Global:WorldDBQuery].
+  1314:      *
+  1315:      * @param string sql : query to execute
+  1316:      * @return [ElunaQuery] results or nil if no rows found
+--- CONTEXT src/server/game/LuaEngine/methods/Mangos/GlobalMethods.h #15 ---
+  1369:      * @param uint32 repeats = 1 : how many times for the event to repeat, 0 is infinite
+  1370:      * @return int eventId : unique ID for the timed event used to cancel it or nil
+  1371:      */
+  1372:     int CreateLuaEvent(Eluna* E)
+  1373:     {
+  1374:         luaL_checktype(E->L, 1, LUA_TFUNCTION);
+  1375:         uint32 min, max;
+--- CONTEXT src/server/game/LuaEngine/methods/Mangos/GlobalMethods.h #16 ---
+  2810:      *
+  2811:      * @proto ()
+  2812:      * @proto (event_type)
+  2813:      * @param uint32 event_type : the event whose handlers will be cleared, see [Global:RegisterPlayerEvent]
+  2814:      */
+  2815:     int ClearPlayerEvents(Eluna* E)
+  2816:     {
+--- CONTEXT src/server/game/LuaEngine/methods/Mangos/GlobalMethods.h #17 ---
+  2839:      * @proto (entry)
+  2840:      * @proto (entry, event_type)
+  2841:      * @param uint32 entry : the low GUID of a [Player] whose handlers will be cleared
+  2842:      * @param uint32 event_type : the event whose handlers will be cleared, see [Global:RegisterPlayerGossipEvent]
+  2843:      */
+  2844:     int ClearPlayerGossipEvents(Eluna* E)
+  2845:     {
+--- CONTEXT src/server/game/LuaEngine/methods/Mangos/GlobalMethods.h #18 ---
+  2871:      *
+  2872:      * @proto ()
+  2873:      * @proto (event_type)
+  2874:      * @param uint32 event_type : the event whose handlers will be cleared, see [Global:RegisterServerEvent]
+  2875:      */
+  2876:     int ClearServerEvents(Eluna* E)
+  2877:     {
+--- CONTEXT src/server/game/LuaEngine/methods/Mangos/GlobalMethods.h #19 ---
+  2900:      * @proto (map_id)
+  2901:      * @proto (map_id, event_type)
+  2902:      * @param uint32 map_id : the ID of a [Map]
+  2903:      * @param uint32 event_type : the event whose handlers will be cleared, see [Global:RegisterPlayerGossipEvent]
+  2904:      */
+  2905:     int ClearMapEvents(Eluna* E)
+  2906:     {
+--- CONTEXT src/server/game/LuaEngine/methods/Mangos/GlobalMethods.h #20 ---
+  2962:     {
+  2963:         // Hooks
+  2964:         { "RegisterPacketEvent", &LuaGlobalFunctions::RegisterPacketEvent },
+  2965:         { "RegisterServerEvent", &LuaGlobalFunctions::RegisterServerEvent },
+  2966:         { "RegisterPlayerEvent", &LuaGlobalFunctions::RegisterPlayerEvent },
+  2967:         { "RegisterGuildEvent", &LuaGlobalFunctions::RegisterGuildEvent },
+  2968:         { "RegisterGroupEvent", &LuaGlobalFunctions::RegisterGroupEvent },
+  2969:         { "RegisterCreatureEvent", &LuaGlobalFunctions::RegisterCreatureEvent },
+--- CONTEXT src/server/game/LuaEngine/methods/Mangos/GlobalMethods.h #21 ---
+  2973:         { "RegisterGameObjectGossipEvent", &LuaGlobalFunctions::RegisterGameObjectGossipEvent },
+  2974:         { "RegisterItemEvent", &LuaGlobalFunctions::RegisterItemEvent },
+  2975:         { "RegisterItemGossipEvent", &LuaGlobalFunctions::RegisterItemGossipEvent },
+  2976:         { "RegisterPlayerGossipEvent", &LuaGlobalFunctions::RegisterPlayerGossipEvent },
+  2977:         { "RegisterBGEvent", &LuaGlobalFunctions::RegisterBGEvent },
+  2978:         { "RegisterMapEvent", &LuaGlobalFunctions::RegisterMapEvent },
+  2979:         { "RegisterInstanceEvent", &LuaGlobalFunctions::RegisterInstanceEvent },
+--- CONTEXT src/server/game/LuaEngine/methods/Mangos/GlobalMethods.h #22 ---
+  3047:         { "ReloadEluna", &LuaGlobalFunctions::ReloadEluna },
+  3048:         { "RunCommand", &LuaGlobalFunctions::RunCommand },
+  3049:         { "SendWorldMessage", &LuaGlobalFunctions::SendWorldMessage },
+  3050:         { "WorldDBQuery", &LuaGlobalFunctions::WorldDBQuery },
+  3051:         { "WorldDBExecute", &LuaGlobalFunctions::WorldDBExecute },
+  3052:         { "CharDBQuery", &LuaGlobalFunctions::CharDBQuery },
+  3053:         { "CharDBExecute", &LuaGlobalFunctions::CharDBExecute },
+  3054:         { "AuthDBQuery", &LuaGlobalFunctions::AuthDBQuery },
+  3055:         { "AuthDBExecute", &LuaGlobalFunctions::AuthDBExecute },
+  3056:         { "CreateLuaEvent", &LuaGlobalFunctions::CreateLuaEvent },
+  3057:         { "RemoveEventById", &LuaGlobalFunctions::RemoveEventById },
+  3058:         { "RemoveEvents", &LuaGlobalFunctions::RemoveEvents },
+  3059:         { "PerformIngameSpawn", &LuaGlobalFunctions::PerformIngameSpawn },
+--- CONTEXT src/server/game/LuaEngine/methods/Mangos/GlobalMethods.h #23 ---
+  3072:         { "StopGameEvent", &LuaGlobalFunctions::StopGameEvent },
+  3073: 
+  3074:         // unimplemented
+  3075:         { "WorldDBQueryAsync", METHOD_REG_NONE },
+  3076:         { "CharDBQueryAsync", METHOD_REG_NONE },
+  3077:         { "AuthDBQueryAsync", METHOD_REG_NONE }
+  3078:     };
+  3079: }
+ELUNA_CONTEXT_FILE path=src/server/game/LuaEngine/methods/Mangos/PlayerMethods.h; sha256=d36b453168d81fe21e16883ef5008333b2e3eba407f8d057f1ce16b9c660586a; blocks=1
+--- CONTEXT src/server/game/LuaEngine/methods/Mangos/PlayerMethods.h #1 ---
+  3384:      * Sends the current gossip items of the player to him as a gossip menu with header text from the given textId.
+  3385:      *
+  3386:      * If sender is a [Player] then menu_id is mandatory, otherwise it is not used for anything.
+  3387:      * menu_id is the ID used to trigger the OnGossipSelect registered for players. See [Global:RegisterPlayerGossipEvent]
+  3388:      *
+  3389:      * See also: [Player:GossipMenuAddItem], [Player:GossipAddQuests], [Player:GossipComplete], [Player:GossipClearMenu]
+  3390:      *
+ELUNA_CONTEXT_FILE path=src/server/game/LuaEngine/methods/TrinityCore/ElunaQueryMethods.h; sha256=cb5b3d9e03efe07650dd6f1648d1875167fb6567c88e5e25ab21ac64c2d36525; blocks=1
+--- CONTEXT src/server/game/LuaEngine/methods/TrinityCore/ElunaQueryMethods.h #1 ---
+    12: /***
+    13:  * The result of a database query.
+    14:  *
+    15:  * E.g. the return value of [Global:WorldDBQuery].
+    16:  *
+    17:  * Inherits all methods from: none
+    18:  */
+ELUNA_CONTEXT_FILE path=src/server/game/LuaEngine/methods/TrinityCore/GlobalMethods.h; sha256=6fcae042a74ec3b14c2fcd0ce540fe9c02604d7fee89d42652680d43a2fdc5e2; blocks=26
+--- CONTEXT src/server/game/LuaEngine/methods/TrinityCore/GlobalMethods.h #1 ---
+   652:      *
+   653:      * @return function cancel : a function that cancels the binding when called
+   654:      */
+   655:     int RegisterServerEvent(Eluna* E)
+   656:     {
+   657:         return RegisterEventHelper(E, Hooks::REGTYPE_SERVER);
+   658:     }
+--- CONTEXT src/server/game/LuaEngine/methods/TrinityCore/GlobalMethods.h #2 ---
+   704:      * @values [PLAYER_EVENT_ON_LEARN_TALENTS, "MAP", <event: number, player: Player, talentId: number, talentRank: number, spellid: number>, ""]
+   705:      * @values [PLAYER_EVENT_ON_ENVIRONMENTAL_DEATH, "MAP", <event: number, player: Player, environmentalDamageType: number>, ""]
+   706:      * @values [PLAYER_EVENT_ON_TRADE_ACCEPT, "MAP", <event: number, player: Player, target: Player>, "Can return false to interrupt trade"]
+   707:      * @values [PLAYER_EVENT_ON_COMMAND, "WORLD", <event: number, player: Player, command: string>, "Player is nil if command used from console. Can return false"]
+   708:      * @values [PLAYER_EVENT_ON_SKILL_CHANGE, "MAP", <event: number, player: Player, skillId: number, skillValue: number>, "Returns new skill level value"]
+   709:      * @values [PLAYER_EVENT_ON_LEARN_SPELL, "MAP", <event: number, player: Player, spellId: number>, ""]
+   710:      * @values [PLAYER_EVENT_ON_ACHIEVEMENT_COMPLETE, "MAP", <event: number, player: Player, achievementId: number>, ""]
+--- CONTEXT src/server/game/LuaEngine/methods/TrinityCore/GlobalMethods.h #3 ---
+   723:      *
+   724:      * @return function cancel : a function that cancels the binding when called
+   725:      */
+   726:     int RegisterPlayerEvent(Eluna* E)
+   727:     {
+   728:         return RegisterEventHelper(E, Hooks::REGTYPE_PLAYER);
+   729:     }
+--- CONTEXT src/server/game/LuaEngine/methods/TrinityCore/GlobalMethods.h #4 ---
+   844:      * @table
+   845:      * @columns [Event, State, Parameters, Comment]
+   846:      * @values [GOSSIP_EVENT_ON_HELLO, "MAP", <event: number, player: Player, object: Creature|GameObject|Item>, "Object is the Creature/GameObject/Item. Can return false to do default action."]
+   847:      * @values [GOSSIP_EVENT_ON_SELECT, "MAP", <event: number, player: Player, object: Creature|GameObject|Item|Player, sender: number, intid: number, code: string, menu_id: number>, "Object is the Creature/GameObject/Item/Player, menu_id is only for player gossip. Can return false to do default action."]
+   848:      *
+   849:      * @proto cancel = (entry, event, function)
+   850:      * @proto cancel = (entry, event, function, shots)
+--- CONTEXT src/server/game/LuaEngine/methods/TrinityCore/GlobalMethods.h #5 ---
+   868:      * @table
+   869:      * @columns [Event, State, Parameters, Comment]
+   870:      * @values [GOSSIP_EVENT_ON_HELLO, "MAP", <event: number, player: Player, object: Creature|GameObject|Item>, "Object is the Creature/GameObject/Item. Can return false to do default action."]
+   871:      * @values [GOSSIP_EVENT_ON_SELECT, "MAP", <event: number, player: Player, object: Creature|GameObject|Item|Player, sender: number, intid: number, code: string, menu_id: number>, "Object is the Creature/GameObject/Item/Player, menu_id is only for player gossip. Can return false to do default action."]
+   872:      *
+   873:      * @proto cancel = (entry, event, function)
+   874:      * @proto cancel = (entry, event, function, shots)
+--- CONTEXT src/server/game/LuaEngine/methods/TrinityCore/GlobalMethods.h #6 ---
+   922:      * @table
+   923:      * @columns [Event, State, Parameters, Comment]
+   924:      * @values [GOSSIP_EVENT_ON_HELLO, "MAP", <event: number, player: Player, object: Creature|GameObject|Item>, "Object is the Creature/GameObject/Item. Can return false to do default action. For item gossip can return false to stop spell casting."]
+   925:      * @values [GOSSIP_EVENT_ON_SELECT, "MAP", <event: number, player: Player, object: Creature|GameObject|Item|Player, sender: number, intid: number, code: string, menu_id: number>, "Object is the Creature/GameObject/Item/Player, menu_id is only for player gossip. Can return false to do default action."]
+   926:      *
+   927:      * @proto cancel = (entry, event, function)
+   928:      * @proto cancel = (entry, event, function, shots)
+--- CONTEXT src/server/game/LuaEngine/methods/TrinityCore/GlobalMethods.h #7 ---
+   994:      * @table
+   995:      * @columns [Event, State, Parameters, Comment]
+   996:      * @values [GOSSIP_EVENT_ON_HELLO,  "MAP", <...>, "Not applicable for player gossip (players have no hello)."]
+   997:      * @values [GOSSIP_EVENT_ON_SELECT, "MAP", <event: number, player: Player, object: Creature|GameObject|Item|Player, sender: number, intid: number, code: string, menu_id: number>, "Object is the Creature/GameObject/Item/Player, menu_id is only for player gossip. Can return false to do default action."]
+   998:      *
+   999:      * @proto cancel = (menu_id, event, function)
+  1000:      * @proto cancel = (menu_id, event, function, shots)
+--- CONTEXT src/server/game/LuaEngine/methods/TrinityCore/GlobalMethods.h #8 ---
+  1006:      *
+  1007:      * @return function cancel : a function that cancels the binding when called
+  1008:      */
+  1009:     int RegisterPlayerGossipEvent(Eluna* E)
+  1010:     {
+  1011:         return RegisterEntryHelper(E, Hooks::REGTYPE_PLAYER_GOSSIP);
+  1012:     }
+--- CONTEXT src/server/game/LuaEngine/methods/TrinityCore/GlobalMethods.h #9 ---
+  1232:      * The query is always executed synchronously
+  1233:      *   (i.e. execution halts until the query has finished and then results are returned).
+  1234:      *
+  1235:      *     local Q = WorldDBQuery("SELECT entry, name FROM creature_template LIMIT 10")
+  1236:      *     if Q then
+  1237:      *         repeat
+  1238:      *             local entry, name = Q:GetUInt32(0), Q:GetString(1)
+--- CONTEXT src/server/game/LuaEngine/methods/TrinityCore/GlobalMethods.h #10 ---
+  1245:      * @param string sql : query to execute
+  1246:      * @return [ElunaQuery] results or nil if no rows found or nil if no rows found
+  1247:      */
+  1248:     int WorldDBQuery(Eluna* E)
+  1249:     {
+  1250:         const char* query = E->CHECKVAL<const char*>(1);
+  1251: 
+--- CONTEXT src/server/game/LuaEngine/methods/TrinityCore/GlobalMethods.h #11 ---
+  1262:      * Executes a SQL query on the world database.
+  1263:      *
+  1264:      * The query may be executed *asynchronously* (at a later, unpredictable time).
+  1265:      * If you need to execute the query synchronously, use [Global:WorldDBQuery] instead.
+  1266:      *
+  1267:      * Any results produced are ignored.
+  1268:      * If you need results from the query, use [Global:WorldDBQuery] instead.
+  1269:      *
+  1270:      *     WorldDBExecute("DELETE FROM my_table")
+  1271:      *
+  1272:      * @param string sql : query to execute
+  1273:      */
+  1274:     int WorldDBExecute(Eluna* E)
+  1275:     {
+  1276:         const char* query = E->CHECKVAL<const char*>(1);
+  1277:         WorldDatabase.Execute(query);
+--- CONTEXT src/server/game/LuaEngine/methods/TrinityCore/GlobalMethods.h #12 ---
+  1285:      * The query is executed asynchronously, and the provided Lua function is called when the query completes.
+  1286:      * The callback function parameter is the query result (an [ElunaQuery] or nil if no rows found).
+  1287:      *
+  1288:      *     WorldDBQueryAsync("SELECT entry, name FROM creature_template LIMIT 10", function(results)
+  1289:      *        if results then
+  1290:      *            repeat
+  1291:      *                local entry, name = results:GetUInt32(0), results:GetString(1)
+--- CONTEXT src/server/game/LuaEngine/methods/TrinityCore/GlobalMethods.h #13 ---
+  1297:      * @param string sql : query to execute asynchronously
+  1298:      * @param function callback : the callback function to be called with the query results
+  1299:      */
+  1300:     int WorldDBQueryAsync(Eluna* E)
+  1301:     {
+  1302:         const char* query = E->CHECKVAL<const char*>(1);
+  1303:         luaL_checktype(E->L, 2, LUA_TFUNCTION);
+--- CONTEXT src/server/game/LuaEngine/methods/TrinityCore/GlobalMethods.h #14 ---
+  1339:      * The query is always executed synchronously
+  1340:      *   (i.e. execution halts until the query has finished and then results are returned).
+  1341:      *
+  1342:      * For an example see [Global:WorldDBQuery].
+  1343:      *
+  1344:      * @warning This method is flagged as **unsafe** and is **disabled by default**. Use with caution, or transition to Async queries.
+  1345:      * 
+  1346:      * @param string sql : query to execute
+  1347:      * @return [ElunaQuery] results or nil if no rows found
+  1348:      */
+  1349:     int CharDBQuery(Eluna* E)
+  1350:     {
+  1351:         const char* query = E->CHECKVAL<const char*>(1);
+  1352: 
+--- CONTEXT src/server/game/LuaEngine/methods/TrinityCore/GlobalMethods.h #15 ---
+  1363:      * Executes a SQL query on the character database.
+  1364:      *
+  1365:      * The query may be executed *asynchronously* (at a later, unpredictable time).
+  1366:      * If you need to execute the query synchronously, use [Global:CharDBQuery] instead.
+  1367:      *
+  1368:      * Any results produced are ignored.
+  1369:      * If you need results from the query, use [Global:CharDBQuery] instead.
+  1370:      *
+  1371:      *     CharDBExecute("DELETE FROM my_table")
+  1372:      *
+  1373:      * @param string sql : query to execute
+  1374:      */
+  1375:     int CharDBExecute(Eluna* E)
+  1376:     {
+  1377:         const char* query = E->CHECKVAL<const char*>(1);
+  1378:         CharacterDatabase.Execute(query);
+--- CONTEXT src/server/game/LuaEngine/methods/TrinityCore/GlobalMethods.h #16 ---
+  1385:      * The query is executed asynchronously, and the provided Lua function is called when the query completes.
+  1386:      * The callback function parameter is the query result (an [ElunaQuery] or nil if no rows found).
+  1387:      *
+  1388:      * For an example see [Global:WorldDBQueryAsync].
+  1389:      *
+  1390:      * @param string sql : query to execute asynchronously
+  1391:      * @param function callback : the callback function to be called with the query results
+  1392:      */
+  1393:     int CharDBQueryAsync(Eluna* E)
+  1394:     {
+  1395:         const char* query = E->CHECKVAL<const char*>(1);
+  1396:         luaL_checktype(E->L, 2, LUA_TFUNCTION);
+--- CONTEXT src/server/game/LuaEngine/methods/TrinityCore/GlobalMethods.h #17 ---
+  1432:      * The query is always executed synchronously
+  1433:      *   (i.e. execution halts until the query has finished and then results are returned).
+  1434:      *
+  1435:      * For an example see [Global:WorldDBQuery].
+  1436:      *
+  1437:      * @warning This method is flagged as **unsafe** and is **disabled by default**. Use with caution, or transition to Async queries.
+  1438:      * 
+--- CONTEXT src/server/game/LuaEngine/methods/TrinityCore/GlobalMethods.h #18 ---
+  1478:      * The query is executed asynchronously, and the provided Lua function is called when the query completes.
+  1479:      * The callback function parameter is the query result (an [ElunaQuery] or nil if no rows found).
+  1480:      *
+  1481:      * For an example see [Global:WorldDBQueryAsync].
+  1482:      *
+  1483:      * @param string sql : query to execute asynchronously
+  1484:      * @param function callback : the callback function to be called with the query results
+--- CONTEXT src/server/game/LuaEngine/methods/TrinityCore/GlobalMethods.h #19 ---
+  1537:      * @param uint32 repeats = 1 : how many times for the event to repeat, 0 is infinite
+  1538:      * @return int eventId : unique ID for the timed event used to cancel it or nil
+  1539:      */
+  1540:     int CreateLuaEvent(Eluna* E)
+  1541:     {
+  1542:         luaL_checktype(E->L, 1, LUA_TFUNCTION);
+  1543:         uint32 min, max;
+--- CONTEXT src/server/game/LuaEngine/methods/TrinityCore/GlobalMethods.h #20 ---
+  2909:      *
+  2910:      * @proto ()
+  2911:      * @proto (event_type)
+  2912:      * @param uint32 event_type : the event whose handlers will be cleared, see [Global:RegisterPlayerEvent]
+  2913:      */
+  2914:     int ClearPlayerEvents(Eluna* E)
+  2915:     {
+--- CONTEXT src/server/game/LuaEngine/methods/TrinityCore/GlobalMethods.h #21 ---
+  2938:      * @proto (entry)
+  2939:      * @proto (entry, event_type)
+  2940:      * @param uint32 entry : the low GUID of a [Player] whose handlers will be cleared
+  2941:      * @param uint32 event_type : the event whose handlers will be cleared, see [Global:RegisterPlayerGossipEvent]
+  2942:      */
+  2943:     int ClearPlayerGossipEvents(Eluna* E)
+  2944:     {
+--- CONTEXT src/server/game/LuaEngine/methods/TrinityCore/GlobalMethods.h #22 ---
+  2970:      *
+  2971:      * @proto ()
+  2972:      * @proto (event_type)
+  2973:      * @param uint32 event_type : the event whose handlers will be cleared, see [Global:RegisterServerEvent]
+  2974:      */
+  2975:     int ClearServerEvents(Eluna* E)
+  2976:     {
+--- CONTEXT src/server/game/LuaEngine/methods/TrinityCore/GlobalMethods.h #23 ---
+  2999:      * @proto (map_id)
+  3000:      * @proto (map_id, event_type)
+  3001:      * @param uint32 map_id : the ID of a [Map]
+  3002:      * @param uint32 event_type : the event whose handlers will be cleared, see [Global:RegisterPlayerGossipEvent]
+  3003:      */
+  3004:     int ClearMapEvents(Eluna* E)
+  3005:     {
+--- CONTEXT src/server/game/LuaEngine/methods/TrinityCore/GlobalMethods.h #24 ---
+  3077:     {
+  3078:         // Hooks
+  3079:         { "RegisterPacketEvent", &LuaGlobalFunctions::RegisterPacketEvent },
+  3080:         { "RegisterServerEvent", &LuaGlobalFunctions::RegisterServerEvent },
+  3081:         { "RegisterPlayerEvent", &LuaGlobalFunctions::RegisterPlayerEvent },
+  3082:         { "RegisterGuildEvent", &LuaGlobalFunctions::RegisterGuildEvent },
+  3083:         { "RegisterGroupEvent", &LuaGlobalFunctions::RegisterGroupEvent },
+  3084:         { "RegisterCreatureEvent", &LuaGlobalFunctions::RegisterCreatureEvent },
+--- CONTEXT src/server/game/LuaEngine/methods/TrinityCore/GlobalMethods.h #25 ---
+  3089:         { "RegisterSpellEvent", &LuaGlobalFunctions::RegisterSpellEvent },
+  3090:         { "RegisterItemEvent", &LuaGlobalFunctions::RegisterItemEvent },
+  3091:         { "RegisterItemGossipEvent", &LuaGlobalFunctions::RegisterItemGossipEvent },
+  3092:         { "RegisterPlayerGossipEvent", &LuaGlobalFunctions::RegisterPlayerGossipEvent },
+  3093:         { "RegisterBGEvent", &LuaGlobalFunctions::RegisterBGEvent },
+  3094:         { "RegisterMapEvent", &LuaGlobalFunctions::RegisterMapEvent },
+  3095:         { "RegisterInstanceEvent", &LuaGlobalFunctions::RegisterInstanceEvent },
+--- CONTEXT src/server/game/LuaEngine/methods/TrinityCore/GlobalMethods.h #26 ---
+  3165:         { "ReloadEluna", &LuaGlobalFunctions::ReloadEluna },
+  3166:         { "RunCommand", &LuaGlobalFunctions::RunCommand },
+  3167:         { "SendWorldMessage", &LuaGlobalFunctions::SendWorldMessage },
+  3168:         { "WorldDBQuery", &LuaGlobalFunctions::WorldDBQuery, METHOD_REG_ALL, METHOD_FLAG_UNSAFE },
+  3169:         { "WorldDBExecute", &LuaGlobalFunctions::WorldDBExecute },
+  3170:         { "WorldDBQueryAsync", &LuaGlobalFunctions::WorldDBQueryAsync },
+  3171:         { "CharDBQuery", &LuaGlobalFunctions::CharDBQuery, METHOD_REG_ALL, METHOD_FLAG_UNSAFE },
+  3172:         { "CharDBExecute", &LuaGlobalFunctions::CharDBExecute },
+  3173:         { "CharDBQueryAsync", &LuaGlobalFunctions::CharDBQueryAsync },
+  3174:         { "AuthDBQuery", &LuaGlobalFunctions::AuthDBQuery, METHOD_REG_ALL, METHOD_FLAG_UNSAFE },
+  3175:         { "AuthDBExecute", &LuaGlobalFunctions::AuthDBExecute },
+  3176:         { "AuthDBQueryAsync", &LuaGlobalFunctions::AuthDBQueryAsync },
+  3177:         { "CreateLuaEvent", &LuaGlobalFunctions::CreateLuaEvent },
+  3178:         { "RemoveEventById", &LuaGlobalFunctions::RemoveEventById },
+  3179:         { "RemoveEvents", &LuaGlobalFunctions::RemoveEvents },
+  3180:         { "PerformIngameSpawn", &LuaGlobalFunctions::PerformIngameSpawn },
+ELUNA_CONTEXT_FILE path=src/server/game/LuaEngine/methods/TrinityCore/PlayerMethods.h; sha256=387062010a8cb88e283085163506dd8477292325c5272d381f380def6a5e5122; blocks=1
+--- CONTEXT src/server/game/LuaEngine/methods/TrinityCore/PlayerMethods.h #1 ---
+  3485:      * Sends the current gossip items of the player to him as a gossip menu with header text from the given textId.
+  3486:      *
+  3487:      * If sender is a [Player] then menu_id is mandatory, otherwise it is not used for anything.
+  3488:      * menu_id is the ID used to trigger the OnGossipSelect registered for players. See [Global:RegisterPlayerGossipEvent]
+  3489:      *
+  3490:      * See also: [Player:GossipMenuAddItem], [Player:GossipAddQuests], [Player:GossipComplete], [Player:GossipClearMenu]
+  3491:      *
+ELUNA_CONTEXT_FILE path=src/server/game/LuaEngine/methods/VMangos/ElunaQueryMethods.h; sha256=5cb462246f5a865b144afc6738b99b05d27373f6b4e16b198997f48ce4c15dc7; blocks=1
+--- CONTEXT src/server/game/LuaEngine/methods/VMangos/ElunaQueryMethods.h #1 ---
+    12: /***
+    13:  * The result of a database query.
+    14:  *
+    15:  * E.g. the return value of [Global:WorldDBQuery].
+    16:  *
+    17:  * Inherits all methods from: none
+    18:  */
+ELUNA_CONTEXT_FILE path=src/server/game/LuaEngine/methods/VMangos/GlobalMethods.h; sha256=ea00c73dc92c7f804d0fce962fe9f42cca3d67363529377de14ec014e4d74fb3; blocks=22
+--- CONTEXT src/server/game/LuaEngine/methods/VMangos/GlobalMethods.h #1 ---
+   603:      *
+   604:      * @return function cancel : a function that cancels the binding when called
+   605:      */
+   606:     int RegisterServerEvent(Eluna* E)
+   607:     {
+   608:         return RegisterEventHelper(E, Hooks::REGTYPE_SERVER);
+   609:     }
+--- CONTEXT src/server/game/LuaEngine/methods/VMangos/GlobalMethods.h #2 ---
+   657:      *     PLAYER_EVENT_ON_LEARN_TALENTS           =     39,       // (event, player, talentId, talentRank, spellid)
+   658:      *     PLAYER_EVENT_ON_ENVIRONMENTAL_DEATH     =     40,       // (event, player, environmentalDamageType)
+   659:      *     PLAYER_EVENT_ON_TRADE_ACCEPT            =     41,       // (event, player, target) - Can return false to interrupt trade
+   660:      *     PLAYER_EVENT_ON_COMMAND                 =     42,       // (event, player, command) - player is nil if command used from console. Can return false
+   661:      *     PLAYER_EVENT_ON_SKILL_CHANGE            =     43,       // (event, player, skillId, skillValue) - Returns new skill level value
+   662:      *     PLAYER_EVENT_ON_LEARN_SPELL             =     44,       // (event, player, spellId)
+   663:      *     PLAYER_EVENT_ON_ACHIEVEMENT_COMPLETE    =     45,       // (event, player, achievementId) - Not supported in VMaNGOS
+--- CONTEXT src/server/game/LuaEngine/methods/VMangos/GlobalMethods.h #3 ---
+   682:      *
+   683:      * @return function cancel : a function that cancels the binding when called
+   684:      */
+   685:     int RegisterPlayerEvent(Eluna* E)
+   686:     {
+   687:         return RegisterEventHelper(E, Hooks::REGTYPE_PLAYER);
+   688:     }
+--- CONTEXT src/server/game/LuaEngine/methods/VMangos/GlobalMethods.h #4 ---
+   820:      * enum GossipEvents
+   821:      * {
+   822:      *     GOSSIP_EVENT_ON_HELLO                           = 1,    // (event, player, object) - Object is the Creature/GameObject/Item. Can return false to do default action. For item gossip can return false to stop spell casting.
+   823:      *     GOSSIP_EVENT_ON_SELECT                          = 2,    // (event, player, object, sender, intid, code, menu_id) - Object is the Creature/GameObject/Item/Player, menu_id is only for player gossip. Can return false to do default action.
+   824:      *     GOSSIP_EVENT_COUNT
+   825:      * };
+   826:      * </pre>
+--- CONTEXT src/server/game/LuaEngine/methods/VMangos/GlobalMethods.h #5 ---
+   847:      * enum GossipEvents
+   848:      * {
+   849:      *     GOSSIP_EVENT_ON_HELLO                           = 1,    // (event, player, object) - Object is the Creature/GameObject/Item. Can return false to do default action. For item gossip can return false to stop spell casting.
+   850:      *     GOSSIP_EVENT_ON_SELECT                          = 2,    // (event, player, object, sender, intid, code, menu_id) - Object is the Creature/GameObject/Item/Player, menu_id is only for player gossip. Can return false to do default action.
+   851:      *     GOSSIP_EVENT_COUNT
+   852:      * };
+   853:      * </pre>
+--- CONTEXT src/server/game/LuaEngine/methods/VMangos/GlobalMethods.h #6 ---
+   905:      * enum GossipEvents
+   906:      * {
+   907:      *     GOSSIP_EVENT_ON_HELLO                           = 1,    // (event, player, object) - Object is the Creature/GameObject/Item. Can return false to do default action. For item gossip can return false to stop spell casting.
+   908:      *     GOSSIP_EVENT_ON_SELECT                          = 2,    // (event, player, object, sender, intid, code, menu_id) - Object is the Creature/GameObject/Item/Player, menu_id is only for player gossip. Can return false to do default action.
+   909:      *     GOSSIP_EVENT_COUNT
+   910:      * };
+   911:      * </pre>
+--- CONTEXT src/server/game/LuaEngine/methods/VMangos/GlobalMethods.h #7 ---
+   988:      * enum GossipEvents
+   989:      * {
+   990:      *     GOSSIP_EVENT_ON_HELLO                           = 1,    // (event, player, object) - Object is the Creature/GameObject/Item. Can return false to do default action. For item gossip can return false to stop spell casting.
+   991:      *     GOSSIP_EVENT_ON_SELECT                          = 2,    // (event, player, object, sender, intid, code, menu_id) - Object is the Creature/GameObject/Item/Player, menu_id is only for player gossip. Can return false to do default action.
+   992:      *     GOSSIP_EVENT_COUNT
+   993:      * };
+   994:      * </pre>
+--- CONTEXT src/server/game/LuaEngine/methods/VMangos/GlobalMethods.h #8 ---
+  1003:      *
+  1004:      * @return function cancel : a function that cancels the binding when called
+  1005:      */
+  1006:     int RegisterPlayerGossipEvent(Eluna* E)
+  1007:     {
+  1008:         return RegisterEntryHelper(E, Hooks::REGTYPE_PLAYER_GOSSIP);
+  1009:     }
+--- CONTEXT src/server/game/LuaEngine/methods/VMangos/GlobalMethods.h #9 ---
+  1212:      * The query is always executed synchronously
+  1213:      *   (i.e. execution halts until the query has finished and then results are returned).
+  1214:      *
+  1215:      *     local Q = WorldDBQuery("SELECT entry, name FROM creature_template LIMIT 10")
+  1216:      *     if Q then
+  1217:      *         repeat
+  1218:      *             local entry, name = Q:GetUInt32(0), Q:GetString(1)
+--- CONTEXT src/server/game/LuaEngine/methods/VMangos/GlobalMethods.h #10 ---
+  1223:      * @param string sql : query to execute
+  1224:      * @return [ElunaQuery] results or nil if no rows found or nil if no rows found
+  1225:      */
+  1226:     int WorldDBQuery(Eluna* E)
+  1227:     {
+  1228:         const char* query = E->CHECKVAL<const char*>(1);
+  1229: 
+--- CONTEXT src/server/game/LuaEngine/methods/VMangos/GlobalMethods.h #11 ---
+  1241:      * Executes a SQL query on the world database.
+  1242:      *
+  1243:      * The query may be executed *asynchronously* (at a later, unpredictable time).
+  1244:      * If you need to execute the query synchronously, use [Global:WorldDBQuery] instead.
+  1245:      *
+  1246:      * Any results produced are ignored.
+  1247:      * If you need results from the query, use [Global:WorldDBQuery] instead.
+  1248:      *
+  1249:      *     WorldDBExecute("DELETE FROM my_table")
+  1250:      *
+  1251:      * @param string sql : query to execute
+  1252:      */
+  1253:     int WorldDBExecute(Eluna* E)
+  1254:     {
+  1255:         const char* query = E->CHECKVAL<const char*>(1);
+  1256:         WorldDatabase.Execute(query);
+--- CONTEXT src/server/game/LuaEngine/methods/VMangos/GlobalMethods.h #12 ---
+  1263:      * The query is always executed synchronously
+  1264:      *   (i.e. execution halts until the query has finished and then results are returned).
+  1265:      *
+  1266:      * For an example see [Global:WorldDBQuery].
+  1267:      *
+  1268:      * @param string sql : query to execute
+  1269:      * @return [ElunaQuery] results or nil if no rows found
+  1270:      */
+  1271:     int CharDBQuery(Eluna* E)
+  1272:     {
+  1273:         const char* query = E->CHECKVAL<const char*>(1);
+  1274: 
+--- CONTEXT src/server/game/LuaEngine/methods/VMangos/GlobalMethods.h #13 ---
+  1286:      * Executes a SQL query on the character database.
+  1287:      *
+  1288:      * The query may be executed *asynchronously* (at a later, unpredictable time).
+  1289:      * If you need to execute the query synchronously, use [Global:CharDBQuery] instead.
+  1290:      *
+  1291:      * Any results produced are ignored.
+  1292:      * If you need results from the query, use [Global:CharDBQuery] instead.
+  1293:      *
+  1294:      *     CharDBExecute("DELETE FROM my_table")
+  1295:      *
+  1296:      * @param string sql : query to execute
+  1297:      */
+  1298:     int CharDBExecute(Eluna* E)
+  1299:     {
+  1300:         const char* query = E->CHECKVAL<const char*>(1);
+  1301:         CharacterDatabase.Execute(query);
+--- CONTEXT src/server/game/LuaEngine/methods/VMangos/GlobalMethods.h #14 ---
+  1308:      * The query is always executed synchronously
+  1309:      *   (i.e. execution halts until the query has finished and then results are returned).
+  1310:      *
+  1311:      * For an example see [Global:WorldDBQuery].
+  1312:      *
+  1313:      * @param string sql : query to execute
+  1314:      * @return [ElunaQuery] results or nil if no rows found
+--- CONTEXT src/server/game/LuaEngine/methods/VMangos/GlobalMethods.h #15 ---
+  1365:      * @param uint32 repeats = 1 : how many times for the event to repeat, 0 is infinite
+  1366:      * @return int eventId : unique ID for the timed event used to cancel it or nil
+  1367:      */
+  1368:     int CreateLuaEvent(Eluna* E)
+  1369:     {
+  1370:         luaL_checktype(E->L, 1, LUA_TFUNCTION);
+  1371:         uint32 min, max;
+--- CONTEXT src/server/game/LuaEngine/methods/VMangos/GlobalMethods.h #16 ---
+  2753:      *
+  2754:      * @proto ()
+  2755:      * @proto (event_type)
+  2756:      * @param uint32 event_type : the event whose handlers will be cleared, see [Global:RegisterPlayerEvent]
+  2757:      */
+  2758:     int ClearPlayerEvents(Eluna* E)
+  2759:     {
+--- CONTEXT src/server/game/LuaEngine/methods/VMangos/GlobalMethods.h #17 ---
+  2782:      * @proto (entry)
+  2783:      * @proto (entry, event_type)
+  2784:      * @param uint32 entry : the low GUID of a [Player] whose handlers will be cleared
+  2785:      * @param uint32 event_type : the event whose handlers will be cleared, see [Global:RegisterPlayerGossipEvent]
+  2786:      */
+  2787:     int ClearPlayerGossipEvents(Eluna* E)
+  2788:     {
+--- CONTEXT src/server/game/LuaEngine/methods/VMangos/GlobalMethods.h #18 ---
+  2814:      *
+  2815:      * @proto ()
+  2816:      * @proto (event_type)
+  2817:      * @param uint32 event_type : the event whose handlers will be cleared, see [Global:RegisterServerEvent]
+  2818:      */
+  2819:     int ClearServerEvents(Eluna* E)
+  2820:     {
+--- CONTEXT src/server/game/LuaEngine/methods/VMangos/GlobalMethods.h #19 ---
+  2843:      * @proto (map_id)
+  2844:      * @proto (map_id, event_type)
+  2845:      * @param uint32 map_id : the ID of a [Map]
+  2846:      * @param uint32 event_type : the event whose handlers will be cleared, see [Global:RegisterPlayerGossipEvent]
+  2847:      */
+  2848:     int ClearMapEvents(Eluna* E)
+  2849:     {
+--- CONTEXT src/server/game/LuaEngine/methods/VMangos/GlobalMethods.h #20 ---
+  2905:     {
+  2906:         // Hooks
+  2907:         { "RegisterPacketEvent", &LuaGlobalFunctions::RegisterPacketEvent },
+  2908:         { "RegisterServerEvent", &LuaGlobalFunctions::RegisterServerEvent },
+  2909:         { "RegisterPlayerEvent", &LuaGlobalFunctions::RegisterPlayerEvent },
+  2910:         { "RegisterGuildEvent", &LuaGlobalFunctions::RegisterGuildEvent },
+  2911:         { "RegisterGroupEvent", &LuaGlobalFunctions::RegisterGroupEvent },
+  2912:         { "RegisterCreatureEvent", &LuaGlobalFunctions::RegisterCreatureEvent },
+--- CONTEXT src/server/game/LuaEngine/methods/VMangos/GlobalMethods.h #21 ---
+  2916:         { "RegisterGameObjectGossipEvent", &LuaGlobalFunctions::RegisterGameObjectGossipEvent },
+  2917:         { "RegisterItemEvent", &LuaGlobalFunctions::RegisterItemEvent },
+  2918:         { "RegisterItemGossipEvent", &LuaGlobalFunctions::RegisterItemGossipEvent },
+  2919:         { "RegisterPlayerGossipEvent", &LuaGlobalFunctions::RegisterPlayerGossipEvent },
+  2920:         { "RegisterBGEvent", &LuaGlobalFunctions::RegisterBGEvent },
+  2921:         { "RegisterMapEvent", &LuaGlobalFunctions::RegisterMapEvent },
+  2922:         { "RegisterInstanceEvent", &LuaGlobalFunctions::RegisterInstanceEvent },
+--- CONTEXT src/server/game/LuaEngine/methods/VMangos/GlobalMethods.h #22 ---
+  2987:         { "ReloadEluna", &LuaGlobalFunctions::ReloadEluna },
+  2988:         { "RunCommand", &LuaGlobalFunctions::RunCommand },
+  2989:         { "SendWorldMessage", &LuaGlobalFunctions::SendWorldMessage },
+  2990:         { "WorldDBQuery", &LuaGlobalFunctions::WorldDBQuery, METHOD_REG_ALL, METHOD_FLAG_UNSAFE },
+  2991:         { "WorldDBExecute", &LuaGlobalFunctions::WorldDBExecute },
+  2992:         { "CharDBQuery", &LuaGlobalFunctions::CharDBQuery, METHOD_REG_ALL, METHOD_FLAG_UNSAFE },
+  2993:         { "CharDBExecute", &LuaGlobalFunctions::CharDBExecute },
+  2994:         { "AuthDBQuery", &LuaGlobalFunctions::AuthDBQuery, METHOD_REG_ALL, METHOD_FLAG_UNSAFE },
+  2995:         { "AuthDBExecute", &LuaGlobalFunctions::AuthDBExecute },
+  2996:         { "CreateLuaEvent", &LuaGlobalFunctions::CreateLuaEvent },
+  2997:         { "RemoveEventById", &LuaGlobalFunctions::RemoveEventById },
+  2998:         { "RemoveEvents", &LuaGlobalFunctions::RemoveEvents },
+  2999:         { "PerformIngameSpawn", &LuaGlobalFunctions::PerformIngameSpawn },
+ELUNA_CONTEXT_FILE path=src/server/game/LuaEngine/methods/VMangos/PlayerMethods.h; sha256=061708e999d713673863989c50b855ecdaceb655783d1b08899e4015d5b149ce; blocks=1
+--- CONTEXT src/server/game/LuaEngine/methods/VMangos/PlayerMethods.h #1 ---
+  3044:      * Sends the current gossip items of the player to him as a gossip menu with header text from the given textId.
+  3045:      *
+  3046:      * If sender is a [Player] then menu_id is mandatory, otherwise it is not used for anything.
+  3047:      * menu_id is the ID used to trigger the OnGossipSelect registered for players. See [Global:RegisterPlayerGossipEvent]
+  3048:      *
+  3049:      * See also: [Player:GossipMenuAddItem], [Player:GossipAddQuests], [Player:GossipComplete], [Player:GossipClearMenu]
+  3050:      *
+G23_ELUNA_CONTEXT_FILE_COUNT=20
+G23_ELUNA_CONTEXT_BLOCK_COUNT=137
+
+===== 6. ACTIVE PROCESS IDENTITY =====
+PID=5304;PATH=D:\TC-Build\bin\RelWithDebInfo\worldserver.exe;CREATED=08/22/2026 00:09:30
+G23_ACTIVE_WORLDSERVER_COUNT=1
+RUN_EXE path=D:\TC-Build\bin\RelWithDebInfo\worldserver.exe; bytes=36734464; sha256=07a8f95259a6d46ab5d46720e5b919fc5cc60f7e81086b81e2748e7d1e1a86c1; mtime_ns=1787324815848971800
+
+===== 7. RECENT RELEVANT LOG LINES =====
+G23_LOG_FILE_SCANNED_COUNT=5
+G23_RELEVANT_LOG_MATCH_COUNT=300
+LOG_FILE path=Server.log; bytes=77562; mtime_ns=1787328736168214400
+LOG_FILE path=DBErrors.log; bytes=183799; mtime_ns=1787328584703329300
+LOG_FILE path=Auth.log; bytes=1324; mtime_ns=1787328573349846900
+LOG_FILE path=Eluna.log; bytes=4782393; mtime_ns=1787327531412861300
+LOG_FILE path=GM.log; bytes=0; mtime_ns=1785170321561081200
+Server.log: Loading Eluna config...
+Server.log: Loading Lua scripts...
+Server.log: Loading Eluna script reloader...
+Server.log: Starting Eluna world state...
+Eluna.log: 2026-08-06_05:33:08 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-06_05:36:03 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-06_05:36:03 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-06_05:36:31 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-06_05:36:31 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-06_05:36:56 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-06_05:36:56 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-06_05:37:19 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-06_05:37:19 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-06_05:37:35 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-06_05:37:35 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-06_05:37:52 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-06_05:37:52 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-06_05:38:24 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-06_05:38:24 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-06_05:38:50 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-06_05:38:50 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-06_05:39:09 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-06_05:39:09 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-06_05:39:42 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-06_05:40:50 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-06_05:40:50 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-06_05:41:21 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-06_05:41:21 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-06_05:41:51 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-06_05:41:51 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-06_05:42:25 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-06_05:42:25 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-06_05:42:53 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-06_05:42:53 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-06_06:04:52 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-06_11:06:28 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-06_11:07:20 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-06_11:07:39 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-06_11:08:39 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-06_11:10:55 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-06_11:11:20 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-06_11:20:17 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-06_11:20:57 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-06_11:22:23 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-06_11:23:16 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-06_11:23:57 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-06_11:24:15 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-06_11:24:44 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-06_11:25:24 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-06_11:26:19 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-06_11:26:39 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-06_11:26:59 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-06_11:27:14 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-06_11:27:34 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-06_11:27:51 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-06_11:28:10 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-06_23:56:44 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-06_23:58:34 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-06_23:58:54 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-07_00:00:58 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-07_00:01:14 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-07_00:01:28 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-07_00:01:46 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-07_00:02:01 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-07_00:02:45 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-07_00:03:17 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-07_00:09:35 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-07_00:10:28 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-07_00:10:48 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-07_00:11:24 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-07_00:11:45 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-07_00:12:56 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-07_00:13:17 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-07_00:14:06 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-07_00:14:36 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-07_00:17:17 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-07_00:17:28 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-07_00:17:57 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-07_00:18:25 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-07_00:18:38 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-07_00:19:29 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-07_00:20:36 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-07_00:24:50 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-07_00:25:10 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-07_00:25:31 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-07_00:25:48 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-07_00:26:08 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-07_00:28:57 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-07_00:29:21 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-07_00:29:42 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-07_00:29:54 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-07_00:30:11 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-07_00:30:30 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-07_00:30:53 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-07_00:31:44 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-07_00:33:00 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-07_00:33:49 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-07_00:34:02 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-07_00:34:19 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-07_00:35:34 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-07_00:36:32 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-07_00:37:57 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-07_00:38:23 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-07_00:38:53 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-07_00:39:16 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-07_00:39:55 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-07_00:40:07 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-07_00:48:45 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-07_00:48:45 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-07_00:49:25 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-07_00:49:25 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-07_00:49:41 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-07_00:49:41 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-07_00:49:55 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-07_00:49:55 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-07_00:50:10 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-07_00:50:10 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-07_00:50:53 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-07_00:50:53 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-07_00:51:54 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-07_00:52:09 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-07_00:52:39 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-07_00:52:57 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-07_00:53:59 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-07_00:54:11 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-07_00:55:05 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-07_00:55:31 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-08_20:08:16 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-08_20:08:16 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-08_20:08:28 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-08_20:08:28 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-08_20:08:49 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-08_20:08:49 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-08_20:09:13 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-08_20:09:13 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-08_20:09:27 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-08_20:09:27 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-08_20:09:59 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-08_20:10:30 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-08_20:10:30 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-08_20:10:43 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-08_20:10:43 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-08_20:10:45 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-08_20:10:45 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-08_20:11:00 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-08_20:11:00 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-08_20:11:15 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-08_20:11:15 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-08_20:11:19 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-08_20:11:19 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-08_20:11:35 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+Eluna.log: 2026-08-08_20:11:35 ERROR ...elWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43: calling 'GetGUIDLow' on bad self (Creature expected, got pointer to nonexisting (invalidated) object (userdata). Check your code.)
+Eluna.log: (3) Lua function 'DestroyObjData' at file 'D:/TC-Build/bin/RelWithDebInfo/lua_scripts/extensions/ObjectVariables.ext:43' (best guess)
+
+===== 8. READ-ONLY POSTCHECK =====
+G23_SOURCE_FILE_EDIT_COUNT=0
+G23_CONFIG_EDIT_COUNT=0
+G23_LUA_FILE_EDIT_COUNT=0
+G23_DATABASE_EDIT_COUNT=0
+G23_DATABASE_CONNECTION_COUNT=0
+G23_BASELINE_CAPTURE_PASS=False
+EVIDENCE_BOUNDARY=Static/runtime baseline only; no intermittent-loot root cause or Lua functional pass inferred

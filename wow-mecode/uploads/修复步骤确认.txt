@@ -1,0 +1,225 @@
+// ============================================================================
+//  bot 登记表
+// ============================================================================
+//  【step42 起】struct PBotEntry 移到 pbot_autoaccept.h，
+//  因为自动接受模块也要读它。这里改成【定义】那个 extern 变量。
+//  两边共用同一份数据 -> .pbot auto 改的就是自动层每帧读的值。
+std::vector<PBotEntry> g_pbots;
+
+// ============================================================================
+
+//  A41 · spawn 核心（不依赖 ChatHandler，供自动上线复用）
+
+// ============================================================================
+
+//  原 SpawnBot 把"查找+校验+登录"和"给玩家发消息"混在一起，
+
+//  自动上线时没有 ChatHandler，所以必须把核心逻辑抽出来。
+
+//  这里是原 :252-300 那段的无 UI 版本。
+
+// ============================================================================
+
+bool PBotSpawnCore(uint32 accountId, ObjectGuid charGuid,
+
+                std::string const& charName, uint32 autoFlags,
+
+                std::string* reason)
+
+{
+
+// 已经在线
+
+    if (ObjectAccessor::FindPlayer(charGuid))
+
+    {
+
+        if (reason) *reason = "已经在线";
+
+        return false;
+
+    }
+
+
+
+
+    // 账号已有会话
+
+    if (sWorld->FindSession(accountId))
+
+    {
+
+        if (reason) *reason = "账号已有活动会话";
+
+        return false;
+
+    }
+
+
+
+
+    // 造无连接会话（同 SpawnBot :263）
+
+    std::string sessName = charName;
+
+    WorldSession* sess = new WorldSession(
+
+        accountId,
+
+        std::move(sessName),
+
+        nullptr,                    // 无 socket
+
+        SEC_ADMINISTRATOR,
+
+        2,                          // WotLK
+
+        0,
+
+        Minutes(0),
+
+        LOCALE_zhCN,
+
+        0,
+
+        false);
+
+
+
+
+    sess->SetBotSession(true);
+
+    sess->AddLegitCharacter(charGuid);
+
+    sWorld->AddSession(sess);
+
+
+
+
+    WorldPacket* pkt = new WorldPacket(CMSG_PLAYER_LOGIN, 8);
+
+    *pkt << charGuid;
+
+    sess->QueuePacket(pkt);
+
+
+
+
+    // 登记进内存表（去重：同一个 guid 只留一份）
+
+    for (PBotEntry const& e : g_pbots)
+
+        if (e.CharGuid == charGuid)
+
+            return true;
+
+
+
+
+    g_pbots.push_back({ accountId, charGuid, charName, autoFlags });
+
+    return true;
+
+}
+
+
+
+
+// ============================================================================
+
+//  A41 · 名册读写
+
+// ============================================================================
+
+void PBotLoadRoster(ObjectGuid ownerGuid, std::vector<PBotEntry>& out)
+
+{
+
+    out.clear();
+
+
+
+
+    QueryResult res = CharacterDatabase.PQuery(
+
+        "SELECT bot_account, bot_guid, bot_name, auto_flags "
+
+        "FROM playerbot_roster WHERE owner_guid = {} AND enabled = 1",
+
+        ownerGuid.GetCounter());
+
+
+
+
+    if (!res)
+
+        return;
+
+
+
+
+    do
+
+    {
+
+        Field* f = res->Fetch();
+
+        PBotEntry e;
+
+        e.AccountId = f[0].GetUInt32();
+
+        e.CharGuid  = ObjectGuid::Create<HighGuid::Player>(f[1].GetUInt32());
+
+        e.CharName  = f[2].GetString();
+
+        e.AutoFlags = f[3].GetUInt32();
+
+        out.push_back(e);
+
+    } while (res->NextRow());
+
+}
+
+
+
+
+void PBotRosterAdd(ObjectGuid ownerGuid, PBotEntry const& e)
+
+{
+
+    CharacterDatabase.PExecute(
+
+        "REPLACE INTO playerbot_roster "
+
+        "(owner_guid, bot_account, bot_guid, bot_name, auto_flags, enabled) "
+
+        "VALUES ({}, {}, {}, '{}', {}, 1)",
+
+        ownerGuid.GetCounter(), e.AccountId, e.CharGuid.GetCounter(),
+
+        e.CharName, e.AutoFlags);
+
+}
+
+
+
+
+void PBotRosterRemove(ObjectGuid ownerGuid, ObjectGuid botGuid)
+
+{
+
+    CharacterDatabase.PExecute(
+
+        "DELETE FROM playerbot_roster WHERE owner_guid = {} AND bot_guid = {}",
+
+        ownerGuid.GetCounter(), botGuid.GetCounter());
+
+}
+
+// ============================================================================
+//  落点距离：bot 站在你【身前】多远（码）
+//    太小 = 和你重叠，看不见也点不到
+//    太大 = 不像"在身边"
+//    2.0 码 ≈ 一个身位，正好面对面
+// ============================================================================
+static constexpr float PBOT_COME_DIST = 2.0f;

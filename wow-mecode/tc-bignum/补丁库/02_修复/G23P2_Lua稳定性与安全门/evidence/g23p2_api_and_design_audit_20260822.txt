@@ -1,0 +1,36 @@
+G23-P2 Eluna API/design audit — 2026-08-22
+
+Target source evidence: workspace _chk Eluna files captured from the project-compatible Eluna tree.
+
+Verified global APIs:
+- GlobalMethods.h: GetStateMapId; returns -1 for the unique World state.
+- GlobalMethods.h: CreateLuaEvent; returns event id and uses state event manager.
+- GlobalMethods.h: CharDBQuery; documented and implemented as synchronous.
+- GlobalMethods.h: WorldDBQuery, SendWorldMessage, SendMail, GetGameTime.
+- Hooks.h / ServerHooks.cpp: server event 33 is ON_LUA_STATE_OPEN, after all scripts load.
+
+Verified Player/Unit/Map APIs used by teleport gates:
+- PlayerMethods.h: GetGMRank, InBattlegroundQueue, InArena, InBattleground, Teleport.
+- UnitMethods.h: IsAlive, IsDead, IsInCombat, IsPvPFlagged, IsOnVehicle, GetVehicle, IsMounted, IsFlying, GetMovementType.
+- WorldObjectMethods.h: GetMap.
+- MapMethods.h: IsArena, IsBattleground, IsDungeon, IsRaid.
+- UnitMethods.h documents FLIGHT_MOTION_TYPE=7.
+- Player:Teleport returns the core TeleportTo boolean; P2 checks it.
+
+Daily reward database gate:
+- No stored procedure, function, cursor, custom delimiter, multi-statement dependency, or async CharDBExecute.
+- custom_daily_reward_claim PRIMARY KEY(guid, claim_date) is the atomic winner gate.
+- Winner token comes from database UUID(), so independent Lua states cannot generate an equal token.
+- Each synchronous DML is followed by SELECT verification because CharDBQuery returns nil for DML.
+- Pre-award failure releases pending only after compensation; post-award DB uncertainty keeps pending to prevent duplicates.
+
+Multistate announcement:
+- Scripts load in world and map states, but custom_announce.lua registers ON_LUA_STATE_OPEN only when GetStateMapId()==-1.
+- Map/instance states register no announcement callback and establish no announcement timer.
+- Same-world-state timerId guard prevents duplicate callback invocation.
+
+ObjectVariables.ext:
+- P0R deployed CRLF preimage SHA-256: 6a682daa547db2a72620e7e1f906532c52c1dd4c1345837d4d6b24640307a547.
+- Historical error came from event 31 calling GetGUIDLow on already-invalidated Creature userdata.
+- P0R deployed project Lua files contain no GetData/SetData dependency.
+- P2 same-path quarantine registers no object method and no delete/map callback; byte-exact original is packaged for rollback.

@@ -1,0 +1,17 @@
+[OK] SPEC_GENERATOR_CHECK=True bytes=69039 path=/home/user/wow-mecode/tc-bignum/补丁库/01_功能/A06_战斗辅助/源文件/CombatSpecData.cpp
+[OK] SPEC_GENERATOR_CHECK=True bytes=69039 path=/home/user/wow-mecode/tc-bignum/补丁库/01_功能/A06_战斗辅助/源文件/CombatSpecData.cpp
+[OK] F44R1_STATIC_TESTS=PASS specs=31 controlled_entries=493 raw_casts=1
+[OK] F44R1_BEHAVIOR_TESTS=12/12
+[OK] F44R1_INSTALLER_SELF_TEST=normal+optimized
+[OK] F44R1_FULL_RUNTIME_MOCK=32/32
+[OK] LEGACY_MOCK=aoetest
+[OK] LEGACY_MOCK=bartest
+[OK] LEGACY_MOCK=bufffixtest
+[OK] LEGACY_MOCK=bugfixtest
+[OK] LEGACY_MOCK=logictest
+[OK] LEGACY_MOCK=persisttest
+[OK] LEGACY_MOCK=setuptest
+[OK] LEGACY_MOCK=v33test
+[OK] LEGACY_MOCK=v34test
+[OK] LEGACY_MOCK=v3test
+[OK] F44R1_ALL_TESTS=PASS

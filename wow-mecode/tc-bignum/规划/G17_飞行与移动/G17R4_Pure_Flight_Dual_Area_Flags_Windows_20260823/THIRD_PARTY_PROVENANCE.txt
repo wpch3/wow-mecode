@@ -1,0 +1,21 @@
+Third-party provenance: mpqcli
+
+Project: mpqcli
+Version: v0.10.2
+Release date: 2026-07-03
+Project URL: https://github.com/thegraydot/mpqcli
+Release URL: https://github.com/thegraydot/mpqcli/releases/tag/v0.10.2
+Windows asset URL: https://github.com/thegraydot/mpqcli/releases/download/v0.10.2/mpqcli-windows-amd64.exe
+Windows asset size: 970752 bytes
+Windows SHA-256: 5dc56b130432098d18e911fdf4b3464adf850432b7fbb35003a2feff7c30a79f
+Binary format: PE32+ x86-64 console application
+License: MIT; full text in third_party\mpqcli-LICENSE.txt
+
+The package verifies this executable hash before use. It creates a WotLK
+format-2 custom MPQ and independently extracts and hashes both
+DBFilesClient\Spell.dbc and DBFilesClient\AreaTable.dbc before installation,
+after installation, and on idempotent reruns.
+
+Offline lifecycle testing used the same-version upstream Linux AMD64 glibc
+asset only; it is not shipped. Its SHA-256 is:
+d2f97ee5b5a7473d8318238d3fc7238a76c35727c4e0b55275516b6ad325b2e7

@@ -1,0 +1,61 @@
+F45本地验收记录
+日期：2026-08-22（Asia/Shanghai）
+
+用户症状定性：
+- 同一环境有时完整、有时不完整；
+- 有时只剩一具怪物未拾取；
+- 怪物种类越多越明显。
+
+决策：
+- R1–R4结构化真人计数取消，不再作为F45前置门槛；
+- 已有P0R真实C++源码足以确认入口、roll整尸、组队金币和邮件边界缺陷；
+- Lua不在AoE Loot主链，F45不修改Lua/.ext/conf/SQL/数据库。
+
+包路径：
+tc-bignum/补丁库/02_修复/F45_AoE拾取随机漏尸与组队金币语义
+
+不可变ZIP：
+F45_delivery_20260822.zip
+size=38016
+sha256=469e55b028544d31cd9c812269a6229b99e080aef0ab8be76870955cf12982a8
+zip_files=13
+zip_crc=PASS
+zip_byte_exact=PASS
+
+原件 -> 后像SHA-256：
+- LootHandler.cpp
+  35ef90116a1eaf8f3a847fc4e3b4b5c9815afe6f973433d42a56ccd755d436c5
+  -> 8003bc7e3e7343c7383c9039f9ed8602d7d83e0561a45de1109522f7130ac124
+- CustomAoELoot.cpp
+  9a88008a895eb3b70eddbf8fe81d7cbefcd0cc285eb18bf460bc06c086af95c5
+  -> 3492330facc3ea250be60e9496a60eab1df4d6a1a05e31179bd527713c8b1cda
+- CustomAoELoot.h
+  4cb423d0f854406f6aadbb7421af3782a90c1a8262d892ee3935e535ec5af6c6
+  -> 11428566fc7c4a79ab20a65f639b1ec0d287a212a5fc639c27b6d040d8339e31
+
+自动门槛：
+F45_SOURCE_GATES=PASS
+F45_BEHAVIOR_MODEL=PASS
+F45_INSTALLER_SELFTEST=PASS
+
+完整头文件语法门槛：
+- 上游：https://github.com/328950225/TrinityCore-NPCBOT-Eluna-zhCN
+- 分支：NPCBOT-Eluna-zhCN-2026
+- Eluna子模块：4608e3f094110089488ee8ddbd87b17de3cc449b
+- 编译器：g++ 14.2.0
+- 标准：C++20
+- CustomAoELoot.cpp CORE：PASS
+- LootHandler.cpp CORE：PASS
+- CustomAoELoot.cpp ELUNA+ELUNA_TRINITY：PASS
+- LootHandler.cpp ELUNA+ELUNA_TRINITY：PASS
+F45_FULL_HEADER_SYNTAX=PASS
+
+边界：
+- Bash沙箱没有cmake；没有执行全worldserver链接。
+- 本门槛不是Windows VS2022编译、启动或真人运行PASS。
+- Windows当前状态：尚未Check/Apply/编译。
+
+F45_LOCAL_ACCEPTANCE=PASS
+F45_WINDOWS_APPLY=NOT_RUN
+F45_WINDOWS_BUILD=NOT_RUN
+F45_RUNTIME=NOT_RUN

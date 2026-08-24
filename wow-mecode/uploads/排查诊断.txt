@@ -1,0 +1,38 @@
+Administrator@LAPTOP-FEN36HKQ MINGW64 /d/TrinityCore/src/server/scripts/Commands (bignum-mod)
+$ echo "===== 1. 源文件对不对 ====="
+md5sum /d/TrinityCore/src/server/scripts/Commands/cs_botpersist.cpp
+echo "  应该是: a7203f85141d95efa184d8147dd60eeb"
+echo
+echo "===== 2. 源文件里有没有 status 分发 ====="
+grep -c 'DoStatus(handler, player)' /d/TrinityCore/src/server/scripts/Commands/cs_botpersist.cpp
+echo "  应该是: 1"
+echo
+echo "===== 3. 编译出来的 exe 里有没有这个字符串 ====="
+strings /d/TC-Build/bin/RelWithDebInfo/worldserver.exe 2>/dev/null | grep -c "看这个bot的真实状态"
+echo "  应该 >= 1 （如果是0，说明exe是旧的）"
+echo
+echo "===== 4. exe 的编译时间 ====="
+ls -la --time-style=full-iso /d/TC-Build/bin/RelWithDebInfo/worldserver.exe
+echo
+echo "===== 5. 你实际在跑的 exe 在哪 ====="
+ls -la --time-style=full-iso /d/WOW-Server/worldserver.exe 2>/dev/null || echo "  (这个路径不存在，换成你实际放exe的目录)"
+===== 1. 源文件对不对 =====
+a7203f85141d95efa184d8147dd60eeb */d/TrinityCore/src/server/scripts/Commands/cs_botpersist.cpp
+  应该是: a7203f85141d95efa184d8147dd60eeb
+
+===== 2. 源文件里有没有 status 分发 =====
+1
+  应该是: 1
+
+===== 3. 编译出来的 exe 里有没有这个字符串 =====
+0
+  应该 >= 1 （如果是0，说明exe是旧的）
+
+===== 4. exe 的编译时间 =====
+-rwxr-xr-x 1 Administrator 197121 36605952 2026-08-05 03:46:49.320931600 +0800 /d/TC-Build/bin/RelWithDebInfo/worldserver.exe*
+
+===== 5. 你实际在跑的 exe 在哪 =====
+  (这个路径不存在，换成你实际放exe的目录)
+
+Administrator@LAPTOP-FEN36HKQ MINGW64 /d/TrinityCore/src/server/scripts/Commands (bignum-mod)
+$

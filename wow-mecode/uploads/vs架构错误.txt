@@ -1,0 +1,2276 @@
+"RBACPermissionContainer": 不是 "rbac" 的成员
+语法错误: 缺少“;”(在“}”的前面)
+语法错误: 缺少“;”(在“}”的前面)
+缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+“rbac::RBAC_PERM_MAX”: 重定义；以前的定义是“枚举数”
+“rbac::RBAC_PERM_MAX”: 重定义；以前的定义是“枚举数”
+语法错误:“}”
+语法错误:“}”
+语法错误: 缺少“;”(在“}”的前面)
+语法错误: 缺少“;”(在“}”的前面)
+语法错误:“函数样式强制转换”
+语法错误:“函数样式强制转换”
+语法错误: 缺少“;”(在“{”的前面)
+语法错误: 缺少“;”(在“{”的前面)
+“{”: 缺少函数标题(是否是老式的形式表?)
+“{”: 缺少函数标题(是否是老式的形式表?)
+"RBACPermission": 不是 "rbac" 的成员
+"RBACPermission": 不是 "rbac" 的成员
+"RBACPermissionContainer": 不是 "rbac" 的成员
+“RBACPermissionContainer”: 应为表达式而不是类型
+"std::map": "RBACPermissionContainer" 不是参数 "_Ty" 的有效 模板 类型参数
+"RBACPermissionContainer": 不是 "rbac" 的成员
+“std::map'”: 模板 参数太少
+“RBACPermissionContainer”: 应为表达式而不是类型
+"std::map": "RBACPermissionContainer" 不是参数 "_Ty" 的有效 模板 类型参数
+“std::map'”: 模板 参数太少
+“std::map”: 使用 类 模板 需要 模板 参数列表
+“CreateAccount”: 未知重写说明符
+语法错误:“(”
+意外的标记位于“;”之前
+“DeleteAccount”: 未知重写说明符
+“std::map”: 使用 类 模板 需要 模板 参数列表
+“uint32”: 应为表达式而不是类型
+“CreateAccount”: 未知重写说明符
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+语法错误:“(”
+意外的标记位于“;”之前
+“ChangeUsername”: 未知重写说明符
+意外的标记位于“;”之前
+“DeleteAccount”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+意外的标记位于“;”之前
+“ChangePassword”: 未知重写说明符
+“ChangeUsername”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+意外的标记位于“;”之前
+“ChangeEmail”: 未知重写说明符
+“ChangePassword”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+意外的标记位于“;”之前
+“ChangeRegEmail”: 未知重写说明符
+“ChangeEmail”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+意外的标记位于“;”之前
+“ChangeRegEmail”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+"RBACPermission": 不是 "rbac" 的成员
+"RBACPermission": 不是 "rbac" 的成员
+"RBACPermissionContainer": 不是 "rbac" 的成员
+"RBACPermissionContainer": 不是 "rbac" 的成员
+“std::map”: 使用 类 模板 需要 模板 参数列表
+“std::map”: 使用 类 模板 需要 模板 参数列表
+使用了未定义类型“rbac::RBACData”
+“GetId”: 找不到标识符
+“GetName”: 找不到标识符
+“Log::OutMessage”: 未找到匹配的重载函数
+“HasDeniedPermission”: 找不到标识符
+“GetId”: 找不到标识符
+“GetName”: 找不到标识符
+“Log::OutMessage”: 未找到匹配的重载函数
+“HasGrantedPermission”: 找不到标识符
+“GetId”: 找不到标识符
+“GetName”: 找不到标识符
+“Log::OutMessage”: 未找到匹配的重载函数
+“AddGrantedPermission”: 找不到标识符
+“GetId”: 找不到标识符
+“GetName”: 找不到标识符
+“Log::OutMessage”: 未找到匹配的重载函数
+“SavePermission”: 找不到标识符
+“CalculateNewPermissions”: 找不到标识符
+“GetId”: 找不到标识符
+“GetName”: 找不到标识符
+“Log::OutMessage”: 未找到匹配的重载函数
+使用了未定义类型“rbac::RBACData”
+“GetId”: 找不到标识符
+“GetName”: 找不到标识符
+“Log::OutMessage”: 未找到匹配的重载函数
+语法错误: 缺少“;”(在“}”的前面)
+“HasGrantedPermission”: 找不到标识符
+缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+“GetId”: 找不到标识符
+“GetName”: 找不到标识符
+“rbac::RBAC_PERM_MAX”: 重定义；以前的定义是“枚举数”
+语法错误: 缺少“;”(在“}”的前面)
+缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+“rbac::RBAC_PERM_MAX”: 重定义；以前的定义是“枚举数”
+“Log::OutMessage”: 未找到匹配的重载函数
+“HasDeniedPermission”: 找不到标识符
+“GetId”: 找不到标识符
+“GetName”: 找不到标识符
+“Log::OutMessage”: 未找到匹配的重载函数
+“AddDeniedPermission”: 找不到标识符
+“GetId”: 找不到标识符
+“GetName”: 找不到标识符
+语法错误:“}”
+语法错误: 缺少“;”(在“}”的前面)
+“Log::OutMessage”: 未找到匹配的重载函数
+语法错误:“}”
+“SavePermission”: 找不到标识符
+语法错误:“函数样式强制转换”
+语法错误: 缺少“;”(在“}”的前面)
+“CalculateNewPermissions”: 找不到标识符
+语法错误: 缺少“;”(在“{”的前面)
+“GetId”: 找不到标识符
+语法错误:“函数样式强制转换”
+“{”: 缺少函数标题(是否是老式的形式表?)
+语法错误: 缺少“;”(在“{”的前面)
+“GetName”: 找不到标识符
+“{”: 缺少函数标题(是否是老式的形式表?)
+"RBACPermission": 不是 "rbac" 的成员
+"RBACPermission": 不是 "rbac" 的成员
+"RBACPermissionContainer": 不是 "rbac" 的成员
+“Log::OutMessage”: 未找到匹配的重载函数
+“RBACPermissionContainer”: 应为表达式而不是类型
+使用了未定义类型“rbac::RBACData”
+“RBACPermissionContainer”: 应为表达式而不是类型
+"std::map": "RBACPermissionContainer" 不是参数 "_Ty" 的有效 模板 类型参数
+"std::map": "RBACPermissionContainer" 不是参数 "_Ty" 的有效 模板 类型参数
+“std::map'”: 模板 参数太少
+“std::map'”: 模板 参数太少
+“std::map”: 使用 类 模板 需要 模板 参数列表
+“CreateAccount”: 未知重写说明符
+语法错误:“(”
+“std::map”: 使用 类 模板 需要 模板 参数列表
+意外的标记位于“;”之前
+“CreateAccount”: 未知重写说明符
+“DeleteAccount”: 未知重写说明符
+语法错误:“(”
+“uint32”: 应为表达式而不是类型
+意外的标记位于“;”之前
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+“DeleteAccount”: 未知重写说明符
+意外的标记位于“;”之前
+“uint32”: 应为表达式而不是类型
+“ChangeUsername”: 未知重写说明符
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+“ChangeUsername”: 未知重写说明符
+意外的标记位于“;”之前
+“uint32”: 应为表达式而不是类型
+“ChangePassword”: 未知重写说明符
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+“uint32”: 应为表达式而不是类型
+意外的标记位于“;”之前
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+“ChangePassword”: 未知重写说明符
+意外的标记位于“;”之前
+“uint32”: 应为表达式而不是类型
+“ChangeEmail”: 未知重写说明符
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+“uint32”: 应为表达式而不是类型
+“ChangeEmail”: 未知重写说明符
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+“uint32”: 应为表达式而不是类型
+意外的标记位于“;”之前
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+“ChangeRegEmail”: 未知重写说明符
+意外的标记位于“;”之前
+“uint32”: 应为表达式而不是类型
+“ChangeRegEmail”: 未知重写说明符
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+意外的标记位于“;”之前
+"RBACPermission": 不是 "rbac" 的成员
+"RBACPermission": 不是 "rbac" 的成员
+"RBACPermissionContainer": 不是 "rbac" 的成员
+"RBACPermissionContainer": 不是 "rbac" 的成员
+“GetId”: 找不到标识符
+使用了未定义类型“rbac::RBACData”
+“HasGrantedPermission”: 找不到标识符
+“HasDeniedPermission”: 找不到标识符
+“GetId”: 找不到标识符
+“GetName”: 找不到标识符
+“std::map”: 使用 类 模板 需要 模板 参数列表
+“Log::OutMessage”: 未找到匹配的重载函数
+“RemoveGrantedPermission”: 找不到标识符
+“RemoveDeniedPermission”: 找不到标识符
+“GetId”: 找不到标识符
+“GetName”: 找不到标识符
+“std::map”: 使用 类 模板 需要 模板 参数列表
+“Log::OutMessage”: 未找到匹配的重载函数
+“GetId”: 找不到标识符
+“CalculateNewPermissions”: 找不到标识符
+“GetId”: 找不到标识符
+“GetName”: 找不到标识符
+错误计数超过 100；正在停止编译
+语法错误: 缺少“;”(在“}”的前面)
+缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+“rbac::RBAC_PERM_MAX”: 重定义；以前的定义是“枚举数”
+语法错误:“}”
+语法错误: 缺少“;”(在“}”的前面)
+语法错误:“函数样式强制转换”
+语法错误: 缺少“;”(在“{”的前面)
+“{”: 缺少函数标题(是否是老式的形式表?)
+"RBACPermission": 不是 "rbac" 的成员
+"RBACPermissionContainer": 不是 "rbac" 的成员
+“RBACPermissionContainer”: 应为表达式而不是类型
+"std::map": "RBACPermissionContainer" 不是参数 "_Ty" 的有效 模板 类型参数
+“std::map'”: 模板 参数太少
+“std::map”: 使用 类 模板 需要 模板 参数列表
+“CreateAccount”: 未知重写说明符
+语法错误:“(”
+意外的标记位于“;”之前
+“DeleteAccount”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+“ChangeUsername”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+“ChangePassword”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+“ChangeEmail”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+“ChangeRegEmail”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+"RBACPermission": 不是 "rbac" 的成员
+"RBACPermissionContainer": 不是 "rbac" 的成员
+“std::map”: 使用 类 模板 需要 模板 参数列表
+“std::map”: 没有合适的默认构造函数可用
+"CreateAccount": 不是 "AccountMgr" 的成员
+缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+语法错误: 缺少“;”(在标识符“CreateAccount”的前面)
+语法错误: 缺少“;”(在“{”的前面)
+“{”: 缺少函数标题(是否是老式的形式表?)
+"DeleteAccount": 不是 "AccountMgr" 的成员
+缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+“int AccountOpResult”: 重定义
+语法错误: 缺少“;”(在标识符“DeleteAccount”的前面)
+语法错误: 缺少“;”(在“{”的前面)
+“{”: 缺少函数标题(是否是老式的形式表?)
+"ChangeUsername": 不是 "AccountMgr" 的成员
+缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+“int AccountOpResult”: 重定义
+语法错误: 缺少“;”(在标识符“ChangeUsername”的前面)
+语法错误: 缺少“;”(在“{”的前面)
+“{”: 缺少函数标题(是否是老式的形式表?)
+"ChangePassword": 不是 "AccountMgr" 的成员
+缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+“int AccountOpResult”: 重定义
+语法错误: 缺少“;”(在标识符“ChangePassword”的前面)
+语法错误: 缺少“;”(在“{”的前面)
+“{”: 缺少函数标题(是否是老式的形式表?)
+"ChangeEmail": 不是 "AccountMgr" 的成员
+缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+“int AccountOpResult”: 重定义
+语法错误: 缺少“;”(在标识符“ChangeEmail”的前面)
+语法错误: 缺少“;”(在“{”的前面)
+“{”: 缺少函数标题(是否是老式的形式表?)
+"ChangeRegEmail": 不是 "AccountMgr" 的成员
+缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+“int AccountOpResult”: 重定义
+语法错误: 缺少“;”(在标识符“ChangeRegEmail”的前面)
+语法错误: 缺少“;”(在“{”的前面)
+“{”: 缺少函数标题(是否是老式的形式表?)
+"RBACPermission": 不是 "rbac" 的成员
+"RBACPermission": 不是 "rbac" 的成员
+"RBACPermissionContainer": 不是 "rbac" 的成员
+二进制“[”: 没有找到接受“rbac::RBACDefaultPermissionsContainer”类型的左操作数的运算符(或没有可接受的转换)
+使用了未定义类型“rbac::RBACData”
+使用了未定义类型“rbac::RBACData”
+"RBACPermission": 不是 "rbac" 的成员
+“rbac”使用未定义的 class“rbac::RBACData”
+"RBACPermission": 不是 "rbac" 的成员
+“permission”: 必须初始化引用
+语法错误: 缺少“;”(在“:”的前面)
+语法错误: 缺少“;”(在“)”的前面)
+类型为“rbac::RBACPermissionsContainer”的条件表达式无效
+"clear": 不是 "std::map" 的成员
+"RBACPermissionContainer": 不是 "rbac" 的成员
+二进制“[”: 没有找到接受“rbac::RBACDefaultPermissionsContainer”类型的左操作数的运算符(或没有可接受的转换)
+二进制“[”: 没有找到接受“rbac::RBACDefaultPermissionsContainer”类型的左操作数的运算符(或没有可接受的转换)
+语法错误: 缺少“;”(在“}”的前面)
+缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+语法错误: 缺少“;”(在“}”的前面)
+缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+“rbac::RBAC_PERM_MAX”: 重定义；以前的定义是“枚举数”
+“rbac::RBAC_PERM_MAX”: 重定义；以前的定义是“枚举数”
+语法错误: 缺少“;”(在“}”的前面)
+缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+“rbac::RBAC_PERM_MAX”: 重定义；以前的定义是“枚举数”
+语法错误:“}”
+语法错误:“}”
+语法错误: 缺少“;”(在“}”的前面)
+语法错误: 缺少“;”(在“}”的前面)
+语法错误:“函数样式强制转换”
+语法错误:“函数样式强制转换”
+语法错误: 缺少“;”(在“{”的前面)
+语法错误: 缺少“;”(在“{”的前面)
+“{”: 缺少函数标题(是否是老式的形式表?)
+“{”: 缺少函数标题(是否是老式的形式表?)
+"RBACPermission": 不是 "rbac" 的成员
+语法错误:“}”
+"RBACPermission": 不是 "rbac" 的成员
+语法错误: 缺少“;”(在“}”的前面)
+语法错误:“函数样式强制转换”
+语法错误: 缺少“;”(在“{”的前面)
+“{”: 缺少函数标题(是否是老式的形式表?)
+"RBACPermissionContainer": 不是 "rbac" 的成员
+"RBACPermission": 不是 "rbac" 的成员
+"RBACPermissionContainer": 不是 "rbac" 的成员
+“RBACPermissionContainer”: 应为表达式而不是类型
+“RBACPermissionContainer”: 应为表达式而不是类型
+"RBACPermissionContainer": 不是 "rbac" 的成员
+"std::map": "RBACPermissionContainer" 不是参数 "_Ty" 的有效 模板 类型参数
+“RBACPermissionContainer”: 应为表达式而不是类型
+"std::map": "RBACPermissionContainer" 不是参数 "_Ty" 的有效 模板 类型参数
+“std::map'”: 模板 参数太少
+"std::map": "RBACPermissionContainer" 不是参数 "_Ty" 的有效 模板 类型参数
+“std::map'”: 模板 参数太少
+“std::map'”: 模板 参数太少
+“std::map”: 使用 类 模板 需要 模板 参数列表
+“CreateAccount”: 未知重写说明符
+“std::map”: 使用 类 模板 需要 模板 参数列表
+“std::map”: 使用 类 模板 需要 模板 参数列表
+语法错误:“(”
+“CreateAccount”: 未知重写说明符
+意外的标记位于“;”之前
+“CreateAccount”: 未知重写说明符
+语法错误:“(”
+“DeleteAccount”: 未知重写说明符
+语法错误:“(”
+意外的标记位于“;”之前
+“uint32”: 应为表达式而不是类型
+意外的标记位于“;”之前
+“DeleteAccount”: 未知重写说明符
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+“DeleteAccount”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+意外的标记位于“;”之前
+“ChangeUsername”: 未知重写说明符
+“ChangeUsername”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+意外的标记位于“;”之前
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+“ChangeUsername”: 未知重写说明符
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+“uint32”: 应为表达式而不是类型
+意外的标记位于“;”之前
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+“ChangePassword”: 未知重写说明符
+“ChangePassword”: 未知重写说明符
+意外的标记位于“;”之前
+“uint32”: 应为表达式而不是类型
+“uint32”: 应为表达式而不是类型
+“ChangePassword”: 未知重写说明符
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+“uint32”: 应为表达式而不是类型
+意外的标记位于“;”之前
+意外的标记位于“;”之前
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+“ChangeEmail”: 未知重写说明符
+“ChangeEmail”: 未知重写说明符
+意外的标记位于“;”之前
+“uint32”: 应为表达式而不是类型
+“uint32”: 应为表达式而不是类型
+“ChangeEmail”: 未知重写说明符
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+“uint32”: 应为表达式而不是类型
+意外的标记位于“;”之前
+意外的标记位于“;”之前
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+“ChangeRegEmail”: 未知重写说明符
+“ChangeRegEmail”: 未知重写说明符
+意外的标记位于“;”之前
+“uint32”: 应为表达式而不是类型
+“uint32”: 应为表达式而不是类型
+“ChangeRegEmail”: 未知重写说明符
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+“uint32”: 应为表达式而不是类型
+意外的标记位于“;”之前
+意外的标记位于“;”之前
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+"RBACData": 不是 "rbac" 的成员
+"RBACData": 不是 "rbac" 的成员
+"RBACData": 不是 "rbac" 的成员
+"RBACPermission": 不是 "rbac" 的成员
+"RBACPermission": 不是 "rbac" 的成员
+"RBACPermission": 不是 "rbac" 的成员
+"RBACPermissionContainer": 不是 "rbac" 的成员
+"RBACPermissionContainer": 不是 "rbac" 的成员
+"RBACPermissionContainer": 不是 "rbac" 的成员
+语法错误: 缺少“;”(在“}”的前面)
+缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+“rbac::RBAC_PERM_MAX”: 重定义；以前的定义是“枚举数”
+“std::map”: 使用 类 模板 需要 模板 参数列表
+“std::map”: 使用 类 模板 需要 模板 参数列表
+“std::map”: 使用 类 模板 需要 模板 参数列表
+语法错误:“}”
+语法错误: 缺少“;”(在“}”的前面)
+语法错误: 缺少“;”(在“}”的前面)
+缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+“rbac::RBAC_PERM_MAX”: 重定义；以前的定义是“枚举数”
+语法错误:“}”
+语法错误: 缺少“;”(在“}”的前面)
+语法错误: 缺少“;”(在“}”的前面)
+缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+“rbac::RBAC_PERM_MAX”: 重定义；以前的定义是“枚举数”
+语法错误:“}”
+语法错误: 缺少“;”(在“}”的前面)
+语法错误: 缺少“;”(在“}”的前面)
+缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+“rbac::RBAC_PERM_MAX”: 重定义；以前的定义是“枚举数”
+语法错误:“}”
+语法错误: 缺少“;”(在“}”的前面)
+"RBACPermission": 不是 "rbac" 的成员
+"RBACPermissionContainer": 不是 "rbac" 的成员
+“RBACPermissionContainer”: 应为表达式而不是类型
+"std::map": "RBACPermissionContainer" 不是参数 "_Ty" 的有效 模板 类型参数
+“std::map'”: 模板 参数太少
+“std::map”: 使用 类 模板 需要 模板 参数列表
+"RBACPermission": 不是 "rbac" 的成员
+"RBACPermissionContainer": 不是 "rbac" 的成员
+“std::map”: 使用 类 模板 需要 模板 参数列表
+"RBACPermission": 不是 "rbac" 的成员
+"RBACPermissionContainer": 不是 "rbac" 的成员
+“RBACPermissionContainer”: 应为表达式而不是类型
+"std::map": "RBACPermissionContainer" 不是参数 "_Ty" 的有效 模板 类型参数
+“std::map'”: 模板 参数太少
+“std::map”: 使用 类 模板 需要 模板 参数列表
+"RBACPermission": 不是 "rbac" 的成员
+"RBACPermissionContainer": 不是 "rbac" 的成员
+语法错误: 缺少“;”(在“}”的前面)
+缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+“rbac::RBAC_PERM_MAX”: 重定义；以前的定义是“枚举数”
+语法错误:“}”
+语法错误: 缺少“;”(在“}”的前面)
+“std::map”: 使用 类 模板 需要 模板 参数列表
+语法错误: 缺少“;”(在“}”的前面)
+缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+“rbac::RBAC_PERM_MAX”: 重定义；以前的定义是“枚举数”
+语法错误:“}”
+语法错误: 缺少“;”(在“}”的前面)
+语法错误: 缺少“;”(在“}”的前面)
+缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+“rbac::RBAC_PERM_MAX”: 重定义；以前的定义是“枚举数”
+语法错误:“}”
+语法错误: 缺少“;”(在“}”的前面)
+语法错误: 缺少“;”(在“}”的前面)
+缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+“rbac::RBAC_PERM_MAX”: 重定义；以前的定义是“枚举数”
+语法错误:“}”
+语法错误: 缺少“;”(在“}”的前面)
+语法错误: 缺少“;”(在“}”的前面)
+缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+“rbac::RBAC_PERM_MAX”: 重定义；以前的定义是“枚举数”
+语法错误:“}”
+语法错误: 缺少“;”(在“}”的前面)
+语法错误:“函数样式强制转换”
+语法错误: 缺少“;”(在“{”的前面)
+“{”: 缺少函数标题(是否是老式的形式表?)
+"RBACPermission": 不是 "rbac" 的成员
+"RBACPermissionContainer": 不是 "rbac" 的成员
+“RBACPermissionContainer”: 应为表达式而不是类型
+"std::map": "RBACPermissionContainer" 不是参数 "_Ty" 的有效 模板 类型参数
+“std::map'”: 模板 参数太少
+“std::map”: 使用 类 模板 需要 模板 参数列表
+“CreateAccount”: 未知重写说明符
+语法错误:“(”
+意外的标记位于“;”之前
+“DeleteAccount”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+“ChangeUsername”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+“ChangePassword”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+“ChangeEmail”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+“ChangeRegEmail”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+"RBACPermission": 不是 "rbac" 的成员
+"RBACPermissionContainer": 不是 "rbac" 的成员
+语法错误: 缺少“;”(在“}”的前面)
+缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+“rbac::RBAC_PERM_MAX”: 重定义；以前的定义是“枚举数”
+语法错误:“}”
+语法错误: 缺少“;”(在“}”的前面)
+“std::map”: 使用 类 模板 需要 模板 参数列表
+缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+“_playerGUID”: 函数应返回一个值；假定“void”返回类型
+语法错误: 缺少“;”(在“}”的前面)
+缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+“rbac::RBAC_PERM_MAX”: 重定义；以前的定义是“枚举数”
+语法错误: 缺少“;”(在“}”的前面)
+缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+“rbac::RBAC_PERM_MAX”: 重定义；以前的定义是“枚举数”
+语法错误: 缺少“;”(在“}”的前面)
+语法错误: 缺少“;”(在“}”的前面)
+语法错误:“}”
+语法错误:“}”
+缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+语法错误: 缺少“;”(在“}”的前面)
+语法错误: 缺少“;”(在“}”的前面)
+“rbac::RBAC_PERM_MAX”: 重定义；以前的定义是“枚举数”
+“rbac::RBAC_PERM_MAX”: 重定义；以前的定义是“枚举数”
+语法错误: 缺少“;”(在“}”的前面)
+缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+语法错误: 缺少“;”(在“}”的前面)
+缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+“rbac::RBAC_PERM_MAX”: 重定义；以前的定义是“枚举数”
+“rbac::RBAC_PERM_MAX”: 重定义；以前的定义是“枚举数”
+语法错误:“}”
+语法错误: 缺少“;”(在“}”的前面)
+语法错误:“}”
+语法错误: 缺少“;”(在“}”的前面)
+语法错误:“}”
+语法错误: 缺少“;”(在“}”的前面)
+语法错误:“}”
+语法错误: 缺少“;”(在“}”的前面)
+语法错误: 缺少“;”(在“}”的前面)
+缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+“rbac::RBAC_PERM_MAX”: 重定义；以前的定义是“枚举数”
+语法错误:“}”
+语法错误: 缺少“;”(在“}”的前面)
+语法错误: 缺少“;”(在“}”的前面)
+缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+“rbac::RBAC_PERM_MAX”: 重定义；以前的定义是“枚举数”
+语法错误:“}”
+语法错误: 缺少“;”(在“}”的前面)
+语法错误:“函数样式强制转换”
+语法错误: 缺少“;”(在“{”的前面)
+“{”: 缺少函数标题(是否是老式的形式表?)
+"RBACPermission": 不是 "rbac" 的成员
+"RBACPermissionContainer": 不是 "rbac" 的成员
+“RBACPermissionContainer”: 应为表达式而不是类型
+"std::map": "RBACPermissionContainer" 不是参数 "_Ty" 的有效 模板 类型参数
+“std::map'”: 模板 参数太少
+“std::map”: 使用 类 模板 需要 模板 参数列表
+“CreateAccount”: 未知重写说明符
+语法错误:“(”
+意外的标记位于“;”之前
+“DeleteAccount”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+“ChangeUsername”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+“ChangePassword”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+“ChangeEmail”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+“ChangeRegEmail”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+"RBACPermission": 不是 "rbac" 的成员
+"RBACPermissionContainer": 不是 "rbac" 的成员
+语法错误: 缺少“;”(在“}”的前面)
+缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+“rbac::RBAC_PERM_MAX”: 重定义；以前的定义是“枚举数”
+语法错误:“}”
+语法错误: 缺少“;”(在“}”的前面)
+语法错误:“函数样式强制转换”
+语法错误: 缺少“;”(在“{”的前面)
+“{”: 缺少函数标题(是否是老式的形式表?)
+"RBACPermission": 不是 "rbac" 的成员
+"RBACPermissionContainer": 不是 "rbac" 的成员
+“RBACPermissionContainer”: 应为表达式而不是类型
+"std::map": "RBACPermissionContainer" 不是参数 "_Ty" 的有效 模板 类型参数
+“std::map'”: 模板 参数太少
+“std::map”: 使用 类 模板 需要 模板 参数列表
+“std::map”: 使用 类 模板 需要 模板 参数列表
+“CreateAccount”: 未知重写说明符
+语法错误:“(”
+意外的标记位于“;”之前
+“DeleteAccount”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+“ChangeUsername”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+“ChangePassword”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+“ChangeEmail”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+“ChangeRegEmail”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+"RBACPermission": 不是 "rbac" 的成员
+"RBACPermissionContainer": 不是 "rbac" 的成员
+语法错误: 缺少“;”(在“}”的前面)
+缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+“rbac::RBAC_PERM_MAX”: 重定义；以前的定义是“枚举数”
+语法错误:“}”
+语法错误: 缺少“;”(在“}”的前面)
+语法错误:“函数样式强制转换”
+语法错误: 缺少“;”(在“{”的前面)
+“{”: 缺少函数标题(是否是老式的形式表?)
+"RBACPermission": 不是 "rbac" 的成员
+"RBACPermissionContainer": 不是 "rbac" 的成员
+“RBACPermissionContainer”: 应为表达式而不是类型
+"std::map": "RBACPermissionContainer" 不是参数 "_Ty" 的有效 模板 类型参数
+“std::map'”: 模板 参数太少
+“std::map”: 使用 类 模板 需要 模板 参数列表
+“CreateAccount”: 未知重写说明符
+“std::map”: 使用 类 模板 需要 模板 参数列表
+语法错误:“(”
+意外的标记位于“;”之前
+“DeleteAccount”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+“ChangeUsername”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+“ChangePassword”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+“ChangeEmail”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+“ChangeRegEmail”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+"RBACPermission": 不是 "rbac" 的成员
+"RBACPermissionContainer": 不是 "rbac" 的成员
+“std::map”: 使用 类 模板 需要 模板 参数列表
+语法错误: 缺少“;”(在“}”的前面)
+缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+“rbac::RBAC_PERM_MAX”: 重定义；以前的定义是“枚举数”
+语法错误: 缺少“;”(在“}”的前面)
+缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+“rbac::RBAC_PERM_MAX”: 重定义；以前的定义是“枚举数”
+语法错误:“}”
+语法错误: 缺少“;”(在“}”的前面)
+语法错误:“}”
+语法错误: 缺少“;”(在“}”的前面)
+语法错误:“函数样式强制转换”
+语法错误: 缺少“;”(在“{”的前面)
+“{”: 缺少函数标题(是否是老式的形式表?)
+"RBACPermission": 不是 "rbac" 的成员
+"RBACPermissionContainer": 不是 "rbac" 的成员
+“RBACPermissionContainer”: 应为表达式而不是类型
+"std::map": "RBACPermissionContainer" 不是参数 "_Ty" 的有效 模板 类型参数
+“std::map'”: 模板 参数太少
+“std::map”: 使用 类 模板 需要 模板 参数列表
+“CreateAccount”: 未知重写说明符
+语法错误:“(”
+意外的标记位于“;”之前
+“DeleteAccount”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+“ChangeUsername”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+“ChangePassword”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+“ChangeEmail”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+“ChangeRegEmail”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+"RBACData": 不是 "rbac" 的成员
+"RBACPermission": 不是 "rbac" 的成员
+"RBACPermissionContainer": 不是 "rbac" 的成员
+语法错误: 缺少“;”(在“}”的前面)
+缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+“rbac::RBAC_PERM_MAX”: 重定义；以前的定义是“枚举数”
+语法错误:“}”
+语法错误: 缺少“;”(在“}”的前面)
+“std::map”: 使用 类 模板 需要 模板 参数列表
+语法错误: 缺少“;”(在“}”的前面)
+缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+“rbac::RBAC_PERM_MAX”: 重定义；以前的定义是“枚举数”
+语法错误:“}”
+语法错误: 缺少“;”(在“}”的前面)
+语法错误: 缺少“;”(在“}”的前面)
+缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+“rbac::RBAC_PERM_MAX”: 重定义；以前的定义是“枚举数”
+语法错误:“}”
+语法错误: 缺少“;”(在“}”的前面)
+语法错误: 缺少“;”(在“}”的前面)
+缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+“rbac::RBAC_PERM_MAX”: 重定义；以前的定义是“枚举数”
+语法错误:“}”
+语法错误: 缺少“;”(在“}”的前面)
+语法错误: 缺少“;”(在“}”的前面)
+缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+“rbac::RBAC_PERM_MAX”: 重定义；以前的定义是“枚举数”
+语法错误:“}”
+语法错误: 缺少“;”(在“}”的前面)
+语法错误: 缺少“;”(在“}”的前面)
+缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+“rbac::RBAC_PERM_MAX”: 重定义；以前的定义是“枚举数”
+语法错误:“}”
+语法错误: 缺少“;”(在“}”的前面)
+语法错误: 缺少“;”(在“}”的前面)
+缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+“rbac::RBAC_PERM_MAX”: 重定义；以前的定义是“枚举数”
+语法错误:“}”
+语法错误: 缺少“;”(在“}”的前面)
+语法错误: 缺少“;”(在“}”的前面)
+缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+“rbac::RBAC_PERM_MAX”: 重定义；以前的定义是“枚举数”
+语法错误:“}”
+语法错误: 缺少“;”(在“}”的前面)
+语法错误: 缺少“;”(在“}”的前面)
+缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+“rbac::RBAC_PERM_MAX”: 重定义；以前的定义是“枚举数”
+语法错误:“}”
+语法错误: 缺少“;”(在“}”的前面)
+语法错误: 缺少“;”(在“}”的前面)
+缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+“rbac::RBAC_PERM_MAX”: 重定义；以前的定义是“枚举数”
+语法错误:“}”
+语法错误: 缺少“;”(在“}”的前面)
+语法错误: 缺少“;”(在“}”的前面)
+缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+“rbac::RBAC_PERM_MAX”: 重定义；以前的定义是“枚举数”
+语法错误:“}”
+语法错误: 缺少“;”(在“}”的前面)
+语法错误: 缺少“;”(在“}”的前面)
+缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+“rbac::RBAC_PERM_MAX”: 重定义；以前的定义是“枚举数”
+语法错误:“}”
+语法错误: 缺少“;”(在“}”的前面)
+语法错误: 缺少“;”(在“}”的前面)
+缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+“rbac::RBAC_PERM_MAX”: 重定义；以前的定义是“枚举数”
+语法错误:“}”
+语法错误: 缺少“;”(在“}”的前面)
+语法错误: 缺少“;”(在“}”的前面)
+缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+“rbac::RBAC_PERM_MAX”: 重定义；以前的定义是“枚举数”
+语法错误: 缺少“;”(在“}”的前面)
+缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+“rbac::RBAC_PERM_MAX”: 重定义；以前的定义是“枚举数”
+语法错误:“}”
+语法错误: 缺少“;”(在“}”的前面)
+语法错误:“}”
+语法错误:“函数样式强制转换”
+语法错误: 缺少“;”(在“}”的前面)
+语法错误:“函数样式强制转换”
+语法错误: 缺少“;”(在“{”的前面)
+“{”: 缺少函数标题(是否是老式的形式表?)
+"RBACPermission": 不是 "rbac" 的成员
+"RBACPermissionContainer": 不是 "rbac" 的成员
+“RBACPermissionContainer”: 应为表达式而不是类型
+"std::map": "RBACPermissionContainer" 不是参数 "_Ty" 的有效 模板 类型参数
+语法错误: 缺少“;”(在“{”的前面)
+“std::map'”: 模板 参数太少
+“{”: 缺少函数标题(是否是老式的形式表?)
+“std::map”: 使用 类 模板 需要 模板 参数列表
+“CreateAccount”: 未知重写说明符
+语法错误:“(”
+意外的标记位于“;”之前
+“DeleteAccount”: 未知重写说明符
+"RBACPermission": 不是 "rbac" 的成员
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+"RBACPermissionContainer": 不是 "rbac" 的成员
+“RBACPermissionContainer”: 应为表达式而不是类型
+意外的标记位于“;”之前
+“ChangeUsername”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+"std::map": "RBACPermissionContainer" 不是参数 "_Ty" 的有效 模板 类型参数
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+“std::map'”: 模板 参数太少
+意外的标记位于“;”之前
+“ChangePassword”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+“ChangeEmail”: 未知重写说明符
+“std::map”: 使用 类 模板 需要 模板 参数列表
+“uint32”: 应为表达式而不是类型
+“CreateAccount”: 未知重写说明符
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+“ChangeRegEmail”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+语法错误:“(”
+意外的标记位于“;”之前
+意外的标记位于“;”之前
+“DeleteAccount”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+"RBACPermission": 不是 "rbac" 的成员
+"RBACPermissionContainer": 不是 "rbac" 的成员
+意外的标记位于“;”之前
+“ChangeUsername”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+“ChangePassword”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+“ChangeEmail”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+“ChangeRegEmail”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+"RBACPermission": 不是 "rbac" 的成员
+“std::map”: 使用 类 模板 需要 模板 参数列表
+"RBACPermissionContainer": 不是 "rbac" 的成员
+“std::map”: 使用 类 模板 需要 模板 参数列表
+语法错误: 缺少“;”(在“}”的前面)
+缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+“rbac::RBAC_PERM_MAX”: 重定义；以前的定义是“枚举数”
+语法错误:“}”
+语法错误: 缺少“;”(在“}”的前面)
+语法错误: 缺少“;”(在“}”的前面)
+缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+“rbac::RBAC_PERM_MAX”: 重定义；以前的定义是“枚举数”
+语法错误:“}”
+语法错误: 缺少“;”(在“}”的前面)
+语法错误: 缺少“;”(在“}”的前面)
+缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+“rbac::RBAC_PERM_MAX”: 重定义；以前的定义是“枚举数”
+语法错误:“}”
+语法错误: 缺少“;”(在“}”的前面)
+语法错误:“函数样式强制转换”
+语法错误: 缺少“;”(在“{”的前面)
+“{”: 缺少函数标题(是否是老式的形式表?)
+"RBACPermission": 不是 "rbac" 的成员
+"RBACPermissionContainer": 不是 "rbac" 的成员
+“RBACPermissionContainer”: 应为表达式而不是类型
+"std::map": "RBACPermissionContainer" 不是参数 "_Ty" 的有效 模板 类型参数
+“std::map'”: 模板 参数太少
+“std::map”: 使用 类 模板 需要 模板 参数列表
+“CreateAccount”: 未知重写说明符
+语法错误:“(”
+意外的标记位于“;”之前
+“DeleteAccount”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+“ChangeUsername”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+“ChangePassword”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+“ChangeEmail”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+“ChangeRegEmail”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+"RBACPermission": 不是 "rbac" 的成员
+"RBACPermissionContainer": 不是 "rbac" 的成员
+“std::map”: 使用 类 模板 需要 模板 参数列表
+语法错误: 缺少“;”(在“}”的前面)
+缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+“rbac::RBAC_PERM_MAX”: 重定义；以前的定义是“枚举数”
+语法错误:“}”
+语法错误: 缺少“;”(在“}”的前面)
+语法错误:“函数样式强制转换”
+语法错误: 缺少“;”(在“{”的前面)
+“{”: 缺少函数标题(是否是老式的形式表?)
+"RBACPermission": 不是 "rbac" 的成员
+"RBACPermissionContainer": 不是 "rbac" 的成员
+“RBACPermissionContainer”: 应为表达式而不是类型
+"std::map": "RBACPermissionContainer" 不是参数 "_Ty" 的有效 模板 类型参数
+“std::map'”: 模板 参数太少
+“std::map”: 使用 类 模板 需要 模板 参数列表
+“CreateAccount”: 未知重写说明符
+语法错误:“(”
+意外的标记位于“;”之前
+“DeleteAccount”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+“ChangeUsername”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+“ChangePassword”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+“ChangeEmail”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+“ChangeRegEmail”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+"RBACPermission": 不是 "rbac" 的成员
+"RBACPermissionContainer": 不是 "rbac" 的成员
+“std::map”: 使用 类 模板 需要 模板 参数列表
+语法错误: 缺少“;”(在“}”的前面)
+缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+“rbac::RBAC_PERM_MAX”: 重定义；以前的定义是“枚举数”
+语法错误:“}”
+语法错误: 缺少“;”(在“}”的前面)
+语法错误:“函数样式强制转换”
+语法错误: 缺少“;”(在“{”的前面)
+“{”: 缺少函数标题(是否是老式的形式表?)
+"RBACPermission": 不是 "rbac" 的成员
+"RBACPermissionContainer": 不是 "rbac" 的成员
+“RBACPermissionContainer”: 应为表达式而不是类型
+"std::map": "RBACPermissionContainer" 不是参数 "_Ty" 的有效 模板 类型参数
+“std::map'”: 模板 参数太少
+“std::map”: 使用 类 模板 需要 模板 参数列表
+“CreateAccount”: 未知重写说明符
+语法错误:“(”
+意外的标记位于“;”之前
+“DeleteAccount”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+“ChangeUsername”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+“ChangePassword”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+“ChangeEmail”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+“ChangeRegEmail”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+"RBACPermission": 不是 "rbac" 的成员
+"RBACPermissionContainer": 不是 "rbac" 的成员
+“std::map”: 使用 类 模板 需要 模板 参数列表
+语法错误: 缺少“;”(在“}”的前面)
+缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+“rbac::RBAC_PERM_MAX”: 重定义；以前的定义是“枚举数”
+语法错误:“}”
+语法错误: 缺少“;”(在“}”的前面)
+语法错误:“函数样式强制转换”
+语法错误: 缺少“;”(在“{”的前面)
+“{”: 缺少函数标题(是否是老式的形式表?)
+"RBACPermission": 不是 "rbac" 的成员
+"RBACPermissionContainer": 不是 "rbac" 的成员
+“RBACPermissionContainer”: 应为表达式而不是类型
+"std::map": "RBACPermissionContainer" 不是参数 "_Ty" 的有效 模板 类型参数
+“std::map'”: 模板 参数太少
+“std::map”: 使用 类 模板 需要 模板 参数列表
+“CreateAccount”: 未知重写说明符
+语法错误:“(”
+意外的标记位于“;”之前
+“DeleteAccount”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+“ChangeUsername”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+“ChangePassword”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+“ChangeEmail”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+“ChangeRegEmail”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+"RBACData": 不是 "rbac" 的成员
+"RBACPermission": 不是 "rbac" 的成员
+"RBACPermissionContainer": 不是 "rbac" 的成员
+语法错误: 缺少“;”(在“}”的前面)
+缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+“rbac::RBAC_PERM_MAX”: 重定义；以前的定义是“枚举数”
+语法错误:“}”
+语法错误: 缺少“;”(在“}”的前面)
+“std::map”: 使用 类 模板 需要 模板 参数列表
+语法错误: 缺少“;”(在“}”的前面)
+缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+“rbac::RBAC_PERM_MAX”: 重定义；以前的定义是“枚举数”
+语法错误:“}”
+语法错误: 缺少“;”(在“}”的前面)
+语法错误: 缺少“;”(在“}”的前面)
+缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+“rbac::RBAC_PERM_MAX”: 重定义；以前的定义是“枚举数”
+语法错误:“}”
+语法错误: 缺少“;”(在“}”的前面)
+语法错误:“函数样式强制转换”
+语法错误: 缺少“;”(在“{”的前面)
+“{”: 缺少函数标题(是否是老式的形式表?)
+"RBACPermission": 不是 "rbac" 的成员
+语法错误: 缺少“;”(在“}”的前面)
+缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+"RBACPermissionContainer": 不是 "rbac" 的成员
+“rbac::RBAC_PERM_MAX”: 重定义；以前的定义是“枚举数”
+“RBACPermissionContainer”: 应为表达式而不是类型
+语法错误: 缺少“;”(在“}”的前面)
+缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+“rbac::RBAC_PERM_MAX”: 重定义；以前的定义是“枚举数”
+"std::map": "RBACPermissionContainer" 不是参数 "_Ty" 的有效 模板 类型参数
+“std::map'”: 模板 参数太少
+“std::map”: 使用 类 模板 需要 模板 参数列表
+“CreateAccount”: 未知重写说明符
+语法错误:“(”
+意外的标记位于“;”之前
+“DeleteAccount”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+“ChangeUsername”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+“ChangePassword”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+“ChangeEmail”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误:“}”
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+语法错误:“}”
+意外的标记位于“;”之前
+语法错误: 缺少“;”(在“}”的前面)
+语法错误: 缺少“;”(在“}”的前面)
+“ChangeRegEmail”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误:“函数样式强制转换”
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+语法错误: 缺少“;”(在“{”的前面)
+“{”: 缺少函数标题(是否是老式的形式表?)
+"RBACPermission": 不是 "rbac" 的成员
+"RBACPermission": 不是 "rbac" 的成员
+"RBACPermissionContainer": 不是 "rbac" 的成员
+"RBACPermissionContainer": 不是 "rbac" 的成员
+语法错误: 缺少“;”(在“{”的前面)
+“{”: 缺少函数标题(是否是老式的形式表?)
+“RBACPermissionContainer”: 应为表达式而不是类型
+"std::map": "RBACPermissionContainer" 不是参数 "_Ty" 的有效 模板 类型参数
+“std::map'”: 模板 参数太少
+"find_type_if_t": 不是 "Trinity" 的成员
+“std::map”: 使用 类 模板 需要 模板 参数列表
+假定的函数模板“find_type_if_t”后面缺少参数列表
+语法错误:“<error type>”的前面应有“;”
+缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+“<error type>”: 没有使用此类型进行定义的成员
+“CreateAccount”: 未知重写说明符
+语法错误:“(”
+意外的标记位于“;”之前
+“DeleteAccount”: 未知重写说明符
+"find_type_if_t": 不是 "Trinity" 的成员
+假定的函数模板“find_type_if_t”后面缺少参数列表
+“std::map”: 使用 类 模板 需要 模板 参数列表
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+“ChangeUsername”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+语法错误:“<error type>”的前面应有“;”
+缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+“<error type>”: 没有使用此类型进行定义的成员
+"find_type_if_t": 不是 "Trinity" 的成员
+“ChangePassword”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+假定的函数模板“find_type_if_t”后面缺少参数列表
+语法错误:“<error type>”的前面应有“;”
+缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+“<error type>”: 没有使用此类型进行定义的成员
+“ChangeEmail”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+“ChangeRegEmail”: 未知重写说明符
+"find_type_end": 不是 "Trinity" 的成员
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+"find_type_end": 不是 "Trinity" 的成员
+"RBACPermission": 不是 "rbac" 的成员
+"RBACPermissionContainer": 不是 "rbac" 的成员
+“std::map”: 使用 类 模板 需要 模板 参数列表
+"CreateAccount": 不是 "AccountMgr" 的成员
+“AccountOpResult”: 不是类或命名空间名称
+“AOR_OK”: 未声明的标识符
+表达式的计算结果不是常数
+语法错误: 缺少“;”(在“}”的前面)
+缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+“rbac::RBAC_PERM_MAX”: 重定义；以前的定义是“枚举数”
+语法错误:“}”
+语法错误: 缺少“;”(在“}”的前面)
+“AccountOpResult”: 不是类或命名空间名称
+“AOR_NAME_TOO_LONG”: 未声明的标识符
+表达式的计算结果不是常数
+“AccountOpResult”: 不是类或命名空间名称
+“AOR_PASS_TOO_LONG”: 未声明的标识符
+表达式的计算结果不是常数
+“AccountOpResult”: 不是类或命名空间名称
+“AOR_NAME_ALREADY_EXIST”: 未声明的标识符
+表达式的计算结果不是常数
+“AccountOpResult”: 不是类或命名空间名称
+“AOR_DB_INTERNAL_ERROR”: 未声明的标识符
+表达式的计算结果不是常数
+“AccountOpResult”: 未声明的标识符
+语法错误: 缺少“;”(在标识符“result”的前面)
+“result”: 未声明的标识符
+"DeleteAccount": 不是 "AccountMgr" 的成员
+“DeleteAccount”: 找不到标识符
+“result”: 未声明的标识符
+switch 表达式不是整型 
+“AccountOpResult”: 不是类或命名空间名称
+“AOR_OK”: 未声明的标识符
+表达式的计算结果不是常数
+“AccountOpResult”: 不是类或命名空间名称
+“AOR_NAME_NOT_EXIST”: 未声明的标识符
+表达式的计算结果不是常数
+“AccountOpResult”: 不是类或命名空间名称
+“AOR_DB_INTERNAL_ERROR”: 未声明的标识符
+表达式的计算结果不是常数
+case 表达式不是常量
+case 表达式不是常量
+case 表达式不是常量
+switch 语句包含“default”但是未包含“case”标签
+语法错误: 缺少“;”(在“}”的前面)
+缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+“rbac::RBAC_PERM_MAX”: 重定义；以前的定义是“枚举数”
+语法错误:“}”
+语法错误: 缺少“;”(在“}”的前面)
+语法错误:“函数样式强制转换”
+语法错误: 缺少“;”(在“{”的前面)
+“{”: 缺少函数标题(是否是老式的形式表?)
+"RBACPermission": 不是 "rbac" 的成员
+"RBACPermissionContainer": 不是 "rbac" 的成员
+“RBACPermissionContainer”: 应为表达式而不是类型
+"std::map": "RBACPermissionContainer" 不是参数 "_Ty" 的有效 模板 类型参数
+“std::map'”: 模板 参数太少
+“std::map”: 使用 类 模板 需要 模板 参数列表
+“CreateAccount”: 未知重写说明符
+语法错误:“(”
+意外的标记位于“;”之前
+“DeleteAccount”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+“ChangeUsername”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+“ChangePassword”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+“ChangeEmail”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+“ChangeRegEmail”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+"RBACData": 不是 "rbac" 的成员
+"RBACPermission": 不是 "rbac" 的成员
+"RBACPermissionContainer": 不是 "rbac" 的成员
+“std::map”: 使用 类 模板 需要 模板 参数列表
+“AccountOpResult”: 未声明的标识符
+语法错误: 缺少“;”(在标识符“result”的前面)
+“result”: 未声明的标识符
+"ChangeEmail": 不是 "AccountMgr" 的成员
+“ChangeEmail”: 找不到标识符
+“result”: 未声明的标识符
+switch 表达式不是整型 
+“AccountOpResult”: 不是类或命名空间名称
+“AOR_OK”: 未声明的标识符
+表达式的计算结果不是常数
+“AccountOpResult”: 不是类或命名空间名称
+“AOR_EMAIL_TOO_LONG”: 未声明的标识符
+表达式的计算结果不是常数
+case 表达式不是常量
+case 表达式不是常量
+switch 语句包含“default”但是未包含“case”标签
+“AccountOpResult”: 未声明的标识符
+语法错误: 缺少“;”(在标识符“result”的前面)
+“result”: 未声明的标识符
+"ChangePassword": 不是 "AccountMgr" 的成员
+“ChangePassword”: 找不到标识符
+“result”: 未声明的标识符
+switch 表达式不是整型 
+“AccountOpResult”: 不是类或命名空间名称
+错误计数超过 100；正在停止编译
+语法错误: 缺少“;”(在“}”的前面)
+缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+“rbac::RBAC_PERM_MAX”: 重定义；以前的定义是“枚举数”
+语法错误:“}”
+语法错误: 缺少“;”(在“}”的前面)
+语法错误: 缺少“;”(在“}”的前面)
+缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+“rbac::RBAC_PERM_MAX”: 重定义；以前的定义是“枚举数”
+语法错误:“}”
+语法错误: 缺少“;”(在“}”的前面)
+语法错误:“函数样式强制转换”
+语法错误: 缺少“;”(在“{”的前面)
+“{”: 缺少函数标题(是否是老式的形式表?)
+"RBACPermission": 不是 "rbac" 的成员
+"RBACPermissionContainer": 不是 "rbac" 的成员
+“RBACPermissionContainer”: 应为表达式而不是类型
+"std::map": "RBACPermissionContainer" 不是参数 "_Ty" 的有效 模板 类型参数
+“std::map'”: 模板 参数太少
+“std::map”: 使用 类 模板 需要 模板 参数列表
+“CreateAccount”: 未知重写说明符
+语法错误:“(”
+意外的标记位于“;”之前
+“DeleteAccount”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+“ChangeUsername”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+“ChangePassword”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+“ChangeEmail”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+“ChangeRegEmail”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+"RBACPermission": 不是 "rbac" 的成员
+"RBACPermissionContainer": 不是 "rbac" 的成员
+“std::map”: 使用 类 模板 需要 模板 参数列表
+语法错误: 缺少“;”(在“}”的前面)
+缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+“rbac::RBAC_PERM_MAX”: 重定义；以前的定义是“枚举数”
+语法错误:“}”
+语法错误: 缺少“;”(在“}”的前面)
+语法错误:“函数样式强制转换”
+语法错误: 缺少“;”(在“{”的前面)
+“{”: 缺少函数标题(是否是老式的形式表?)
+"RBACPermission": 不是 "rbac" 的成员
+"RBACPermissionContainer": 不是 "rbac" 的成员
+“RBACPermissionContainer”: 应为表达式而不是类型
+"std::map": "RBACPermissionContainer" 不是参数 "_Ty" 的有效 模板 类型参数
+“std::map'”: 模板 参数太少
+“std::map”: 使用 类 模板 需要 模板 参数列表
+“CreateAccount”: 未知重写说明符
+语法错误:“(”
+意外的标记位于“;”之前
+“DeleteAccount”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+“ChangeUsername”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+“ChangePassword”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+“ChangeEmail”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+“ChangeRegEmail”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+"RBACPermission": 不是 "rbac" 的成员
+"RBACPermissionContainer": 不是 "rbac" 的成员
+“std::map”: 使用 类 模板 需要 模板 参数列表
+语法错误: 缺少“;”(在“}”的前面)
+缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+“rbac::RBAC_PERM_MAX”: 重定义；以前的定义是“枚举数”
+语法错误:“}”
+语法错误: 缺少“;”(在“}”的前面)
+语法错误: 缺少“;”(在“}”的前面)
+缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+“rbac::RBAC_PERM_MAX”: 重定义；以前的定义是“枚举数”
+语法错误:“}”
+语法错误: 缺少“;”(在“}”的前面)
+语法错误:“函数样式强制转换”
+语法错误: 缺少“;”(在“{”的前面)
+“{”: 缺少函数标题(是否是老式的形式表?)
+"RBACPermission": 不是 "rbac" 的成员
+"RBACPermissionContainer": 不是 "rbac" 的成员
+“RBACPermissionContainer”: 应为表达式而不是类型
+"std::map": "RBACPermissionContainer" 不是参数 "_Ty" 的有效 模板 类型参数
+“std::map'”: 模板 参数太少
+“std::map”: 使用 类 模板 需要 模板 参数列表
+“CreateAccount”: 未知重写说明符
+语法错误:“(”
+意外的标记位于“;”之前
+“DeleteAccount”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+“ChangeUsername”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+“ChangePassword”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+“ChangeEmail”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+“ChangeRegEmail”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+"RBACPermission": 不是 "rbac" 的成员
+"RBACPermissionContainer": 不是 "rbac" 的成员
+“std::map”: 使用 类 模板 需要 模板 参数列表
+语法错误: 缺少“;”(在“}”的前面)
+缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+“rbac::RBAC_PERM_MAX”: 重定义；以前的定义是“枚举数”
+语法错误:“}”
+语法错误: 缺少“;”(在“}”的前面)
+语法错误:“函数样式强制转换”
+语法错误: 缺少“;”(在“{”的前面)
+“{”: 缺少函数标题(是否是老式的形式表?)
+"RBACPermission": 不是 "rbac" 的成员
+"RBACPermissionContainer": 不是 "rbac" 的成员
+“RBACPermissionContainer”: 应为表达式而不是类型
+"std::map": "RBACPermissionContainer" 不是参数 "_Ty" 的有效 模板 类型参数
+“std::map'”: 模板 参数太少
+“std::map”: 使用 类 模板 需要 模板 参数列表
+“CreateAccount”: 未知重写说明符
+语法错误:“(”
+意外的标记位于“;”之前
+“DeleteAccount”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+“ChangeUsername”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+“ChangePassword”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“;”(在“}”的前面)
+缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+“ChangeEmail”: 未知重写说明符
+“rbac::RBAC_PERM_MAX”: 重定义；以前的定义是“枚举数”
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+语法错误:“}”
+语法错误: 缺少“;”(在“}”的前面)
+“ChangeRegEmail”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+语法错误:“函数样式强制转换”
+语法错误: 缺少“;”(在“{”的前面)
+“{”: 缺少函数标题(是否是老式的形式表?)
+意外的标记位于“;”之前
+"RBACPermission": 不是 "rbac" 的成员
+"RBACPermissionContainer": 不是 "rbac" 的成员
+"RBACPermission": 不是 "rbac" 的成员
+"RBACPermissionContainer": 不是 "rbac" 的成员
+“RBACPermissionContainer”: 应为表达式而不是类型
+"std::map": "RBACPermissionContainer" 不是参数 "_Ty" 的有效 模板 类型参数
+“std::map'”: 模板 参数太少
+“std::map”: 使用 类 模板 需要 模板 参数列表
+“CreateAccount”: 未知重写说明符
+语法错误:“(”
+意外的标记位于“;”之前
+“DeleteAccount”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+“ChangeUsername”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+“ChangePassword”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+“std::map”: 使用 类 模板 需要 模板 参数列表
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+“ChangeEmail”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+“ChangeRegEmail”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+"RBACPermission": 不是 "rbac" 的成员
+"RBACPermissionContainer": 不是 "rbac" 的成员
+“std::map”: 使用 类 模板 需要 模板 参数列表
+语法错误: 缺少“;”(在“}”的前面)
+缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+“rbac::RBAC_PERM_MAX”: 重定义；以前的定义是“枚举数”
+语法错误:“}”
+语法错误: 缺少“;”(在“}”的前面)
+语法错误: 缺少“;”(在“}”的前面)
+缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+“rbac::RBAC_PERM_MAX”: 重定义；以前的定义是“枚举数”
+语法错误:“}”
+语法错误: 缺少“;”(在“}”的前面)
+语法错误: 缺少“;”(在“}”的前面)
+缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+“rbac::RBAC_PERM_MAX”: 重定义；以前的定义是“枚举数”
+语法错误:“}”
+语法错误: 缺少“;”(在“}”的前面)
+语法错误: 缺少“;”(在“}”的前面)
+缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+“rbac::RBAC_PERM_MAX”: 重定义；以前的定义是“枚举数”
+语法错误:“}”
+语法错误: 缺少“;”(在“}”的前面)
+语法错误:“函数样式强制转换”
+语法错误: 缺少“;”(在“{”的前面)
+“{”: 缺少函数标题(是否是老式的形式表?)
+"RBACPermission": 不是 "rbac" 的成员
+"RBACPermissionContainer": 不是 "rbac" 的成员
+“RBACPermissionContainer”: 应为表达式而不是类型
+"std::map": "RBACPermissionContainer" 不是参数 "_Ty" 的有效 模板 类型参数
+“std::map'”: 模板 参数太少
+“std::map”: 使用 类 模板 需要 模板 参数列表
+“CreateAccount”: 未知重写说明符
+语法错误:“(”
+意外的标记位于“;”之前
+“DeleteAccount”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+“ChangeUsername”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+“ChangePassword”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+“ChangeEmail”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+“ChangeRegEmail”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+"RBACData": 不是 "rbac" 的成员
+"RBACPermission": 不是 "rbac" 的成员
+"RBACPermissionContainer": 不是 "rbac" 的成员
+“std::map”: 使用 类 模板 需要 模板 参数列表
+语法错误: 缺少“;”(在“}”的前面)
+缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+“rbac::RBAC_PERM_MAX”: 重定义；以前的定义是“枚举数”
+语法错误:“}”
+语法错误: 缺少“;”(在“}”的前面)
+语法错误:“函数样式强制转换”
+语法错误: 缺少“;”(在“{”的前面)
+“{”: 缺少函数标题(是否是老式的形式表?)
+"RBACPermission": 不是 "rbac" 的成员
+"RBACPermissionContainer": 不是 "rbac" 的成员
+“RBACPermissionContainer”: 应为表达式而不是类型
+"std::map": "RBACPermissionContainer" 不是参数 "_Ty" 的有效 模板 类型参数
+“std::map'”: 模板 参数太少
+“std::map”: 使用 类 模板 需要 模板 参数列表
+“CreateAccount”: 未知重写说明符
+语法错误:“(”
+意外的标记位于“;”之前
+“DeleteAccount”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+“ChangeUsername”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+“ChangePassword”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+“ChangeEmail”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+“ChangeRegEmail”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+"RBACData": 不是 "rbac" 的成员
+"RBACPermission": 不是 "rbac" 的成员
+"RBACPermissionContainer": 不是 "rbac" 的成员
+“std::map”: 使用 类 模板 需要 模板 参数列表
+语法错误: 缺少“;”(在“}”的前面)
+缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+“rbac::RBAC_PERM_MAX”: 重定义；以前的定义是“枚举数”
+语法错误:“}”
+语法错误: 缺少“;”(在“}”的前面)
+语法错误: 缺少“;”(在“}”的前面)
+缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+“rbac::RBAC_PERM_MAX”: 重定义；以前的定义是“枚举数”
+语法错误: 缺少“;”(在“}”的前面)
+缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+“rbac::RBAC_PERM_MAX”: 重定义；以前的定义是“枚举数”
+语法错误:“}”
+语法错误: 缺少“;”(在“}”的前面)
+语法错误:“}”
+语法错误: 缺少“;”(在“}”的前面)
+语法错误:“函数样式强制转换”
+语法错误: 缺少“;”(在“{”的前面)
+“{”: 缺少函数标题(是否是老式的形式表?)
+"RBACPermission": 不是 "rbac" 的成员
+"RBACPermissionContainer": 不是 "rbac" 的成员
+“RBACPermissionContainer”: 应为表达式而不是类型
+"std::map": "RBACPermissionContainer" 不是参数 "_Ty" 的有效 模板 类型参数
+“std::map'”: 模板 参数太少
+“std::map”: 使用 类 模板 需要 模板 参数列表
+“CreateAccount”: 未知重写说明符
+语法错误:“(”
+意外的标记位于“;”之前
+“DeleteAccount”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+“ChangeUsername”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+“ChangePassword”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+“ChangeEmail”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+“ChangeRegEmail”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+"RBACData": 不是 "rbac" 的成员
+"RBACPermission": 不是 "rbac" 的成员
+"RBACPermissionContainer": 不是 "rbac" 的成员
+“std::map”: 使用 类 模板 需要 模板 参数列表
+语法错误: 缺少“;”(在“}”的前面)
+缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+“rbac::RBAC_PERM_MAX”: 重定义；以前的定义是“枚举数”
+语法错误:“}”
+语法错误: 缺少“;”(在“}”的前面)
+语法错误:“函数样式强制转换”
+语法错误: 缺少“;”(在“{”的前面)
+“{”: 缺少函数标题(是否是老式的形式表?)
+"RBACPermission": 不是 "rbac" 的成员
+"RBACPermissionContainer": 不是 "rbac" 的成员
+“RBACPermissionContainer”: 应为表达式而不是类型
+"std::map": "RBACPermissionContainer" 不是参数 "_Ty" 的有效 模板 类型参数
+“std::map'”: 模板 参数太少
+“std::map”: 使用 类 模板 需要 模板 参数列表
+“CreateAccount”: 未知重写说明符
+语法错误:“(”
+意外的标记位于“;”之前
+“DeleteAccount”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+“ChangeUsername”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+“ChangePassword”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+“ChangeEmail”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+“ChangeRegEmail”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+"RBACPermission": 不是 "rbac" 的成员
+"RBACPermissionContainer": 不是 "rbac" 的成员
+“std::map”: 使用 类 模板 需要 模板 参数列表
+语法错误: 缺少“;”(在“}”的前面)
+缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+“rbac::RBAC_PERM_MAX”: 重定义；以前的定义是“枚举数”
+语法错误:“}”
+语法错误: 缺少“;”(在“}”的前面)
+语法错误: 缺少“;”(在“}”的前面)
+缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+“rbac::RBAC_PERM_MAX”: 重定义；以前的定义是“枚举数”
+语法错误:“}”
+语法错误: 缺少“;”(在“}”的前面)
+语法错误: 缺少“;”(在“}”的前面)
+缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+“rbac::RBAC_PERM_MAX”: 重定义；以前的定义是“枚举数”
+语法错误:“}”
+语法错误: 缺少“;”(在“}”的前面)
+语法错误:“函数样式强制转换”
+语法错误: 缺少“;”(在“{”的前面)
+“{”: 缺少函数标题(是否是老式的形式表?)
+"RBACPermission": 不是 "rbac" 的成员
+"RBACPermissionContainer": 不是 "rbac" 的成员
+“RBACPermissionContainer”: 应为表达式而不是类型
+"std::map": "RBACPermissionContainer" 不是参数 "_Ty" 的有效 模板 类型参数
+“std::map'”: 模板 参数太少
+“std::map”: 使用 类 模板 需要 模板 参数列表
+“CreateAccount”: 未知重写说明符
+语法错误:“(”
+意外的标记位于“;”之前
+“DeleteAccount”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+“ChangeUsername”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+“ChangePassword”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+“ChangeEmail”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+“ChangeRegEmail”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+"RBACPermission": 不是 "rbac" 的成员
+"RBACPermissionContainer": 不是 "rbac" 的成员
+语法错误: 缺少“;”(在“}”的前面)
+缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+“rbac::RBAC_PERM_MAX”: 重定义；以前的定义是“枚举数”
+语法错误:“}”
+语法错误: 缺少“;”(在“}”的前面)
+语法错误:“函数样式强制转换”
+语法错误: 缺少“;”(在“{”的前面)
+“{”: 缺少函数标题(是否是老式的形式表?)
+"RBACPermission": 不是 "rbac" 的成员
+"RBACPermissionContainer": 不是 "rbac" 的成员
+“RBACPermissionContainer”: 应为表达式而不是类型
+"std::map": "RBACPermissionContainer" 不是参数 "_Ty" 的有效 模板 类型参数
+“std::map'”: 模板 参数太少
+“std::map”: 使用 类 模板 需要 模板 参数列表
+“CreateAccount”: 未知重写说明符
+语法错误:“(”
+意外的标记位于“;”之前
+“DeleteAccount”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+“ChangeUsername”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+“ChangePassword”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+“ChangeEmail”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+“ChangeRegEmail”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+“std::map”: 使用 类 模板 需要 模板 参数列表
+"RBACPermission": 不是 "rbac" 的成员
+"RBACPermissionContainer": 不是 "rbac" 的成员
+语法错误: 缺少“;”(在“}”的前面)
+缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+“std::map”: 使用 类 模板 需要 模板 参数列表
+“rbac::RBAC_PERM_MAX”: 重定义；以前的定义是“枚举数”
+语法错误:“}”
+语法错误: 缺少“;”(在“}”的前面)
+语法错误: 缺少“;”(在“}”的前面)
+缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+“rbac::RBAC_PERM_MAX”: 重定义；以前的定义是“枚举数”
+语法错误:“}”
+语法错误: 缺少“;”(在“}”的前面)
+删除指向不完整“rbac::RBACData”类型的指针；没有调用析构函数
+使用了未定义类型“rbac::RBACData”
+使用了未定义类型“rbac::RBACData”
+"RBACCommandResult": 不是 "rbac" 的成员
+使用了未定义类型“rbac::RBACData”
+"RBACPermission": 不是 "rbac" 的成员
+"RBAC_CANT_ADD_ALREADY_ADDED": 不是 "rbac" 的成员
+"RBAC_IN_DENIED_LIST": 不是 "rbac" 的成员
+"RBAC_OK": 不是 "rbac" 的成员
+"RBAC_ID_DOES_NOT_EXISTS": 不是 "rbac" 的成员
+"RBACCommandResult": 不是 "rbac" 的成员
+使用了未定义类型“rbac::RBACData”
+"RBACPermission": 不是 "rbac" 的成员
+"RBAC_CANT_ADD_ALREADY_ADDED": 不是 "rbac" 的成员
+"RBAC_IN_GRANTED_LIST": 不是 "rbac" 的成员
+"RBAC_OK": 不是 "rbac" 的成员
+"RBAC_ID_DOES_NOT_EXISTS": 不是 "rbac" 的成员
+"RBACCommandResult": 不是 "rbac" 的成员
+使用了未定义类型“rbac::RBACData”
+"RBACPermission": 不是 "rbac" 的成员
+"RBAC_CANT_REVOKE_NOT_IN_LIST": 不是 "rbac" 的成员
+"RBAC_OK": 不是 "rbac" 的成员
+"RBAC_ID_DOES_NOT_EXISTS": 不是 "rbac" 的成员
+使用了未定义类型“rbac::RBACData”
+使用了未定义类型“rbac::RBACData”
+"RBACPermissionContainer": 不是 "rbac" 的成员
+使用了未定义类型“rbac::RBACData”
+“granted”: 必须初始化引用
+"RBACPermission": 不是 "rbac" 的成员
+使用了未定义类型“rbac::RBACData”
+使用了未定义类型“rbac::RBACData”
+"RBACPermissionContainer": 不是 "rbac" 的成员
+使用了未定义类型“rbac::RBACData”
+“denied”: 必须初始化引用
+"RBACPermission": 不是 "rbac" 的成员
+使用了未定义类型“rbac::RBACData”
+使用了未定义类型“rbac::RBACData”
+使用了未定义类型“rbac::RBACData”
+"RBACPermissionContainer": 不是 "rbac" 的成员
+使用了未定义类型“rbac::RBACData”
+“defaultPermissions”: 必须初始化引用
+"RBACPermission": 不是 "rbac" 的成员
+"RBACPermission": 不是 "rbac" 的成员
+"RBACPermission": 不是 "rbac" 的成员
+语法错误: 缺少“;”(在“}”的前面)
+缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+“rbac::RBAC_PERM_MAX”: 重定义；以前的定义是“枚举数”
+语法错误:“}”
+语法错误: 缺少“;”(在“}”的前面)
+语法错误:“函数样式强制转换”
+语法错误: 缺少“;”(在“{”的前面)
+“{”: 缺少函数标题(是否是老式的形式表?)
+"RBACPermission": 不是 "rbac" 的成员
+"RBACPermissionContainer": 不是 "rbac" 的成员
+“RBACPermissionContainer”: 应为表达式而不是类型
+"std::map": "RBACPermissionContainer" 不是参数 "_Ty" 的有效 模板 类型参数
+“std::map'”: 模板 参数太少
+“std::map”: 使用 类 模板 需要 模板 参数列表
+“CreateAccount”: 未知重写说明符
+语法错误:“(”
+意外的标记位于“;”之前
+“DeleteAccount”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+“ChangeUsername”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+“ChangePassword”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+“ChangeEmail”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+“ChangeRegEmail”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+"RBACPermission": 不是 "rbac" 的成员
+"RBACPermissionContainer": 不是 "rbac" 的成员
+“std::map”: 使用 类 模板 需要 模板 参数列表
+语法错误: 缺少“;”(在“}”的前面)
+缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+“rbac::RBAC_PERM_MAX”: 重定义；以前的定义是“枚举数”
+语法错误:“}”
+语法错误: 缺少“;”(在“}”的前面)
+语法错误: 缺少“;”(在“}”的前面)
+缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+“rbac::RBAC_PERM_MAX”: 重定义；以前的定义是“枚举数”
+语法错误:“}”
+语法错误: 缺少“;”(在“}”的前面)
+语法错误: 缺少“;”(在“}”的前面)
+缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+“rbac::RBAC_PERM_MAX”: 重定义；以前的定义是“枚举数”
+语法错误:“}”
+语法错误: 缺少“;”(在“}”的前面)
+语法错误: 缺少“;”(在“{”的前面)
+“{”: 缺少函数标题(是否是老式的形式表?)
+语法错误: 缺少“;”(在“}”的前面)
+缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+“rbac::RBAC_PERM_MAX”: 重定义；以前的定义是“枚举数”
+语法错误:“}”
+语法错误: 缺少“;”(在“}”的前面)
+语法错误:“函数样式强制转换”
+语法错误: 缺少“;”(在“{”的前面)
+“{”: 缺少函数标题(是否是老式的形式表?)
+"RBACPermission": 不是 "rbac" 的成员
+"RBACPermissionContainer": 不是 "rbac" 的成员
+“RBACPermissionContainer”: 应为表达式而不是类型
+"std::map": "RBACPermissionContainer" 不是参数 "_Ty" 的有效 模板 类型参数
+“std::map'”: 模板 参数太少
+“std::map”: 使用 类 模板 需要 模板 参数列表
+“CreateAccount”: 未知重写说明符
+语法错误:“(”
+意外的标记位于“;”之前
+“DeleteAccount”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+“ChangeUsername”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+“ChangePassword”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+“ChangeEmail”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+“ChangeRegEmail”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+"RBACPermission": 不是 "rbac" 的成员
+"RBACPermissionContainer": 不是 "rbac" 的成员
+“std::map”: 使用 类 模板 需要 模板 参数列表
+语法错误: 缺少“;”(在“}”的前面)
+缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+“rbac::RBAC_PERM_MAX”: 重定义；以前的定义是“枚举数”
+语法错误:“}”
+语法错误: 缺少“;”(在“}”的前面)
+语法错误:“函数样式强制转换”
+语法错误: 缺少“;”(在“{”的前面)
+“{”: 缺少函数标题(是否是老式的形式表?)
+"RBACPermission": 不是 "rbac" 的成员
+"RBACPermissionContainer": 不是 "rbac" 的成员
+“RBACPermissionContainer”: 应为表达式而不是类型
+"std::map": "RBACPermissionContainer" 不是参数 "_Ty" 的有效 模板 类型参数
+“std::map'”: 模板 参数太少
+“std::map”: 使用 类 模板 需要 模板 参数列表
+“CreateAccount”: 未知重写说明符
+语法错误:“(”
+意外的标记位于“;”之前
+“DeleteAccount”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+“ChangeUsername”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+“ChangePassword”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+“ChangeEmail”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+“ChangeRegEmail”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+"RBACPermission": 不是 "rbac" 的成员
+"RBACPermissionContainer": 不是 "rbac" 的成员
+“std::map”: 使用 类 模板 需要 模板 参数列表
+语法错误: 缺少“;”(在“}”的前面)
+缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+“rbac::RBAC_PERM_MAX”: 重定义；以前的定义是“枚举数”
+语法错误:“}”
+语法错误: 缺少“;”(在“}”的前面)
+语法错误:“函数样式强制转换”
+语法错误: 缺少“;”(在“{”的前面)
+“{”: 缺少函数标题(是否是老式的形式表?)
+"RBACPermission": 不是 "rbac" 的成员
+"RBACPermissionContainer": 不是 "rbac" 的成员
+“RBACPermissionContainer”: 应为表达式而不是类型
+"std::map": "RBACPermissionContainer" 不是参数 "_Ty" 的有效 模板 类型参数
+“std::map'”: 模板 参数太少
+“std::map”: 使用 类 模板 需要 模板 参数列表
+“CreateAccount”: 未知重写说明符
+语法错误:“(”
+意外的标记位于“;”之前
+“DeleteAccount”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+“ChangeUsername”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+“ChangePassword”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+“ChangeEmail”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+“ChangeRegEmail”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+"RBACPermission": 不是 "rbac" 的成员
+"RBACPermissionContainer": 不是 "rbac" 的成员
+“std::map”: 使用 类 模板 需要 模板 参数列表
+语法错误: 缺少“;”(在“}”的前面)
+缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+“rbac::RBAC_PERM_MAX”: 重定义；以前的定义是“枚举数”
+语法错误:“}”
+语法错误: 缺少“;”(在“}”的前面)
+语法错误:“函数样式强制转换”
+语法错误: 缺少“;”(在“{”的前面)
+“{”: 缺少函数标题(是否是老式的形式表?)
+"RBACPermission": 不是 "rbac" 的成员
+"RBACPermissionContainer": 不是 "rbac" 的成员
+“RBACPermissionContainer”: 应为表达式而不是类型
+"std::map": "RBACPermissionContainer" 不是参数 "_Ty" 的有效 模板 类型参数
+“std::map'”: 模板 参数太少
+“std::map”: 使用 类 模板 需要 模板 参数列表
+“CreateAccount”: 未知重写说明符
+语法错误:“(”
+意外的标记位于“;”之前
+“DeleteAccount”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+“ChangeUsername”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+“ChangePassword”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+“ChangeEmail”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+“ChangeRegEmail”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+"RBACPermission": 不是 "rbac" 的成员
+"RBACPermissionContainer": 不是 "rbac" 的成员
+“std::map”: 使用 类 模板 需要 模板 参数列表
+语法错误: 缺少“;”(在“}”的前面)
+缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+“rbac::RBAC_PERM_MAX”: 重定义；以前的定义是“枚举数”
+语法错误:“}”
+语法错误: 缺少“;”(在“}”的前面)
+语法错误: 缺少“;”(在“}”的前面)
+缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+“rbac::RBAC_PERM_MAX”: 重定义；以前的定义是“枚举数”
+语法错误:“}”
+语法错误: 缺少“;”(在“}”的前面)
+语法错误: 缺少“;”(在“}”的前面)
+缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+“rbac::RBAC_PERM_MAX”: 重定义；以前的定义是“枚举数”
+语法错误:“}”
+语法错误: 缺少“;”(在“}”的前面)
+语法错误:“函数样式强制转换”
+语法错误: 缺少“;”(在“{”的前面)
+“{”: 缺少函数标题(是否是老式的形式表?)
+"RBACPermission": 不是 "rbac" 的成员
+"RBACPermissionContainer": 不是 "rbac" 的成员
+“RBACPermissionContainer”: 应为表达式而不是类型
+"std::map": "RBACPermissionContainer" 不是参数 "_Ty" 的有效 模板 类型参数
+“std::map'”: 模板 参数太少
+“std::map”: 使用 类 模板 需要 模板 参数列表
+“CreateAccount”: 未知重写说明符
+语法错误:“(”
+意外的标记位于“;”之前
+“DeleteAccount”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+“ChangeUsername”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+“ChangePassword”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+“ChangeEmail”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+“ChangeRegEmail”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+"RBACPermission": 不是 "rbac" 的成员
+"RBACPermissionContainer": 不是 "rbac" 的成员
+“std::map”: 使用 类 模板 需要 模板 参数列表
+语法错误: 缺少“;”(在“}”的前面)
+缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+“rbac::RBAC_PERM_MAX”: 重定义；以前的定义是“枚举数”
+语法错误:“}”
+语法错误: 缺少“;”(在“}”的前面)
+语法错误:“函数样式强制转换”
+语法错误: 缺少“;”(在“{”的前面)
+“{”: 缺少函数标题(是否是老式的形式表?)
+"RBACPermission": 不是 "rbac" 的成员
+"RBACPermissionContainer": 不是 "rbac" 的成员
+“RBACPermissionContainer”: 应为表达式而不是类型
+"std::map": "RBACPermissionContainer" 不是参数 "_Ty" 的有效 模板 类型参数
+“std::map'”: 模板 参数太少
+“std::map”: 使用 类 模板 需要 模板 参数列表
+“CreateAccount”: 未知重写说明符
+语法错误:“(”
+意外的标记位于“;”之前
+“DeleteAccount”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+“ChangeUsername”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+“ChangePassword”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+“ChangeEmail”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+“ChangeRegEmail”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+"RBACPermission": 不是 "rbac" 的成员
+"RBACPermissionContainer": 不是 "rbac" 的成员
+语法错误: 缺少“;”(在“}”的前面)
+缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+“rbac::RBAC_PERM_MAX”: 重定义；以前的定义是“枚举数”
+“std::map”: 使用 类 模板 需要 模板 参数列表
+语法错误:“}”
+语法错误: 缺少“;”(在“}”的前面)
+语法错误: 缺少“;”(在“}”的前面)
+缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+“rbac::RBAC_PERM_MAX”: 重定义；以前的定义是“枚举数”
+语法错误:“}”
+语法错误: 缺少“;”(在“}”的前面)
+语法错误:“函数样式强制转换”
+语法错误: 缺少“;”(在“{”的前面)
+“{”: 缺少函数标题(是否是老式的形式表?)
+"RBACPermission": 不是 "rbac" 的成员
+"RBACPermissionContainer": 不是 "rbac" 的成员
+“RBACPermissionContainer”: 应为表达式而不是类型
+"std::map": "RBACPermissionContainer" 不是参数 "_Ty" 的有效 模板 类型参数
+“std::map'”: 模板 参数太少
+“std::map”: 使用 类 模板 需要 模板 参数列表
+“CreateAccount”: 未知重写说明符
+语法错误:“(”
+意外的标记位于“;”之前
+“DeleteAccount”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+“ChangeUsername”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+“ChangePassword”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+“ChangeEmail”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+“ChangeRegEmail”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+"RBACPermission": 不是 "rbac" 的成员
+"RBACPermissionContainer": 不是 "rbac" 的成员
+“std::map”: 使用 类 模板 需要 模板 参数列表
+语法错误: 缺少“;”(在“}”的前面)
+缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+“rbac::RBAC_PERM_MAX”: 重定义；以前的定义是“枚举数”
+语法错误:“}”
+语法错误: 缺少“;”(在“}”的前面)
+语法错误: 缺少“;”(在“{”的前面)
+“{”: 缺少函数标题(是否是老式的形式表?)
+“Flags”: 未知重写说明符
+缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+使用了未定义类型“rbac::RBACData”
+删除指向不完整“rbac::RBACData”类型的指针；没有调用析构函数
+使用了未定义类型“rbac::RBACData”
+使用了未定义类型“rbac::RBACData”
+使用了未定义类型“rbac::RBACData”
+使用了未定义类型“rbac::RBACData”
+使用了未定义类型“rbac::RBACData”
+使用了未定义类型“rbac::RBACData”
+“fmt::v12::fstring<uint32 &>::fstring”: 对即时函数的调用不是常量表达式
+使用了未定义类型“rbac::RBACData”
+“fmt::v12::fstring<uint32 &>::fstring”: 对即时函数的调用不是常量表达式
+删除指向不完整“rbac::RBACData”类型的指针；没有调用析构函数
+语法错误: 缺少“;”(在“}”的前面)
+缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+“rbac::RBAC_PERM_MAX”: 重定义；以前的定义是“枚举数”
+语法错误:“}”
+语法错误: 缺少“;”(在“}”的前面)
+语法错误:“函数样式强制转换”
+语法错误: 缺少“;”(在“{”的前面)
+“{”: 缺少函数标题(是否是老式的形式表?)
+"RBACPermission": 不是 "rbac" 的成员
+"RBACPermissionContainer": 不是 "rbac" 的成员
+“RBACPermissionContainer”: 应为表达式而不是类型
+"std::map": "RBACPermissionContainer" 不是参数 "_Ty" 的有效 模板 类型参数
+“std::map'”: 模板 参数太少
+“std::map”: 使用 类 模板 需要 模板 参数列表
+“CreateAccount”: 未知重写说明符
+语法错误:“(”
+意外的标记位于“;”之前
+“DeleteAccount”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+“ChangeUsername”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+“ChangePassword”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+“ChangeEmail”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+“ChangeRegEmail”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+"RBACData": 不是 "rbac" 的成员
+"RBACPermission": 不是 "rbac" 的成员
+"RBACPermissionContainer": 不是 "rbac" 的成员
+“std::map”: 使用 类 模板 需要 模板 参数列表
+语法错误: 缺少“;”(在“}”的前面)
+缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+“rbac::RBAC_PERM_MAX”: 重定义；以前的定义是“枚举数”
+语法错误:“}”
+语法错误: 缺少“;”(在“}”的前面)
+语法错误:“函数样式强制转换”
+语法错误: 缺少“;”(在“{”的前面)
+“{”: 缺少函数标题(是否是老式的形式表?)
+"RBACPermission": 不是 "rbac" 的成员
+"RBACPermissionContainer": 不是 "rbac" 的成员
+“RBACPermissionContainer”: 应为表达式而不是类型
+"std::map": "RBACPermissionContainer" 不是参数 "_Ty" 的有效 模板 类型参数
+“std::map'”: 模板 参数太少
+“std::map”: 使用 类 模板 需要 模板 参数列表
+“CreateAccount”: 未知重写说明符
+语法错误:“(”
+意外的标记位于“;”之前
+“DeleteAccount”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+“ChangeUsername”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+“ChangePassword”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+“ChangeEmail”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+“ChangeRegEmail”: 未知重写说明符
+“uint32”: 应为表达式而不是类型
+语法错误: 缺少“)”(在标识符“accountId”的前面)
+意外的标记位于“;”之前
+"RBACData": 不是 "rbac" 的成员
+"RBACPermission": 不是 "rbac" 的成员
+"RBACPermissionContainer": 不是 "rbac" 的成员
+“std::map”: 使用 类 模板 需要 模板 参数列表

@@ -1,0 +1,21 @@
+G17-B0 world安装v2真实错误记录（用户回传）
+日期：2026-08-22 Asia/Shanghai
+阶段：01_G17B0_world_install_v2_locked.sql
+
+用户回传原文：
+SQL 错误 [1267] [HY000]: Illegal mix of collations (utf8mb4_unicode_ci,IMPLICIT) and (utf8mb4_0900_ai_ci,IMPLICIT) for operation '='
+
+验收结论：
+G17B0_WORLD_INSTALL_V2_RUNTIME=FAIL_ERROR_1267
+G17B0_WORLD_INSTALL=NOT_ACCEPTED
+G17B0_WORLD_POSTCHECK=DO_NOT_RUN
+G17B0_WINDOWS_BUILD=DO_NOT_RUN
+
+根因：
+world相关表的文本列为utf8mb4_unicode_ci；MySQL 8连接经旧01的“SET NAMES utf8mb4”采用utf8mb4_0900_ai_ci。旧01把表列与用户文本变量以相同IMPLICIT强制等级进行“=”比较，触发1267。首个风险比较在START TRANSACTION和任何永久DML之前。
+
+处置：
+1. 用户应在原连接执行ROLLBACK;并停止旧v2。
+2. v2包降级为已知失败历史证据，禁止重跑。
+3. v3显式USE world、SET NAMES utf8mb4 COLLATE utf8mb4_unicode_ci，并给所有比较文本变量/表达式加显式utf8mb4_unicode_ci。
+4. v3独立只读后检的全部表使用world全限定名，仍保持单语句/零写入。
