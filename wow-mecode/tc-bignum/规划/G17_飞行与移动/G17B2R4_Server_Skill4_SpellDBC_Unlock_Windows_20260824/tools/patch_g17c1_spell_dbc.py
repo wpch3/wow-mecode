@@ -38,6 +38,7 @@ import struct
 import sys
 from pathlib import Path
 
+G17C1_PATCHER_VERSION = "v6_auto_mkdir"
 SPELL_ID = 52226
 FOCUS_COL = 18
 AURA_COL = 24
@@ -231,6 +232,7 @@ def do_patch(args) -> int:
 def do_check(args) -> int:
     data = Path(args.input).read_bytes()
     a = audit(data)
+    report_lines = [f"G17C1_PATCHER_VERSION={G17C1_PATCHER_VERSION}"]
     report_lines = [f"{k}={v}" for k, v in a.items()]
     if a["layout_unknown"]:
         state = "LAYOUT_UNKNOWN"
@@ -249,11 +251,22 @@ def do_check(args) -> int:
 
 def main() -> int:
     ap = argparse.ArgumentParser()
-    ap.add_argument("command", choices=("patch", "check"))
-    ap.add_argument("--input", required=True)
+    ap.add_argument("--version", action="store_true",
+                    help="print G17C1_PATCHER_VERSION and exit")
+    ap.add_argument("command", nargs="?", choices=("patch", "check"))
+    ap.add_argument("--input", default="")
     ap.add_argument("--output", default="")
-    ap.add_argument("--report", required=True)
+    ap.add_argument("--report", default="")
     args = ap.parse_args()
+    if args.version:
+        print(f"G17C1_PATCHER_VERSION={G17C1_PATCHER_VERSION}")
+        return 0
+    if not args.command:
+        print("G17C1_PATCHER_VERSION=" + G17C1_PATCHER_VERSION)
+        return 2
+    if not args.input or not args.report:
+        print("--input and --report required for patch/check")
+        return 2
     if args.command == "patch":
         if not args.output:
             print("--output required for patch")

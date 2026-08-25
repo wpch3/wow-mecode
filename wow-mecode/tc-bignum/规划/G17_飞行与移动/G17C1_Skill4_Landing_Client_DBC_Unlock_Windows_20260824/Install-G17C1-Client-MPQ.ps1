@@ -170,8 +170,11 @@ function Discover-ClientEnvironment {
     }
 }
 
+$BuildFingerprint = "v6_auto_mkdir"
+$PatcherMarker = "G17C1_PATCHER_VERSION = \"v6_auto_mkdir\""
 try {
     W "G17C1_CLIENT_MPQ_UNLOCK_START"
+    W ("C1_BUILD=" + $BuildFingerprint)
     W "SCOPE=SPELL_52226_FOCUS_1553_AND_AURA_52255_CLEARED_IN_CLIENT_SPELL_DBC"
     W "MODIFIES_SERVER=False"
     W "EXECUTES_SQL=False"
@@ -188,6 +191,15 @@ try {
     foreach ($Required in @($Tool, $Patcher)) {
         if (-not (Test-Path -LiteralPath $Required -PathType Leaf)) { throw "required file missing: $Required" }
     }
+    # Version fingerprint guard: if a user runs an OLD package (pre-v6), the
+    # patcher lacks the auto-mkdir fix and the run would fail later with a
+    # confusing FileNotFoundError.  Refuse loudly instead.  The marker is
+    # read from the actual patcher source so it can never drift.
+    $patcherText = [IO.File]::ReadAllText($Patcher)
+    if ($patcherText -notmatch [regex]::Escape($PatcherMarker)) {
+        throw ("OBSOLETE_PACKAGE: patcher is not v6_auto_mkdir. Re-download G17C1_Skill4_Landing_Client_DBC_Unlock_Windows_20260824.zip and verify SHA256=c64366fbc2474b49cf7ecf225d28c81b08bc89a76b46de3a9e45d0eaed9dc46d")
+    }
+    W "C1_PATCHER_VERSION_CHECK=PASS v6_auto_mkdir"
     if (-not (Test-Path -LiteralPath $ClientRoot -PathType Container)) { throw "client root missing: $ClientRoot" }
     $ClientRoot = (Resolve-Path -LiteralPath $ClientRoot).Path
     $DataDir = Join-Path $ClientRoot "Data"

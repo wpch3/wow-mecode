@@ -258,5 +258,24 @@ class TestPatcher(unittest.TestCase):
         self.assertLess(idx_mkdir, idx_patch)
 
 
+    def test_12_package_version_fingerprint(self):
+        # Guard against the user running an OLD package: the patcher must
+        # carry G17C1_PATCHER_VERSION=v6_auto_mkdir and support --version,
+        # and the installer must fingerprint C1_BUILD + refuse with a clear
+        # OBSOLETE_PACKAGE message if the patcher marker is absent.
+        patcher = (ROOT / "tools/patch_g17c1_spell_dbc.py").read_text(
+            encoding="utf-8")
+        self.assertIn('G17C1_PATCHER_VERSION = "v6_auto_mkdir"', patcher)
+        self.assertIn("--version", patcher)
+        self.assertIn("out_path.parent.mkdir(parents=True, exist_ok=True)",
+                      patcher)
+        install = (ROOT / "Install-G17C1-Client-MPQ.ps1").read_text(
+            encoding="utf-8")
+        self.assertIn('C1_BUILD=', install)
+        self.assertIn('$BuildFingerprint = "v6_auto_mkdir"', install)
+        self.assertIn("OBSOLETE_PACKAGE", install)
+        self.assertIn("C1_PATCHER_VERSION_CHECK=PASS", install)
+
+
 if __name__ == "__main__":
     unittest.main(verbosity=2)
