@@ -170,8 +170,8 @@ function Discover-ClientEnvironment {
     }
 }
 
-$BuildFingerprint = "v6_auto_mkdir"
-$PatcherMarker = "G17C1_PATCHER_VERSION = \"v6_auto_mkdir\""
+$BuildFingerprint = "v8_ps_parse_fix"
+$PatcherMarker = 'G17C1_PATCHER_VERSION = "v8_ps_parse_fix"'
 try {
     W "G17C1_CLIENT_MPQ_UNLOCK_START"
     W ("C1_BUILD=" + $BuildFingerprint)
@@ -197,7 +197,7 @@ try {
     # read from the actual patcher source so it can never drift.
     $patcherText = [IO.File]::ReadAllText($Patcher)
     if ($patcherText -notmatch [regex]::Escape($PatcherMarker)) {
-        throw ("OBSOLETE_PACKAGE: patcher is not v6_auto_mkdir. Re-download G17C1_Skill4_Landing_Client_DBC_Unlock_Windows_20260824.zip and verify SHA256=c64366fbc2474b49cf7ecf225d28c81b08bc89a76b46de3a9e45d0eaed9dc46d")
+        throw ("OBSOLETE_PACKAGE: patcher is not v8_ps_parse_fix. Re-download G17C1_Skill4_Landing_Client_DBC_Unlock_Windows_20260824.zip from the project repo (see tc-bignum/00-当前整体安装步骤_单文件入口.md for the current SHA256)")
     }
     W "C1_PATCHER_VERSION_CHECK=PASS v6_auto_mkdir"
     if (-not (Test-Path -LiteralPath $ClientRoot -PathType Container)) { throw "client root missing: $ClientRoot" }

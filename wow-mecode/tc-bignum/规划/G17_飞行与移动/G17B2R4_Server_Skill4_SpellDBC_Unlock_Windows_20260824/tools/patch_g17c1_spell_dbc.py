@@ -38,7 +38,7 @@ import struct
 import sys
 from pathlib import Path
 
-G17C1_PATCHER_VERSION = "v6_auto_mkdir"
+G17C1_PATCHER_VERSION = "v8_ps_parse_fix"
 SPELL_ID = 52226
 FOCUS_COL = 18
 AURA_COL = 24

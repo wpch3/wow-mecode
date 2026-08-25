@@ -10,7 +10,13 @@ G17-C1 客户端 Spell.dbc 解锁（技能4 52226）— 双端解锁的客户端
   本包把【客户端】的 Spell.dbc 也解掉这两个门槛（改的是 DBC 文件本身，
   按钮名字/图标完全不变），点击后封包才会真正到达服务器。
 
-重要（v7 更新，防旧包）：你上次仍运行了旧包（patcher 无 auto-mkdir）。
+重要（v8 更新）：v7 的安装器指纹行里用了 C 风格 \" 转义，PowerShell 5.1
+  不支持，导致启动即 ParserError（你上次看到的 Unexpected token）。v8 已改为
+  单引号字符串，并把 PowerShell 静态语法检查加入包自检（以后此类问题会
+  在打包时就拦截）；版本指纹为 v8_ps_parse_fix。请核对 zip SHA
+  并确认 C1_BUILD=v8_ps_parse_fix。
+
+（v7 更新，防旧包）：你上次仍运行了旧包（patcher 无 auto-mkdir）。
   本版安装器启动会打印 C1_BUILD=v6_auto_mkdir，并自动校验 patcher 版本；
   若你误用旧包会明确提示 OBSOLETE_PACKAGE 而不是 FileNotFoundError。
   重下后请核对 zip 的 SHA256（见 README 末尾），并确认解压后

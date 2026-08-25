@@ -265,14 +265,14 @@ class TestPatcher(unittest.TestCase):
         # OBSOLETE_PACKAGE message if the patcher marker is absent.
         patcher = (ROOT / "tools/patch_g17c1_spell_dbc.py").read_text(
             encoding="utf-8")
-        self.assertIn('G17C1_PATCHER_VERSION = "v6_auto_mkdir"', patcher)
+        self.assertIn('G17C1_PATCHER_VERSION = "v8_ps_parse_fix"', patcher)
         self.assertIn("--version", patcher)
         self.assertIn("out_path.parent.mkdir(parents=True, exist_ok=True)",
                       patcher)
         install = (ROOT / "Install-G17C1-Client-MPQ.ps1").read_text(
             encoding="utf-8")
         self.assertIn('C1_BUILD=', install)
-        self.assertIn('$BuildFingerprint = "v6_auto_mkdir"', install)
+        self.assertIn('$BuildFingerprint = "v8_ps_parse_fix"', install)
         self.assertIn("OBSOLETE_PACKAGE", install)
         self.assertIn("C1_PATCHER_VERSION_CHECK=PASS", install)
 
