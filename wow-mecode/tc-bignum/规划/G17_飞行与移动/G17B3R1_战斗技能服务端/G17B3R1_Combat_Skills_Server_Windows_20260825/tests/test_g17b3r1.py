@@ -138,6 +138,19 @@ class TestToolLifecycle(unittest.TestCase):
             capture_output=True, text=True)
         self.assertEqual(run.returncode, 0, run.stdout + run.stderr)
 
-
-if __name__ == "__main__":
-    unittest.main(verbosity=2)
+    def test_05_binding_sql_is_explicit_and_idempotent(self):
+        # Regression: the previous CROSS JOIN/NOT EXISTS generator produced
+        # only 5 bound rows (post-count stayed 5, gate FAILed) on the user's
+        # MySQL 8.  The fix uses 25 explicit rows + INSERT IGNORE + recount.
+        import re
+        sql = (ROOT / "sql/G17B3R1_world_combat_binding.sql").read_text(
+            encoding="utf-8")
+        rows = re.findall(r"\(9900\d\d,\s*@G17B3R1_SCRIPT\)", sql)
+        self.assertEqual(len(rows), 25)
+        self.assertEqual(len(set(rows)), 25)
+        self.assertIn("INSERT IGNORE INTO `spell_script_names`", sql)
+        # ignore comment lines (the NOTE describes the old bad construct)
+        code = [l for l in sql.splitlines() if not l.lstrip().startswith("--")]
+        joint = chr(10).join(code)
+        self.assertNotIn("CROSS JOIN", joint)
+        self.assertNotIn("NOT EXISTS", joint)
