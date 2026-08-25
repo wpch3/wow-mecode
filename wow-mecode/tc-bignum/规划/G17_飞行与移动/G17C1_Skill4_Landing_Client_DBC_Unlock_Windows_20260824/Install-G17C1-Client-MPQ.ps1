@@ -326,6 +326,11 @@ try {
     if ($rc -ne 0) { throw "extracted Spell.dbc did not pass semantic guards" }
 
     $GeneratedSpell = Join-Path $WorkRoot "generated\DBFilesClient\Spell.dbc"
+    # A work-root may contain nested subdirectories that do not exist yet.
+    # The patcher also auto-creates parents, but create them here as well so
+    # the failure mode (FileNotFoundError writing generated Spell.dbc) can
+    # never occur regardless of caller.
+    New-Item -ItemType Directory -Path (Split-Path -Parent $GeneratedSpell) -Force | Out-Null
     $patchReport = Join-Path $WorkRoot "G17C1_SPELL_DBC_PATCH_REPORT.txt"
     $rc = Invoke-NativeLogged -FilePath $Python -NativeArgs @($Patcher, "patch", "--input", $OldSpell.Path, "--output", $GeneratedSpell, "--report", $patchReport) -Prefix "SPELL_DBC_PATCH"
     W "SPELL_DBC_PATCH_EXIT=$rc"

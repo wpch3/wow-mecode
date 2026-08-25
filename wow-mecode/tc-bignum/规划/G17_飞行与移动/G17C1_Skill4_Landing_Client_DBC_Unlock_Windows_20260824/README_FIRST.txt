@@ -10,7 +10,12 @@ G17-C1 客户端 Spell.dbc 解锁（技能4 52226）— 双端解锁的客户端
   本包把【客户端】的 Spell.dbc 也解掉这两个门槛（改的是 DBC 文件本身，
   按钮名字/图标完全不变），点击后封包才会真正到达服务器。
 
-重要（v5 修复）：上一版虽已加入状态文件缺失的自动探测，但安装器开头的
+重要（v6 修复）：上一版发现模式/探测/check全部成功，但补丁器写
+  generated\DBFilesClient\Spell.dbc 时因父目录未创建而 FileNotFoundError。
+  v6 已让补丁器与安装器都自动创建父目录（并用你 48.9MB 真实 Spell.dbc
+  验证：输出哈希 03bf11fd...）。直接重跑即可，DBC/MPQ 均未被改动。
+
+（v5 修复）：上一版虽已加入状态文件缺失的自动探测，但安装器开头的
   "必需文件"列表仍把 R4/R5 状态文件列入（漏删），导致你仍卡在
   required file missing: G17R4_CLIENT_MPQ_UPGRADE_STATE.txt。v5 已把这个
   硬前置删掉——只有工具和 patcher 是必需，状态文件缺失会自动内容探测。

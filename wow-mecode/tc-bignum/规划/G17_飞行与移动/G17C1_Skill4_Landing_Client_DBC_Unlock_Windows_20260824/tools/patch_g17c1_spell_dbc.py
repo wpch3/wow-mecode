@@ -167,6 +167,10 @@ def audit(data: bytes) -> dict:
 
 
 def write_report(report: Path, lines: list[str]) -> None:
+    # Auto-create the parent directory: installers may invoke this with a
+    # report path under a freshly created work root that contains nested
+    # subdirectories which Python write_text will not create by itself.
+    report.parent.mkdir(parents=True, exist_ok=True)
     report.write_text("\n".join(lines) + "\n", encoding="utf-8")
 
 
@@ -214,7 +218,9 @@ def do_patch(args) -> int:
     report_lines.append("G17C1_SPELL_DBC_STATE=PATCHED")
     report_lines.append("G17C1_SPELL_DBC_PATCH=PASS")
     write_report(Path(args.report), report_lines)
-    Path(args.output).write_bytes(out)
+    out_path = Path(args.output)
+    out_path.parent.mkdir(parents=True, exist_ok=True)
+    out_path.write_bytes(out)
     print(f"G17C1_SPELL_DBC_STATE=PATCHED")
     print(f"G17C1_SPELL_DBC_PATCH=PASS")
     print(f"INPUT_SHA256={before}")

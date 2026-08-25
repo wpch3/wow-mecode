@@ -217,5 +217,46 @@ class TestPatcher(unittest.TestCase):
         self.assertIn("BACKUP_LOCALE=NONE_ABSENT", install)
 
 
+    def test_10_patch_writes_into_missing_nested_parent(self):
+        # Regression (user's C1 run): Spell.dbc patch failed with
+        # FileNotFoundError writing ...workroot\generated\DBFilesClient\Spell.dbc
+        # because the installer never created 'generated\DBFilesClient' and
+        # Path.write_bytes does not create parents.  The patcher must create
+        # output/report parent directories itself.
+        with tempfile.TemporaryDirectory() as tmp:
+            base = Path(tmp)
+            inp = base / "Spell.in.dbc"
+            inp.write_bytes(build_synthetic_dbc())
+            deep_out = base / "nested" / "a" / "b" / "DBFilesClient" / "Spell.out.dbc"
+            deep_rep = base / "nested" / "a" / "report.txt"
+            args = type("A", (), {"input": str(inp), "output": str(deep_out),
+                                  "report": str(deep_rep)})()
+            rc = self.mod.do_patch(args)
+            self.assertEqual(rc, 0)
+            self.assertTrue(deep_out.exists())
+            self.assertTrue(deep_rep.exists())
+            # the two gates are actually cleared
+            data = deep_out.read_bytes()
+            count, fields, recsize = struct.unpack_from("<5I", data, 0)[1],                 struct.unpack_from("<5I", data, 0)[2], struct.unpack_from("<5I", data, 0)[3]
+            recs = data[20:20 + count * recsize]
+            vals = struct.unpack_from("<" + "I" * fields, recs, 33132 * recsize) if False else None
+            # verify 52226 row (record 0 in synthetic, but re-scan)
+            for i in range(count):
+                v = struct.unpack_from("<" + "I" * fields, recs, i * recsize)
+                if v[0] == 52226:
+                    self.assertEqual((v[18], v[24]), (0, 0))
+                    break
+            else:
+                self.fail("52226 not found")
+
+    def test_11_installer_creates_generated_parent_before_patch(self):
+        install = (ROOT / "Install-G17C1-Client-MPQ.ps1").read_text(
+            encoding="utf-8")
+        self.assertIn("Split-Path -Parent $GeneratedSpell", install)
+        idx_mkdir = install.index("Split-Path -Parent $GeneratedSpell")
+        idx_patch = install.index("SPELL_DBC_PATCH_EXIT")
+        self.assertLess(idx_mkdir, idx_patch)
+
+
 if __name__ == "__main__":
     unittest.main(verbosity=2)
