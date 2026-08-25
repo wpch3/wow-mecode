@@ -170,11 +170,10 @@ function Discover-ClientEnvironment {
     }
 }
 
-$BuildFingerprint = "v8_ps_parse_fix"
-$PatcherMarker = 'G17B3_DBC_APPENDER_VERSION="v1_append25"'
+$BuildFingerprint = "v1_append25"
 try {
     W "G17C2_CLIENT_MPQ_UNLOCK_START"
-    W ("C1_BUILD=" + $BuildFingerprint)
+    W ("C2_BUILD=" + $BuildFingerprint)
     W "SCOPE=SPELL_52226_FOCUS_1553_AND_AURA_52255_CLEARED_IN_CLIENT_SPELL_DBC"
     W "MODIFIES_SERVER=False"
     W "EXECUTES_SQL=False"
@@ -195,9 +194,12 @@ try {
     # patcher lacks the auto-mkdir fix and the run would fail later with a
     # confusing FileNotFoundError.  Refuse loudly instead.  The marker is
     # read from the actual patcher source so it can never drift.
+    # Version guard: accept G17B3_DBC_APPENDER_VERSION = "v1_append25" (with
+    # optional whitespace around '='); this parser-tolerant form prevents the
+    # false OBSOLETE_PACKAGE rejections that the exact-literal marker caused.
     $patcherText = [IO.File]::ReadAllText($Patcher)
-    if ($patcherText -notmatch [regex]::Escape($PatcherMarker)) {
-        throw ("OBSOLETE_PACKAGE: dbc appender is not v1_append25. Re-download G17C2_Skill4_Landing_Client_DBC_Unlock_Windows_20260824.zip from the project repo (see tc-bignum/00-当前整体安装步骤_单文件入口.md for the current SHA256)")
+    if ($patcherText -notmatch 'G17B3_DBC_APPENDER_VERSION\s*=\s*"v1_append25"') {
+        throw ("OBSOLETE_PACKAGE: dbc appender is not v1_append25. Re-download G17C2_Combat_Skills_Client_DBC_Windows_20260825.zip from the project repo (see tc-bignum/00-当前整体安装步骤_单文件入口.md for the current SHA256)")
     }
     W "C2_PATCHER_VERSION_CHECK=PASS v1_append25"
     if (-not (Test-Path -LiteralPath $ClientRoot -PathType Container)) { throw "client root missing: $ClientRoot" }
@@ -335,8 +337,12 @@ try {
     # (OldSpell.Hash must equal the C1 unlocked 03bf11fd).  The appender
     # additionally refuses any input where the 25 IDs already exist.  Run its
     # --version so the marker is also self-evident in the log.
-    $rc = Invoke-NativeLogged -FilePath $Python -NativeArgs @($Patcher, "--version") -Prefix "APPENDER_VERSION"
-    W "APPENDER_VERSION_EXIT=$rc"
+    $verOut = @(& $Python $Patcher --version 2>&1)
+    $verLine = ($verOut | Where-Object { $_ -match '^G17B3_DBC_APPENDER_VERSION=' } | Select-Object -First 1)
+    if (-not $verLine -or $verLine -notmatch '^G17B3_DBC_APPENDER_VERSION=v1_append25$') {
+        throw ("OBSOLETE_PACKAGE: appender --version did not report v1_append25 (got: " + (($verOut | Out-String).Trim()) + ")")
+    }
+    W "APPENDER_VERSION=$($verLine.ToString().Trim())"
 
     $GeneratedSpell = Join-Path $WorkRoot "generated\DBFilesClient\Spell.dbc"
     # A work-root may contain nested subdirectories that do not exist yet.
