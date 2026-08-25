@@ -118,7 +118,13 @@ class TestToolLifecycle(unittest.TestCase):
         self.assertIn("append_g17b3_spells.py", install)
         self.assertIn("G17B3R1_WORLD_COMBAT_BINDING=PASS", install)
         self.assertIn("G17B3R1_SERVER_DBC_APPEND=PASS", install)
-        # no hard-required state files; only tool/appender listed
+        # Regression: appender `check` prints to STDOUT only; installer must
+        # not ReadAllText a report file (crash: 'Could not find file
+        # ...G17B3R1_DBC_CHECK_BEFORE.txt' on the user's machine).
+        self.assertNotIn("ReadAllText($dbcCheck)", install)
+        self.assertIn("$dbcOut = @(& $python $Appender check", install)
+        self.assertIn("DBC_CHECK_STATE=", install)
+        self.assertIn("G17B3_SPELL_DBC_STATE=MISSING", install)
 
     def test_03_ps_files_parse(self):
         checker = ROOT / "tools/ps_static_check.py"

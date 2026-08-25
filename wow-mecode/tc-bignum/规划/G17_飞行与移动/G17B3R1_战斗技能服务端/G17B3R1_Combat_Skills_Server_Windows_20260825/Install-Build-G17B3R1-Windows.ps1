@@ -170,15 +170,22 @@ try {
 
     # --- server Spell.dbc append (semantic, no fixed postimage; preimage is
     #     the user's zhCN DBC = 49839 records / 234 fields, gates already 0/0) ---
-    $dbcCheck = Join-Path $UploadDir "G17B3R1_DBC_CHECK_BEFORE.txt"
-    $rc = Invoke-NativeLogged -FilePath $python -NativeArgs @($Appender, "check", "--input", $ServerDbc, "--report", $dbcCheck) -Prefix "DBC_CHECK"
-    W "DBC_CHECK_EXIT=$rc"
-    $dbctext = [IO.File]::ReadAllText($dbcCheck) 2>$null
-    W "DBC_CHECK_STATE=$($dbctext -split "`n" | Where-Object { $_ -match '^G17B3_SPELL_DBC_STATE=' } | Select-Object -First 1)"
-    if ($dbctext -match 'G17B3_SPELL_DBC_STATE=ALREADY_APPENDED') {
+    # The B3 appender's `check` prints to STDOUT (it does not write a report
+    # file, unlike the C1 patch_g17c1 checker).  Capture stdout and parse the
+    # state line directly; never read a file that may not exist.
+    $dbcOut = @(& $python $Appender check --input $ServerDbc 2>&1)
+    $dbcExit = $LASTEXITCODE
+    $dbcStateLine = @($dbcOut | Where-Object { $_ -match '^G17B3_SPELL_DBC_STATE=' } | Select-Object -First 1)
+    foreach ($line in $dbcOut) { W ("DBC_CHECK|" + $line.ToString()) }
+    W "DBC_CHECK_EXIT=$dbcExit"
+    W "DBC_CHECK_STATE=$($dbcStateLine.ToString().Trim())"
+    if ($dbcExit -ne 0) { throw "server Spell.dbc check failed" }
+    if ($dbcStateLine -match 'G17B3_SPELL_DBC_STATE=ALREADY_APPENDED') {
         W "G17B3R1_SERVER_DBC_APPEND=ALREADY_APPENDED"
-    } elseif ($dbctext -match 'G17B3_SPELL_DBC_STATE=PARTIAL') {
+    } elseif ($dbcStateLine -match 'G17B3_SPELL_DBC_STATE=PARTIAL') {
         throw "server Spell.dbc has PARTIAL 990000-990024 presence; refusing"
+    } elseif ($dbcStateLine -notmatch 'G17B3_SPELL_DBC_STATE=MISSING') {
+        throw ("Unexpected server Spell.dbc state: " + $dbcStateLine)
     } else {
         $dbBackup = Join-Path $UploadDir ("G17B3R1_Server_DBC_Backup_" + (Get-Date -Format "yyyyMMdd_HHmmss"))
         New-Item -ItemType Directory -Path $dbBackup -Force | Out-Null
