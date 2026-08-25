@@ -16,7 +16,7 @@ ROLLBACK = ROOT / "rollback_safe_src/src/server/scripts/Commands/cs_dragonriding
 TOOL = ROOT / "tools/apply_g17b3r1_source.py"
 
 PRE_SHA = "98446106309b45371f138d9c7bc707ee608d9a3db347e13d61cfd68cc97810f9"
-POST_SHA = "1a96b72eb28ffa2c0ac0d3e0c07e26c30f25bcd8525babd15efad02a041825d6"
+POST_SHA = "ecd307b472cb2c49f68607a8b0afe5dcf5f87a7a8eb6f087a4717f4cd8fa1bbb"
 
 
 def sha(p: Path) -> str:
@@ -60,6 +60,26 @@ class TestR0ExitNormalize(unittest.TestCase):
         # The normal landing action still exists (skill 4 unaffected).
         self.assertIn("ACTION_LAND", self.text)
 
+    def test_05_compile_fix_regressions(self):
+        # Real MSVC build errors fixed (FIX4): these symbols must not appear.
+        for bad in ("target->SetStunned", "ObjectAccessor::FindUnit"):
+            self.assertNotIn(bad, self.text)
+        # HandleCombatSkillSpell is defined INSIDE namespace so the
+        # PlayerScript can call G17Dragonriding::HandleCombatSkillSpell.
+        idx_ns = self.text.index("namespace G17Dragonriding")
+        idx_struct = self.text.index("struct npc_g17_dragonriding_vehicle")
+        idx_fn = self.text.index("void HandleCombatSkillSpell")
+        self.assertLess(idx_ns, idx_fn)
+        self.assertLess(idx_fn, idx_struct)
+        # Unit::SetStunned is protected -> use flags+state; and include the
+        # full SpellHistory type.
+        self.assertIn("SetUnitFlag(UNIT_FLAG_STUNNED)", self.text)
+        self.assertIn("AddUnitState(UNIT_STATE_STUNNED)", self.text)
+        self.assertIn('#include "SpellHistory.h"', self.text)
+        # stun release uses FindPlayer/GetUnit (this fork's API)
+        self.assertIn("ObjectAccessor::FindPlayer", self.text)
+        self.assertIn("ObjectAccessor::GetUnit", self.text)
+
 
 class TestB3R1Combat(unittest.TestCase):
     def setUp(self):
@@ -79,7 +99,7 @@ class TestB3R1Combat(unittest.TestCase):
 
     def test_03_real_effects(self):
         for tok in ("Unit::DealDamage(", "Unit::DealHeal(",
-                    "target->SetStunned(true)", "AddCooldown(",
+                    "SetUnitFlag(UNIT_FLAG_STUNNED)", "AddCooldown(",
                     "RemoveAurasWithMechanic(", "LearnSpell(",
                     "RemoveSpell("):
             self.assertIn(tok, self.text)

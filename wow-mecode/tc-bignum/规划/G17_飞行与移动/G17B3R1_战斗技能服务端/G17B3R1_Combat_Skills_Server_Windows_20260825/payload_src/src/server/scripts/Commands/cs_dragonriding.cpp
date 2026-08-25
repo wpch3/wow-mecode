@@ -38,6 +38,7 @@
 #include "Spell.h"
 #include "SpellAuraEffects.h"
 #include "SpellInfo.h"
+#include "SpellHistory.h"
 #include "SpellMgr.h"
 #include "SpellScript.h"
 #include "TemporarySummon.h"
@@ -773,6 +774,9 @@ void EnsureLandingCommandCastable()
         ">> G17-B2R3 landing command %u cast-gates cleared (focus/aura/item/stance); OnCheckCast+AfterCast hooks remain active.", SPELL_SAFE_LANDING);
 }
 
+// Forward declarations (defined further below; called from earlier paths).
+void RevokeCombatSkills(Player* player);
+
 bool IsCombatSkill(uint32 spellId)
 {
     return spellId >= COMBAT_SPELL_BASE &&
@@ -881,6 +885,94 @@ SpellCastResult CheckEnergyCast(Unit* caster, uint32 cost)
 
     return SPELL_CAST_OK;
 }
+
+// B3-R1: execute one combat carrier (called from the proven PlayerScript
+// OnSpellCast hook after the cast succeeded; CheckCast already gated
+// context/archetype/energy/BG).
+void HandleCombatSkillSpell(Player* player, Spell* spell)
+{
+    if (!player || !spell)
+        return;
+    SpellInfo const* info = spell->GetSpellInfo();
+    if (!info)
+        return;
+    Creature* dragon = GetDragon(player);
+    if (!dragon || !dragon->IsAIEnabled())
+        return;
+
+    uint32 const block = CombatArchetype(info->Id);
+    uint32 const arch = CombatArchetypeToMount(block);
+    uint32 const slot = CombatSlot(info->Id);
+    uint32 const cost = (slot == 4) ? COMBAT_BURST_ENERGY : COMBAT_ENERGY_COST;
+    dragon->ModifyPower(POWER_ENERGY, -int32(cost));
+
+    Unit* target = spell->m_targets.GetUnitTarget();
+    if (target == player || (target && target->IsFriendlyTo(player)))
+        target = nullptr;
+
+    float const mult = CombatDamageMultiplier(arch) *
+        ((target && target->IsPlayer()) ? COMBAT_PLAYER_FACTOR : 1.0f);
+    SpellSchoolMask const school = CombatSchool(arch);
+    uint32 const cdMs = COMBAT_CD_MS[slot];
+
+    WorldSession* session = player->GetSession();
+    if (slot == 2)
+    {
+        // Defense/assist: heal + cleanse common movement-imparing mechanics.
+        uint32 const heal = uint32(float(player->GetMaxHealth()) * COMBAT_HEAL_PCT);
+        if (heal)
+        {
+            HealInfo healInfo(player, player, heal, info, SPELL_SCHOOL_MASK_NORMAL);
+            Unit::DealHeal(healInfo);
+        }
+        player->RemoveAurasWithMechanic(
+            (1u << MECHANIC_ROOT) | (1u << MECHANIC_FEAR) | (1u << MECHANIC_FREEZE) |
+            (1u << MECHANIC_STUN) | (1u << MECHANIC_SILENCE) | (1u << MECHANIC_HORROR),
+            AURA_REMOVE_BY_DEFAULT, info->Id);
+        if (session)
+            ChatHandler(session).PSendSysMessage("|cff80ff80[G17-B3] %s：治疗自身并净化控制效果。|r",
+                info->SpellName[0] ? info->SpellName[0] : "御龙战斗技能");
+    }
+    else
+    {
+        if (!target)
+        {
+            if (session)
+                ChatHandler(session).PSendSysMessage("|cffff8040[G17-B3] %s 需要敌对目标。|r",
+                    info->SpellName[0] ? info->SpellName[0] : "御龙战斗技能");
+            return;
+        }
+        uint32 const base = COMBAT_BASE_DAMAGE[slot];
+        float const factor = (slot == 4) ? COMBAT_BURST_MULT : 1.0f;
+        uint32 const amount = uint32(float(base) * mult * factor);
+        Unit::DealDamage(player, target, amount, nullptr, DIRECT_DAMAGE, school, info, true);
+
+        if (slot == 3)
+        {
+            // Control follow-up: interrupt + short stun with guaranteed release.
+            target->CastStop();
+            target->SetUnitFlag(UNIT_FLAG_STUNNED);
+            target->AddUnitState(UNIT_STATE_STUNNED);
+            player->m_Events.AddEvent(
+                new CombatStunReleaseEvent(player->GetGUID(), target->GetGUID()),
+                player->m_Events.CalculateTime(Milliseconds(G17Dragonriding::COMBAT_STUN_MS)));
+            TC_LOG_INFO("scripts.g17.dragonriding",
+                "G17B3R1 combat stun: caster={} target={} duration=%u",
+                player->GetGUID().ToString(), target->GetGUID().ToString(), COMBAT_STUN_MS);
+        }
+        if (session)
+            ChatHandler(session).PSendSysMessage("|cff80dfff[G17-B3] %s：%u 点伤害。|r",
+                info->SpellName[0] ? info->SpellName[0] : "御龙战斗技能", amount);
+    }
+
+    // Authoritative client-visible cooldown (server-side, per player).
+    player->GetSpellHistory()->AddCooldown(info->Id, 0, Milliseconds(cdMs));
+    TC_LOG_INFO("scripts.g17.dragonriding",
+        "G17B3R1 combat: player={}({}) spell=%u block=%u slot=%u cd=%u",
+        player->GetName(), player->GetGUID().ToString(), info->Id, block, slot, cdMs);
+}
+
+
 }
 
 struct npc_g17_dragonriding_vehicle : public VehicleAI
@@ -1900,17 +1992,25 @@ private:
 class CombatStunReleaseEvent : public BasicEvent
 {
 public:
-    CombatStunReleaseEvent(ObjectGuid targetGuid) : _targetGuid(targetGuid) { }
+    CombatStunReleaseEvent(ObjectGuid casterGuid, ObjectGuid targetGuid)
+        : _casterGuid(casterGuid), _targetGuid(targetGuid) { }
 
     bool Execute(uint64 /*now*/, uint32 /*diff*/) override
     {
-        if (Unit* target = ObjectAccessor::FindUnit(_targetGuid))
-            if (target->IsInWorld())
-                target->SetStunned(false);
+        // Resolve through the caster (must be a valid in-world WorldObject);
+        // ObjectAccessor::GetUnit requires a non-null searcher in this fork.
+        Player* caster = ObjectAccessor::FindPlayer(_casterGuid);
+        Unit* target = caster ? ObjectAccessor::GetUnit(caster, _targetGuid) : nullptr;
+        if (target && target->IsInWorld())
+        {
+            target->RemoveUnitFlag(UNIT_FLAG_STUNNED);
+            target->ClearUnitState(UNIT_STATE_STUNNED);
+        }
         return true;
     }
 
 private:
+    ObjectGuid _casterGuid;
     ObjectGuid _targetGuid;
 };
 
@@ -2153,91 +2253,6 @@ class spell_g17_dragon_safe_landing : public SpellScript
         AfterCast += SpellCastFn(spell_g17_dragon_safe_landing::EnsureLanding);
     }
 };
-
-// B3-R1: execute one combat carrier (called from the proven PlayerScript
-// OnSpellCast hook after the cast succeeded; CheckCast already gated
-// context/archetype/energy/BG).
-void HandleCombatSkillSpell(Player* player, Spell* spell)
-{
-    if (!player || !spell)
-        return;
-    SpellInfo const* info = spell->GetSpellInfo();
-    if (!info)
-        return;
-    Creature* dragon = GetDragon(player);
-    if (!dragon || !dragon->IsAIEnabled())
-        return;
-
-    uint32 const block = CombatArchetype(info->Id);
-    uint32 const arch = CombatArchetypeToMount(block);
-    uint32 const slot = CombatSlot(info->Id);
-    uint32 const cost = (slot == 4) ? COMBAT_BURST_ENERGY : COMBAT_ENERGY_COST;
-    dragon->ModifyPower(POWER_ENERGY, -int32(cost));
-
-    Unit* target = spell->m_targets.GetUnitTarget();
-    if (target == player || (target && target->IsFriendlyTo(player)))
-        target = nullptr;
-
-    float const mult = CombatDamageMultiplier(arch) *
-        ((target && target->IsPlayer()) ? COMBAT_PLAYER_FACTOR : 1.0f);
-    SpellSchoolMask const school = CombatSchool(arch);
-    uint32 const cdMs = COMBAT_CD_MS[slot];
-
-    WorldSession* session = player->GetSession();
-    if (slot == 2)
-    {
-        // Defense/assist: heal + cleanse common movement-imparing mechanics.
-        uint32 const heal = uint32(float(player->GetMaxHealth()) * COMBAT_HEAL_PCT);
-        if (heal)
-        {
-            HealInfo healInfo(player, player, heal, info, SPELL_SCHOOL_MASK_NORMAL);
-            Unit::DealHeal(healInfo);
-        }
-        player->RemoveAurasWithMechanic(
-            (1u << MECHANIC_ROOT) | (1u << MECHANIC_FEAR) | (1u << MECHANIC_FREEZE) |
-            (1u << MECHANIC_STUN) | (1u << MECHANIC_SILENCE) | (1u << MECHANIC_HORROR),
-            AURA_REMOVE_BY_DEFAULT, info->Id);
-        if (session)
-            ChatHandler(session).PSendSysMessage("|cff80ff80[G17-B3] %s：治疗自身并净化控制效果。|r",
-                info->SpellName[0] ? info->SpellName[0] : "御龙战斗技能");
-    }
-    else
-    {
-        if (!target)
-        {
-            if (session)
-                ChatHandler(session).PSendSysMessage("|cffff8040[G17-B3] %s 需要敌对目标。|r",
-                    info->SpellName[0] ? info->SpellName[0] : "御龙战斗技能");
-            return;
-        }
-        uint32 const base = COMBAT_BASE_DAMAGE[slot];
-        float const factor = (slot == 4) ? COMBAT_BURST_MULT : 1.0f;
-        uint32 const amount = uint32(float(base) * mult * factor);
-        Unit::DealDamage(player, target, amount, nullptr, DIRECT_DAMAGE, school, info, true);
-
-        if (slot == 3)
-        {
-            // Control follow-up: interrupt + short stun with guaranteed release.
-            target->CastStop();
-            target->SetStunned(true);
-            target->m_Events.AddEvent(
-                new CombatStunReleaseEvent(target->GetGUID()),
-                target->m_Events.CalculateTime(Milliseconds(COMBAT_STUN_MS)));
-            TC_LOG_INFO("scripts.g17.dragonriding",
-                "G17B3R1 combat stun: caster={} target={} duration=%u",
-                player->GetGUID().ToString(), target->GetGUID().ToString(), COMBAT_STUN_MS);
-        }
-        if (session)
-            ChatHandler(session).PSendSysMessage("|cff80dfff[G17-B3] %s：%u 点伤害。|r",
-                info->SpellName[0] ? info->SpellName[0] : "御龙战斗技能", amount);
-    }
-
-    // Authoritative client-visible cooldown (server-side, per player).
-    player->GetSpellHistory()->AddCooldown(info->Id, 0, Milliseconds(cdMs));
-    TC_LOG_INFO("scripts.g17.dragonriding",
-        "G17B3R1 combat: player={}({}) spell=%u block=%u slot=%u cd=%u",
-        player->GetName(), player->GetGUID().ToString(), info->Id, block, slot, cdMs);
-}
 
 class g17_dragonriding_playerscript : public PlayerScript
 {

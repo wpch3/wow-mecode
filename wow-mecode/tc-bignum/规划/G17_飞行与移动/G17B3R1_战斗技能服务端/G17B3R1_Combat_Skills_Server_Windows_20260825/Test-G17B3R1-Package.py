@@ -13,7 +13,7 @@ EXPECTED_HASHES = {
     "original_src/src/server/scripts/Commands/cs_dragonriding.cpp":
         "98446106309b45371f138d9c7bc707ee608d9a3db347e13d61cfd68cc97810f9",
     "payload_src/src/server/scripts/Commands/cs_dragonriding.cpp":
-        "1a96b72eb28ffa2c0ac0d3e0c07e26c30f25bcd8525babd15efad02a041825d6",
+        "ecd307b472cb2c49f68607a8b0afe5dcf5f87a7a8eb6f087a4717f4cd8fa1bbb",
     "rollback_safe_src/src/server/scripts/Commands/cs_dragonriding.cpp":
         "98446106309b45371f138d9c7bc707ee608d9a3db347e13d61cfd68cc97810f9",
 }

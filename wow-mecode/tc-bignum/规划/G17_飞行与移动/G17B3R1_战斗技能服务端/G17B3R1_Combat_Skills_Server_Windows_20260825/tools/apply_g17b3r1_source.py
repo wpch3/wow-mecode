@@ -5,7 +5,7 @@ from pathlib import Path
 
 SOURCE_RELATIVE = Path("src/server/scripts/Commands/cs_dragonriding.cpp")
 PRE_SHA256 = "98446106309b45371f138d9c7bc707ee608d9a3db347e13d61cfd68cc97810f9"   # B2R3 R3FIX5 (user's current build)
-POST_SHA256 = "1a96b72eb28ffa2c0ac0d3e0c07e26c30f25bcd8525babd15efad02a041825d6" # B3R1
+POST_SHA256 = "ecd307b472cb2c49f68607a8b0afe5dcf5f87a7a8eb6f087a4717f4cd8fa1bbb" # B3R1
 # all earlier lineage images remain valid upgrade sources
 INTERMEDIATE_SHA256 = "3b92e815dc81ade4aa9927c19716dabddb8e8f93a6d0aff8b32c80dfbcbfc7f1"
 INTERMEDIATE2_SHA256 = "ff185d9987b8f4457d8380e1c662cd0313b33a7ae4be6b82974e7702d1fdc4fc"
