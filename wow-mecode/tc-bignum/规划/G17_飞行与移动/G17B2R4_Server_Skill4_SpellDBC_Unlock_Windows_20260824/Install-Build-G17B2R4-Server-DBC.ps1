@@ -106,9 +106,13 @@ try {
             ("INSTALLED_AT=" + (Get-Date).ToString("o"))
         )
         $stateTemp = $stateFile + ".tmp"
-        if (Test-Path -LiteralPath $stateTemp) { throw "state temp exists" }
+        # Idempotent: a previous PASS (or crashed) run may have left the
+        # state file / temp.  Remove stale temp, then overwrite with -Force.
+        if (Test-Path -LiteralPath $stateTemp -PathType Leaf) {
+            Remove-Item -LiteralPath $stateTemp -Force -ErrorAction SilentlyContinue
+        }
         [IO.File]::WriteAllText($stateTemp, (($alreadyLine -join [Environment]::NewLine) + [Environment]::NewLine), $Utf8NoBom)
-        Move-Item -LiteralPath $stateTemp -Destination $stateFile
+        Move-Item -LiteralPath $stateTemp -Destination $stateFile -Force
         W "G17B2R4_SERVER_SPELL_DBC_WROTE_FILE=False"
         W "G17B2R4_SERVER_SPELL_DBC=ALREADY_CLEAN"
         W "G17B2R4_SERVER_SPELL_DBC_RESULT=PASS"
@@ -133,7 +137,9 @@ try {
 
     $tmpTarget = $Target + ".g17b2r4.new"
     $tmpReport = Join-Path $UploadDir "G17B2R4_SPELL_DBC_PATCH_REPORT.txt"
-    if (Test-Path -LiteralPath $tmpTarget) { throw "temp target exists" }
+    if (Test-Path -LiteralPath $tmpTarget -PathType Leaf) {
+        Remove-Item -LiteralPath $tmpTarget -Force -ErrorAction SilentlyContinue
+    }
     $rc = Invoke-NativeLogged -FilePath $python -NativeArgs @($Patcher, "patch", "--input", $Target, "--output", $tmpTarget, "--report", $tmpReport) -Prefix "DBC_PATCH"
     W "DBC_PATCH_EXIT=$rc"
     if ($rc -ne 0) { throw "Spell.dbc patch failed" }
@@ -143,7 +149,11 @@ try {
     if ((Get-Item -LiteralPath $tmpTarget).Length -ne $size) { throw "patched file size changed unexpectedly" }
 
     $targetTmp = $Target + ".g17b2r4.old"
-    if (Test-Path -LiteralPath $targetTmp) { throw "swap temp exists" }
+    if (Test-Path -LiteralPath $targetTmp -PathType Leaf) {
+        # A previous run may have crashed between the two moves; the real
+        # target is authoritative.  Remove only our .old artifact.
+        Remove-Item -LiteralPath $targetTmp -Force -ErrorAction SilentlyContinue
+    }
     Move-Item -LiteralPath $Target -Destination $targetTmp
     Move-Item -LiteralPath $tmpTarget -Destination $Target
     if ((Get-FileHash -LiteralPath $Target -Algorithm SHA256).Hash.ToLowerInvariant() -cne $after) {
@@ -176,6 +186,13 @@ try {
     if ($tmpTarget -and (Test-Path -LiteralPath $tmpTarget -PathType Leaf)) {
         Remove-Item -LiteralPath $tmpTarget -Force -ErrorAction SilentlyContinue
     }
+    try {
+        if ($Target -and $targetTmp -and (Test-Path -LiteralPath $targetTmp -PathType Leaf) -and
+            -not (Test-Path -LiteralPath $Target -PathType Leaf)) {
+            Move-Item -LiteralPath $targetTmp -Destination $Target
+            W "AUTO_RESTORE_SERVER_DBC=PASS"
+        }
+    } catch { W ("AUTO_RESTORE_ERROR=" + $_.Exception.Message) }
     W ("G17B2R4_SERVER_SPELL_DBC_ERROR=" + $_.Exception.Message)
     W "G17B2R4_SERVER_SPELL_DBC_RESULT=FAIL"
     W "STOP_DO_NOT_START_WORLDSERVER_UNTIL_RESOLVED"

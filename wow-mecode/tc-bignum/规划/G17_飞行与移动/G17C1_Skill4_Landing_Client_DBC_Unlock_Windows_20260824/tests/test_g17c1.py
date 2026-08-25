@@ -151,5 +151,26 @@ class TestPatcher(unittest.TestCase):
                           rep.read_text(encoding="utf-8"))
 
 
+    def test_08_installer_state_write_is_idempotent(self):
+        # Regression (user's 3rd B2R4 run): "Cannot create a file when that
+        # file already exists" - the ALREADY_CLEAN branch wrote state to a
+        # .tmp then Move-Item onto an EXISTING state file without -Force
+        # (the second run fails).  All installer state writes must be
+        # overwrite-safe and all stale/swap temps must be cleaned up instead
+        # of throwing, so re-running any step is always safe.
+        install = (ROOT / "Install-G17C1-Client-MPQ.ps1").read_text(encoding="utf-8")
+        rollback = (ROOT / "Rollback-G17C1-Client-MPQ.ps1").read_text(encoding="utf-8")
+        self.assertIn("-Force", install)
+        self.assertIn("Move-Item -LiteralPath $StateTemp -Destination $StateFile -Force",
+                      install)
+        for script in (install, rollback):
+            self.assertNotIn("throw \"state temp exists\"", script)
+            self.assertNotIn("throw \"swap temp path exists\"", script)
+            self.assertNotIn("throw \"temp target exists\"", script)
+            self.assertNotIn("throw \"locale swap temp exists\"", script)
+            self.assertNotIn("throw \"swap temp exists\"", script)
+            self.assertNotIn("throw \"state temp exists\"", script)
+
+
 if __name__ == "__main__":
     unittest.main(verbosity=2)

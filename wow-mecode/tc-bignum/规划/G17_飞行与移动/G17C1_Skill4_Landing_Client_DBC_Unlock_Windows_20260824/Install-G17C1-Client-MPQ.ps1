@@ -238,7 +238,8 @@ try {
 
     $TemporaryTarget = $RootMpq + ".g17c1.new.tmp"
     $SwapOld = $RootMpq + ".g17c1.old.tmp"
-    if ((Test-Path -LiteralPath $TemporaryTarget) -or (Test-Path -LiteralPath $SwapOld)) { throw "swap temp path exists" }
+    if (Test-Path -LiteralPath $TemporaryTarget -PathType Leaf) { Remove-Item -LiteralPath $TemporaryTarget -Force -ErrorAction SilentlyContinue }
+    if (Test-Path -LiteralPath $SwapOld -PathType Leaf) { Remove-Item -LiteralPath $SwapOld -Force -ErrorAction SilentlyContinue }
     Copy-Item -LiteralPath $BuiltArchive -Destination $TemporaryTarget
     if ((Get-FileHash -LiteralPath $TemporaryTarget -Algorithm SHA256).Hash.ToLowerInvariant() -cne $NewArchiveHash) { throw "temp MPQ hash mismatch" }
     Move-Item -LiteralPath $RootMpq -Destination $SwapOld
@@ -249,7 +250,8 @@ try {
     # R5 mirror contract: locale file is byte-identical to root.
     $LocaleTmp = $LocaleMpq + ".g17c1.new.tmp"
     $LocaleSwap = $LocaleMpq + ".g17c1.old.tmp"
-    if ((Test-Path -LiteralPath $LocaleTmp) -or (Test-Path -LiteralPath $LocaleSwap)) { throw "locale swap temp exists" }
+    if (Test-Path -LiteralPath $LocaleTmp -PathType Leaf) { Remove-Item -LiteralPath $LocaleTmp -Force -ErrorAction SilentlyContinue }
+    if (Test-Path -LiteralPath $LocaleSwap -PathType Leaf) { Remove-Item -LiteralPath $LocaleSwap -Force -ErrorAction SilentlyContinue }
     Copy-Item -LiteralPath $RootMpq -Destination $LocaleTmp
     Move-Item -LiteralPath $LocaleMpq -Destination $LocaleSwap
     Move-Item -LiteralPath $LocaleTmp -Destination $LocaleMpq
@@ -277,9 +279,13 @@ try {
         ("INSTALLED_AT=" + (Get-Date).ToString("o"))
     )
     $StateTemp = $StateFile + ".tmp"
-    if (Test-Path -LiteralPath $StateTemp) { throw "state temp exists" }
+    # Idempotent: a previous PASS/crash may have left the state file or temp;
+    # remove stale temp and overwrite the state file with -Force.
+    if (Test-Path -LiteralPath $StateTemp -PathType Leaf) {
+        Remove-Item -LiteralPath $StateTemp -Force -ErrorAction SilentlyContinue
+    }
     [IO.File]::WriteAllText($StateTemp, (($StateLines -join [Environment]::NewLine) + [Environment]::NewLine), $Utf8NoBom)
-    Move-Item -LiteralPath $StateTemp -Destination $StateFile
+    Move-Item -LiteralPath $StateTemp -Destination $StateFile -Force
     $StateCommitted = $true
     Remove-Item -LiteralPath $SwapOld -Force -ErrorAction SilentlyContinue
     Remove-Item -LiteralPath $LocaleSwap -Force -ErrorAction SilentlyContinue

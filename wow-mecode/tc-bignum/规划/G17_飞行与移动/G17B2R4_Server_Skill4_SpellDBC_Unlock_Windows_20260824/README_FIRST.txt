@@ -25,6 +25,10 @@ G17-B2R4 服务端 Spell.dbc 解锁（技能4 52226）— 无需重新编译
   【ALREADY_CLEAN】并标记 PASS、【不写任何文件】——这是预期行为，不是失败。
   你只需继续执行第2步客户端解锁（G17-C1），那才是技能4真正卡住的地方。
 
+另外（v3 修复）：如果你之前已经跑过一次，可能碰到
+  “Cannot create a file when that file already exists”——那是状态文件已存在
+  时覆盖不成功；v3 已改为安全覆盖。直接重新双击 CMD 即可，重复运行无副作用。
+
 回滚：双击 02_Rollback_G17B2R4_Server_DBC.cmd 恢复原 Spell.dbc。
 
 结果文件：

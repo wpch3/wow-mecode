@@ -13,3 +13,4 @@ SERVER_PARTNER=G17B2R4_Server_Skill4_SpellDBC_Unlock_Windows_20260824
 PROOF=G17C1_CLIENT_MPQ_UNLOCK_RESULT=PASS
 PATCHER_STATES=PATCHED|ALREADY_CLEAN|LAYOUT_UNKNOWN(guard)
 GBK_NAME_SUPPORT=True
+V3_FIX=state_write_idempotent(Move -Force + stale temp cleanup) - same 'Cannot create a file' class fixed for re-runs
