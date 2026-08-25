@@ -186,11 +186,29 @@ class TestPatcher(unittest.TestCase):
         self.assertIn("ENV_REASON=state_files_missing", install)
         self.assertIn("expected exactly one R4 chain owner", install)
         self.assertIn("BYTE_IDENTICAL", install)
-        # The old hard failure must be gone from the runtime path: the only
-        # 'required file missing' check must be for the tool and patcher,
-        # NOT for the state files.
-        self.assertNotIn("throw \"required file missing: $R4StateFile\"", install)
-        self.assertNotIn("throw \"required file missing: $R5StateFile\"", install)
+        # The old hard failure must be gone from the runtime path.  The ONLY
+        # 'required file missing' loop must list the tool and patcher; the
+        # R4/R5 state files must NOT be in that list (this was the real bug:
+        # v4 added the fallback but left them in the hard-prerequisite loop,
+        # so the user's run still died BEFORE reaching ENV_MODE=DISCOVERY).
+        import re
+        # The installer's hard-prerequisite loop must exist and must contain
+        # ONLY the tool and patcher (no state files).  Match the literal text
+        # instead of a fragile regex.
+        # The installer's hard-prerequisite loop must list ONLY the tool and
+        # patcher - never the state files.  Check the literal foreach line.
+        self.assertIn("foreach ($Required in @($Tool, $Patcher))", install)
+        # ensure the state-file names are never in a Required foreach array
+        import re as _re
+        for m in _re.finditer(r"foreach\s+\$Required\s+in\s+@\(([^)]*)\)",
+                              install):
+            self.assertNotIn("R4StateFile", m.group(1))
+            self.assertNotIn("R5StateFile", m.group(1))
+            self.assertIn("$Tool", m.group(1))
+            self.assertIn("$Patcher", m.group(1))
+        # The fallback must come BEFORE any possible state-based resolve.
+        self.assertLess(install.index("Discover-ClientEnvironment"),
+                        install.index("$R4 = Read-KeyValueFile"))
         # Already-unlocked root must yield ALREADY_CURRENT without writing.
         self.assertIn("G17C1_SPELL_DBC_STATE=ALREADY_CLEAN", install)
         self.assertIn("G17C1_CLIENT_MPQ_UNLOCK=ALREADY_CURRENT", install)

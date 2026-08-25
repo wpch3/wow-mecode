@@ -181,7 +181,11 @@ try {
     if (Get-Process worldserver -ErrorAction SilentlyContinue) {
         throw "worldserver is running; close it first (client-only package, but keep the server calm)"
     }
-    foreach ($Required in @($Tool, $Patcher, $R4StateFile, $R5StateFile)) {
+    # CRITICAL: only the tool and patcher are hard prerequisites.  R4/R5
+    # STATE FILES are NOT required - when missing we fall back to content
+    # discovery (Discover-ClientEnvironment) below.  Requiring them here was
+    # the bug that kept blocking the user even after v4 added the fallback.
+    foreach ($Required in @($Tool, $Patcher)) {
         if (-not (Test-Path -LiteralPath $Required -PathType Leaf)) { throw "required file missing: $Required" }
     }
     if (-not (Test-Path -LiteralPath $ClientRoot -PathType Container)) { throw "client root missing: $ClientRoot" }

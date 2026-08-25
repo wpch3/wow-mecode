@@ -10,7 +10,12 @@ G17-C1 客户端 Spell.dbc 解锁（技能4 52226）— 双端解锁的客户端
   本包把【客户端】的 Spell.dbc 也解掉这两个门槛（改的是 DBC 文件本身，
   按钮名字/图标完全不变），点击后封包才会真正到达服务器。
 
-重要（v4 修复）：即使 `uploads\` 里 R4/R5 状态文件丢失/被清理
+重要（v5 修复）：上一版虽已加入状态文件缺失的自动探测，但安装器开头的
+  "必需文件"列表仍把 R4/R5 状态文件列入（漏删），导致你仍卡在
+  required file missing: G17R4_CLIENT_MPQ_UPGRADE_STATE.txt。v5 已把这个
+  硬前置删掉——只有工具和 patcher 是必需，状态文件缺失会自动内容探测。
+
+（v4 修复）：即使 `uploads\` 里 R4/R5 状态文件丢失/被清理
   （你这次正是：G17R4_CLIENT_MPQ_UPGRADE_STATE.txt 缺失），本包会自动降级为
   内容探测：直接扫描客户端找到 DBC 完全匹配的 patch-Z.MPQ 与 zhCN 镜像，
   校验通过后照常解锁。日志会显示 ENV_MODE=DISCOVERY；不伪造状态文件。

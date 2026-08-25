@@ -14,4 +14,5 @@ PROOF=G17C1_CLIENT_MPQ_UNLOCK_RESULT=PASS
 PATCHER_STATES=PATCHED|ALREADY_CLEAN|LAYOUT_UNKNOWN(guard)
 GBK_NAME_SUPPORT=True
 V3_FIX=state_write_idempotent(Move -Force + stale temp cleanup) - same 'Cannot create a file' class fixed for re-runs
+V5_FIX=removed_R4R5_state_files_from_hard_prerequisite_foreach(only tool+patcher required) - the v4 fallback existed but was unreachable because the old required-file loop still listed the state files; regression test now asserts the Required-loop contents directly
 V4_FIX=state_files_missing_fallback(Discover-ClientEnvironment content probe: root R4 chain Spell dd250911/03bf11fd + Area 1acef997, zhCN byte-identical mirror; collisions refused; ALREADY_CURRENT for already-unlocked root; locale-absent safe create)
