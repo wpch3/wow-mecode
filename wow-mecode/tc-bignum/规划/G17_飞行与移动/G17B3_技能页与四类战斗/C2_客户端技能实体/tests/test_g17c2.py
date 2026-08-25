@@ -103,7 +103,15 @@ class TestInstallerStatic(unittest.TestCase):
                       install)
         self.assertIn('"760d3f274ab63fc780867a7193717eeca73b194632b2f69f43cf399faf65e2fe"',
                       install)
+        self.assertIn('$ExpectedAppendedSpellSize = 48981416', install)
         self.assertIn("C2_PATCHER_VERSION_CHECK=PASS", install)
+        # the new-archive size check must use the appended size, not old
+        self.assertNotIn("$Spell.Size -ne $ExpectedSpellSize", install)
+        self.assertIn("$Spell.Size -ne $ExpectedAppendedSpellSize", install)
+        # the pre-append input gate must enforce the C1 size
+        self.assertIn("must be the C1 unlocked image size", install)
+        # generated size must equal appended
+        self.assertIn("$generatedSize -ne $ExpectedAppendedSpellSize", install)
 
     def test_02_ps_files_parse_clean(self):
         checker = ROOT / "tools/ps_static_check.py"

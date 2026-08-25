@@ -21,6 +21,8 @@ $AreaTarget = "DBFilesClient\AreaTable.dbc"
 $ExpectedToolHash = "5dc56b130432098d18e911fdf4b3464adf850432b7fbb35003a2feff7c30a79f"
 $ExpectedSpellHash = "03bf11fdeff7c296837fc6b0cc335476a9df33965baf8eed8ca671529577ccba"
 $ExpectedSpellSize = 48956359
+# After B3 append: 48981416 = 48956359 + 25*936 (records) + 1657 (new name/desc strings)
+$ExpectedAppendedSpellSize = 48981416
 $ExpectedAreaHash = "1acef997a27f844a8abee9b477c44f2097f745168c6df85ece6b1a135568c233"
 $ExpectedAreaSize = 362740
 # Spell.dbc after the G17C2 unlock (deterministic; only 52226 record changes)
@@ -85,7 +87,7 @@ function Assert-NewArchive([string]$Archive, [string]$Prefix) {
     W ($Prefix + "_SPELL_SIZE=" + $Spell.Size)
     W ($Prefix + "_AREA_SHA256=" + $Area.Hash)
     W ($Prefix + "_AREA_SIZE=" + $Area.Size)
-    if ($Spell.State -ne "HIT" -or $Spell.Size -ne $ExpectedSpellSize) { throw "new archive Spell.dbc missing/wrong size" }
+    if ($Spell.State -ne "HIT" -or $Spell.Size -ne $ExpectedAppendedSpellSize) { throw "new archive Spell.dbc missing/wrong size (expected appended $ExpectedAppendedSpellSize, got $($Spell.Size))" }
     if ($Area.State -ne "HIT" -or $Area.Hash -cne $ExpectedAreaHash -or $Area.Size -ne $ExpectedAreaSize) { throw "new archive AreaTable.dbc mismatch" }
     # Password-protected? no. Spell gate: allow either old patched or new unlocked.
     if ($Spell.Hash -cne $ExpectedPatchedSpellHash) { throw "new archive Spell.dbc hash not unlocked image: $($Spell.Hash)" }
@@ -120,7 +122,7 @@ function Discover-ClientEnvironment {
         W ("ROOT_DISCOVERY=SLOT=$s;TYPE=PACKED_MPQ;SPELL=$($spell.State);SPELL_SHA256=$($spell.Hash);AREA=$($area.State);AREA_SHA256=$($area.Hash);PATH=$cand")
         if ($spell.State -eq "ERROR" -or $area.State -eq "ERROR") { throw "cannot inspect root slot $s" }
         $isChain = ($spell.State -eq "HIT" -and $area.State -eq "HIT" -and
-                    $spell.Size -eq $ExpectedSpellSize -and $area.Size -eq $ExpectedAreaSize -and
+                    ($spell.Size -eq $ExpectedSpellSize -or $spell.Size -eq $ExpectedAppendedSpellSize) -and $area.Size -eq $ExpectedAreaSize -and
                     $area.Hash -ceq $ExpectedAreaHash -and
                     ($spell.Hash -ceq $ExpectedSpellHash -or $spell.Hash -ceq $ExpectedPatchedSpellHash))
         if ($isChain) {
@@ -271,7 +273,7 @@ try {
             $LocaleHash -ceq $RootHash) {
             $CurrentSpell = Extract-ArchiveTarget -Archive $RootMpq -Target $SpellTarget -Tag "current_spell"
             if ($CurrentSpell.State -ceq "HIT" -and $CurrentSpell.Hash -ceq $ExpectedPatchedSpellHash -and
-                $CurrentSpell.Size -eq $ExpectedSpellSize) {
+                $CurrentSpell.Size -eq $ExpectedAppendedSpellSize) {
                 W "G17C2_CLIENT_MPQ_UNLOCK=ALREADY_CURRENT"
                 W "G17C2_CLIENT_MPQ_UNLOCK_RESULT=PASS"
                 W "RESULT_FILE=$Result"
@@ -303,7 +305,7 @@ try {
     W "R4_OWNED_SPELL_SIZE=$($OldSpell.Size)"
     W "R4_OWNED_AREA_SHA256=$($OldArea.Hash)"
     if ($OldSpell.State -ne "HIT" -or $OldSpell.Size -ne $ExpectedSpellSize) {
-        throw "R4 owned Spell.dbc missing or wrong size"
+        throw ("R4 owned Spell.dbc must be the C1 unlocked image size $ExpectedSpellSize; got $($OldSpell.Size)")
     }
     if ($OldArea.State -ne "HIT" -or $OldArea.Hash -cne $ExpectedAreaHash -or $OldArea.Size -ne $ExpectedAreaSize) {
         throw "R4 owned AreaTable.dbc mismatch"
@@ -356,7 +358,8 @@ try {
     if ($rc -ne 0) { throw "Spell.dbc B3 skill append failed" }
     $PatchedSpellHash = (Get-FileHash -LiteralPath $GeneratedSpell -Algorithm SHA256).Hash.ToLowerInvariant()
     W "GENERATED_SPELL_SHA256=$PatchedSpellHash"
-    if ((Get-Item -LiteralPath $GeneratedSpell).Length -le $ExpectedSpellSize) { throw "appended Spell.dbc size did not grow" }
+    $generatedSize = (Get-Item -LiteralPath $GeneratedSpell).Length
+    if ($generatedSize -ne $ExpectedAppendedSpellSize) { throw "appended Spell.dbc size mismatch: $generatedSize != $ExpectedAppendedSpellSize" }
 
     $PackRoot = Join-Path $WorkRoot "pack_root"
     $PackSpell = Join-Path $PackRoot $SpellTarget
