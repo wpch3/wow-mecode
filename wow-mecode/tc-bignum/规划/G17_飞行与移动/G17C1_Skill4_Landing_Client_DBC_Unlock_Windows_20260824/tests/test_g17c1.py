@@ -172,5 +172,32 @@ class TestPatcher(unittest.TestCase):
             self.assertNotIn("throw \"state temp exists\"", script)
 
 
+    def test_09_installer_falls_back_when_state_files_missing(self):
+        # Regression (user's C1 run): required file missing
+        # G17R4_CLIENT_MPQ_UPGRADE_STATE.txt.  The installer must not hard-fail
+        # when the R4/R5 state files are absent; it must fall back to content
+        # discovery of the R4 chain (root MPQ whose Spell.dbc == dd250911... /
+        # 03bf11fd... with AreaTable 1acef997...) plus byte-identical zhCN
+        # mirror.  Static assertions on the PS1.
+        install = (ROOT / "Install-G17C1-Client-MPQ.ps1").read_text(
+            encoding="utf-8")
+        self.assertIn("function Discover-ClientEnvironment", install)
+        self.assertIn("ENV_MODE=DISCOVERY", install)
+        self.assertIn("ENV_REASON=state_files_missing", install)
+        self.assertIn("expected exactly one R4 chain owner", install)
+        self.assertIn("BYTE_IDENTICAL", install)
+        # The old hard failure must be gone from the runtime path: the only
+        # 'required file missing' check must be for the tool and patcher,
+        # NOT for the state files.
+        self.assertNotIn("throw \"required file missing: $R4StateFile\"", install)
+        self.assertNotIn("throw \"required file missing: $R5StateFile\"", install)
+        # Already-unlocked root must yield ALREADY_CURRENT without writing.
+        self.assertIn("G17C1_SPELL_DBC_STATE=ALREADY_CLEAN", install)
+        self.assertIn("G17C1_CLIENT_MPQ_UNLOCK=ALREADY_CURRENT", install)
+        # Discovery-created locale must not try to swap an absent file.
+        self.assertIn("LOCALE_MIRROR=CREATED_ABSENT_SLOT", install)
+        self.assertIn("BACKUP_LOCALE=NONE_ABSENT", install)
+
+
 if __name__ == "__main__":
     unittest.main(verbosity=2)

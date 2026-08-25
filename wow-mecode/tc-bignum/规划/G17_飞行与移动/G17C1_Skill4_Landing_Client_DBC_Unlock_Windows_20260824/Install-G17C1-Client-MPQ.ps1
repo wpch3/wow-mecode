@@ -91,6 +91,85 @@ function Assert-NewArchive([string]$Archive, [string]$Prefix) {
     if ($Spell.Hash -cne $ExpectedPatchedSpellHash) { throw "new archive Spell.dbc hash not unlocked image: $($Spell.Hash)" }
 }
 $PatchedSpellHash = ""
+function Discover-ClientEnvironment {
+    param([string]$ClientRoot, [string]$DataDir)
+    # Content-based fallback used when the G17R4/G17R5 state files are
+    # missing (e.g. the uploads folder was cleaned or renamed).  The MPQ
+    # archives themselves are authoritative: we scan every root locale slot
+    # for the exact R4 chain (Spell.dbc dd250911.../03bf11fd... + AreaTable
+    # 1acef997...) and every zhCN slot for its byte-identical mirror.  No
+    # state file is faked; the discovery provenance is written to the result.
+    $LocaleDir = Join-Path $DataDir "zhCN"
+    if (-not (Test-Path -LiteralPath $LocaleDir -PathType Container)) {
+        throw "zhCN locale directory missing (discovery)"
+    }
+    $Slots = @("Z","Y","X","W","V","U","T","S","R","Q","P","O","N","M","L","K","J","I","H","G","F","E","D","C","B","A")
+    $RootHits = @()
+    foreach ($s in $Slots) {
+        $cand = Join-Path $DataDir ("patch-" + $s + ".MPQ")
+        if (-not (Test-Path -LiteralPath $cand)) { continue }
+        if (Test-Path -LiteralPath $cand -PathType Container) {
+            $areaHit = [int](Test-Path -LiteralPath (Join-Path $cand $AreaTarget) -PathType Leaf)
+            $spellHit = [int](Test-Path -LiteralPath (Join-Path $cand $SpellTarget) -PathType Leaf)
+            W ("ROOT_DISCOVERY=SLOT=$s;TYPE=DIRECTORY;AREA_HIT=$areaHit;SPELL_HIT=$spellHit;PATH=$cand")
+            if ($areaHit -or $spellHit) { throw "root slot $s is a directory owning Spell/Area; refusing" }
+            continue
+        }
+        $spell = Extract-ArchiveTarget -Archive $cand -Target $SpellTarget -Tag ("root_" + $s + "_spell")
+        $area  = Extract-ArchiveTarget -Archive $cand -Target $AreaTarget -Tag ("root_" + $s + "_area")
+        W ("ROOT_DISCOVERY=SLOT=$s;TYPE=PACKED_MPQ;SPELL=$($spell.State);SPELL_SHA256=$($spell.Hash);AREA=$($area.State);AREA_SHA256=$($area.Hash);PATH=$cand")
+        if ($spell.State -eq "ERROR" -or $area.State -eq "ERROR") { throw "cannot inspect root slot $s" }
+        $isChain = ($spell.State -eq "HIT" -and $area.State -eq "HIT" -and
+                    $spell.Size -eq $ExpectedSpellSize -and $area.Size -eq $ExpectedAreaSize -and
+                    $area.Hash -ceq $ExpectedAreaHash -and
+                    ($spell.Hash -ceq $ExpectedSpellHash -or $spell.Hash -ceq $ExpectedPatchedSpellHash))
+        if ($isChain) {
+            $RootHits += [pscustomobject]@{ Path = $cand; Slot = $s; SpellHash = $spell.Hash; AreaHash = $area.Hash }
+        } elseif ($spell.State -eq "HIT" -or $area.State -eq "HIT") {
+            throw "root slot $s contains Spell/Area but is not the locked R4 chain; ambiguous override refused"
+        }
+    }
+    if ($RootHits.Count -ne 1) {
+        throw "expected exactly one R4 chain owner in Data (found $($RootHits.Count)); refusing ambiguous override"
+    }
+    $root = $RootHits[0]
+    $rootHash = (Get-FileHash -LiteralPath $root.Path -Algorithm SHA256).Hash.ToLowerInvariant()
+
+    $mirror = $null
+    foreach ($s in $Slots) {
+        $cand = Join-Path $LocaleDir ("patch-zhCN-" + $s + ".MPQ")
+        if (-not (Test-Path -LiteralPath $cand -PathType Leaf)) { continue }
+        $h = (Get-FileHash -LiteralPath $cand -Algorithm SHA256).Hash.ToLowerInvariant()
+        W ("LOCALE_DISCOVERY=SLOT=$s;MPQ_SHA256=$h;BYTE_IDENTICAL=" + [bool]($h -ceq $rootHash) + ";PATH=$cand")
+        if ($h -ceq $rootHash) { $mirror = $cand; break }
+    }
+    $locale = $mirror
+    $localeAbsent = $false
+    if (-not $locale) {
+        # R5 default target was the Y slot.  Create it only if absent;
+        # an existing non-mirror file (even without DBC) is ambiguous.
+        $cand = Join-Path $LocaleDir "patch-zhCN-Y.MPQ"
+        if (Test-Path -LiteralPath $cand -PathType Leaf) {
+            $spell = Extract-ArchiveTarget -Archive $cand -Target $SpellTarget -Tag "locale_Y_spell"
+            $area  = Extract-ArchiveTarget -Archive $cand -Target $AreaTarget -Tag "locale_Y_area"
+            W ("LOCALE_DISCOVERY=SLOT=Y;NOT_MIRROR;SPELL=$($spell.State);AREA=$($area.State);PATH=$cand")
+            if ($spell.State -eq "HIT" -or $area.State -eq "HIT") {
+                throw "locale Y owns Spell/Area but is not the mirror; refusing"
+            }
+            throw "no byte-identical locale mirror found and patch-zhCN-Y.MPQ already exists (non-mirror); cannot auto-create; report this"
+        }
+        $locale = $cand
+        $localeAbsent = $true
+        W "LOCALE_DISCOVERY=SLOT=Y;ABSENT;WILL_CREATE_BYTE_MIRROR_BYTE_COPY"
+    }
+    return [pscustomobject]@{
+        Mode = "DISCOVERY"; RootMpq = $root.Path; Slot = $root.Slot;
+        RootHash = $rootHash; SpellHash = $root.SpellHash;
+        LocaleMpq = $locale; LocaleAbsent = $localeAbsent;
+        LocaleHash = if ($mirror) { (Get-FileHash -LiteralPath $locale -Algorithm SHA256).Hash.ToLowerInvariant() } else { "" }
+    }
+}
+
 try {
     W "G17C1_CLIENT_MPQ_UNLOCK_START"
     W "SCOPE=SPELL_52226_FOCUS_1553_AND_AURA_52255_CLEARED_IN_CLIENT_SPELL_DBC"
@@ -117,26 +196,55 @@ try {
 
     $R4 = Read-KeyValueFile $R4StateFile
     $R5 = Read-KeyValueFile $R5StateFile
-    if ($R4["INSTALL_STATUS"] -cne "PASS") { throw "R4 client state is not PASS" }
-    if ($R5["INSTALL_STATUS"] -cne "PASS") { throw "R5 locale mirror state is not PASS" }
-    $RootMpq = $R4["INSTALLED_MPQ"]
-    $Slot = $R4["PATCH_SLOT"]
-    if (-not $RootMpq -or $Slot -notmatch '^[A-Z]$') { throw "R4 state target/slot missing" }
-    $LocaleMpq = $R5["TARGET_LOCALE_MPQ"]
-    if (-not $LocaleMpq) { throw "R5 state target missing" }
-    $ExpectedRoot = Join-Path $DataDir ("patch-" + $Slot + ".MPQ")
-    if ($RootMpq -ine $ExpectedRoot) { throw "R4 state target outside its owned slot" }
-    if (-not (Test-Path -LiteralPath $RootMpq -PathType Leaf)) { throw "R4 owned MPQ missing: $RootMpq" }
-    if (-not (Test-Path -LiteralPath $LocaleMpq -PathType Leaf)) { throw "R5 locale MPQ missing: $LocaleMpq" }
-    $RootHash = (Get-FileHash -LiteralPath $RootMpq -Algorithm SHA256).Hash.ToLowerInvariant()
-    $LocaleHash = (Get-FileHash -LiteralPath $LocaleMpq -Algorithm SHA256).Hash.ToLowerInvariant()
-    W "R4_ROOT_MPQ=$RootMpq"
-    W "R4_ROOT_MPQ_SHA256=$RootHash"
-    W "R5_LOCALE_MPQ=$LocaleMpq"
-    W "R5_LOCALE_MPQ_SHA256=$LocaleHash"
-    if ($RootHash -cne $R4["NEW_MPQ_SHA256"].ToLowerInvariant()) { throw "R4 owned root MPQ hash no longer matches state" }
-    if ($LocaleHash -cne $R5["TARGET_MPQ_SHA256"].ToLowerInvariant()) { throw "R5 locale MPQ hash no longer matches state" }
-    if ($RootHash -cne $LocaleHash) { throw "R5 locale mirror no longer byte-identical to root" }
+    $haveR4State = ($R4["INSTALL_STATUS"] -ceq "PASS" -and $R4["INSTALLED_MPQ"] -and $R4["PATCH_SLOT"] -match '^[A-Z]$')
+    $haveR5State = ($R5["INSTALL_STATUS"] -ceq "PASS" -and $R5["TARGET_LOCALE_MPQ"])
+    $LocaleAbsent = $false
+    if ($haveR4State -and $haveR5State) {
+        W "ENV_MODE=STATE"
+        $RootMpq = $R4["INSTALLED_MPQ"]
+        $Slot = $R4["PATCH_SLOT"]
+        $LocaleMpq = $R5["TARGET_LOCALE_MPQ"]
+        $ExpectedRoot = Join-Path $DataDir ("patch-" + $Slot + ".MPQ")
+        if ($RootMpq -ine $ExpectedRoot) { throw "R4 state target outside its owned slot" }
+        if (-not (Test-Path -LiteralPath $RootMpq -PathType Leaf)) { throw "R4 owned MPQ missing: $RootMpq" }
+        if (-not (Test-Path -LiteralPath $LocaleMpq -PathType Leaf)) { throw "R5 locale MPQ missing: $LocaleMpq" }
+        $RootHash = (Get-FileHash -LiteralPath $RootMpq -Algorithm SHA256).Hash.ToLowerInvariant()
+        $LocaleHash = (Get-FileHash -LiteralPath $LocaleMpq -Algorithm SHA256).Hash.ToLowerInvariant()
+        W "R4_ROOT_MPQ=$RootMpq"
+        W "R4_ROOT_MPQ_SHA256=$RootHash"
+        W "R5_LOCALE_MPQ=$LocaleMpq"
+        W "R5_LOCALE_MPQ_SHA256=$LocaleHash"
+        if ($RootHash -cne $R4["NEW_MPQ_SHA256"].ToLowerInvariant()) { throw "R4 owned root MPQ hash no longer matches state" }
+        if ($LocaleHash -cne $R5["TARGET_MPQ_SHA256"].ToLowerInvariant()) { throw "R5 locale MPQ hash no longer matches state" }
+        if ($RootHash -cne $LocaleHash) { throw "R5 locale mirror no longer byte-identical to root" }
+    } else {
+        # State files missing/partial (uploads folder cleaned or renamed) ->
+        # content-based discovery.  The archives themselves are authoritative.
+        W "ENV_MODE=DISCOVERY"
+        W ("ENV_REASON=state_files_missing r4=" + [bool](Test-Path -LiteralPath $R4StateFile -PathType Leaf) + " r5=" + [bool](Test-Path -LiteralPath $R5StateFile -PathType Leaf) + "; archives verified by DBC content")
+        $WorkRoot = Join-Path $UploadDir ("G17C1_Client_Work_" + (Get-Date -Format "yyyyMMdd_HHmmss") + "_" + $PID)
+        if (Test-Path -LiteralPath $WorkRoot) { throw "work directory already exists" }
+        New-Item -ItemType Directory -Path $WorkRoot | Out-Null
+        $envInfo = Discover-ClientEnvironment -ClientRoot $ClientRoot -DataDir $DataDir
+        $RootMpq = $envInfo.RootMpq
+        $Slot = $envInfo.Slot
+        $LocaleMpq = $envInfo.LocaleMpq
+        $LocaleAbsent = [bool]$envInfo.LocaleAbsent
+        $RootHash = $envInfo.RootHash
+        $LocaleHash = $envInfo.LocaleHash
+        W "ENV_DISCOVERED_ROOT_MPQ=$RootMpq"
+        W "ENV_DISCOVERED_ROOT_SLOT=$Slot"
+        W "ENV_DISCOVERED_ROOT_MPQ_SHA256=$RootHash"
+        W "ENV_DISCOVERED_SPELL_SHA256=$($envInfo.SpellHash)"
+        W "ENV_DISCOVERED_LOCALE_MPQ=$LocaleMpq"
+        W "ENV_DISCOVERED_LOCALE_ABSENT=$LocaleAbsent"
+        if ($LocaleAbsent) {
+            W "ENV_DISCOVERED_LOCALE_MIRROR=NONE_FOUND; will create byte copy at $LocaleMpq"
+        } else {
+            W "ENV_DISCOVERED_LOCALE_MPQ_SHA256=$LocaleHash"
+            if ($RootHash -cne $LocaleHash) { throw "discovered locale mirror is not byte-identical to root" }
+        }
+    }
 
     if (Test-Path -LiteralPath $StateFile -PathType Leaf) {
         $C1 = Read-KeyValueFile $StateFile
@@ -165,20 +273,35 @@ try {
     W "CLIENT_LOCALE=$Locale"
     if ($Locale -cne "zhCN") { throw "zhCN locale required; detected $Locale" }
 
-    $WorkRoot = Join-Path $UploadDir ("G17C1_Client_Work_" + (Get-Date -Format "yyyyMMdd_HHmmss") + "_" + $PID)
-    if (Test-Path -LiteralPath $WorkRoot) { throw "work directory already exists" }
-    New-Item -ItemType Directory -Path $WorkRoot | Out-Null
+    if (-not (Test-Path -LiteralPath $WorkRoot -PathType Container)) {
+        $WorkRoot = Join-Path $UploadDir ("G17C1_Client_Work_" + (Get-Date -Format "yyyyMMdd_HHmmss") + "_" + $PID)
+        if (Test-Path -LiteralPath $WorkRoot) { throw "work directory already exists" }
+        New-Item -ItemType Directory -Path $WorkRoot | Out-Null
+    }
 
     $OldSpell = Extract-ArchiveTarget -Archive $RootMpq -Target $SpellTarget -Tag "old_spell"
     $OldArea = Extract-ArchiveTarget -Archive $RootMpq -Target $AreaTarget -Tag "old_area"
     W "R4_OWNED_SPELL_SHA256=$($OldSpell.Hash)"
     W "R4_OWNED_SPELL_SIZE=$($OldSpell.Size)"
     W "R4_OWNED_AREA_SHA256=$($OldArea.Hash)"
-    if ($OldSpell.State -ne "HIT" -or $OldSpell.Hash -cne $ExpectedSpellHash -or $OldSpell.Size -ne $ExpectedSpellSize) {
-        throw "R4 owned Spell.dbc mismatch"
+    if ($OldSpell.State -ne "HIT" -or $OldSpell.Size -ne $ExpectedSpellSize) {
+        throw "R4 owned Spell.dbc missing or wrong size"
     }
     if ($OldArea.State -ne "HIT" -or $OldArea.Hash -cne $ExpectedAreaHash -or $OldArea.Size -ne $ExpectedAreaSize) {
         throw "R4 owned AreaTable.dbc mismatch"
+    }
+    if ($OldSpell.Hash -ceq $ExpectedPatchedSpellHash) {
+        # Already unlocked (a prior run completed).  When the C1 state file
+        # was lost, treat it as ALREADY_CURRENT after mirror/locale checks.
+        W "G17C1_SPELL_DBC_STATE=ALREADY_CLEAN"
+        W "G17C1_CLIENT_MPQ_UNLOCK=ALREADY_CURRENT"
+        W "G17C1_CLIENT_MPQ_UNLOCK_RESULT=PASS"
+        W "NOTE=client Spell.dbc already unlocked; no write performed"
+        W "RESULT_FILE=$Result"
+        exit 0
+    }
+    if ($OldSpell.Hash -cne $ExpectedSpellHash) {
+        throw "R4 owned Spell.dbc hash not recognized: $($OldSpell.Hash)"
     }
 
     $PythonCandidates = @(
@@ -229,11 +352,17 @@ try {
     if (Test-Path -LiteralPath $BackupDir) { throw "backup directory already exists" }
     New-Item -ItemType Directory -Path $BackupDir | Out-Null
     $BackupRoot = Join-Path $BackupDir ("before_G17C1_" + (Split-Path -Leaf $RootMpq))
-    $BackupLocale = Join-Path $BackupDir ("before_G17C1_" + (Split-Path -Leaf $LocaleMpq))
     Copy-Item -LiteralPath $RootMpq -Destination $BackupRoot
-    Copy-Item -LiteralPath $LocaleMpq -Destination $BackupLocale
     if ((Get-FileHash -LiteralPath $BackupRoot -Algorithm SHA256).Hash.ToLowerInvariant() -cne $RootHash) { throw "backup root MPQ verification failed" }
-    if ((Get-FileHash -LiteralPath $BackupLocale -Algorithm SHA256).Hash.ToLowerInvariant() -cne $LocaleHash) { throw "backup locale MPQ verification failed" }
+    W "BACKUP_ROOT=$BackupRoot"
+    if ($LocaleAbsent) {
+        W "BACKUP_LOCALE=NONE_ABSENT (discovery mode; locale file will be created)"
+    } else {
+        $BackupLocale = Join-Path $BackupDir ("before_G17C1_" + (Split-Path -Leaf $LocaleMpq))
+        Copy-Item -LiteralPath $LocaleMpq -Destination $BackupLocale
+        if ((Get-FileHash -LiteralPath $BackupLocale -Algorithm SHA256).Hash.ToLowerInvariant() -cne $LocaleHash) { throw "backup locale MPQ verification failed" }
+        W "BACKUP_LOCALE=$BackupLocale"
+    }
     W "BACKUP_DIR=$BackupDir"
 
     $TemporaryTarget = $RootMpq + ".g17c1.new.tmp"
@@ -248,13 +377,20 @@ try {
     if ((Get-FileHash -LiteralPath $RootMpq -Algorithm SHA256).Hash.ToLowerInvariant() -cne $NewArchiveHash) { throw "installed root MPQ hash mismatch" }
 
     # R5 mirror contract: locale file is byte-identical to root.
-    $LocaleTmp = $LocaleMpq + ".g17c1.new.tmp"
-    $LocaleSwap = $LocaleMpq + ".g17c1.old.tmp"
-    if (Test-Path -LiteralPath $LocaleTmp -PathType Leaf) { Remove-Item -LiteralPath $LocaleTmp -Force -ErrorAction SilentlyContinue }
-    if (Test-Path -LiteralPath $LocaleSwap -PathType Leaf) { Remove-Item -LiteralPath $LocaleSwap -Force -ErrorAction SilentlyContinue }
-    Copy-Item -LiteralPath $RootMpq -Destination $LocaleTmp
-    Move-Item -LiteralPath $LocaleMpq -Destination $LocaleSwap
-    Move-Item -LiteralPath $LocaleTmp -Destination $LocaleMpq
+    if ($LocaleAbsent) {
+        # Discovery mode with no existing mirror: direct byte copy (no swap).
+        Copy-Item -LiteralPath $RootMpq -Destination $LocaleMpq
+        W "LOCALE_MIRROR=CREATED_ABSENT_SLOT"
+    } else {
+        $LocaleTmp = $LocaleMpq + ".g17c1.new.tmp"
+        $LocaleSwap = $LocaleMpq + ".g17c1.old.tmp"
+        if (Test-Path -LiteralPath $LocaleTmp -PathType Leaf) { Remove-Item -LiteralPath $LocaleTmp -Force -ErrorAction SilentlyContinue }
+        if (Test-Path -LiteralPath $LocaleSwap -PathType Leaf) { Remove-Item -LiteralPath $LocaleSwap -Force -ErrorAction SilentlyContinue }
+        Copy-Item -LiteralPath $RootMpq -Destination $LocaleTmp
+        Move-Item -LiteralPath $LocaleMpq -Destination $LocaleSwap
+        Move-Item -LiteralPath $LocaleTmp -Destination $LocaleMpq
+        $LocaleSwap = ""
+    }
     if ((Get-FileHash -LiteralPath $LocaleMpq -Algorithm SHA256).Hash.ToLowerInvariant() -cne $NewArchiveHash) { throw "locale mirror hash mismatch" }
 
     $CacheDir = Join-Path $ClientRoot "Cache"
@@ -273,7 +409,8 @@ try {
         ("OLD_SPELL_DBC_SHA256=" + $ExpectedSpellHash),
         ("NEW_SPELL_DBC_SHA256=" + $PatchedSpellHash),
         ("OLD_ROOT_MPQ_SHA256=" + $RootHash),
-        ("OLD_LOCALE_MPQ_SHA256=" + $LocaleHash),
+        ("OLD_LOCALE_MPQ_SHA256=" + $(if ($LocaleAbsent) { "ABSENT" } else { $LocaleHash })),
+        ("ENV_MODE=" + $(if ($haveR4State -and $haveR5State) { "STATE" } else { "DISCOVERY" })),
         ("NEW_MPQ_SHA256=" + $NewArchiveHash),
         ("BACKUP_DIR=" + $BackupDir),
         ("INSTALLED_AT=" + (Get-Date).ToString("o"))
@@ -288,7 +425,7 @@ try {
     Move-Item -LiteralPath $StateTemp -Destination $StateFile -Force
     $StateCommitted = $true
     Remove-Item -LiteralPath $SwapOld -Force -ErrorAction SilentlyContinue
-    Remove-Item -LiteralPath $LocaleSwap -Force -ErrorAction SilentlyContinue
+    if ($LocaleSwap) { Remove-Item -LiteralPath $LocaleSwap -Force -ErrorAction SilentlyContinue }
     $SwapOld = ""; $LocaleSwap = ""
 
     W "CLIENT_RESTART_REQUIRED=True"
@@ -312,7 +449,7 @@ try {
                 Move-Item -LiteralPath $SwapOld -Destination $RootMpq
                 W "AUTO_ROLLBACK_ROOT=PASS"
             }
-            if ($LocaleMpq -and (Test-Path -LiteralPath $LocaleSwap -PathType Leaf) -and -not (Test-Path -LiteralPath $LocaleMpq)) {
+            if ($LocaleMpq -and $LocaleSwap -and (Test-Path -LiteralPath $LocaleSwap -PathType Leaf) -and -not (Test-Path -LiteralPath $LocaleMpq)) {
                 Move-Item -LiteralPath $LocaleSwap -Destination $LocaleMpq
                 W "AUTO_ROLLBACK_LOCALE=PASS"
             }
