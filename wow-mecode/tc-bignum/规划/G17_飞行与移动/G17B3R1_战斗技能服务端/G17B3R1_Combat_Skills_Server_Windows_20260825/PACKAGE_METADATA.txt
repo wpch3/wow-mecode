@@ -1,0 +1,10 @@
+PACKAGE=G17B3R1_Combat_Skills_Server_Windows_20260825
+DATE_UTC=2026-08-25
+PURPOSE=B3 combat carriers server-side (25 spells 990000-990024 real SpellScript via PlayerScript OnSpellCast gate) + rider-exit flight normalize fix (R0)
+PREIMAGE_SOURCE=98446106309b45371f138d9c7bc707ee608d9a3db347e13d61cfd68cc97810f9
+POSTIMAGE_SOURCE=1a96b72eb28ffa2c0ac0d3e0c07e26c30f25bcd8525babd15efad02a041825d6
+SAFE_ROLLBACK_SOURCE=98446106309b45371f138d9c7bc707ee608d9a3db347e13d61cfd68cc97810f9
+SERVER_DBC_APPEND=append_g17b3_spells.py (25 records; semantic guard; backup)
+WORLD_SQL=G17B3R1_world_combat_binding.sql (spell_script_names 990000-990024 -> spell_g17_combat_skill)
+CLIENT_PARTNER=G17C2_Combat_Skills_Client_DBC_Windows_20260825.zip (already installed by user)
+PROOF=G17B3R1_WINDOWS_BUILD_RESULT=PASS

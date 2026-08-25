@@ -1,0 +1,11 @@
+G17B3R1_LOCAL_VALIDATION=PASS (17/17 tests; package self-test; PS static; frozen hashes; combat contract; R0 exit-normalize wiring)
+DATE_UTC=2026-08-25T05:15:30Z
+PREIMAGE_SOURCE=98446106309b45371f138d9c7bc707ee608d9a3db347e13d61cfd68cc97810f9
+POSTIMAGE_SOURCE=1a96b72eb28ffa2c0ac0d3e0c07e26c30f25bcd8525babd15efad02a041825d6
+----------------------------------------------------------------------
+Ran 17 tests in 0.031s
+
+OK
+PACKAGE_PS_STATIC_CHECK=PASS
+UNIT_TESTS_RAN=17 FAILURES=0 ERRORS=0
+G17B3R1_PACKAGE_SELF_TEST=PASS
