@@ -125,6 +125,9 @@ class TestToolLifecycle(unittest.TestCase):
         self.assertIn("$dbcOut = @(& $python $Appender check", install)
         self.assertIn("DBC_CHECK_STATE=", install)
         self.assertIn("G17B3_SPELL_DBC_STATE=MISSING", install)
+        # Version fingerprint so the user can instantly tell an old package.
+        self.assertIn('$B3R1_BUILD = "f1_dbc_stdout"', install)
+        self.assertIn('"B3R1_BUILD=" + $B3R1_BUILD', install)
 
     def test_03_ps_files_parse(self):
         checker = ROOT / "tools/ps_static_check.py"
