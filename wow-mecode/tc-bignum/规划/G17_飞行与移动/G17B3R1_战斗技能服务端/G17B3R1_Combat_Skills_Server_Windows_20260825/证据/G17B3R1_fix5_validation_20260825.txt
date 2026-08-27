@@ -1,0 +1,20 @@
+G17B3R1_FIX5_VALIDATION=PASS (lineage upgrade gate + 24 tests + package self-test)
+DATE_UTC=2026-08-25T10:38:41Z
+FIX=f2_lineage_upgrade: INTERMEDIATE7_SHA256=1a96b72e... whitelisted as upgradeable image
+ROOT_CAUSE=FIX4 replaced the payload (ecd307b4) but did not whitelist the pre-FIX4 postimage
+         1a96b72e... = the user's real source state (apply PASS, MSBuild FAIL), so the rerun
+         was rejected by the locked-lineage gate before any write.
+PREIMAGE_SOURCE=98446106309b45371f138d9c7bc707ee608d9a3db347e13d61cfd68cc97810f9
+POSTIMAGE_SOURCE=ecd307b472cb2c49f68607a8b0afe5dcf5f87a7a8eb6f087a4717f4cd8fa1bbb
+UPGRADEABLE_NOW=7 images incl. 1a96b72eb28ffa2c0ac0d3e0c07e26c30f25bcd8525babd15efad02a041825d6
+----------------------------------------------------------------------
+PACKAGE_PS_STATIC_CHECK=PASS
+UNIT_TESTS_RAN=24 FAILURES=0 ERRORS=0
+G17B3R1_PACKAGE_SELF_TEST=PASS
+Ran 24 tests in 0.181s
+
+OK
+
+GATE_SIMULATION: PS1 Read-ToolHash parse of the fixed tool -> recognized set contains
+  1a96b72e... (user state) -> rerun proceeds: apply -> ecd307b4 -> DBC ALREADY_APPENDED
+  -> idempotent world SQL -> MSBuild.

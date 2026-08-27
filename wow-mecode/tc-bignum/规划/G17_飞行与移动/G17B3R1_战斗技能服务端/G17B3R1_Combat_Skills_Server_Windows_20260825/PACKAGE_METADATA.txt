@@ -1,10 +1,14 @@
 PACKAGE=G17B3R1_Combat_Skills_Server_Windows_20260825
 DATE_UTC=2026-08-25
+REVISION=FIX6_f3_decl_order
 PURPOSE=B3 combat carriers server-side (25 spells 990000-990024 real SpellScript via PlayerScript OnSpellCast gate) + rider-exit flight normalize fix (R0)
 PREIMAGE_SOURCE=98446106309b45371f138d9c7bc707ee608d9a3db347e13d61cfd68cc97810f9
-POSTIMAGE_SOURCE=1a96b72eb28ffa2c0ac0d3e0c07e26c30f25bcd8525babd15efad02a041825d6
+POSTIMAGE_SOURCE=2ddf54a66395896244869318e4bcfd619d10afc884033c6aa88e7cb53d0e6963
 SAFE_ROLLBACK_SOURCE=98446106309b45371f138d9c7bc707ee608d9a3db347e13d61cfd68cc97810f9
-SERVER_DBC_APPEND=append_g17b3_spells.py (25 records; semantic guard; backup)
-WORLD_SQL=G17B3R1_world_combat_binding.sql (spell_script_names 990000-990024 -> spell_g17_combat_skill)
+UPGRADEABLE_FROM=3b92e815,ff185d99,3e4590da,61342067,03dd649d,adedfc58,1a96b72e,ecd307b4
+UPGRADEABLE_NOTE=1a96b72e = pre-FIX4 postimage (6 MSVC error classes); ecd307b4 = FIX4 postimage, which the user's source sits on RIGHT NOW (FIX5 run applied it, MSBuild then failed on 5 decl-order/reference errors). Both are whitelisted so the next rerun upgrades straight to the FIX6 payload 2ddf54a6.
+FIX6_FIXES=C3861 RevokeCombatSkills fwd decl moved before first call; C2061/C2660/C2143/C2059 CombatStunReleaseEvent class moved before its `new` use; C2664 ObjectAccessor::GetUnit(*caster, guid) dereference (const WorldObject& parameter).
+SERVER_DBC_APPEND=append_g17b3_spells.py (25 records; semantic guard; backup; ALREADY_APPENDED re-run safe)
+WORLD_SQL=G17B3R1_world_combat_binding.sql (spell_script_names 990000-990024 -> spell_g17_combat_skill; INSERT IGNORE idempotent)
 CLIENT_PARTNER=G17C2_Combat_Skills_Client_DBC_Windows_20260825.zip (already installed by user)
 PROOF=G17B3R1_WINDOWS_BUILD_RESULT=PASS

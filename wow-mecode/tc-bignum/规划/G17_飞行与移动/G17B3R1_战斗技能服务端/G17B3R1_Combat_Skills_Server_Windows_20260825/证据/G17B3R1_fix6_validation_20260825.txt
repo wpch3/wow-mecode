@@ -1,0 +1,22 @@
+G17B3R1_FIX6_VALIDATION=PASS (30 tests + package self-test + gate simulation)
+DATE_UTC=2026-08-25T10:54:56Z
+FIX=f3_decl_order: 5 real MSVC errors in the FIX4 payload (ecd307b4) fixed
+USER_REPORT=证据/G17B3R1_WINDOWS_BUILD_RESULT_f2run_20260825.txt (f2 run: lineage gate PASS,
+  source 1a96b72e->ecd307b4 apply PASS, DBC ALREADY_APPENDED, SQL 0/25/0 PASS, MSBuild FAIL)
+MSVC_ERRORS_FIXED=
+  C3861  (534)  RevokeCombatSkills: fwd decl moved before first call (was at line 778)
+  C2061  (957)  CombatStunReleaseEvent unknown type: class moved before its `new` use
+  C2660  (956)  AddEvent arg count: cascade of C2061 (2-arg CalculateTime pattern kept,
+                 same as the proven NonVisualFallGuardEvent call that compiled)
+  C2143/C2059 (957) cascade of C2061
+  C2664  (2003) ObjectAccessor::GetUnit(Player*, ...) -> GetUnit(*caster, ...) (const WorldObject&)
+PREIMAGE_SOURCE=98446106309b45371f138d9c7bc707ee608d9a3db347e13d61cfd68cc97810f9
+POSTIMAGE_SOURCE=2ddf54a66395896244869318e4bcfd619d10afc884033c6aa88e7cb53d0e6963
+INTERMEDIATE8=ecd307b472cb2c49f68607a8b0afe5dcf5f87a7a8eb6f087a4717f4cd8fa1bbb (user's CURRENT state)
+----------------------------------------------------------------------
+PACKAGE_PS_STATIC_CHECK=PASS
+UNIT_TESTS_RAN=30 FAILURES=0 ERRORS=0
+G17B3R1_PACKAGE_SELF_TEST=PASS
+
+GATE_SIMULATION: PS1 Read-ToolHash parse -> recognized = {Pre, Post, SafeRollback} + 8 intermediates
+  contains ecd307b4 (user now) and 1a96b72e (historical) -> rerun upgrades to 2ddf54a6.

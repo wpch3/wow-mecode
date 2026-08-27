@@ -1,0 +1,59 @@
+G17C3_OFFLINE_VALIDATION=PASS (9 tests + package self-test + PS static)
+DATE_UTC=2026-08-25T11:35:14Z
+INPUT=C2 postimage 760d3f274ab63fc780867a7193717eeca73b194632b2f69f43cf399faf65e2fe (48981416)
+OUTPUT=006a892b0b3363caedc7436f907948778fe6d084759fa0fc0ddc7f7603c03997 (48985408)
+DETERMINISM=sandbox reproduced the full chain dd250911 ->(C1) 03bf11fd ->(B3 append25) 760d3f27
+            byte-for-byte before computing the C3 image with the same appender logic.
+RECORDS=990025 切换技能页(279) 990026 拉升(2755) 990027 俯冲(539) 990028 滑翔制动(505)
+----------------------------------------------------------------------
+PACKAGE_PS_STATIC_CHECK=PASS
+G17B3R2_SPELL_DBC_STATE=APPENDED
+G17B3R2_SPELL_DBC_APPEND=PASS
+G17B3R2_INPUT_SHA256=2966d36c01cde40c2d0fe3d29f52a0fea901661a40b17b46fbda9353a4af5c07
+G17B3R2_OUTPUT_SHA256=b2e9d5fc3ea13d07aa80ac2bf9236a0d5d3ab7afc0a0ac59d5bdc5b6c3ed3066
+G17B3R2_RECORDS_BEFORE=2
+G17B3R2_RECORDS_AFTER=6
+G17B3R2_STRING_BLOCK_PREFIX_KEPT=True
+G17B3R2_SPELL_DBC_STATE=APPENDED
+G17B3R2_SPELL_DBC_APPEND=PASS
+G17B3R2_INPUT_SHA256=2966d36c01cde40c2d0fe3d29f52a0fea901661a40b17b46fbda9353a4af5c07
+G17B3R2_OUTPUT_SHA256=b2e9d5fc3ea13d07aa80ac2bf9236a0d5d3ab7afc0a0ac59d5bdc5b6c3ed3066
+G17B3R2_RECORDS_BEFORE=2
+G17B3R2_RECORDS_AFTER=6
+G17B3R2_STRING_BLOCK_PREFIX_KEPT=True
+G17B3R2_SPELL_DBC_STATE=APPENDED
+G17B3R2_SPELL_DBC_APPEND=PASS
+G17B3R2_INPUT_SHA256=2966d36c01cde40c2d0fe3d29f52a0fea901661a40b17b46fbda9353a4af5c07
+G17B3R2_OUTPUT_SHA256=b2e9d5fc3ea13d07aa80ac2bf9236a0d5d3ab7afc0a0ac59d5bdc5b6c3ed3066
+G17B3R2_RECORDS_BEFORE=2
+G17B3R2_RECORDS_AFTER=6
+G17B3R2_STRING_BLOCK_PREFIX_KEPT=True
+G17B3R2_SPELL_DBC_STATE=APPENDED
+G17B3R2_SPELL_DBC_APPEND=PASS
+G17B3R2_INPUT_SHA256=2966d36c01cde40c2d0fe3d29f52a0fea901661a40b17b46fbda9353a4af5c07
+G17B3R2_OUTPUT_SHA256=b2e9d5fc3ea13d07aa80ac2bf9236a0d5d3ab7afc0a0ac59d5bdc5b6c3ed3066
+G17B3R2_RECORDS_BEFORE=2
+G17B3R2_RECORDS_AFTER=6
+G17B3R2_STRING_BLOCK_PREFIX_KEPT=True
+UNIT_TESTS_RAN=9 FAILURES=0 ERRORS=0
+G17C3_PACKAGE_SELF_TEST=PASS
+
+V2_FIX (2026-08-25): real user run failed in C2_STATE mode with
+  "Cannot bind argument to parameter 'LiteralPath' because it is an empty string."
+Root cause: $WorkRoot stays "" in C2_STATE mode (the discovery branch that sets it
+never ran) and Test-Path -LiteralPath "" throws.  The v1 run performed NO writes
+(client MPQs untouched, hashes still the C2 image).  Fix (v2_workroot_fix):
+guard emptiness BEFORE Test-Path; fingerprint bumped; regression test added
+(test_05_workroot_empty_guard).  10/10 tests + package self-test PASS.
+
+V2 REPACKAGE (2026-08-25, second user run): the user's second FAIL log still
+shows C3_BUILD=v1_append4 - they ran the OLD v1 package.  Two confusion
+sources found and eliminated:
+  1) the 规划-level archive G17C3_客户端技能页按钮.zip was still v1 (the v2 fix
+     copied the archive one level too deep by mistake);
+  2) the v1/v2 folders inside the zip had identical names, so an old extracted
+     folder was indistinguishable from the new one.
+Fix: package folder renamed to G17C3v2_Skill_Page_Buttons_Client_Windows_20260825,
+root deliverable renamed to G17C3v2_FINAL.zip (old G17C3_FINAL.zip removed),
+CMD banner now shows the version.  No client writes happened in either failed
+v1 run (both aborted before extraction).

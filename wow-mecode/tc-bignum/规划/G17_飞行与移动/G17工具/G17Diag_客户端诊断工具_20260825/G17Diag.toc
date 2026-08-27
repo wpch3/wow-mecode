@@ -1,0 +1,4 @@
+## Interface: 30300
+## Title: |cffffd700G17|r Diag
+## Notes: 御龙术客户端诊断工具：输入 /g17diag 输出完整状态报告，复制回传给开发。
+G17Diag.lua

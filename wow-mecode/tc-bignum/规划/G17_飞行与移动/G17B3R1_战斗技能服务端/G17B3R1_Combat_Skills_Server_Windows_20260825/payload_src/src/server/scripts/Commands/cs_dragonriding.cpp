@@ -450,6 +450,12 @@ private:
     bool _sawFalling;
 };
 
+// B3-R1: forward declaration.  RevokeCombatSkills is defined further below
+// with the other combat helpers, but CleanupPlayer (and every vehicle exit
+// path) calls it BEFORE that definition point, so it must be declared here
+// (real MSVC error C3861 at the first call site in the previous build).
+void RevokeCombatSkills(Player* player);
+
 // B3-R1/R0: "leave vehicle without pressing landing" left the player in a
 // flying/stale movement state (user-reported: flight effects never go away).
 // The vehicle AI normalized itself, but the RIDER kept CAN_FLY / DISABLE_GRAVITY
@@ -774,9 +780,6 @@ void EnsureLandingCommandCastable()
         ">> G17-B2R3 landing command %u cast-gates cleared (focus/aura/item/stance); OnCheckCast+AfterCast hooks remain active.", SPELL_SAFE_LANDING);
 }
 
-// Forward declarations (defined further below; called from earlier paths).
-void RevokeCombatSkills(Player* player);
-
 bool IsCombatSkill(uint32 spellId)
 {
     return spellId >= COMBAT_SPELL_BASE &&
@@ -885,6 +888,37 @@ SpellCastResult CheckEnergyCast(Unit* caster, uint32 cost)
 
     return SPELL_CAST_OK;
 }
+
+// B3-R1: controlled stun release (never leaves the target stunned forever).
+// Defined here, BEFORE its first use in HandleCombatSkillSpell below, so that
+// `new CombatStunReleaseEvent(...)` sees a complete type (real MSVC errors
+// C2061/C2660/C2143/C2059 at the call site in the previous build).
+class CombatStunReleaseEvent : public BasicEvent
+{
+public:
+    CombatStunReleaseEvent(ObjectGuid casterGuid, ObjectGuid targetGuid)
+        : _casterGuid(casterGuid), _targetGuid(targetGuid) { }
+
+    bool Execute(uint64 /*now*/, uint32 /*diff*/) override
+    {
+        // Resolve through the caster (must be a valid in-world WorldObject);
+        // ObjectAccessor::GetUnit requires a non-null searcher in this fork.
+        // NOTE: GetUnit takes (const WorldObject&, ObjectGuid const&), so the
+        // Player* must be dereferenced (real MSVC error C2664 before).
+        Player* caster = ObjectAccessor::FindPlayer(_casterGuid);
+        Unit* target = caster ? ObjectAccessor::GetUnit(*caster, _targetGuid) : nullptr;
+        if (target && target->IsInWorld())
+        {
+            target->RemoveUnitFlag(UNIT_FLAG_STUNNED);
+            target->ClearUnitState(UNIT_STATE_STUNNED);
+        }
+        return true;
+    }
+
+private:
+    ObjectGuid _casterGuid;
+    ObjectGuid _targetGuid;
+};
 
 // B3-R1: execute one combat carrier (called from the proven PlayerScript
 // OnSpellCast hook after the cast succeeded; CheckCast already gated
@@ -1986,32 +2020,6 @@ private:
     uint32 _sourceCreature = 0;
     uint32 _sourceDisplay = 0;
     uint32 _archetype = G17Dragonriding::ARCHETYPE_DRAGON;
-};
-
-// B3-R1: controlled stun release (never leaves the target stunned forever).
-class CombatStunReleaseEvent : public BasicEvent
-{
-public:
-    CombatStunReleaseEvent(ObjectGuid casterGuid, ObjectGuid targetGuid)
-        : _casterGuid(casterGuid), _targetGuid(targetGuid) { }
-
-    bool Execute(uint64 /*now*/, uint32 /*diff*/) override
-    {
-        // Resolve through the caster (must be a valid in-world WorldObject);
-        // ObjectAccessor::GetUnit requires a non-null searcher in this fork.
-        Player* caster = ObjectAccessor::FindPlayer(_casterGuid);
-        Unit* target = caster ? ObjectAccessor::GetUnit(caster, _targetGuid) : nullptr;
-        if (target && target->IsInWorld())
-        {
-            target->RemoveUnitFlag(UNIT_FLAG_STUNNED);
-            target->ClearUnitState(UNIT_STATE_STUNNED);
-        }
-        return true;
-    }
-
-private:
-    ObjectGuid _casterGuid;
-    ObjectGuid _targetGuid;
 };
 
 // B3-R1: single on-cast gate for the 25 custom combat carriers.  It only

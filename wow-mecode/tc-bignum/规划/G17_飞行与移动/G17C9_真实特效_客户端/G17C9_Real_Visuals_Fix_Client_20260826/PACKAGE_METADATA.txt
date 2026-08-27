@@ -1,0 +1,8 @@
+PACKAGE=G17C9_Real_Visuals_Fix_Client_20260826
+DATE_UTC=2026-08-26
+REVISION=v1_real_visuals_no_dbc_cd
+PURPOSE=Per-archetype per-slot visuals from real verified spells + remove DBC RecoveryTime (fixes phantom cooldown on failed casts)
+FIX_VISUALS=25 unique SpellVisualIDs (5 archetypes × 5 slots), all from real spells with verified visual effects
+FIX_COOLDOWN=RecoveryTime(col 29)=0 + CategoryRecoveryTime(col 30)=0; server AddCooldown handles display via SMSG_SPELL_COOLDOWN
+ALSO=Effect_1=2(SCHOOL_DAMAGE) ImplicitTargetA=18 RangeIndex=4 (idempotent with C7/C8)
+PROOF=G17C9_RESULT=PASS

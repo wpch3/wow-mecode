@@ -1,0 +1,33 @@
+G17B3R4_LOCAL_VALIDATION=PASS (28 tests + package self-test + PS static + upgrade simulation)
+DATE_UTC=2026-08-25T13:03:48Z
+FEEDBACK=user live test: addon bar never showed (IsSpellKnown missing in 3.3.5),
+        combat skills felt dead (no visuals/numbers), 无法命中 with explicit targets,
+        damage only tens at level 80 full gear.
+FIXES=addon v2 (spellbook-name scan, hand-built buttons); level-scaled damage;
+      server DBC RangeIndex 1->4 (30yd) for 990000-990024 (in-place patcher, verified
+      against the real client image chain); combat visuals (melee attack packets +
+      audited impact kits); mount assisted strikes (3.5s cadence, rider-attributed,
+      LOS+range gated, energy floor 20).
+PREIMAGE_SOURCE=29f3e55470f3ceaab79c8c5a6145ece76a8743c99999adec505a446239c32b3a
+POSTIMAGE_SOURCE=f49fd955ec27f2336bfcc6ed8e84f995abaf1d98a1136cf1eb0daefecf563a14
+----------------------------------------------------------------------
+PACKAGE_PS_STATIC_CHECK=PASS
+UNIT_TESTS_RAN=28 FAILURES=0 ERRORS=0
+G17B3R4_PACKAGE_SELF_TEST=PASS
+
+R1B_FIX (2026-08-25): real user r1 run - source apply (29f3e554->f49fd955),
+server DBC range patch (25 records -> 30yd) and addon v2 install all PASS;
+MSBuild failed with C2039 "getLevel" x2: the fork's accessor is GetLevel()
+(Unit.h:890). Fixed both call sites; f49fd955 (user's CURRENT state) whitelisted
+as INTERMEDIATE7 (upgrade path simulated with the real image). 28/28 + self-test
+PASS.
+
+R1C_FIX (2026-08-25): real user run of r1b - the PS INSTALLER gate rejected the
+user's live state f49fd955 ("not a locked lineage image"). Root cause: when the
+installer was derived, the $Upgradeable string-replace silently failed to add
+INTERMEDIATE6/7 (pattern mismatch), so the PS gate only knew INTERMEDIATE1-5
+while the apply TOOL whitelisted everything. Fixed the list; added an
+installer-gate simulation test that parses Read-ToolHash calls from the PS1,
+rebuilds the recognized set exactly like the PS1, and requires every
+tool-upgradeable digest and every live user state to pass - the two layers can
+never diverge again. 29/29 tests + self-test PASS.

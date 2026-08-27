@@ -1,0 +1,10 @@
+PACKAGE=G17C7_Combat_Visual_Fix_Client_Windows_20260826
+DATE_UTC=2026-08-26
+REVISION=v1_school_damage
+PURPOSE=Fix the ROOT CAUSE of "no spell visual effects": 3.3.5 client only renders visuals for SCHOOL_DAMAGE(2) effects, NOT DUMMY(3). Our 25 combat carriers had DUMMY effects - completely invisible on the client even with SpellVisualID set. This changes Effect_1 to SCHOOL_DAMAGE, sets ImplicitTargetA to 18 (current target, same as Fire Breath 9573), and ensures visuals/ranges (idempotent with C6/B3R4).
+EVIDENCE=DBC comparison: Fireball(133) Effect_1=2 has visuals; Fire Breath(9573) Effect_1=2 has visuals; our carrier(990000) Effect_1=3 has NO visuals. This is the root cause.
+FIX=Effect_1: 3->2 (SCHOOL_DAMAGE), BasePoints_1=0 (script handles damage), ImplicitTargetA_1=18 (TARGET_UNIT_TARGET_ENEMY)
+SERVER_SIDE=SpellScript's HandleDummy calls PreventHitDefaultEffect for SPELL_EFFECT_ANY, so the default SCHOOL_DAMAGE is suppressed and our ExecuteCombatSkill handles real damage. No C++ changes needed.
+INPUT=Any DBC with the 25 carriers present (accepts C3v2/C6 output states)
+OUTPUT=Deterministic per input (in-place record patch, same file size)
+PROOF=G17C7_EFFECT_FIX_RESULT=PASS

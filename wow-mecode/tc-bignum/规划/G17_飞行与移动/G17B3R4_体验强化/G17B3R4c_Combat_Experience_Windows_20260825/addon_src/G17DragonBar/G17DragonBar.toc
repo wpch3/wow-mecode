@@ -1,0 +1,5 @@
+## Interface: 30300
+## Title: |cff80dfffG17|r DragonBar
+## Notes: 御龙术技能面板 v2：骑乘G17坐骑时显示完整技能条（移动技能+当前坐骑类型战斗技能），不修改任何客户端文件。
+## SavedVariablesPerCharacter: G17DragonBarDB
+G17DragonBar.lua

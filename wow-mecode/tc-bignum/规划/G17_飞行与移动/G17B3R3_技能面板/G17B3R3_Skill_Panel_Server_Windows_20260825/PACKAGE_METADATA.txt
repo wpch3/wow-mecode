@@ -1,0 +1,13 @@
+PACKAGE=G17B3R3_Skill_Panel_Server_Windows_20260825
+DATE_UTC=2026-08-25
+REVISION=r1_skillpanel
+PURPOSE=DF-style rider skill panel: dragonriding skills live in the rider's own spellbook while mounted (dual-cast: vehicle bar button OR player skill panel), rendered by the G17DragonBar addon as an 11-button secure bar. No SQL/DBC changes (all bindings from B3R2 already in place).
+MECHANISM=the fork's SpellInfo::CheckVehicle (SpellInfo.cpp:1911) allows rider casts while seated when the spell carries Attributes 0x100 (CASTABLE_WHILE_MOUNTED) - all 29 carriers do. B3R1 failed only because the default UI hides the player's bars on the controlling seat; the addon bar sidesteps that without touching client files.
+PREIMAGE_SOURCE=175e5a122765691448738c7db7a25b32535f1fc29d7781e297e10614d4173975 (B3R2d)
+POSTIMAGE_SOURCE=29f3e55470f3ceaab79c8c5a6145ece76a8743c99999adec505a446239c32b3a (B3R3)
+SAFE_ROLLBACK_SOURCE=175e5a122765691448738c7db7a25b32535f1fc29d7781e297e10614d4173975
+UPGRADEABLE_FROM=98446106,1a96b72e,ecd307b4,feb3dad4,a65b0ddc
+ADDON=G17DragonBar (Interface 30300; 11 secure buttons: 6 movement + auto-detected archetype combat; cooldown sweeps; vehicle energy display; /g17bar reset|refresh; installed to Interface\AddOns with backup)
+DUAL_COOLDOWNS=combat cooldowns on BOTH the vehicle and the rider history (shared gates, neither path bypasses the other); energy stays on the vehicle
+FALLBACK=the six-button vehicle bar keeps the B3R2d layout and works without the addon
+PROOF=G17B3R3_WINDOWS_BUILD_RESULT=PASS

@@ -1,0 +1,9 @@
+PACKAGE=G17C8_Combat_Visuals_Per_Slot_Windows_20260826
+DATE_UTC=2026-08-26
+REVISION=v1_perslot_cd
+PURPOSE=Per-slot visual effects (each skill looks different) + cooldown display (RecoveryTime in DBC drives client-side cooldown sweep on action bar buttons).
+CHANGES_VS_C7=C7 fixed DUMMY->SCHOOL_DAMAGE (root cause of no visuals) but used ONE visual per archetype block. C8 gives EACH SLOT a different visual AND sets RecoveryTime for cooldown display.
+SLOT_VISUALS=slot0:143(FireBlast) slot1:67(Fireball) slot2:3077(FlashHeal) slot3:322(HammerOfJustice) slot4:2253(Pyroblast)
+SLOT_COOLDOWNS=slot0:4000ms slot1:6000ms slot2:20000ms slot3:10000ms slot4:60000ms
+ALSO_ENSURES=Effect_1=2(SCHOOL_DAMAGE) ImplicitTargetA=18 RangeIndex=4 (idempotent with C7)
+PROOF=G17C8_RESULT=PASS

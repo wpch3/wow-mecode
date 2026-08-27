@@ -4,6 +4,15 @@
 #   2) server dbc\Spell.dbc append (25 records 990000-990024)
 #   3) world SQL binding (spell_script_names -> spell_g17_combat_skill)
 #   4) MSBuild /t:worldserver (fresh obj + exe/pdb proof)
+# FIX5 (f2_lineage_upgrade): the locked-lineage gate now also accepts the
+#   pre-FIX4 B3R1 postimage 1a96b72e... (INTERMEDIATE7) so a rerun over the
+#   user's real source state (apply succeeded, MSBuild failed) upgrades
+#   directly to the current postimage instead of being rejected.
+# FIX6 (f3_decl_order): fixes the 5 remaining REAL MSVC compile errors in the
+#   FIX4 payload (user log 2026-08-25): C3861 RevokeCombatSkills decl too
+#   late, C2061/C2660/C2143/C2059 CombatStunReleaseEvent defined after use,
+#   C2664 GetUnit(Player*, ...) needs *caster (const WorldObject&).  The
+#   FIX4 postimage ecd307b4 is now INTERMEDIATE8 (upgradeable).
 param(
     [string]$Workspace = "C:\Users\Administrator\Downloads\workspace",
     [string]$SourceRoot = "D:\TrinityCore",
@@ -39,7 +48,8 @@ $SafeRollback = Read-ToolHash "SAFE_ROLLBACK_SHA256"
 $Upgradeable = @(
     (Read-ToolHash "INTERMEDIATE_SHA256"), (Read-ToolHash "INTERMEDIATE2_SHA256"),
     (Read-ToolHash "INTERMEDIATE3_SHA256"), (Read-ToolHash "INTERMEDIATE4_SHA256"),
-    (Read-ToolHash "INTERMEDIATE5_SHA256"), (Read-ToolHash "INTERMEDIATE6_SHA256")
+    (Read-ToolHash "INTERMEDIATE5_SHA256"), (Read-ToolHash "INTERMEDIATE6_SHA256"),
+    (Read-ToolHash "INTERMEDIATE7_SHA256"), (Read-ToolHash "INTERMEDIATE8_SHA256")
 )
 
 New-Item -ItemType Directory -Path $UploadDir -Force | Out-Null
@@ -131,7 +141,7 @@ function Invoke-WorldSql {
     W ("G17B3R1_WORLD_SQL_GATE=PASS " + $PassMarker)
 }
 
-$B3R1_BUILD = "f1_dbc_stdout"
+$B3R1_BUILD = "f3_decl_order"
 try {
     W "G17B3R1_WINDOWS_BUILD_START"
     W ("B3R1_BUILD=" + $B3R1_BUILD)
@@ -177,11 +187,12 @@ try {
     # state line directly; never read a file that may not exist.
     $dbcOut = @(& $python $Appender check --input $ServerDbc 2>&1)
     $dbcExit = $LASTEXITCODE
-    $dbcStateLine = @($dbcOut | Where-Object { $_ -match '^G17B3_SPELL_DBC_STATE=' } | Select-Object -First 1)
+    $dbcStateLine = @($dbcOut | Where-Object { $_ -match '^G17B3_SPELL_DBC_STATE=' } | Select-Object -First 1)[0]
     foreach ($line in $dbcOut) { W ("DBC_CHECK|" + $line.ToString()) }
     W "DBC_CHECK_EXIT=$dbcExit"
-    W "DBC_CHECK_STATE=$($dbcStateLine.ToString().Trim())"
+    if ($dbcStateLine) { W "DBC_CHECK_STATE=$($dbcStateLine.ToString().Trim())" }
     if ($dbcExit -ne 0) { throw "server Spell.dbc check failed" }
+    if (-not $dbcStateLine) { throw "server Spell.dbc check printed no state line" }
     if ($dbcStateLine -match 'G17B3_SPELL_DBC_STATE=ALREADY_APPENDED') {
         W "G17B3R1_SERVER_DBC_APPEND=ALREADY_APPENDED"
     } elseif ($dbcStateLine -match 'G17B3_SPELL_DBC_STATE=PARTIAL') {

@@ -1,0 +1,12 @@
+PACKAGE=G17C3v2_Skill_Page_Buttons_Client_Windows_20260825
+DATE_UTC=2026-08-25
+REVISION=v1_append4
+PURPOSE=Append the 4 G17-B3R2 multi-page bar button carriers (990025 切换技能页 / 990026 拉升 / 990027 俯冲 / 990028 滑翔制动) to the CLIENT Spell.dbc inside the existing G17 MPQ chain so the new vehicle action bar buttons have names, icons and tooltips.
+INPUT_IMAGE=C2 postimage 760d3f274ab63fc780867a7193717eeca73b194632b2f69f43cf399faf65e2fe (48981416 bytes; the 25 combat skills image installed by G17C2)
+OUTPUT_IMAGE=006a892b0b3363caedc7436f907948778fe6d084759fa0fc0ddc7f7603c03997 (48985408 bytes; +4*936 records +792 strings, deterministic)
+MPQ_CHAIN=root patch-<slot>.MPQ owner + zhCN patch-zhCN-<slot>.MPQ byte-identical mirror (R4/R5 contract); env resolved from the C2 state file or content discovery
+APPENDER=tools/append_g17b3r2_spells.py (v1_append4; idempotent; string-block prefix preserved byte-for-byte)
+ICONS=279 战斗姿态(page switch) / 2755 喷射跳跃(ascend) / 539 俯冲(dive) / 505 缓落术(brake) — all read from the project's real zhCN client Spell.dbc
+AREA_TABLE=unchanged 1acef997a27f844a8abee9b477c44f2097f745168c6df85ece6b1a135568c233 (362740)
+PROOF=G17C3_CLIENT_BAR_BUTTONS_RESULT=PASS
+PARTNER_SERVER_PACKAGE=G17B3R2_MultiPage_Skillbar_Server_Windows_20260825

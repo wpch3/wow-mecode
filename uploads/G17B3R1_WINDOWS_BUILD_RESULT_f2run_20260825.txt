@@ -1,0 +1,95 @@
+G17B3R1_WINDOWS_BUILD_START
+B3R1_BUILD=f2_lineage_upgrade
+SCOPE=B3_COMBAT_SKILLS_25_CARRIERS+RIDER_EXIT_NORMALIZE+8000210_APPEND
+RUNS_DBC_APPEND=True
+RUNS_SQL=True
+DATABASE=world
+POST_SHA256=ecd307b472cb2c49f68607a8b0afe5dcf5f87a7a8eb6f087a4717f4cd8fa1bbb
+PYTHON=C:\Users\Administrator\AppData\Local\Programs\Python\Python312\python.exe
+PACKAGE_TEST|----------------------------------------------------------------------
+PACKAGE_TEST|PACKAGE_PS_STATIC_CHECK=PASS
+PACKAGE_TEST|UNIT_TESTS_RAN=24 FAILURES=0 ERRORS=0
+PACKAGE_TEST|Ran 24 tests in 0.865s
+PACKAGE_TEST|System.Management.Automation.RemoteException
+PACKAGE_TEST|OK
+PACKAGE_TEST|G17B3R1_PACKAGE_SELF_TEST=PASS
+PACKAGE_TEST_EXIT=0
+UNIT_TEST_EXIT=0
+SOURCE_SHA256_BEFORE=1a96b72eb28ffa2c0ac0d3e0c07e26c30f25bcd8525babd15efad02a041825d6
+SOURCE_APPLY|G17B3R1_SOURCE_STATE=B3R1_INTERMEDIATE_UPGRADEABLE
+SOURCE_APPLY|TARGET_SHA256=1a96b72eb28ffa2c0ac0d3e0c07e26c30f25bcd8525babd15efad02a041825d6
+SOURCE_APPLY|FORENSIC_BACKUP=D:\TrinityCore\src\server\scripts\Commands\cs_dragonriding.cpp.g17b3r1.preimage
+SOURCE_APPLY|G17B3R1_SOURCE_APPLY=PASS
+SOURCE_APPLY_EXIT=0
+SOURCE_SHA256_AFTER=ecd307b472cb2c49f68607a8b0afe5dcf5f87a7a8eb6f087a4717f4cd8fa1bbb
+G17B3R1_SOURCE_APPLY_GATE=PASS
+DBC_CHECK|G17B3_RECORDS=49864
+DBC_CHECK|G17B3_PRESENT=25
+DBC_CHECK|G17B3_SPELL_DBC_STATE=ALREADY_APPENDED
+DBC_CHECK_EXIT=0
+DBC_CHECK_STATE=System.Object[]
+G17B3R1_SERVER_DBC_APPEND=ALREADY_APPENDED
+MYSQL|G17B3R1_WORLD_COMBAT_BINDING=PASS	0	25	0
+MYSQL_EXIT=0
+G17B3R1_WORLD_SQL_GATE=PASS G17B3R1_WORLD_COMBAT_BINDING=PASS
+MSBUILD=D:\vs\MSBuild\Current\Bin\MSBuild.exe
+DRAGONRIDING_VCXPROJ_HITS=1
+BEFORE_EXE_SHA256=e4998849761f869e687c047e39643799b4f98785aec6dbf7532df1fa9dab952d
+BEFORE_EXE_UTC=2026-08-24T19:23:09.7393397Z
+BEFORE_PDB_UTC=2026-08-24T19:23:09.7723620Z
+BUILD_START_UTC=2026-08-25T10:45:57.9386244Z
+MSBUILD|适用于 .NET Framework MSBuild 版本 18.8.2+ce25c0108
+MSBUILD|
+MSBUILD|  gsoap.vcxproj -> D:\TC-Build\dep\gsoap\RelWithDebInfo\gsoap.lib
+MSBUILD|  efsw.vcxproj -> D:\TC-Build\dep\efsw\RelWithDebInfo\efsw.lib
+MSBUILD|  sfmt.vcxproj -> D:\TC-Build\dep\SFMT\RelWithDebInfo\sfmt.lib
+MSBUILD|  fmt.vcxproj -> D:\TC-Build\dep\fmt\RelWithDebInfo\fmt.lib
+MSBUILD|  lualib.vcxproj -> D:\TC-Build\bin\RelWithDebInfo\lua52.dll
+MSBUILD|  zlib.vcxproj -> D:\TC-Build\dep\zlib\RelWithDebInfo\zlib.lib
+MSBUILD|  argon2.vcxproj -> D:\TC-Build\dep\argon2\RelWithDebInfo\argon2.lib
+MSBUILD|  Detour.vcxproj -> D:\TC-Build\dep\recastnavigation\Detour\RelWithDebInfo\Detour.lib
+MSBUILD|  g3dlib.vcxproj -> D:\TC-Build\dep\g3dlite\RelWithDebInfo\g3dlib.lib
+MSBUILD|  common.vcxproj -> D:\TC-Build\src\common\RelWithDebInfo\common.lib
+MSBUILD|  database.vcxproj -> D:\TC-Build\src\server\database\RelWithDebInfo\database.lib
+MSBUILD|  shared.vcxproj -> D:\TC-Build\src\server\shared\RelWithDebInfo\shared.lib
+MSBUILD|  game.vcxproj -> D:\TC-Build\src\server\game\RelWithDebInfo\game.lib
+MSBUILD|  cs_dragonriding.cpp
+MSBUILD|D:\TrinityCore\src\server\scripts\Commands\cs_dragonriding.cpp(534,5): error C3861: “RevokeCombatSkills”: 找不到标识符 [D:\TC-Build\src\server\scripts\scripts.vcxproj]
+MSBUILD|  (编译源文件“../../../../TrinityCore/src/server/scripts/Commands/cs_dragonriding.cpp”)
+MSBUILD|  
+MSBUILD|D:\TrinityCore\src\server\scripts\Commands\cs_dragonriding.cpp(957,21): error C2061: 语法错误: 标识符“CombatStunReleaseEvent” [D:\TC-Build\src\server\scripts\scripts.vcxproj]
+MSBUILD|  (编译源文件“../../../../TrinityCore/src/server/scripts/Commands/cs_dragonriding.cpp”)
+MSBUILD|  
+MSBUILD|D:\TrinityCore\src\server\scripts\Commands\cs_dragonriding.cpp(956,30): error C2660: “EventProcessor::AddEvent”: 函数不接受 1 个参数 [D:\TC-Build\src\server\scripts\scripts.vcxproj]
+MSBUILD|  (编译源文件“../../../../TrinityCore/src/server/scripts/Commands/cs_dragonriding.cpp”)
+MSBUILD|      D:\TrinityCore\src\common\Utilities\EventProcessor.h(103,14):
+MSBUILD|      参见“EventProcessor::AddEvent”的声明
+MSBUILD|      D:\TrinityCore\src\common\Utilities\EventProcessor.h(105,28):
+MSBUILD|      可能是“enable_if<!std::is_base_of_v<BasicEvent,remove_pointer<remove_cv<remove_reference<_Ty>::type>::type>::type>,void>::type EventProcessor::AddEvent(T &&,Milliseconds,bool)”
+MSBUILD|          D:\TrinityCore\src\server\scripts\Commands\cs_dragonriding.cpp(956,30):
+MSBUILD|          “enable_if<!std::is_base_of_v<BasicEvent,remove_pointer<remove_cv<remove_reference<_Ty>::type>::type>::type>,void>::type EventProcessor::AddEvent(T &&,Milliseconds,bool)”: 应输入 3 个参数，却提供了 1 个
+MSBUILD|      D:\TrinityCore\src\server\scripts\Commands\cs_dragonriding.cpp(956,30):
+MSBUILD|      尝试匹配参数列表“()”时
+MSBUILD|  
+MSBUILD|D:\TrinityCore\src\server\scripts\Commands\cs_dragonriding.cpp(957,80): error C2143: 语法错误: 缺少“;”(在“)”的前面) [D:\TC-Build\src\server\scripts\scripts.vcxproj]
+MSBUILD|  (编译源文件“../../../../TrinityCore/src/server/scripts/Commands/cs_dragonriding.cpp”)
+MSBUILD|  
+MSBUILD|D:\TrinityCore\src\server\scripts\Commands\cs_dragonriding.cpp(957,80): error C2059: 语法错误:“)” [D:\TC-Build\src\server\scripts\scripts.vcxproj]
+MSBUILD|  (编译源文件“../../../../TrinityCore/src/server/scripts/Commands/cs_dragonriding.cpp”)
+MSBUILD|  
+MSBUILD|D:\TrinityCore\src\server\scripts\Commands\cs_dragonriding.cpp(2003,49): error C2664: “Unit *ObjectAccessor::GetUnit(const WorldObject &,const ObjectGuid &)”: 无法将参数 1 从“Player *”转换为“const WorldObject &” [D:\TC-Build\src\server\scripts\scripts.vcxproj]
+MSBUILD|  (编译源文件“../../../../TrinityCore/src/server/scripts/Commands/cs_dragonriding.cpp”)
+MSBUILD|      D:\TrinityCore\src\server\scripts\Commands\cs_dragonriding.cpp(2003,57):
+MSBUILD|      原因如下: 无法从“Player *”转换为“const WorldObject”
+MSBUILD|      D:\TrinityCore\src\server\scripts\Commands\cs_dragonriding.cpp(2003,57):
+MSBUILD|      class“WorldObject”的构造函数声明为“explicit”
+MSBUILD|      D:\TrinityCore\src\server\game\Globals\ObjectAccessor.h(67,23):
+MSBUILD|      参见“ObjectAccessor::GetUnit”的声明
+MSBUILD|      D:\TrinityCore\src\server\scripts\Commands\cs_dragonriding.cpp(2003,49):
+MSBUILD|      尝试匹配参数列表“(Player *, ObjectGuid)”时
+MSBUILD|  
+MSBUILD_EXIT=1
+G17B3R1_WINDOWS_BUILD_ERROR=MSBuild failed
+G17B3R1_WINDOWS_BUILD_RESULT=FAIL
+STOP_DO_NOT_START_WORLDSERVER
+RESULT_FILE=C:\Users\Administrator\Downloads\workspace\uploads\G17B3R1_WINDOWS_BUILD_RESULT.txt

@@ -1,0 +1,89 @@
+G17B3R2_WINDOWS_BUILD_START
+B3R2_BUILD=r1b_template_spell_table
+SCOPE=B3R2_MULTIPAGE_SKILLBAR_8SLOTS+PAGE_SWITCH+ENERGY_LOOP+RIDER_ATTRIBUTION+DBC_990025_990028
+RUNS_DBC_APPEND=True
+RUNS_SQL=True
+DATABASE=world
+POST_SHA256=feb3dad467188052c7b189478cea7060b14f8e13eb5bd7082d9f81b4ca3ab9ce
+PYTHON=C:\Users\Administrator\AppData\Local\Programs\Python\Python312\python.exe
+PACKAGE_TEST|----------------------------------------------------------------------
+PACKAGE_TEST|Ran 45 tests in 1.120s
+PACKAGE_TEST|System.Management.Automation.RemoteException
+PACKAGE_TEST|OK
+PACKAGE_TEST|PACKAGE_PS_STATIC_CHECK=PASS
+PACKAGE_TEST|UNIT_TESTS_RAN=45 FAILURES=0 ERRORS=0
+PACKAGE_TEST|G17B3R2_PACKAGE_SELF_TEST=PASS
+PACKAGE_TEST_EXIT=0
+UNIT_TEST|.............................................
+UNIT_TEST|----------------------------------------------------------------------
+UNIT_TEST|Ran 45 tests in 1.104s
+UNIT_TEST|System.Management.Automation.RemoteException
+UNIT_TEST|OK
+UNIT_TEST_EXIT=0
+SOURCE_SHA256_BEFORE=feb3dad467188052c7b189478cea7060b14f8e13eb5bd7082d9f81b4ca3ab9ce
+SOURCE_APPLY|G17B3R2_SOURCE_STATE=B3R2_APPLIED
+SOURCE_APPLY|TARGET_SHA256=feb3dad467188052c7b189478cea7060b14f8e13eb5bd7082d9f81b4ca3ab9ce
+SOURCE_APPLY|G17B3R2_SOURCE_APPLY=ALREADY_CURRENT
+SOURCE_APPLY_EXIT=0
+SOURCE_SHA256_AFTER=feb3dad467188052c7b189478cea7060b14f8e13eb5bd7082d9f81b4ca3ab9ce
+G17B3R2_SOURCE_APPLY_GATE=PASS
+DBC_CHECK|G17B3R2_RECORDS=49868
+DBC_CHECK|G17B3R2_PRESENT=4
+DBC_CHECK|G17B3R2_SPELL_DBC_STATE=ALREADY_APPENDED
+DBC_CHECK_EXIT=0
+DBC_CHECK_STATE=G17B3R2_SPELL_DBC_STATE=ALREADY_APPENDED
+G17B3R2_SERVER_DBC_APPEND=ALREADY_APPENDED
+MYSQL|G17B3R2_WORLD_SKILL_PAGES=PASS	0	4	0	7	0
+MYSQL_EXIT=0
+G17B3R2_WORLD_SQL_GATE=PASS G17B3R2_WORLD_SKILL_PAGES=PASS
+MSBUILD=D:\vs\MSBuild\Current\Bin\MSBuild.exe
+DRAGONRIDING_VCXPROJ_HITS=1
+BEFORE_EXE_SHA256=56a15a5cfff865633ce383eeeb3de3352ecfe0f3243f3c19d573b6f46d382f05
+BEFORE_EXE_UTC=2026-08-25T11:00:51.0664236Z
+BEFORE_PDB_UTC=2026-08-25T11:00:51.0994821Z
+BUILD_START_UTC=2026-08-25T11:54:40.2127490Z
+MSBUILD|适用于 .NET Framework MSBuild 版本 18.8.2+ce25c0108
+MSBUILD|
+MSBUILD|  gsoap.vcxproj -> D:\TC-Build\dep\gsoap\RelWithDebInfo\gsoap.lib
+MSBUILD|  efsw.vcxproj -> D:\TC-Build\dep\efsw\RelWithDebInfo\efsw.lib
+MSBUILD|  sfmt.vcxproj -> D:\TC-Build\dep\SFMT\RelWithDebInfo\sfmt.lib
+MSBUILD|  fmt.vcxproj -> D:\TC-Build\dep\fmt\RelWithDebInfo\fmt.lib
+MSBUILD|  lualib.vcxproj -> D:\TC-Build\bin\RelWithDebInfo\lua52.dll
+MSBUILD|  zlib.vcxproj -> D:\TC-Build\dep\zlib\RelWithDebInfo\zlib.lib
+MSBUILD|  argon2.vcxproj -> D:\TC-Build\dep\argon2\RelWithDebInfo\argon2.lib
+MSBUILD|  Detour.vcxproj -> D:\TC-Build\dep\recastnavigation\Detour\RelWithDebInfo\Detour.lib
+MSBUILD|  g3dlib.vcxproj -> D:\TC-Build\dep\g3dlite\RelWithDebInfo\g3dlib.lib
+MSBUILD|  common.vcxproj -> D:\TC-Build\src\common\RelWithDebInfo\common.lib
+MSBUILD|  database.vcxproj -> D:\TC-Build\src\server\database\RelWithDebInfo\database.lib
+MSBUILD|  shared.vcxproj -> D:\TC-Build\src\server\shared\RelWithDebInfo\shared.lib
+MSBUILD|  game.vcxproj -> D:\TC-Build\src\server\game\RelWithDebInfo\game.lib
+MSBUILD|  cs_dragonriding.cpp
+MSBUILD|D:\TrinityCore\src\server\scripts\Commands\cs_dragonriding.cpp(2760,69): error C2039: "FLIGHT_STATE": 不是 "G17Dragonriding" 的成员 [D:\TC-Build\src\server\scripts\scripts.vcxproj]
+MSBUILD|  (编译源文件“../../../../TrinityCore/src/server/scripts/Commands/cs_dragonriding.cpp”)
+MSBUILD|      D:\TrinityCore\src\server\scripts\Commands\cs_dragonriding.cpp(60,11):
+MSBUILD|      参见“G17Dragonriding”的声明
+MSBUILD|  
+MSBUILD|D:\TrinityCore\src\server\scripts\Commands\cs_dragonriding.cpp(2760,69): error C2065: “FLIGHT_STATE”: 未声明的标识符 [D:\TC-Build\src\server\scripts\scripts.vcxproj]
+MSBUILD|  (编译源文件“../../../../TrinityCore/src/server/scripts/Commands/cs_dragonriding.cpp”)
+MSBUILD|  
+MSBUILD|D:\TrinityCore\src\server\scripts\Commands\cs_dragonriding.cpp(2760,22): error C2737: “state”: 必须初始化 const 对象 [D:\TC-Build\src\server\scripts\scripts.vcxproj]
+MSBUILD|  (编译源文件“../../../../TrinityCore/src/server/scripts/Commands/cs_dragonriding.cpp”)
+MSBUILD|  
+MSBUILD|D:\TrinityCore\src\server\scripts\Commands\cs_dragonriding.cpp(2793,10): error C3668: “g17_dragonriding_playerscript::OnLogin”: 包含重写说明符“override”的方法没有重写任何基类方法 [D:\TC-Build\src\server\scripts\scripts.vcxproj]
+MSBUILD|  (编译源文件“../../../../TrinityCore/src/server/scripts/Commands/cs_dragonriding.cpp”)
+MSBUILD|  
+MSBUILD|D:\TrinityCore\src\server\scripts\Commands\cs_dragonriding.cpp(2793,10): error C4263: “void g17_dragonriding_playerscript::OnLogin(Player *)”: 成员函数不重写任何基类虚拟成员函数 [D:\TC-Build\src\server\scripts\scripts.vcxproj]
+MSBUILD|  (编译源文件“../../../../TrinityCore/src/server/scripts/Commands/cs_dragonriding.cpp”)
+MSBUILD|  
+MSBUILD|D:\TrinityCore\src\server\scripts\Commands\cs_dragonriding.cpp(2784,7): error C4264: “void PlayerScript::OnLogin(Player *,bool)”: 不重写基“PlayerScript”中的虚拟成员函数；函数被隐藏 [D:\TC-Build\src\server\scripts\scripts.vcxproj]
+MSBUILD|  (编译源文件“../../../../TrinityCore/src/server/scripts/Commands/cs_dragonriding.cpp”)
+MSBUILD|      D:\TrinityCore\src\server\game\Scripting\ScriptMgr.h(692,22):
+MSBUILD|      参见“PlayerScript::OnLogin”的声明
+MSBUILD|      D:\TrinityCore\src\server\game\Scripting\ScriptMgr.h(625,19):
+MSBUILD|      参见“PlayerScript”的声明
+MSBUILD|  
+MSBUILD_EXIT=1
+G17B3R2_WINDOWS_BUILD_ERROR=MSBuild failed
+G17B3R2_WINDOWS_BUILD_RESULT=FAIL
+STOP_DO_NOT_START_WORLDSERVER
+RESULT_FILE=C:\Users\Administrator\Downloads\workspace\uploads\G17B3R2_WINDOWS_BUILD_RESULT.txt

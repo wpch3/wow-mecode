@@ -1,0 +1,15 @@
+PACKAGE=G17B3R2d_MultiPage_Skillbar_Server_Windows_20260825
+DATE_UTC=2026-08-25
+REVISION=r1d_sixslot_fastland
+PURPOSE=Multi-page vehicle skill bar: the skill bar lives on the VEHICLE (Creature::m_spells, 8 slots) with a pure movement page (no attack skills) and a per-archetype combat page, switched live via Player::VehicleSpellInitialize(); energy loop (dive +15 / generator +8 / passive +1 per 2s); rider-attributed combat with vehicle cooldowns; BG/arena blocked; 40yd range + LOS legality.
+PREIMAGE_SOURCE=2ddf54a66395896244869318e4bcfd619d10afc884033c6aa88e7cb53d0e6963
+POSTIMAGE_SOURCE=175e5a122765691448738c7db7a25b32535f1fc29d7781e297e10614d4173975
+SAFE_ROLLBACK_SOURCE=2ddf54a66395896244869318e4bcfd619d10afc884033c6aa88e7cb53d0e6963
+UPGRADEABLE_FROM=98446106,1a96b72e,ecd307b4,feb3dad4,a65b0ddc
+SERVER_DBC_APPEND=append_g17b3r2_spells.py (990025-990028; v1_append4; idempotent; ALREADY_APPENDED re-run safe)
+WORLD_SQL=G17B3R2_world_skill_pages.sql (spell_script_names 990025-990028 + creature_template_spell rows 0-6 = movement page; INSERT IGNORE + full realign, idempotent)
+R1B_FIX=real user run failed with "ERROR 1054: Unknown column 'spell1'": this fork has NO creature_template.spell1-8; creature spells live in creature_template_spell (CreatureID/Index/Spell -> CreatureTemplate.spells[Index], ObjectMgr.cpp:670). SQL rewritten; rollback SQL fixed; folder renamed to G17B3R2b to prevent stale v1 folder confusion.
+CLIENT_PARTNER=G17C3v2_Skill_Page_Buttons_Client_Windows_20260825 (installed by user, PASS)
+PROOF=G17B3R2_WINDOWS_BUILD_RESULT=PASS
+R1C_FIX=real user r1b run: source apply+DBC+SQL all PASS, MSBuild failed with 5 errors: C2039/C2065/C2737 (GetData(G17Dragonriding::FLIGHT_STATE) missing DATA_ prefix in spell_g17_glide_brake) and C3668/C4263/C4264 (fork PlayerScript::OnLogin is OnLogin(Player*, bool)). Fixed both; feb3dad4 (user's current state) whitelisted as INTERMEDIATE4 so the rerun upgrades directly (B3R1 FIX5 lesson).
+R1D_FIX=user live test: 7 spells sent -> only 6 buttons rendered and the page-switch button (slot 6) was invisible -> the stock 3.3.5 client VehicleMenuBar has a FIXED 6 spell buttons. R1d re-layouts every page to exactly 6 visible entries (5 skills + switch at slot 5; brake skill stays registered but off the bar, S key covers braking) and makes landings ~2x faster/steeper per the user request (profiles 45/18@21 -> 28/26@26 for dragons etc., timeout 45s -> 25s).

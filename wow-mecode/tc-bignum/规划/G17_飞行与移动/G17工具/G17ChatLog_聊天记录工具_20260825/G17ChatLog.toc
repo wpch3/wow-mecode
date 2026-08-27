@@ -1,0 +1,5 @@
+## Interface: 30300
+## Title: |cffffd700G17|r ChatLog
+## Notes: 聊天框记录+导出工具：自动记录全部聊天到文件，/g17log 打开浏览界面，一键复制或导出全文。
+## SavedVariablesPerCharacter: G17ChatLogDB
+G17ChatLog.lua

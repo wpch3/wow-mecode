@@ -1,0 +1,11 @@
+PACKAGE=G17C6_Combat_Visuals_Client_Windows_20260825
+DATE_UTC=2026-08-25
+REVISION=v1_visuals_range
+PURPOSE=Patch the CLIENT Spell.dbc (MPQ chain) so the 25 combat carriers have REAL spell visuals (SpellVisualID per archetype block) and 30yd ranges.
+INPUT_IMAGE=006a892b0b3363caedc7436f907948778fe6d084759fa0fc0ddc7f7603c03997 (48985408; the C3 postimage currently installed)
+OUTPUT_IMAGE=5db5b7a52a4fad0e7c05ed6127fe95a437dce158332ae9b626ec99e2b7855e9b (48985408; same size, in-place record patch; identical to the B3R5 server image)
+VISUALS=dragon 1483 | beast 6587 | magic 7749 | mech 98 | generic 219
+MPQ_CHAIN=root patch-<slot>.MPQ owner + zhCN patch-zhCN-<slot>.MPQ byte-identical mirror
+AREA_TABLE=unchanged 1acef997a27f844a8abee9b477c44f2097f745168c6df85ece6b1a135568c233
+PROOF=G17C6_CLIENT_VISUALS_RESULT=PASS
+PARTNER_SERVER_PACKAGE=G17B3R5_Combat_Visuals_Windows_20260825

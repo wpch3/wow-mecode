@@ -1,0 +1,14 @@
+G17B3R3_LOCAL_VALIDATION=PASS (24 tests + package self-test + PS static + dual upgrade-path simulation)
+DATE_UTC=2026-08-25T12:28:18Z
+SCOPE=DF-style rider skill panel (dual-cast) + G17DragonBar addon
+MECHANISM=fork SpellInfo::CheckVehicle (SpellInfo.cpp:1911) allows rider casts while
+         seated for Attributes-0x100 carriers; all 29 carriers qualify. B3R1 failed
+         only because the default UI hides player bars on the controlling seat.
+PREIMAGE_SOURCE=175e5a122765691448738c7db7a25b32535f1fc29d7781e297e10614d4173975
+POSTIMAGE_SOURCE=29f3e55470f3ceaab79c8c5a6145ece76a8743c99999adec505a446239c32b3a
+UPGRADE_SIMULATION=a65b0ddc -> 29f3e554 PASS; 175e5a12 -> 29f3e554 PASS
+ADDON=G17DragonBar 11 secure buttons, cooldowns, energy display, /g17bar reset
+----------------------------------------------------------------------
+PACKAGE_PS_STATIC_CHECK=PASS
+UNIT_TESTS_RAN=24 FAILURES=0 ERRORS=0
+G17B3R3_PACKAGE_SELF_TEST=PASS

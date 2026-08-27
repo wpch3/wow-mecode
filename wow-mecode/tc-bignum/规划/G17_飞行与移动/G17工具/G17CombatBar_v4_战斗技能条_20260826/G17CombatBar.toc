@@ -1,0 +1,5 @@
+## Interface: 30300
+## Title: |cffff8c00G17|r CombatBar
+## Notes: 御龙术战斗技能条 v4：骑龙时显示5个战斗技能（配合坐骑栏的6个移动技能，共11个同时可见）
+## SavedVariablesPerCharacter: G17CombatBarDB
+G17CombatBar.lua

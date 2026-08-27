@@ -16,7 +16,7 @@ ROLLBACK = ROOT / "rollback_safe_src/src/server/scripts/Commands/cs_dragonriding
 TOOL = ROOT / "tools/apply_g17b3r1_source.py"
 
 PRE_SHA = "98446106309b45371f138d9c7bc707ee608d9a3db347e13d61cfd68cc97810f9"
-POST_SHA = "ecd307b472cb2c49f68607a8b0afe5dcf5f87a7a8eb6f087a4717f4cd8fa1bbb"
+POST_SHA = "2ddf54a66395896244869318e4bcfd619d10afc884033c6aa88e7cb53d0e6963"
 
 
 def sha(p: Path) -> str:
@@ -146,7 +146,7 @@ class TestToolLifecycle(unittest.TestCase):
         self.assertIn("DBC_CHECK_STATE=", install)
         self.assertIn("G17B3_SPELL_DBC_STATE=MISSING", install)
         # Version fingerprint so the user can instantly tell an old package.
-        self.assertIn('$B3R1_BUILD = "f1_dbc_stdout"', install)
+        self.assertIn('$B3R1_BUILD = "f3_decl_order"', install)
         self.assertIn('"B3R1_BUILD=" + $B3R1_BUILD', install)
 
     def test_03_ps_files_parse(self):
@@ -174,3 +174,161 @@ class TestToolLifecycle(unittest.TestCase):
         joint = chr(10).join(code)
         self.assertNotIn("CROSS JOIN", joint)
         self.assertNotIn("NOT EXISTS", joint)
+
+
+# Exact SHA256 the user's real source had when the FIX4-window package was
+# rejected by the locked-lineage gate (SOURCE_SHA256_BEFORE in
+# G17B3R1_WINDOWS_BUILD_RESULT.txt, run of 2026-08-25).
+USER_SOURCE_AFTER_FAILED_RUN = "1a96b72eb28ffa2c0ac0d3e0c07e26c30f25bcd8525babd15efad02a041825d6"
+
+
+class TestLineageUpgrade(unittest.TestCase):
+    """FIX5 regression: the gate must accept the real user state 1a96b72e.
+
+    The pre-FIX4 package applied its payload (user source -> 1a96b72e) and
+    then failed MSBuild with 6 real error classes. FIX4 replaced the payload
+    (ecd307b4) but did NOT whitelist 1a96b72e, so the rerun died with
+    'dragonriding source is not a locked lineage image: 1a96b72e...' before
+    touching anything. These tests pin the exact upgrade path.
+    """
+
+    def _tool_module(self):
+        spec = importlib.util.spec_from_file_location("t", TOOL)
+        mod = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(mod)
+        return mod
+
+    def test_01_intermediate7_is_user_state(self):
+        mod = self._tool_module()
+        self.assertEqual(mod.INTERMEDIATE7_SHA256, USER_SOURCE_AFTER_FAILED_RUN)
+
+    def test_02_user_state_is_upgradeable(self):
+        mod = self._tool_module()
+        self.assertIn(USER_SOURCE_AFTER_FAILED_RUN, mod.UPGRADEABLE_SHAS)
+        self.assertEqual(mod.state_for_digest(USER_SOURCE_AFTER_FAILED_RUN),
+                         "B3R1_INTERMEDIATE_UPGRADEABLE")
+
+    def test_02b_fix4_postimage_is_upgradeable(self):
+        # FIX6: after the FIX5-window run the user's source sits on the FIX4
+        # postimage ecd307b4 (apply PASS, MSBuild FAIL with 5 decl-order /
+        # reference errors).  It must be INTERMEDIATE8 so the next rerun
+        # upgrades to the FIX6 payload instead of being lineage-rejected.
+        fix4 = "ecd307b472cb2c49f68607a8b0afe5dcf5f87a7a8eb6f087a4717f4cd8fa1bbb"
+        mod = self._tool_module()
+        self.assertEqual(mod.INTERMEDIATE8_SHA256, fix4)
+        self.assertIn(fix4, mod.UPGRADEABLE_SHAS)
+        self.assertEqual(mod.state_for_digest(fix4), "B3R1_INTERMEDIATE_UPGRADEABLE")
+
+    def test_03_installer_gate_whitelists_user_state(self):
+        install = (ROOT / "Install-Build-G17B3R1-Windows.ps1").read_text(
+            encoding="utf-8")
+        self.assertIn('Read-ToolHash "INTERMEDIATE7_SHA256"', install)
+        # the recognized set = Pre + Post + SafeRollback + all intermediates
+        self.assertRegex(install, r"\$recognized = @\(\$Pre, \$Post, \$SafeRollback\) \+ \$Upgradeable")
+        self.assertIn("INTERMEDIATE7_SHA256", install)
+
+    def test_04_full_tool_lifecycle(self):
+        # End-to-end: check -> apply (preimage) -> apply again (already) ->
+        # rollback, against a temp source root.
+        import sys
+        import tempfile
+        mod = self._tool_module()
+        with tempfile.TemporaryDirectory() as tmp:
+            target = Path(tmp) / "src/server/scripts/Commands/cs_dragonriding.cpp"
+            target.parent.mkdir(parents=True)
+            target.write_bytes(ORIGINAL.read_bytes())
+            self.assertEqual(sha(target), PRE_SHA)
+            out = subprocess.run(
+                [sys.executable, str(TOOL), "check", "--source-root", tmp],
+                capture_output=True, text=True)
+            self.assertEqual(out.returncode, 0, out.stdout + out.stderr)
+            # PRE_SHA == SAFE_ROLLBACK_SHA (same B2R3 floor) so the state map
+            # reports the rollback alias; both mean "recognized, not applied".
+            self.assertIn("G17B3R1_SOURCE_STATE=", out.stdout)
+            self.assertIn("TARGET_SHA256=" + PRE_SHA, out.stdout)
+            out = subprocess.run(
+                [sys.executable, str(TOOL), "apply", "--source-root", tmp],
+                capture_output=True, text=True)
+            self.assertEqual(out.returncode, 0, out.stdout + out.stderr)
+            self.assertIn("G17B3R1_SOURCE_APPLY=PASS", out.stdout)
+            self.assertEqual(sha(target), POST_SHA)
+            # NOTE: no .preimage backup is written for the floor state (the
+            # state map aliases 98446106 to B3R1_SAFE_ROLLBACK); that is fine
+            # because rollback_safe_src is byte-identical to the floor image.
+            # For a true intermediate (e.g. 1a96b72e) apply() does write a
+            # forensic .g17b3r1.preimage backup.
+            out = subprocess.run(
+                [sys.executable, str(TOOL), "apply", "--source-root", tmp],
+                capture_output=True, text=True)
+            self.assertEqual(out.returncode, 0, out.stdout + out.stderr)
+            self.assertIn("G17B3R1_SOURCE_APPLY=ALREADY_CURRENT", out.stdout)
+            out = subprocess.run(
+                [sys.executable, str(TOOL), "rollback", "--source-root", tmp],
+                capture_output=True, text=True)
+            self.assertEqual(out.returncode, 0, out.stdout + out.stderr)
+            self.assertIn("G17B3R1_SOURCE_ROLLBACK=PASS_B2R3_FLOOR", out.stdout)
+            self.assertEqual(sha(target), PRE_SHA)
+
+    def test_05_payload_file_integrity(self):
+        # Whole-file sanity for a payload that must survive MSVC: balanced
+        # braces/parens and no truncation.
+        text = PAYLOAD.read_text(encoding="utf-8")
+        self.assertEqual(text.count("{"), text.count("}"))
+        self.assertEqual(text.count("("), text.count(")"))
+        self.assertTrue(text.rstrip().endswith("}"))
+        self.assertGreater(len(text.splitlines()), 1500)
+
+# FIX6: the 5 REAL MSVC errors from the user's 2026-08-25 build log:
+#   C3861 RevokeCombatSkills (fwd decl placed AFTER the first call)
+#   C2061/C2660/C2143/C2059 CombatStunReleaseEvent (class defined AFTER `new`)
+#   C2664 GetUnit(Player*, ...) -> wants const WorldObject& (needs *caster)
+class TestFix6DeclOrder(unittest.TestCase):
+    def _lines(self):
+        return PAYLOAD.read_text(encoding="utf-8").splitlines()
+
+    def _first_line(self, needle, start=0):
+        lines = self._lines()
+        for i in range(start, len(lines)):
+            if needle in lines[i]:
+                return i + 1
+        return -1
+
+    def test_01_revoke_fwd_decl_before_first_call(self):
+        lines = self._lines()
+        decl = self._first_line("void RevokeCombatSkills(Player* player);")
+        call = self._first_line("    RevokeCombatSkills(player);")
+        self.assertGreater(decl, 0, "forward declaration missing")
+        self.assertGreater(call, 0, "call site missing")
+        self.assertLess(decl, call,
+                        "C3861 regression: decl must precede first call")
+
+    def test_02_stun_event_class_before_use(self):
+        cls = self._first_line("class CombatStunReleaseEvent : public BasicEvent")
+        # match the real call site (with actual ctor args), not the comment
+        use = self._first_line("new CombatStunReleaseEvent(player->GetGUID()")
+        self.assertGreater(cls, 0, "class definition missing")
+        self.assertGreater(use, 0, "use site missing")
+        self.assertLess(cls, use,
+                        "C2061 regression: class must be complete before `new`")
+
+    def test_03_single_definitions(self):
+        text = PAYLOAD.read_text(encoding="utf-8")
+        self.assertEqual(text.count("class CombatStunReleaseEvent"), 1)
+        self.assertEqual(text.count("void RevokeCombatSkills(Player* player);"), 1)
+
+    def test_04_getunit_takes_reference(self):
+        # C2664 regression: ObjectAccessor::GetUnit(const WorldObject&, ...)
+        text = PAYLOAD.read_text(encoding="utf-8")
+        self.assertIn("ObjectAccessor::GetUnit(*caster, _targetGuid)", text)
+        self.assertNotIn("ObjectAccessor::GetUnit(caster, _targetGuid)", text)
+
+    def test_05_addevent_two_arg_pattern(self):
+        # The proven pattern from NonVisualFallGuardEvent (compiled on the
+        # user's machine): AddEvent(new X(...), CalculateTime(Milliseconds(...)))
+        text = PAYLOAD.read_text(encoding="utf-8")
+        self.assertIn(
+            "new CombatStunReleaseEvent(player->GetGUID(), target->GetGUID()),\n"
+            "                player->m_Events.CalculateTime(Milliseconds(G17Dragonriding::COMBAT_STUN_MS))",
+            text)
+        self.assertIn("new NonVisualFallGuardEvent(player, FALL_GUARD_MAX_CHECKS),",
+                      text)

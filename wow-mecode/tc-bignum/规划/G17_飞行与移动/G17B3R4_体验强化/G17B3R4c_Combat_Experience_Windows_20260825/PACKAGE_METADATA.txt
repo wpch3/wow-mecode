@@ -1,0 +1,15 @@
+PACKAGE=G17B3R4c_Combat_Experience_Windows_20260825
+DATE_UTC=2026-08-25
+REVISION=r1c_lineage_gate
+PURPOSE=Combat experience rework from the user's live-test feedback: level-scaled damage, combat visuals, 30yd range fix (无法命中), mount assisted strikes, G17DragonBar addon v2 (the v1 bar never showed because 3.3.5 lacks IsSpellKnown).
+PREIMAGE_SOURCE=29f3e55470f3ceaab79c8c5a6145ece76a8743c99999adec505a446239c32b3a (B3R3; user's current build)
+POSTIMAGE_SOURCE=7cb417b3cec7c6d93002c35c96a17748583d412308ac019bf2830fd496afa936 (B3R4)
+SAFE_ROLLBACK_SOURCE=29f3e55470f3ceaab79c8c5a6145ece76a8743c99999adec505a446239c32b3a
+UPGRADEABLE_FROM=98446106,1a96b72e,ecd307b4,feb3dad4,a65b0ddc,175e5a12,f49fd955
+DAMAGE_SCALING=base + 15/level (slots 0-3), finisher + 45/level before the 2.6x burst; level-80 slot-1 hit ~= 1250, finisher ~= 9800 (x archetype mult, x0.45 PvP)
+RANGE_FIX=server Spell.dbc records 990000-990024 RangeIndex 1(self)->4(30yd) via tools/patch_g17b3r4_ranges.py (in-place, idempotent, backup; root cause of 无法命中: self-range records reject explicit targets in Spell::CheckRange)
+AUTO_COMBAT=dragon assisted strike every 3.5s while the rider is in combat: rider-attributed, LOS+40yd gated, 5 energy, never below 20 energy; BG/arena blocked
+ADDON_V2=G17DragonBar: spellbook-name scan (GetSpellBookItemName/GetSpellName) instead of the non-existent-in-3.3.5 IsSpellKnown; hand-built SecureActionButtonTemplate buttons (no ActionButtonTemplate inheritance); /g17bar debug for on-client diagnosis
+PROOF=G17B3R4_WINDOWS_BUILD_RESULT=PASS
+R1B_FIX=real user run: source+DBC range patch+addon all PASS, MSBuild failed with C2039 "getLevel" (x2) - the fork's accessor is GetLevel() (Unit.h:890). Fixed; f49fd955 (user's current state) whitelisted as INTERMEDIATE7.
+R1C_FIX=real user run of r1b: the PS installer gate rejected f49fd955 because the derived $Upgradeable list silently failed to include INTERMEDIATE6/7 (string-replace pattern mismatch; the TOOL had them but the INSTALLER did not). Fixed the list and added an installer-gate simulation test that parses Read-ToolHash from the PS1 and requires every tool-upgradeable digest and every live user state to be recognized - the two layers can never diverge again.
