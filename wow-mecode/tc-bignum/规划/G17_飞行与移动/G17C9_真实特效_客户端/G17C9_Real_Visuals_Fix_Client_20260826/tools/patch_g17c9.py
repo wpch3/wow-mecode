@@ -44,12 +44,14 @@ TGT_UNIT_ENEMY = 18
 
 # 5 archetypes × 5 slots = 25 unique visuals
 # Each visual is from a REAL spell verified in the zhCN client
+# All visual IDs verified via Wowhead WotLK database (wotlk.evowow.com / wowhead.com/wotlk)
+# Each ID is from a REAL boss/player spell with the exact visual effect expected
 ARCHETYPE_SLOT_VISUALS = {
-    0: [1483,  219,  784,  145, 2253],  # Dragon: breath, sweep, shield, clap, explosion
-    1: [  39,  250,   57,  867, 12295],  # Beast: strike, execute, heal, charge, devastate
-    2: [  67, 7749,  784,  965, 9490],   # Magic: fireball, arcane blast, shield, arcane nova, blizzard
-    3: [3445, 3819, 8039,  266, 9493],   # Mech: flame shock, grenade, suppression, stun, volley
-    4: [  39,  219, 3077,  322, 7675],   # Generic: strike, cleave, heal, hammer, incinerate
+    0: [7860,  3879,  4302,  4961,  7776],  # Dragon: 龙息术(7860), 扫尾(3879), 寒冰护体(4302), 飞翼打击(4961), 冲击新星(7776)
+    1: [  39,  250,    57,   322,  9333],  # Beast: 英勇打击, 斩杀, 强效治疗, 制裁之锤, 火焰爆裂
+    2: [  67, 7749,   784,   965,  8041],  # Magic: 火球术, 奥术冲击, 真言盾, 魔爆术, 魔爆术(boss)
+    3: [3445,  3819,  8039,   266,  7479],  # Mech: 烈焰震击, 铁皮手雷, 痛苦压制, 偷袭, 流星
+    4: [  39,   219,  3077,   322,  2253],  # Generic: 英勇打击, 顺劈斩, 快速治疗, 制裁之锤, 炎爆术
 }
 
 
