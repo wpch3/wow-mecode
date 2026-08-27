@@ -1,44 +1,42 @@
 WOW-MECODE HANDOFF GIT STATE
-Generated: 2026-08-27 (Asia/Shanghai)
+Generated: 2026-08-27 (Asia/Shanghai) - batch 2 (C9 v3 installer fix)
 Repository: /home/user/wow-mecode  (mirror of https://github.com/wpch3/wow-mecode.git)
-Session branch: arena/01a03878-wow-mecode  (branched from arena/01a03493-wow-mecode @ ef24e03a; DO NOT switch/push other branches)
-HEAD: e9716455ae47cc938e3ec60674e4264a9bd414c9
-Other local branch: main
+Session branch: arena/01a03878-wow-mecode  (DO NOT switch/push other branches)
+HEAD at generation: 7cfde0724927852ac1c236ed1f0bef7ff727a63d (batch-1 handoff commit; the C9 v3 commit lands on top)
+NOTE: sandbox was re-cloned between turns; the local branch pointer was restored to the remote state via fetch+update-ref, working tree untouched
 Remotes:
 origin	https://github.com/wpch3/wow-mecode.git (fetch)
 origin	https://github.com/wpch3/wow-mecode.git (push)
 
 RECENT COMMITS (last 20)
-e971645 (HEAD -> arena/01a03878-wow-mecode) G17-C9 v2: Wowhead验证的真实Boss法术视觉ID + 删除DBC冷却
-010c838 G17-C9: 真实法术特效(25独特视觉按类型×槽位) + 修复凭空冷却(删DBC RecoveryTime)
-ef24e03 (grafted) G17-B3R1 FIX4: 修复真实MSVC编译错误(6类), 源码1a96b72e->ecd307b4; 19/19测试+包自检PASS
+ef24e03 (grafted, HEAD -> arena/01a03878-wow-mecode) G17-B3R1 FIX4: 修复真实MSVC编译错误(6类), 源码1a96b72e->ecd307b4; 19/19测试+包自检PASS
 
-WORKING TREE
-## arena/01a03878-wow-mecode
- M wow-mecode/PROJECT_HANDOFF.md
-(untracked/modified entries above are authoritative; this file and the manifest are regenerated this batch)
-
-CURRENT PROJECT STATE (one-line per line of work)
-- G17 R1-R5 / B0 / B1(R1-R5) / B2(R1-R4): ALL CLOSED; do not rerun or roll back any package.
-- G17 B3 combat-skills line: closed through B3R6. Server payload SHA 3fdb46e8... (cs_dragonriding.cpp),
-  safe rollback 1febdecb (B3R5). Multi-page 6-button vehicle bar, 25 skills 990000-990024,
-  energy loop, real-cast auto-combat every 4.5s, dual-gate cooldowns, mount-lag fix (no
-  LearnSpell/RemoveSpell on board), target validation removed (r1c).
-- G17 client DBC chain: base dd250911 -> C1 03bf11fd -> C2 760d3f27 (49864) -> C3v2 006a892b (49868)
-  -> C6 5db5b7a5 -> C7 (SCHOOL_DAMAGE) -> C8 (WRONG visuals + phantom CD, user FAIL, superseded)
-  -> C9 v2 (Wowhead-verified per-slot visuals + RecoveryTime=0) = CURRENT, AWAITING USER INSTALL.
-- G17-C9 v2 is the ONLY pending action: user double-clicks 01_Install_G17C9.cmd, expects PASSED
-  file in uploads/, then in-game verifies: 5 distinct matching visuals per archetype, no cooldown
-  spin on failed/no-target cast.
-- Iron rule recorded in PROJECT_HANDOFF.md section 0.1 (user order 2026-08-27): ALWAYS look up
-  references (Wowhead WotLK, extracted FrameXML, fork source) and do COMPLETE field-by-field
-  cross-verification, deep mechanism analysis. Never guess from names. Origin case: C8 disaster.
-- Dead ends (must not revive): player LearnSpell skill panel (client IsKnown=false for all 29),
-  11-button IsKnown-based bar. Only candidate for >6 buttons: BonusActionBar (shown in vehicle
-  mode per MainMenuBar.lua:90; not yet prototyped).
-- After C9: skill variety design (user demand: diverse forms/casting styles) + B4 (mounted player
-  casting, eat/drink/sleep) -> BonusActionBar prototype -> B5 pathfinding -> B6 polish.
-- All non-G17 lines frozen per PROJECT_HANDOFF.md section 5 (G11/G16/G19/G22/G23/F44/F45/PBot/NPCBot).
+CURRENT PROJECT STATE
+- G17 R1-R5 / B0 / B1(R1-R5) / B2(R1-R4) / B3(R1-R6): ALL CLOSED; do not rerun.
+- G17-C9 v1/v2: DEPRECATED. User's real Windows run FAILED with
+  OBSOLETE_PACKAGE (installer greped the C6-template variable name
+  G17B3R5_VISUAL_PATCHER_VERSION while the C9 patcher defines G17C9_VERSION;
+  plus input gate pinned to the C3 image, output gate pinned to the C6 image,
+  root-MPQ hash pinning, and a 0-byte rollback PS1). Old folder renamed
+  G17C9_v1v2_已废弃_安装器五缺陷_20260826 with DEFECT_NOTE.txt. NEVER run it.
+- G17-C9 v3: CURRENT authoritative client package = repo-root G17C9_FINAL.zip
+  (flat, 459833 bytes, SHA256 2079be3f2b9626a6421d0e7efff94ab59de07f4872c0ef83290cfd1051adf4fb).
+  Installer rebuilt on the C8-proven flow (state files give paths only; input
+  state detected by the patcher; content verification + round-trip archive
+  check; real rollback script). DBC payload identical to v2 (Wowhead-verified
+  per-slot visuals + RecoveryTime/Category = 0). Package self-test 28/28 PASS
+  including the NEW installer-gate simulation test (tools/test_g17c9_package.py)
+  which would have caught every v1/v2 defect before delivery.
+- ONLY pending action: user re-downloads G17C9_FINAL.zip (v3), closes WoW,
+  double-clicks 01_Install_G17C9.cmd, expects G17C9_CLIENT_VISUALS_RESULT=PASS
+  in uploads, then in-game verifies the four README points.
+- Iron rule (user order 2026-08-27, PROJECT_HANDOFF.md section 0.1): ALWAYS
+  look up references (Wowhead WotLK, extracted FrameXML, fork source) and do
+  COMPLETE field-by-field cross-verification. Never guess from names.
+- Dead ends: player LearnSpell skill panel; 11-button IsKnown bar. >6 buttons
+  candidate = BonusActionBar (not yet prototyped).
+- After C9 v3: skill variety design + B4 -> BonusActionBar -> B5 -> B6.
+- All non-G17 lines frozen per PROJECT_HANDOFF.md section 5.
 
 REPO-ROOT ASSETS (outside nested wow-mecode/ workspace mirror)
 e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  .sudo_as_admin_successful  (0 bytes)
@@ -58,7 +56,7 @@ eecc252ddf2069238199f0cc911265f15fe8febf89c1b07099863f2ca8938894  G17C2_FINAL.zi
 d34ad6ab2ed78e787e3bb717789c205268aba686f917ae768109955f6cbf9e1f  G17C6_FINAL.zip  (461214 bytes)
 44b300e0831f59255b9392b06e7b97fcb233345f8284bf0f9a9b10e2af4e6af1  G17C7_FINAL.zip  (451766 bytes)
 452bb642d07edbb8f2ebcd301d10f1762df60252855c772fc464253da0c4c3cf  G17C8_FINAL.zip  (451615 bytes)
-e1bb16d07783883caff320cd0ba7e9305326399e21ec6f62b9f2157febfcb87e  G17C9_FINAL.zip  (457657 bytes)
+2079be3f2b9626a6421d0e7efff94ab59de07f4872c0ef83290cfd1051adf4fb  G17C9_FINAL.zip  (459833 bytes)
 c62dcaa3efaeeea77d7cfc77353610c5f51d5f64bb25e2cbf6a0c882c8cd0f64  G17ChatLog_FINAL.zip  (4497 bytes)
 03b81abbba63a006b7b688beac8528e4a2244d7ddbe861475c3aca3391168df5  G17CombatBar_FINAL.zip  (5513 bytes)
 adf94bf4bfcfc9017194c7e353b1c11bdeebe90350c890cbca31ab7c1878a58e  G17Diag_FINAL.zip  (4195 bytes)
@@ -70,5 +68,5 @@ a999b38813963a9f906dbd4364c3f0204b6b8e676ddcd68e428d51da5a76cbfd  g17-higher-slo
 [dir] tc-bignum/  (1 files)
 [dir] uploads/  (23 files)
 
-NESTED WORKSPACE wow-mecode/ : 1981 files (tc-bignum patch/planning tree, uploads, handoff trio)
-MANIFEST: HANDOFF_FILE_MANIFEST.tsv (regenerated 2026-08-27, whole-repo, excludes .git and itself)
+MANIFEST: HANDOFF_FILE_MANIFEST.tsv (regenerated 2026-08-27 batch 2, whole-repo, excludes .git and itself)
+EVIDENCE: wow-mecode/tc-bignum/规划/G17_飞行与移动/证据/g17c9v3_installer_fix_delivery_20260827.md

@@ -1,0 +1,18 @@
+PACKAGE: G17-C9 v3 Real Per-Skill Visuals + Remove Phantom Cooldown (client)
+BUILD: v3_wowhead_visuals_no_dbc_cd
+DATE: 2026-08-27
+PREREQ: G17-C3v2 or any later client chain state (C3/C6/C7/C8)
+TARGET: client Spell.dbc inside the G17 root patch MPQ + zhCN locale mirror
+SCOPE: 25 combat carriers 990000-990024 only
+  - SpellVisualID = per-archetype-per-slot Wowhead-verified real spell visual
+  - Effect_1 = SCHOOL_DAMAGE(2), EffectBasePoints_1 = 0
+  - ImplicitTargetA_1 = 18 (TARGET_UNIT_TARGET_ENEMY), RangeIndex = 4 (30yd)
+  - RecoveryTime = CategoryRecoveryTime = 0 (phantom cooldown fix)
+INSTALL: 01_Install_G17C9.cmd (double-click)
+ROLLBACK: 02_Rollback_G17C9.cmd (restores pre-C9 root+locale MPQ from backup)
+RESULT: uploads\G17C9_CLIENT_VISUALS_RESULT.txt
+STATE: uploads\G17C9_CLIENT_VISUALS_STATE.txt
+SELFTEST: python tools/test_g17c9_package.py (T1-T7; gate simulation would have
+          caught every v1/v2 installer defect before delivery)
+IDEMPOTENT: rerun on a COMPLETE client prints ALREADY_CURRENT and exits PASS
+V3 CHANGE: installer rebuilt on the C8-proven flow; DBC payload identical to v2

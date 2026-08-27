@@ -1,0 +1,16 @@
+此包已废弃（2026-08-27）——禁止安装
+====================================
+用户真实运行 FAIL 证据：G17C9_CLIENT_VISUALS_ERROR=OBSOLETE_PACKAGE
+（结果文件 uploads/G17C9_CLIENT_VISUALS_RESULT.txt）
+
+五个先天缺陷（任何机器上都不可能装上）：
+  1. Install PS1 版本门 grep G17B3R5_VISUAL_PATCHER_VERSION（C6模板遗留），
+     而 C9 补丁器变量名是 G17C9_VERSION → 永远 throw OBSOLETE_PACKAGE
+  2. 输入门硬编码要求客户端 Spell.dbc == C3 镜像，用户实际在 C8 状态
+  3. 输出门硬编码要求补丁输出 == C6 镜像哈希，C9 输出按设计必然不同
+  4. C3 状态环境模式要求根 MPQ 哈希 == C3 时代值（C6/C7/C8 安装早已改写根 MPQ）
+  5. Rollback-G17C9-Real-Visuals.ps1 是 0 字节空文件
+
+继承者：G17C9v3_Real_Visuals_Fix_Client_20260827/（C8 已验证流程重写安装器，
+DBC 负载与本目录 v2 补丁器完全一致；28/28 包自检 PASS）。
+本目录仅作谱系与根因取证，禁止执行其中任何 CMD/PS1。
