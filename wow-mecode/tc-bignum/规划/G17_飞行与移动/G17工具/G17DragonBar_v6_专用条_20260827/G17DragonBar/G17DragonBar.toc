@@ -1,0 +1,6 @@
+## Interface: 30300
+## Title: |cffff8c00G17|r DragonBar
+## Notes: 御龙术专用技能条 v6：8格混合条（原生动作槽＋玩家施法兜底）＋冷却显示＋能量读数＋诊断
+## SavedVariablesPerCharacter: G17DragonBarDB
+G17DragonBar.xml
+G17DragonBar.lua

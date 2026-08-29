@@ -1,0 +1,12 @@
+PACKAGE: G17-B3R8 Slot-Layout Safety Fix (server)
+PAYLOAD: dcfa78dd92ac4491882b9e2ec5c18a8b0803d6fcbb01cbe553e7fc069ac0f487
+PRE:     f2360d7e1be3ccea66f8bd499b19d4a7cc04acadee804dedbf8bf6774e3ca38c (B3R7)
+UPGRADEABLE FROM: any lineage image, incl. B3R6 3fdb46e8 (if B3R7 was never installed)
+ROLLBACK: 3fdb46e89a03a521d641b285a15339619a43b68c6399938121fb24683dfd306b (B3R6 floor)
+DATE: 2026-08-27
+TARGET: D:\TrinityCore\src\server\scripts\Commands\cs_dragonriding.cpp
+CHANGES: both pages = [skills/moves 0..4, PAGE_SWITCH@m_spells[5] (slot 6, always
+         visible on the stock 6-slot bar), GLIDE_BRAKE@m_spells[6] (slot 7, shown by
+         G17DragonBar v6 natively or via its secure spell-cast fallback), 0]
+         B3R7 cooldown packets unchanged.
+SELFTEST: python tools/test_g17b3r8_package.py
