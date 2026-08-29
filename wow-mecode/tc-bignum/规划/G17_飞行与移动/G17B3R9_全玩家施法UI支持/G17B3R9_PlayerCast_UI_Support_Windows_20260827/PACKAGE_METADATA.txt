@@ -1,0 +1,8 @@
+PACKAGE: G17-B3R9 Full Player-Cast Support for the Custom DragonRide UI (server)
+PAYLOAD: f0564c5ad225a67f0e49477d31d6939d32b490e6d69b8218f122bc7dce5560c3
+PRE:     dcfa78dd92ac4491882b9e2ec5c18a8b0803d6fcbb01cbe553e7fc069ac0f487 (B3R8)
+UPGRADEABLE FROM: any lineage image (B3R6 3fdb46e8 / B3R7 f2360d7e / B3R8 dcfa78dd)
+ROLLBACK: 3fdb46e89a03a521d641b285a15339619a43b68c6399938121fb24683dfd306b (B3R6 floor)
+DATE: 2026-08-27
+TARGET: D:\TrinityCore\src\server\scripts\Commands\cs_dragonriding.cpp
+SELFTEST: python tools/test_g17b3r9_package.py

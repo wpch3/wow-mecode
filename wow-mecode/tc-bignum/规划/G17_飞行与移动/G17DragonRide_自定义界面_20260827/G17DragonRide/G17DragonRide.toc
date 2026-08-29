@@ -1,0 +1,6 @@
+## Interface: 30300
+## Title: |cffff8c00G17|r DragonRide |cffc0c0c0[全新御龙界面]|r
+## Notes: 御龙术专属完整界面：自定义双行技能条(6原生+6玩家施法)+能量条+冷却+页面指示，覆盖原版6格载具条
+## SavedVariablesPerCharacter: G17DragonRideDB
+G17DragonRide.xml
+G17DragonRide.lua
