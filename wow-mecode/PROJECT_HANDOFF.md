@@ -47,13 +47,14 @@ C8 批次给 25 个战斗技能分配视觉 ID 时**凭技能名字猜**，没�
 
 ## 1. 给下一位代理的 30 秒摘要（2026-08-27 真实状态）
 
-1. **当前主线是 G17 御龙术（Dragonriding），进度＝服务端 B3R6 ＋ 客户端 C9 v2 已交付，等待用户安装 C9 做特效与冷却终验。** B0/B1/B2/R1–R5/C1–C8 全部关闭，禁止重跑旧包。
+1. **当前主线是 G17 御龙术（Dragonriding）：C9 v3 已由用户验收 PASS（龙类特效确认）；最新交付＝服务端 B3R7（7 槽＋冷却封包）＋ 客户端 C10（全类型特效）＋ G17DragonBar v5 专用条插件，等待用户安装三件套验收。** B0/B1/B2/R1–R5/B3R1–R6/C1–C9 全部关闭，禁止重跑旧包。
 2. **御龙术架构已成型**：NPC 1000171 御空龙·B0（VehicleId 70、80 级、75000 HP、能量 100/100），5 种坐骑原型（龙/兽/法/机/通）×5 战斗槽＝25 技能（990000–990024）＋4 载体（990025 切页/990026 拉升/990027 俯冲/990028 制动）；载具动作条双页切换（移动页 6 键↔战斗页 6 键）；能量循环（俯冲+15/生成器+8/被动+1每2秒）；骑手交战时龙每 4.5 秒真实施放生成器（带完整施法动画与弹道）；冷却双门（载具＋玩家 SpellHistory）。
 3. **3.3.5 客户端硬限制已全部摸清并有证据**（§4.3）：载具条最多 6 按钮（VehicleMenuBar.lua 第 6 行硬编码）；`LearnSpell` 只进服务端、客户端全部 IsKnown=false（玩家技能面板路线 B3R3 已死）；DUMMY 效果不渲染视觉（必须 SCHOOL_DAMAGE）；DBC RecoveryTime 造成"按了就转圈"的幻影冷却（C9 已清零，冷却完全由服务端 SMSG_SPELL_COOLDOWN 驱动）；上马卡顿根因是登乘时 40+ 封包（B3R6 已移除 LearnSpell/RemoveSpell）。
-4. **C9 v3 是当前唯一待执行动作**：Wowhead 逐条验证的 25 个真实法术视觉（每原型每槽独立）＋ DBC RecoveryTime=0。v1/v2 安装器有五处先天缺陷（用户真实运行 FAIL：OBSOLETE_PACKAGE），v3 已按 C8 已验证流程重写并 28/28 自检。装完验收：5 技特效各不相同且符合名字语义、无目标按技能不再出现冷却转圈。
+4. **冷却 UI 修复已双管齐下**（根因查证：C9 清零 DBC RecoveryTime 后客户端无本地预测，且载具生物施法永远不走 SpellHistory::StartCooldown 的玩家发包分支）：服务端 B3R7 发 SMSG_SPELL_COOLDOWN 双 GUID 变体＋插件 CLEU 施法成功跟踪，互为保险且无幻影冷却。
+5. **用户架构方案已落地第一步**："任务是任务，御龙术是御龙术"——御龙专用 8 格条（G17DragonBar，继承 BonusActionButtonTemplate＝原生动作槽机制）只在御龙载具激活，任务坐骑零影响；协议上限查证：m_spells 8 槽／SMSG_PET_SPELLS 10 槽／BonusActionBar 12 槽、默认 UI 只画 6——专用条能显示第 7/8 格，B3R7 起两页各用 7 槽。
 5. **未完成**：同屏 >6 按钮（BonusActionBar 已确认为载具模式下仍显示，是唯一候选路线，未实施）；B4 骑乘时玩家自己施法/吃喝/睡眠；B5 自动寻路；B6 客户端体验与压力加固。用户已提出技能设计新要求："技能太单调了，要多元，形态多样，释放方式有区别"——B4 起的技能设计必须满足。
 6. 其余各线（G11/G16/G19/G22/G23/F44/F45/AHBot/PBot/NPCBot）状态见 §6，全部冻结待办，禁止误写完成。
-7. **开工第一动作：先读本文件 §0 铁律（查资料＋完整对照＋深度学习），再读 §4 G17 现状，然后处理 C9 验收或 B4 设计。禁止重跑任何已关闭包。**
+7. **开工第一动作：先读本文件 §0 铁律（查资料＋完整对照＋深度学习——选特效必查 G17VisualDB 全量对照库），再读 §3 G17 现状，然后处理 C10/B3R7 验收或技能差异化设计。禁止重跑任何已关闭包。**
 
 ---
 ## 2. 项目身份、目的与仓库关系
@@ -92,7 +93,7 @@ World of Warcraft 3.3.5a 客户端＋服务端联合魔改：TrinityCore ＋ NPC
 
 ### 3.1 一句话进度
 
-服务端多页载具技能栏＋25 战斗技能＋能量＋自动战斗已全部真实落地（B3R6）；客户端按钮/射程/特效/冷却链已修到 C9 v2（Wowhead 验证视觉＋清 DBC 冷却），**唯一待办＝用户安装 C9 终验**；随后进 B4（骑乘玩家施法/吃喝/睡眠）与 >6 按钮的 BonusActionBar 路线。
+服务端多页载具技能栏＋25 战斗技能＋能量＋自动战斗已全部真实落地（B3R6 已装）；客户端特效链 C9 v3 用户验收 PASS（龙类确认）；**最新交付＝B3R7（7 槽＋冷却封包）＋C10（全类型特效）＋G17DragonBar v5 专用条，待用户三件套安装验收**；随后进技能差异化设计与 B4（骑乘玩家施法/吃喝/睡眠）。
 
 ### 3.2 服务端架构事实（当前已部署语义）
 
@@ -124,7 +125,12 @@ World of Warcraft 3.3.5a 客户端＋服务端联合魔改：TrinityCore ＋ NPC
 | 10 | fork `PlayerScript::OnLogin(Player*, bool)`（ScriptMgr.h:692）双参签名 | fork 源码 |
 | 11 | Spell.dbc（build 12340 zhCN）234 字段/记录 936 字节；关键列：29 RecoveryTime、30 CategoryRecoveryTime、46 RangeIndex（4=30 码、1=自身）、71 Effect_1、80 EffectBasePoints_1、92 ImplicitTargetA_1（18=敌方目标）、131 SpellVisualID、133 SpellIconID、140 Name、174 Description | DBC 解析工具实测 |
 | 12 | G17Diag 确认：载具名"御空龙·B0"、GUID `0xF1500F42EB002E5C`、能量类型 3＝100/100、VehicleMenuBar 显示 6 按钮、MainMenuBar 隐藏 | 用户实测输出（§3.7） |
-| 13 | 客户端检测载具状态的可靠信号＝power type 3 ＋ max 100（G17CombatBar v4 架构基础） | 诊断数据 |
+| 13 | 客户端检测载具状态的可靠信号＝power type 3 ＋ max 100（G17CombatBar v4/G17DragonBar v5 架构基础） | 诊断数据 |
+| 14 | **载具法术存放在 BonusActionBar 动作槽**（SMSG_PET_SPELLS→客户端写入 bonus 页）；槽位 ID＝`id + (NUM_ACTIONBAR_PAGES + GetBonusBarOffset() - 1) * 12`（ActionButton.lua:140） | 提取的 FrameXML |
+| 15 | **协议上限：m_spells 8 槽（MAX_CREATURE_SPELLS）→ SMSG_PET_SPELLS 10 槽（MAX_SPELL_CONTROL_BAR，Unit.h:39）→ BonusActionBar 12 槽（NUM_BONUS_ACTION_SLOTS）；默认 VehicleMenuBar 只渲染 6**。VehicleSpellInitialize 同时携带载具当前冷却列表（WritePacket\<Pet\>） | fork Player.cpp:20961 + FrameXML |
+| 16 | VehicleMenuBarActionButton1-6 继承 **BonusActionButtonTemplate**（→ActionBarButtonTemplate→SecureActionButtonTemplate）：type="action" 安全点击、GetActionCooldown 冷却、UPDATE_BONUS_ACTIONBAR 自动刷新（ActionButton.lua:369）——**自建按钮继承同一模板即得全部原生行为，可显示施放第 7/8 格** | VehicleMenuBar.xml/BonusActionBarFrame.xml/ActionBarFrame.xml |
+| 17 | **冷却不显示根因**：玩家施法靠 DBC RecoveryTime 本地预测（C9 已清零→无预测）；载具生物施法走 SpellHistory::StartCooldown，**只有 MOD_COOLDOWN 分支发包**，正常路径零发包；GetPlayerOwner() 对载具返回骑手（载具 charmer＝骑手，BotMgr.cpp:1935 佐证）但无人调用 | fork SpellHistory.cpp:280-360 |
+| 18 | SMSG_SPELL_COOLDOWN（fork 0x134）＝GUID(8)+flags(1)+spellId(4)+cd(4)；`SpellHistory::BuildCooldownPacket` 为 public，脚本可直接复用（格式零漂移） | fork SpellHistory.cpp:608 |
 
 ### 3.4 客户端 DBC 补丁链（Spell.dbc，含 SHA256 链）
 
@@ -137,9 +143,10 @@ World of Warcraft 3.3.5a 客户端＋服务端联合魔改：TrinityCore ＋ NPC
 | C6 | 每类型块视觉＋30 码射程 | 5db5b7a5 | 49868 | ✅ 已装（服务端 DBC 同镜像收敛） |
 | C7 | Effect_1 DUMMY→SCHOOL_DAMAGE（特效渲染开关） | （C8 前像） | 49868 | ✅ 已装 |
 | C8 | 每槽独立视觉（**凭名猜错**）＋RecoveryTime 写入（**引入幻影冷却**） | — | 49868 | 🔴 用户实测 FAIL，被 C9 取代 |
-| **C9 v3** | **Wowhead 逐条验证 25 视觉＋RecoveryTime/Category=0；v1/v2 安装器五缺陷已修** | 安装后新哈希 | 49868 | 🟡 已交付待用户安装验收 |
+| C9 v3 | Wowhead 逐条验证 25 视觉＋RecoveryTime/Category=0；安装器五缺陷已修 | 安装后新哈希 | 49868 | ✅ 用户安装 PASS，龙类特效验收确认 |
+| **C10** | **兽/法/机/通 20 槽视觉重制（G17VisualDB 全量对照＋语义匹配源法术）；龙类不动；附带 G17DragonBar v5 插件** | 安装后新哈希 | 49868 | 🟡 已交付待安装验收 |
 
-当前权威客户端包：仓库根 `G17C9_FINAL.zip`（v3，平铺结构，459833 字节，SHA256 `2079be3f2b9626a6421d0e7efff94ab59de07f4872c0ef83290cfd1051adf4fb`）。前置：C3v2 及之后任一状态（C3/C6/C7/C8 已装均可直接升级）。操作：关 WoW → 双击 `01_Install_G17C9.cmd` → PASSED → 重启客户端。
+当前权威客户端包：仓库根 `G17C10_FINAL.zip`（平铺结构，467969 字节，SHA256 `9d9c546bcaa93cb8778ace0f6cff1fffe0ba41cd80d3bbdb1284354ab83c9eee`，35/35 包自检 PASS；内附 addon/G17DragonBar）。C9 v3 的 `G17C9_FINAL.zip`（SHA `2079be3f...df4fb`）已被用户验收后由 C10 接棒。前置：C3v2 及之后任一状态（C3/C6/C7/C8/C9 已装均可直接升级，幂等）。操作：关 WoW → 双击 `01_Install_G17C10.cmd` → PASSED → 复制 addon\G17DragonBar 到 AddOns → 重启客户端。
 
 **C9 v1/v2 安装器事故（2026-08-27 用户真实运行 FAIL，已归档根因）**：`OBSOLETE_PACKAGE: patcher is not v1_real_visuals_no_dbc_cd`。逐行对照查明五处先天缺陷：①版本门 grep 的是 C6 模板遗留变量名 `G17B3R5_VISUAL_PATCHER_VERSION`，而 C9 补丁器变量叫 `G17C9_VERSION`（用户撞到的）；②输入门硬编码要求 C3 镜像 `006a892b`（用户在 C8 态）；③输出门硬编码要求 C6 镜像 `5db5b7a5`（C9 输出按设计不同）；④C3 状态模式钉根 MPQ 哈希（C6/C7/C8 装过必变）；⑤回滚 PS1 为 0 字节空文件。v1/v2 从未具备可安装性；旧目录已改名 `G17C9_v1v2_已废弃_安装器五缺陷_20260826/`（含 DEFECT_NOTE.txt）。**v3 修复**：安装器按用户机器上真实跑通过的 C8 流程重写（状态文件只给路径不钉哈希、输入态由补丁器自判、输出改内容验证＋打包回读校验、真回滚脚本）；DBC 负载与 v2 完全一致；包自检 28/28 PASS，**并新增"安装器门仿真"测试（T2）——把 PS1 里每个对补丁器的正则门用真实补丁文本求值，此类 bug 交付前即被拦截**。证据：`证据/g17c9v3_installer_fix_delivery_20260827.md`。
 
@@ -163,9 +170,10 @@ World of Warcraft 3.3.5a 客户端＋服务端联合魔改：TrinityCore ＋ NPC
 | cd05b836 | B3R6 r1 | 性能修复＋目标校验（曾为用户现场态） |
 | ddcaa119 | B3R6 r1b | BAD_TARGETS＋冲突标记（曾为用户现场态） |
 | 726d4032 | B3R6 r1c | 移除目标校验（技能可放） |
-| **3fdb46e8** | **B3R6 最终像** | **当前 payload；安全回滚＝1febdecb(B3R5)** |
+| 3fdb46e8 | B3R6 最终像 | 已部署并被用户验收（C9 期） |
+| **f2360d7e** | **B3R7 七槽＋冷却封包** | **当前 payload；安全回滚＝3fdb46e8(B3R6)；13 个历史镜像全部可升级** |
 
-B3R6 安装器升级白名单＝上表除 2ddf54a6 外全部镜像；未知现场状态零写入拒绝。权威包：仓库根 `G17B3R6_FINAL.zip`（SHA256 `0e08748b0a821ba52ab139f8e6df18d8d947cb211e0f1d62c5acc09ec13887da`）；包目录 `tc-bignum/规划/G17_飞行与移动/G17B3R6_性能修复/G17B3R6_Performance_Fix_Windows_20260826/`。
+安装器升级白名单＝上表除 2ddf54a6 外全部镜像；未知现场状态零写入拒绝。当前权威服务端包：仓库根 `G17B3R7_FINAL.zip`（219175 字节，SHA256 `a11e6ced6a8593e561017b2a76169aede4505db5b614be2e4718617dc32e38fb`，25/25 包自检 PASS）；包目录 `tc-bignum/规划/G17_飞行与移动/G17B3R7_七槽与冷却显示/G17B3R7_SevenSlots_CooldownUI_Windows_20260827/`。B3R6 包（`0e08748b...87da`）关闭禁重跑。
 
 ### 3.6 C9 v2 视觉分配表（每 ID 均经 Wowhead WotLK 核对真实法术）
 
@@ -181,6 +189,15 @@ B3R6 安装器升级白名单＝上表除 2ddf54a6 外全部镜像；未知现�
 
 同时写入：Effect_1=SCHOOL_DAMAGE(2)、RangeIndex=4（30 码）、ImplicitTargetA_1=18（敌方目标）、RecoveryTime=CategoryRecoveryTime=0。
 
+**C10 视觉表（2026-08-27，兽/法/机/通 20 槽重制；每个 ID 经 G17VisualDB 全量对照库核对源法术）：**
+
+| 原型/槽 | 0 | 1 | 2 | 3 | 4 |
+|---|---|---|---|---|---|
+| 兽 BEAST (990005–09) | 6587 凶猛撕咬(48576) | 8634 斜掠(33876) | 57 强效治疗(2060) | 3942 突袭(9005) | 372 嗜血(23881) |
+| 法 MAGIC (990010–14) | 262 奥术飞弹(5143) | 12655 吸取生命(689) | 784 真言盾(17) | 12303 奥术超载(56432) | 8041 奥爆(29919) |
+| 机 MECHANICAL (990015–19) | 1904 机枪(10346) | 6399 火箭冲击(1940) | 8697 焊接光束(35919) | 1164 烟雾弹(8817) | 7479 流星(24340) |
+| 通 GENERIC (990020–24) | 1165 猛击(1464) | 219 顺劈斩(845) | 3077 快速治疗(2061) | 322 制裁之锤(853) | 2253 炎爆术(11366) |
+
 ### 3.7 用户反馈与已修复问题史（防重复踩坑）
 
 | 问题 | 根因 | 修复 | 状态 |
@@ -188,7 +205,8 @@ B3R6 安装器升级白名单＝上表除 2ddf54a6 外全部镜像；未知现�
 | 战斗技能无任何特效 | 载体 Effect_1=DUMMY；SpellVisualID=0 | C7 改 SCHOOL_DAMAGE＋C6 起写视觉 | ✅ |
 | C8 特效张冠李戴（龙息/尾扫都显示绿色旋风；龙鳞无特效） | **视觉 ID 凭名字猜，未查 Wowhead** | C9 v2 逐条 Wowhead 验证（铁律 §0.1 起源案例） | 🟡 待用户验收 |
 | 无目标按技能也转冷却 | DBC RecoveryTime 客户端本地触发 | C9 清零，服务端 SMSG_SPELL_COOLDOWN 独占 | 🟡 待用户验收 |
-| C9 v1/v2 安装即 FAIL（OBSOLETE_PACKAGE，2026-08-27 用户真实运行） | 安装器五缺陷（§3.4 详）＋交付前缺"安装器门仿真"自测 | C9 v3 重写安装器（C8 已验证流程）＋28/28 包自检含门仿真 | 🟡 v3 待用户安装 |
+| C9 v1/v2 安装即 FAIL（OBSOLETE_PACKAGE，2026-08-27 用户真实运行） | 安装器五缺陷（§3.4 详）＋交付前缺"安装器门仿真"自测 | C9 v3 重写安装器（C8 已验证流程）＋28/28 包自检含门仿真 | ✅ 用户安装 PASS |
+| 有冷却但 UI 不显示（2026-08-27 用户报告） | DBC RecoveryTime=0 无本地预测＋载具施法不走 StartCooldown 发包分支（§3.3-17） | B3R7 双 GUID 冷却封包＋G17DragonBar CLEU 跟踪，互为保险 | 🟡 待用户验收 |
 | 上马卡顿 | 登乘 40+ 封包 | B3R6 移除 LearnSpell/RemoveSpell | ✅ 用户确认 |
 | 技能被"需要目标"阻断 | B3R6 r1 目标校验过严 | r1c 移除校验 | ✅ |
 | MSVC C2039 getLevel | fork 访问器名不同 | B3R4c 改 GetLevel() | ✅ |
@@ -206,6 +224,8 @@ B3R6 安装器升级白名单＝上表除 2ddf54a6 外全部镜像；未知现�
 | G17ChatLog | 同上 `G17ChatLog_...20260825/`；`G17ChatLog_FINAL.zip` | 聊天 5000 行＋独立 10000 缓冲；导出窗口 Ctrl+A/C；`/g17log save` |
 | G17CombatBar v4 | `G17CombatBar_v4_战斗技能条_20260826/`；`G17CombatBar_FINAL.zip` | 基于能量类型3+max100 检测载具状态的战斗条（不再依赖 IsKnown） |
 | G17Extract | `G17Extract_客户端提取工具_20260826/`；`G17Extract_FINAL.zip` | 从客户端 MPQ 提取 Interface/FrameXML 源码 |
+| **G17DragonBar v5** | C10 包内 `addon/G17DragonBar/` | **御龙专用 8 格条**（继承 BonusActionButtonTemplate：原生动作槽安全点击/图标/冷却事件＋第 7/8 格显示）＋冷却圈跟踪（CLEU）＋龙能读数＋按键 1-8；只在御龙载具激活，任务坐骑零影响 |
+| **G17VisualDB** | `G17工具/G17VisualDB_法术视觉对照库_20260827/` | **3.3.5.12340 全量 Spell.dbc 视觉对照库**（49839 条，Kaev 转储，五法术校准列位）；`g17visualdb.py <法术ID或视觉ID>` 正反查、`--name` 搜索——选特效必查，铁律工具化 |
 | G17_extracted | 仓库根 `G17_extracted/Interface/FrameXML/`（282 文件） | 客户端 UI 源码取证库（§0.1 权威资料源） |
 
 关键取证结论（已写死，无需重查）：VehicleMenuBar.lua 1194 行（第 6 行 VEHICLE_MAX_ACTIONBUTTONS=6）；MainMenuBar.lua 第 90 行载具美术切换（隐藏主条/多条，显示载具条＋BonusActionBar）；UIParent.lua 第 1756 行载具偏移；BonusActionBarFrame.lua 载具模式仍显示。
@@ -223,9 +243,11 @@ B3R6 安装器升级白名单＝上表除 2ddf54a6 外全部镜像；未知现�
 ---
 ## 4. 当前优先级与唯一主线
 
-### P0（当前唯一执行）：G17-C9 v3 用户安装与终验
-- 包：`G17C9_FINAL.zip` v3（根目录，平铺结构，459833 字节，SHA256 `2079be3f...df4fb`）。前置：C3v2 及之后任一状态（C3/C6/C7/C8 已装均可）。
-- v1/v2 已废弃（安装器五缺陷，详见 §3.4/§3.7）；重跑旧包只会再得 OBSOLETE_PACKAGE。
+### P0（当前唯一执行）：G17 三件套（B3R7＋C10＋G17DragonBar）用户安装与验收
+- 服务端 `G17B3R7_FINAL.zip`（payload f2360d7e；关 worldserver → `01_Install_Build_G17B3R7.cmd`，首行必须 `G17B3R7_BUILD=f2360d7e`）
+- 客户端 `G17C10_FINAL.zip`（关 WoW → `01_Install_G17C10.cmd`）
+- 插件：C10 包内 `addon\G17DragonBar` → `D:\WOW\Interface\AddOns\G17DragonBar`
+- 验收五点见 §3.9；若个别槽视觉不符→G17VisualDB 换该槽源法术重打 C10（幂等，禁整批重猜）。
 - 验收四点：①龙类 5 技特效＝龙息火焰／扫尾／冰盾／振翼／环形爆发，互不相同；②其余 4 原型各自成族；③无目标按技能无冷却转圈；④有目标正常伤害＋服务端冷却显示。
 - 若个别槽视觉不符：只查 Wowhead 换该槽 SpellVisualID，重打 C9（幂等），禁止整批凭感觉重配。
 
@@ -264,8 +286,8 @@ B3R6 安装器升级白名单＝上表除 2ddf54a6 外全部镜像；未知现�
 
 - R 系（纯飞行门）：G17-A（SpellInfo.cpp 安全全世界飞行，conf 默认关）、R1（入座＋客户端 DBC 门清理）、R2（服务端施放链）、R2A（门诊断）、R3（AreaTable）、R4（双区旗）、R5（有效 zhCN locale 槽镜像 → 59961 召唤/上马/起飞/移动/室内解除全 PASS，纯飞行门关闭）。
 - B 系（御龙骨架）：B0（原生载具 `.dragon` 命令族）、B1R1–B1R5（全坐骑接管；B1R4 室内 PASS；B1R5 包装坐骑/无降落伞 PASS 后 B1 关闭；旧 B1 包因 PS1 `$Args` 覆盖卡死永久废弃）、B2/B2R1–B2R4（御空体验三技能重制；B2R2 用户确认技能2 OK/技能3 偶倒车/技能4 不可用→B2R3/B2R4 修复关闭）。
-- B3 系（战斗技能）：B3R1（2ddf54a6 部署，方向被否决）、B3R2/B3R2d（多页 6 按钮技能栏）、B3R3（玩家面板死路）、B3R4/R4b/R4c（体验强化＋getLevel 修复）、B3R5（真实施法自动战斗＋C6 服务端 DBC 收敛 5db5b7a5）、**B3R6（3fdb46e8：登乘性能＋目标校验移除；最终像独立 Windows 报告未单独归档，按"已交付、游戏内与 C9 合并验收"处理）**。
-- C 系（客户端 DBC）：C1（52226 门）、C2（+25 技能）、C3v2（+4 按钮，修复 v1 跑旧包问题）、C6（类型视觉＋射程）、C7（DUMMY→SCHOOL_DAMAGE）、C8（🔴 视觉猜错＋幻影冷却，被 C9 取代）、C9 v1/v2（🔴 安装器五缺陷，用户真实运行 FAIL，已废弃改名禁装）、**C9 v3（🟡 待装；28/28 自检含安装器门仿真）**。
+- B3 系（战斗技能）：B3R1（2ddf54a6 部署，方向被否决）、B3R2/B3R2d（多页 6 按钮技能栏）、B3R3（玩家面板死路）、B3R4/R4b/R4c（体验强化＋getLevel 修复）、B3R5（真实施法自动战斗＋C6 服务端 DBC 收敛 5db5b7a5）、B3R6（3fdb46e8：登乘性能＋目标校验移除；用户随 C9 v3 验收）。当前批：**B3R7（f2360d7e：7 槽＋冷却封包，待验收）**。
+- C 系（客户端 DBC）：C1（52226 门）、C2（+25 技能）、C3v2（+4 按钮，修复 v1 跑旧包问题）、C6（类型视觉＋射程）、C7（DUMMY→SCHOOL_DAMAGE）、C8（🔴 视觉猜错＋幻影冷却，被 C9 取代）、C9 v1/v2（🔴 安装器五缺陷，用户真实运行 FAIL，已废弃改名禁装）、C9 v3（✅ 用户安装 PASS，龙类特效确认）、**C10（🟡 待装；35/35 自检；全类型视觉＋G17DragonBar）**。
 
 用户真实 Windows 运行证据归档（仓库根 `uploads/`）：B3R1 f2run PASS（`G17B3R1_WINDOWS_BUILD_RESULT_f2run_20260825.txt`：谱系门/源码 1a96b72e→ecd307b4/DBC ALREADY_APPENDED/SQL 0/25/0 全 PASS）、B3R2 r1b FAIL、B3R4 r1 FAIL（getLevel）；B3R4b 真实运行（源码+DBC+插件 PASS、仅 MSVC getLevel）与 B3R5 用户现场态（1febdecb 曾为 PRE"用户当前"）由 00-入口文档与包内谱系注释佐证。
 
@@ -289,7 +311,15 @@ B3R6 安装器升级白名单＝上表除 2ddf54a6 外全部镜像；未知现�
 | 仓库根 `G17C9_FINAL.zip` | 重建为 v3 平铺包（459833 字节，SHA256 `2079be3f2b9626a6421d0e7efff94ab59de07f4872c0ef83290cfd1051adf4fb`） |
 | `wow-mecode/tc-bignum/规划/G17_飞行与移动/证据/g17c9v3_installer_fix_delivery_20260827.md` | 新增：用户 FAIL 证据＋五缺陷根因＋修复＋28/28 自检记录 |
 
-第一批为纯交接同步（不改源码/SQL/客户端文件）；第二批只改交付包与文档，**不改任何服务端源码、SQL、用户客户端**。
+第一批为纯交接同步（不改源码/SQL/客户端文件）；第二批只改交付包与文档；第三批（同日晚，全类型特效＋冷却修复＋专用条）：
+
+| 文件 | 动作 |
+|---|---|
+| `G17C9_真实特效_客户端/G17C10_全类型特效_客户端/G17C10_All_Archetypes_Visuals_Client_20260827/` | **新建 C10 包**：20 槽视觉重制（G17VisualDB 核对）＋C9 v3 安装器克隆＋35/35 自检（T1-T8，新增 T8 插件检查）＋`addon/G17DragonBar`（专用 8 格条 v5：原生动作槽＋CLEU 冷却跟踪＋任务坐骑零影响） |
+| `G17B3R7_七槽与冷却显示/G17B3R7_SevenSlots_CooldownUI_Windows_20260827/` | **新建 B3R7 服务端包**：payload f2360d7e（PRE/回滚=3fdb46e8，13 镜像白名单）；两页 7 槽＋SendVehicleCooldownPackets 双 GUID 封包；25/25 自检（含真实跑 apply check 三态验证） |
+| `G17工具/G17VisualDB_法术视觉对照库_20260827/` | **新建工具**：49839 条全量视觉对照库＋查询/反查/名字搜索 CLI（数据源 Kaev/AzerothcoreDBCToSQL，列位五法术校准） |
+| 仓库根 `G17C10_FINAL.zip` / `G17B3R7_FINAL.zip` | 新建交付 ZIP（467969B/9d9c546b...；219175B/a11e6ced...） |
+| `证据/g17c10_b3r7_delivery_20260827.md` | 新增：查证结论＋视觉表＋验收步骤 |
 
 ---
 
@@ -305,7 +335,8 @@ B3R6 安装器升级白名单＝上表除 2ddf54a6 外全部镜像；未知现�
 | 2026-08-26 | C8 | 用户游戏内实测 | 🔴 视觉张冠李戴＋幻影冷却 | 用户反馈（§3.7） |
 | 2026-08-26 | C9 v2 | 交付＋包自检＋静态门 | 🟡 待用户安装验收 | `G17C9_FINAL.zip`；包内 patch_g17c9.py 逐槽 Wowhead 注释 |
 | 2026-08-27 | C9 v1/v2 | **用户真实 Windows 运行** | 🔴 FAIL：OBSOLETE_PACKAGE（安装器五缺陷，任何机器必挂） | 用户控制台/结果文件输出（已归档 §3.4/证据 md） |
-| 2026-08-27 | C9 v3 | 交付＋28/28 包自检（含安装器门仿真 T2） | 🟡 待用户安装验收 | `G17C9_FINAL.zip` v3；`证据/g17c9v3_installer_fix_delivery_20260827.md` |
+| 2026-08-27 | C9 v3 | **用户 Windows 安装＋游戏内验收** | ✅ PASS（龙类特效确认；冷却 UI 缺失转新任务） | 用户确认＋`证据/g17c9v3_installer_fix_delivery_20260827.md` |
+| 2026-08-27 | C10＋B3R7＋G17DragonBar | 交付＋35/35 与 25/25 包自检＋fork/FrameXML 源码查证 | 🟡 待用户三件套验收 | `证据/g17c10_b3r7_delivery_20260827.md` |
 | 2026-08-26 | G17Diag | 用户游戏内实测 | ✅ 输出归档（29 法术 IsKnown=false 等） | 用户粘贴输出（§3.3/§3.7） |
 
 ---
@@ -333,7 +364,8 @@ B3R6 安装器升级白名单＝上表除 2ddf54a6 外全部镜像；未知现�
 
 ## 11. 当前未知项（写"未确认"，不得推断）
 
-- **C9 v3 用户安装与游戏内验收结果**（当前最大未知；特效是否符合语义、幻影冷却是否根除；v1/v2 因安装器缺陷从未真正装上过）
+- **B3R7＋C10＋G17DragonBar 三件套用户验收结果**（当前最大未知：兽/法/机/通视觉是否符合语义；冷却圈是否显示——服务端封包与插件双路径若都不显示需抓包定位；专用条第 7 格是否正常施放）
+- G17DragonBar 的 B3R7 前兼容性已设计（第 7/8 格为空自动隐藏），但未在旧服务端实测
 - B3R6 最终像（3fdb46e8）的独立 Windows 构建/运行报告未单独归档（用户现场曾为 r1/r1b 中间像；按与 C9 合并验收处理）
 - 同屏 >6 按钮是否可行：BonusActionBar 显示链已证实，但其按钮绑定/姿态页机制未取证，未做原型
 - B4 骑乘玩家施法的具体技能集、吃喝/睡眠数值曲线（设计未开始）
@@ -350,14 +382,19 @@ wow-mecode/HANDOFF_GIT_STATE.txt
 wow-mecode/HANDOFF_FILE_MANIFEST.tsv
 
 # 当前权威交付包（仓库根，用户从这里拿）
-G17C9_FINAL.zip        # 客户端 v3：Wowhead视觉+清DBC冷却+修复安装器（待装）SHA 2079be3f...df4fb
-G17B3R6_FINAL.zip      # 服务端：登乘性能+目标校验移除 payload 3fdb46e8 SHA 0e08748b...87da
+G17B3R7_FINAL.zip      # 服务端当前：7槽+冷却封包 payload f2360d7e SHA a11e6ced...e38fb（待装）
+G17C10_FINAL.zip        # 客户端当前：全类型视觉+G17DragonBar专用条 SHA 9d9c546b...c9eee（待装）
+G17C9_FINAL.zip         # v3 已验收归档 SHA 2079be3f...df4fb（勿重跑）
+G17B3R6_FINAL.zip       # 已关闭 SHA 0e08748b...87da（勿重跑）
 G17Diag_FINAL.zip / G17ChatLog_FINAL.zip / G17CombatBar_FINAL.zip / G17Extract_FINAL.zip
 
 # G17 权威包目录（wow-mecode/tc-bignum/规划/G17_飞行与移动/）
 G17B3R6_性能修复/G17B3R6_Performance_Fix_Windows_20260826/    # 三镜像+谱系锁+自检
-G17C9_真实特效_客户端/G17C9v3_Real_Visuals_Fix_Client_20260827/ # v3 权威包; tools/patch_g17c9.py=视觉真值表; 28/28自检
+G17C9_真实特效_客户端/G17C9v3_Real_Visuals_Fix_Client_20260827/ # C9 v3 已验收归档
+G17C9_真实特效_客户端/G17C10_全类型特效_客户端/G17C10_All_Archetypes_Visuals_Client_20260827/ # 当前客户端权威包(35/35自检; addon/G17DragonBar)
 G17C9_真实特效_客户端/G17C9_v1v2_已废弃_安装器五缺陷_20260826/  # 🔴 禁装（DEFECT_NOTE.txt）
+G17B3R7_七槽与冷却显示/G17B3R7_SevenSlots_CooldownUI_Windows_20260827/ # 当前服务端权威包(25/25自检)
+G17工具/G17VisualDB_法术视觉对照库_20260827/                     # 全量视觉对照库(选特效必查)
 G17C8_技能差异化_客户端/  # 🔴 历史FAIL包，只作对照，禁止安装
 G17C7_战斗特效修复_客户端/ G17C6_战斗特效客户端/ G17C3_客户端技能页按钮/
 G17B3R1_战斗技能服务端/ … G17B3R5_战斗表现/                    # 历史谱系包
@@ -388,7 +425,7 @@ D:\TC-Build\bin\RelWithDebInfo\worldserver.exe
 ## 13. 交接结论
 
 1. 本文件基于当前工作树、全部 G17 包目录/SHA256SUMS、谱系安装器白名单、用户 uploads 结果文件与用户反馈链完整重写；旧版（2026-08-24，B2R3 时代）在 Git 历史中可查。
-2. G17 御龙术服务端链（多页技能栏/25 技能/能量/自动战斗/性能）与客户端链（按钮/射程/特效渲染/冷却）均已修到各自的最新交付：服务端 B3R6（3fdb46e8）、客户端 C9 v3（Wowhead 验证视觉＋零 DBC 冷却＋重写的安装器；v1/v2 因五缺陷从未可安装，已废弃禁装）。**唯一待办＝C9 v3 用户安装与验收。**
+2. G17 御龙术服务端链（多页技能栏/25 技能/能量/自动战斗/性能）与客户端链（按钮/射程/特效渲染/冷却）均已修到各自的最新交付：服务端 B3R6（3fdb46e8）、客户端 C9 v3 已验收（龙类特效确认）；当前批＝B3R7（7 槽＋冷却封包）＋C10（全类型视觉）＋G17DragonBar v5 专用条，**唯一待办＝三件套用户验收**。用户的"御龙/任务两套分离＋专用多格条"架构方案已落地第一步（协议上限 8/10/12 槽查证＋原生模板继承＋任务坐骑零影响）。
 3. 用户明令的"查找资料＋完整对照＋深度学习"已立为 §0.1 最高铁律并写入起源案例（C8 灾难）；后续任何代理任何批次开工前必须先读。
 4. B3R3"玩家技能面板"与"11 同屏按钮（IsKnown 路线）"已判定死路，禁止复活；>6 按钮唯一候选＝BonusActionBar（显示链已证实、未实施）。
 5. 技能差异化（多元/形态多样/释放方式有区别）是用户已提出的硬需求，当前未满足，排在 C9 验收后与 B4 合并设计。

@@ -1,0 +1,14 @@
+PACKAGE: G17-B3R7 Seven-Slot Vehicle Pages + Vehicle Cooldown UI Packets (server)
+PAYLOAD: f2360d7e1be3ccea66f8bd499b19d4a7cc04acadee804dedbf8bf6774e3ca38c
+PRE:     3fdb46e89a03a521d641b285a15339619a43b68c6399938121fb24683dfd306b (B3R6)
+ROLLBACK: 3fdb46e89a03a521d641b285a15339619a43b68c6399938121fb24683dfd306b (B3R6)
+DATE: 2026-08-27
+TARGET: D:\TrinityCore\src\server\scripts\Commands\cs_dragonriding.cpp
+CHANGES: (1) m_spells[5]=brake 990028 + m_spells[6]=page-switch on BOTH pages
+         (2) SendVehicleCooldownPackets(): SMSG_SPELL_COOLDOWN to the rider,
+             dragon-GUID + player-GUID variants via SpellHistory::BuildCooldownPacket,
+             called after combat-skill AddCooldown (COMBAT_CD_MS per slot) and the
+             page-switch AddCooldown (1s)
+SQL/DBC/ADDON: none required (works standalone; G17DragonBar from G17-C10
+               displays the 7th slot and doubles as the cooldown fallback)
+SELFTEST: python tools/test_g17b3r7_package.py

@@ -1,0 +1,19 @@
+PACKAGE: G17-C10 All-Archetype Visuals (client DBC) + G17DragonBar addon folder
+BUILD: v1_all_archetypes_visuals
+DATE: 2026-08-27
+PREREQ: G17-C3v2 or any later client chain state (C3/C6/C7/C8/C9 all fine)
+TARGET: client Spell.dbc (25 carriers 990000-990024) inside the G17 root patch MPQ + zhCN mirror
+DBC: dragon row UNCHANGED (user-verified C9 v3); beast/magic/mech/generic rows
+     replaced with name-matched real-spell visuals verified against a full
+     3.3.5.12340 Spell.dbc dump (Kaev/AzerothcoreDBCToSQL, 49839 rows).
+     RecoveryTime/CategoryRecoveryTime stay 0 (no phantom cooldown).
+ADDON: addon/G17DragonBar - dedicated 8-slot dragonriding bar (inherits
+     BonusActionButtonTemplate = native secure action-slot machinery), fixes
+     the cooldown display via COMBAT_LOG SPELL_CAST_SUCCESS tracking, power
+     readout, keybinds 1-8/numpad, only activates on G17 dragons (power type 3
+     + max 100) so quest vehicles keep their stock 6-slot bar.
+INSTALL: 01_Install_G17C10.cmd (DBC part); addon is copy-to-AddOns (manual)
+ROLLBACK: 02_Rollback_G17C10.cmd
+RESULT: uploads\G17C10_CLIENT_VISUALS_RESULT.txt
+SELFTEST: python tools/test_g17c10_package.py
+IDEMPOTENT: rerun prints ALREADY_COMPLETE / ALREADY_CURRENT and exits PASS

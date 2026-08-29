@@ -1,42 +1,51 @@
 WOW-MECODE HANDOFF GIT STATE
-Generated: 2026-08-27 (Asia/Shanghai) - batch 2 (C9 v3 installer fix)
+Generated: 2026-08-27 (Asia/Shanghai) - batch 3 (C10 + B3R7 + G17DragonBar + G17VisualDB)
 Repository: /home/user/wow-mecode  (mirror of https://github.com/wpch3/wow-mecode.git)
 Session branch: arena/01a03878-wow-mecode  (DO NOT switch/push other branches)
-HEAD at generation: 7cfde0724927852ac1c236ed1f0bef7ff727a63d (batch-1 handoff commit; the C9 v3 commit lands on top)
-NOTE: sandbox was re-cloned between turns; the local branch pointer was restored to the remote state via fetch+update-ref, working tree untouched
+HEAD at generation: be334e4411e1fe626e717f334965ce7503d955b5 (batch-2 commit; the batch-3 commit lands on top)
+NOTE: sandbox re-cloned again mid-session; branch pointer restored via fetch+update-ref, working tree untouched
 Remotes:
 origin	https://github.com/wpch3/wow-mecode.git (fetch)
 origin	https://github.com/wpch3/wow-mecode.git (push)
 
-RECENT COMMITS (last 20)
-ef24e03 (grafted, HEAD -> arena/01a03878-wow-mecode) G17-B3R1 FIX4: 修复真实MSVC编译错误(6类), 源码1a96b72e->ecd307b4; 19/19测试+包自检PASS
-
 CURRENT PROJECT STATE
-- G17 R1-R5 / B0 / B1(R1-R5) / B2(R1-R4) / B3(R1-R6): ALL CLOSED; do not rerun.
-- G17-C9 v1/v2: DEPRECATED. User's real Windows run FAILED with
-  OBSOLETE_PACKAGE (installer greped the C6-template variable name
-  G17B3R5_VISUAL_PATCHER_VERSION while the C9 patcher defines G17C9_VERSION;
-  plus input gate pinned to the C3 image, output gate pinned to the C6 image,
-  root-MPQ hash pinning, and a 0-byte rollback PS1). Old folder renamed
-  G17C9_v1v2_已废弃_安装器五缺陷_20260826 with DEFECT_NOTE.txt. NEVER run it.
-- G17-C9 v3: CURRENT authoritative client package = repo-root G17C9_FINAL.zip
-  (flat, 459833 bytes, SHA256 2079be3f2b9626a6421d0e7efff94ab59de07f4872c0ef83290cfd1051adf4fb).
-  Installer rebuilt on the C8-proven flow (state files give paths only; input
-  state detected by the patcher; content verification + round-trip archive
-  check; real rollback script). DBC payload identical to v2 (Wowhead-verified
-  per-slot visuals + RecoveryTime/Category = 0). Package self-test 28/28 PASS
-  including the NEW installer-gate simulation test (tools/test_g17c9_package.py)
-  which would have caught every v1/v2 defect before delivery.
-- ONLY pending action: user re-downloads G17C9_FINAL.zip (v3), closes WoW,
-  double-clicks 01_Install_G17C9.cmd, expects G17C9_CLIENT_VISUALS_RESULT=PASS
-  in uploads, then in-game verifies the four README points.
-- Iron rule (user order 2026-08-27, PROJECT_HANDOFF.md section 0.1): ALWAYS
-  look up references (Wowhead WotLK, extracted FrameXML, fork source) and do
-  COMPLETE field-by-field cross-verification. Never guess from names.
-- Dead ends: player LearnSpell skill panel; 11-button IsKnown bar. >6 buttons
-  candidate = BonusActionBar (not yet prototyped).
-- After C9 v3: skill variety design + B4 -> BonusActionBar -> B5 -> B6.
-- All non-G17 lines frozen per PROJECT_HANDOFF.md section 5.
+- C9 v3: USER-VERIFIED PASS (dragon visuals confirmed; cooldown display gap -> new task).
+- Batch 3 delivery (ALL awaiting user install, in this order):
+  1) SERVER  G17B3R7_FINAL.zip (219175B, SHA a11e6ced6a8593e561017b2a76169aede4505db5b614be2e4718617dc32e38fb)
+     payload f2360d7e, pre/rollback 3fdb46e8 (B3R6), 13-image lineage whitelist.
+     Seven-slot pages on BOTH pages (brake 990028 back, page-switch last) +
+     SendVehicleCooldownPackets() -> SMSG_SPELL_COOLDOWN to the rider in TWO
+     variants (dragon GUID + player GUID, built with the public
+     SpellHistory::BuildCooldownPacket) after combat skills and the page switch.
+     Close worldserver -> 01_Install_Build_G17B3R7.cmd -> first line must read
+     G17B3R7_BUILD=f2360d7e -> PASSED -> restart worldserver.
+  2) CLIENT  G17C10_FINAL.zip (467969B, SHA 9d9c546bcaa93cb8778ace0f6cff1fffe0ba41cd80d3bbdb1284354ab83c9eee)
+     Dragon row unchanged; beast/magic/mech/generic 20 slots replaced with
+     name-matched real-spell visuals verified against the full 3.3.5.12340
+     Spell.dbc dump. Same proven v3 installer flow; 35/35 self-test.
+     Close WoW -> 01_Install_G17C10.cmd -> PASSED.
+  3) ADDON   copy addon\G17DragonBar from the C10 zip to D:\WOW\Interface\AddOns\
+     G17DragonBar v5: dedicated 8-slot dragonriding bar (inherits
+     BonusActionButtonTemplate = native secure action slots; shows/casts slots
+     7-8 the stock bar hides), cooldown swirls via CLEU SPELL_CAST_SUCCESS
+     tracking (4/6/20/10/60s per slot, 1s page switch), power readout, keys 1-8,
+     activates ONLY on G17 dragons (power type 3 + max 100) - quest vehicles
+     untouched. This lands the user's two-set architecture decision (step 1).
+- New permanent tool: G17工具/G17VisualDB_法术视觉对照库_20260827 - full 49839-entry
+  3.3.5.12340 spell->visual database (calibrated on 5 dragon spells) with
+  lookup/reverse/name-search CLI. Iron-rule tooling: never guess visuals again.
+- Protocol ceilings verified (handoff 3.3 facts 14-18): m_spells 8 /
+  SMSG_PET_SPELLS 10 (MAX_SPELL_CONTROL_BAR) / BonusActionBar 12 slots;
+  stock VehicleMenuBar renders 6. Custom buttons inheriting the Blizzard
+  template get the full native machinery incl. slot 7/8.
+- Cooldown-UI root cause verified: DBC RecoveryTime=0 removed client prediction
+  AND vehicle-creature casts never hit the packet-sending branch of
+  SpellHistory::StartCooldown (only the MOD_COOLDOWN branch sends there).
+  Server packets + addon tracking are belt-and-suspenders.
+- All older batches CLOSED; do not rerun (R1-R5/B0/B1/B2/B3R1-R6/C1-C9, and
+  G17B3R6_FINAL.zip / G17C9_FINAL.zip are archived - superseded).
+- Iron rule (user order 2026-08-27): ALWAYS look up references + complete
+  field-by-field cross-verification (now with G17VisualDB in-repo).
 
 REPO-ROOT ASSETS (outside nested wow-mecode/ workspace mirror)
 e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  .sudo_as_admin_successful  (0 bytes)
@@ -50,6 +59,8 @@ eb2c71e39b735f0e237d809b2613034da9bab55aac3372a2472adc4728bf1156  G17B3R4c_FINAL
 d310b56e0a1f33501e05c88406961e0f70a327786105624627a67b6632180097  G17B3R5_FINAL.zip  (226377 bytes)
 a8838aeb123a4332dffb7aadefdabc94ef8970209b826a40b5455834c166be1a  G17B3R5_WINDOWS_BUILD_RESULT.txt  (2003 bytes)
 0e08748b0a821ba52ab139f8e6df18d8d947cb211e0f1d62c5acc09ec13887da  G17B3R6_FINAL.zip  (214875 bytes)
+a11e6ced6a8593e561017b2a76169aede4505db5b614be2e4718617dc32e38fb  G17B3R7_FINAL.zip  (219175 bytes)
+9d9c546bcaa93cb8778ace0f6cff1fffe0ba41cd80d3bbdb1284354ab83c9eee  G17C10_FINAL.zip  (467969 bytes)
 2c19c761001dfa02acbf28a1bb0af5549d6c83c6b6f644b4e9e2c10671a80bdd  G17C1_FINAL.zip  (466277 bytes)
 eecc252ddf2069238199f0cc911265f15fe8febf89c1b07099863f2ca8938894  G17C2_FINAL.zip  (469112 bytes)
 038c5434cdac5389449dd854a4cf1b9f8dc2a912661410e651d5417c042cc98c  G17C3v2_FINAL.zip  (476810 bytes)
@@ -68,5 +79,5 @@ a999b38813963a9f906dbd4364c3f0204b6b8e676ddcd68e428d51da5a76cbfd  g17-higher-slo
 [dir] tc-bignum/  (1 files)
 [dir] uploads/  (23 files)
 
-MANIFEST: HANDOFF_FILE_MANIFEST.tsv (regenerated 2026-08-27 batch 2, whole-repo, excludes .git and itself)
-EVIDENCE: wow-mecode/tc-bignum/规划/G17_飞行与移动/证据/g17c9v3_installer_fix_delivery_20260827.md
+MANIFEST: HANDOFF_FILE_MANIFEST.tsv (regenerated batch 3, whole-repo, excludes .git and itself)
+EVIDENCE: wow-mecode/tc-bignum/规划/G17_飞行与移动/证据/g17c10_b3r7_delivery_20260827.md

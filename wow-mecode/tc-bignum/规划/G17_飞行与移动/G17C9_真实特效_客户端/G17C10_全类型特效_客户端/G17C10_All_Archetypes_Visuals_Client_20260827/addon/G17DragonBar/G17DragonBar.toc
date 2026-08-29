@@ -1,0 +1,6 @@
+## Interface: 30300
+## Title: |cffff8c00G17|r DragonBar
+## Notes: 御龙术专用技能条 v5：独立8格动作条（原生载具动作槽机制）＋冷却显示＋能量读数
+## SavedVariablesPerCharacter: G17DragonBarDB
+G17DragonBar.xml
+G17DragonBar.lua
