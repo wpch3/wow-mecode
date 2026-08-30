@@ -38,6 +38,7 @@ C8 批次给 25 个战斗技能分配视觉 ID 时**凭技能名字猜**，没�
 3. 已交付的三个插件包（G17CombatBar v4、G17DragonBar v5/v6、G17DragonRide）**一律作废归档**，不安装、不维护、不基于其继续开发。B3R9（玩家施法路径）保留为服务端能力（供未来客户端魔改调用），不再是插件配套。
 4. 客户端魔改的标准流水线（C11 已闭环验证）：**G17Extract 提取 → 最小字节差异修改 → patch-Z.MPQ 链下发 → 四文件回读校验 → 幂等/回滚**。G22 深度客户端魔改全线复用。
 5. 下一位代理若再提出"做个插件"类方案，视为方向错误，必须先回到本条。
+6. **错误路线/失败包已物理归档**（2026-08-27 清理）：`G17_飞行与移动/归档_废弃_20260827/`＝G17CombatBar_v4、G17DragonBar_v6、G17DragonRide（插件）＋G17C8（视觉猜错）＋G17C9v1v2（安装器五缺陷）＋4 个对应 ZIP＋归档说明。C10 已装包原样保留（其内 addon 废弃勿装）；G17Diag/G17ChatLog（诊断）与 G17Extract/G17VisualDB（魔改流水线/铁律工具）保留；服务端 B0-R9 谱系原地保留。
 
 ### 0.2 既有铁律（沿用，违者同样返工）
 
@@ -238,7 +239,7 @@ World of Warcraft 3.3.5a 客户端＋服务端联合魔改：TrinityCore ＋ NPC
 | G17ChatLog | 同上 `G17ChatLog_...20260825/`；`G17ChatLog_FINAL.zip` | 聊天 5000 行＋独立 10000 缓冲；导出窗口 Ctrl+A/C；`/g17log save` |
 | G17CombatBar v4 | `G17CombatBar_v4_战斗技能条_20260826/`；`G17CombatBar_FINAL.zip` | 基于能量类型3+max100 检测载具状态的战斗条（不再依赖 IsKnown） |
 | G17Extract | `G17Extract_客户端提取工具_20260826/`；`G17Extract_FINAL.zip` | 从客户端 MPQ 提取 Interface/FrameXML 源码 |
-| G17DragonRide 界面（🔴已废止） | `G17DragonRide_自定义界面_20260827/`；`G17DragonRide_FINAL.zip` | 插件路线（铁律 §0.3 废止，仅归档）：主行 6 原生槽（100% 可用）＋扩展行最多 6 格玩家施法按钮（`/g17ride add <1-6> <法术ID>` 任意技能——**格数无上限**）＋图形能量条＋页面指示＋冷却圈＋**默认隐藏原版载具条 6 按钮**＋**施法路径自动遥测**（无 SENT 事件→自动折叠扩展行＋红字提示）＋按键 1-6/7-0-=；任务坐骑零影响。取代 G17DragonBar v5/v6（安装前需删除旧插件） |
+| G17DragonRide 界面（🔴已废止归档） | `归档_废弃_20260827/G17DragonRide_插件_错误路线/` | 插件路线（铁律 §0.3 废止）：主行 6 原生槽（100% 可用）＋扩展行最多 6 格玩家施法按钮（`/g17ride add <1-6> <法术ID>` 任意技能——**格数无上限**）＋图形能量条＋页面指示＋冷却圈＋**默认隐藏原版载具条 6 按钮**＋**施法路径自动遥测**（无 SENT 事件→自动折叠扩展行＋红字提示）＋按键 1-6/7-0-=；任务坐骑零影响。取代 G17DragonBar v5/v6（安装前需删除旧插件） |
 | **G17VisualDB** | `G17工具/G17VisualDB_法术视觉对照库_20260827/` | **3.3.5.12340 全量 Spell.dbc 视觉对照库**（49839 条，Kaev 转储，五法术校准列位）；`g17visualdb.py <法术ID或视觉ID>` 正反查、`--name` 搜索——选特效必查，铁律工具化 |
 | G17_extracted | 仓库根 `G17_extracted/Interface/FrameXML/`（282 文件） | 客户端 UI 源码取证库（§0.1 权威资料源） |
 
@@ -412,11 +413,11 @@ G17Diag_FINAL.zip / G17ChatLog_FINAL.zip / G17CombatBar_FINAL.zip / G17Extract_F
 G17B3R6_性能修复/G17B3R6_Performance_Fix_Windows_20260826/    # 三镜像+谱系锁+自检
 G17C9_真实特效_客户端/G17C9v3_Real_Visuals_Fix_Client_20260827/ # C9 v3 已验收归档
 G17C9_真实特效_客户端/G17C10_全类型特效_客户端/G17C10_All_Archetypes_Visuals_Client_20260827/ # 当前客户端权威包(35/35自检; addon/G17DragonBar)
-G17C9_真实特效_客户端/G17C9_v1v2_已废弃_安装器五缺陷_20260826/  # 🔴 禁装（DEFECT_NOTE.txt）
+归档_废弃_20260827/                                    # 🔴 错误路线+失败包物理归档(3插件+C8+C9v1v2+4ZIP+说明), 勿装勿重跑
 G17B3R7_七槽与冷却显示/G17B3R7_SevenSlots_CooldownUI_Windows_20260827/ # 已被B3R8取代
 G17C11_客户端UI魔改_载具条/G17C11_ClientMod_VehicleBar_Windows_20260827/ # 当前客户端魔改权威包(23/23自检)
 G17B3R9_全玩家施法UI支持/G17B3R9_PlayerCast_UI_Support_Windows_20260827/ # 服务端可选(玩家施法路径)
-G17DragonRide_自定义界面_20260827/                                     # 插件可选路线
+
 G17B3R8_槽位布局修正/ G17工具/G17DragonBar_v6_专用条_20260827/          # 已被取代, 归档
 G17工具/G17VisualDB_法术视觉对照库_20260827/                     # 全量视觉对照库(选特效必查)
 G17C8_技能差异化_客户端/  # 🔴 历史FAIL包，只作对照，禁止安装

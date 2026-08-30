@@ -1,5 +1,22 @@
 WOW-MECODE HANDOFF GIT STATE
-Generated: 2026-08-27 (Asia/Shanghai) - batch 6 (G17-C11: REAL CLIENT MOD)
+Generated: 2026-08-27 (Asia/Shanghai) - batch 6b (cleanup: wrong-route/failed packages archived)
+Previous batch: G17-C11 REAL CLIENT MOD (client mod of the stock vehicle bar)
+HEAD at generation: 6da178521c5e35cefc68a7d5647f21ac034064ca
+
+CLEANUP (user-ordered audit, batch 6b):
+- Moved to 规划/G17_飞行与移动/归档_废弃_20260827/ (archived, NOT deleted - lineage/evidence kept):
+  G17CombatBar_v4 + G17DragonBar_v6 + G17DragonRide (plugin route, forbidden by iron rule 0.3),
+  G17C8 (failed visuals), G17C9 v1/v2 (failed installer), and their 4 root zips.
+- Repo root now contains ONLY right-route lineage zips (server B2/B3R1-R9, client C1-C11,
+  diagnostic/pipeline tools G17Diag/G17ChatLog/G17Extract).
+- Kept in place: C10 package untouched (installed; its embedded addon folder is deprecated
+  per rule 0.3 but altering a delivered/installed package would break version integrity);
+  server lineage dirs B0-R9 (installer lineage evidence); 证据/ research docs (the client
+  mechanism research underpins C11).
+- ACTIVE deliveries unchanged: G17C11_FINAL.zip (client mod, awaiting install),
+  G17B3R8_FINAL.zip (installed), G17B3R9_FINAL.zip (server capability reserve),
+  G17C10_FINAL.zip (installed, visuals delivered).
+Original batch-6 header follows:
 Repository: /home/user/wow-mecode  (mirror of https://github.com/wpch3/wow-mecode.git)
 Session branch: arena/01a03878-wow-mecode  (DO NOT switch/push other branches)
 HEAD at generation: ef24e03abcec6fc8c8a7b14ab1f1af9780e70712
