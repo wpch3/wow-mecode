@@ -1,39 +1,35 @@
 WOW-MECODE HANDOFF GIT STATE
-Generated: 2026-08-27 (Asia/Shanghai) - batch 5 (B3R9 + G17DragonRide: the FULL custom UI)
+Generated: 2026-08-27 (Asia/Shanghai) - batch 6 (G17-C11: REAL CLIENT MOD)
 Repository: /home/user/wow-mecode  (mirror of https://github.com/wpch3/wow-mecode.git)
 Session branch: arena/01a03878-wow-mecode  (DO NOT switch/push other branches)
-HEAD at generation: 03ecba549dec041d405dbed310ad7310f9dcbc5a
+HEAD at generation: ef24e03abcec6fc8c8a7b14ab1f1af9780e70712
 
 CURRENT PROJECT STATE
-- User's directional order executed: STOP patching the stock 6-slot vehicle
-  bar; deliver a brand-new custom client UI that fully takes over the
-  dragonriding interface. Both packages below are awaiting install.
-- Verified this batch (research): 55215/52197 lack DBC Attributes 0x100
-  (CASTABLE_WHILE_MOUNTED; 52226 has it) and their handlers were
-  IsDragon(caster)-only -> the player-cast path needed server support.
-- 1) SERVER G17B3R9_FINAL.zip (224053B, SHA ef15c5e381545c48a3784bd38470542ef16c67582c5a667fe1d127e32ccefdb6)
-     payload f0564c5a, pre dcfa78dd (B3R8; B3R6/R7/R8 all valid sources),
-     rollback 3fdb46e8 (B3R6). Dual-caster handlers for the three real
-     movement skills + dual energy gate + runtime Attributes |= 0x100 for
-     55215/52197 (proven B2R3 const_cast pattern). 29/29 self-test.
-     Close worldserver -> 01_Install_Build_G17B3R9.cmd -> first line
-     G17B3R9_BUILD=f0564c5a -> PASSED.
-- 2) ADDON  G17DragonRide_FINAL.zip (9100B, SHA fccc6fb1dff1cc97f2a52ecac745fc161c8080b22fbc6f736b618181c4624d04)
-     The new full custom UI: native 6-slot main row (BonusActionButtonTemplate,
-     guaranteed) + up-to-6 player-cast extra row (SecureActionButtonTemplate,
-     type="spell" by ID - unlimited slot count with B3R9), graphical energy
-     bar, page indicator, cooldown swirls, stock vehicle bar hidden by
-     default, keys 1-6 / 7-0-=, drag/scale, quest vehicles untouched.
-     BUILT-IN TELEMETRY: if a player-cast click produces no
-     UNIT_SPELLCAST_SENT within 0.5s the addon flags the path as
-     client-blocked, collapses the extra row with a red notice and offers
-     /g17ride forcextra to retry - no more guessing whether the client
-     allows unknown-spell casts. DELETE the old AddOns\G17DragonBar first.
-- Prior verified: dragon visuals (C9 v3), cooldown UI display, B3R8 install
-  PASS with the stock bar still showing exactly 6 slots (client hard limit
-  settled - this is why the full custom UI route was taken).
-- All older batches CLOSED (R1-R5/B0/B1/B2/B3R1-R8/C1-C10/G17DragonBar v5-v6);
-  do not rerun.
+- User's directional correction executed: they wanted CLIENT MODIFICATION
+  (客户端魔改), not an addon. G17-C11 delivers exactly that: the stock
+  vehicle action bar goes 6 -> 8 slots by patching the client's own FrameXML
+  and shipping it through the G17 patch-MPQ chain (the same mechanism as
+  every G17 client DBC patch since R1).
+  - Interface\FrameXML\VehicleMenuBar.lua : VEHICLE_MAX_ACTIONBUTTONS 6 -> 8
+    (the client's keybind routing in ActionButton.lua follows the constant)
+  - Interface\FrameXML\VehicleMenuBar.xml : VehicleMenuBarActionButton7/8
+    added (same template, same anchor chain)
+  - Spell.dbc / AreaTable.dbc pass through byte-identically.
+  - Payload hashes: lua 0d572a7fbb7d69005b02f22932fbdc8f64c06f0d1d4ddc52a048300f30bb1a3c
+    (baseline 2183cb19...), xml 31563ecf8787054408bab4049f212b2b77aa56c12dd264d60aa03b1494f1e628
+    (baseline fff0aec7...). 23/23 package self-test. Idempotent.
+- DELIVERY: repo-root G17C11_FINAL.zip (465664B, SHA e038129f37068459161919d1d68408afb221e3f1220bb9435f8b5aca45dd9472)
+  Install: close WoW -> 01_Install_G17C11.cmd -> PASSED -> restart client.
+  Acceptance: 7th slot visible (brake, needs B3R8+ server layout), key 7
+  works; if slot 8 also shows an icon, the client fills bonus slot 8 (report).
+- STRATEGIC: this closes the loop on the G22 deep-client-mod capability -
+  ANY client UI file can be extracted (G17Extract) -> minimally patched ->
+  shipped via the MPQ chain -> verified -> rolled back. All future deep
+  client modifications use this pipeline.
+- Optional routes kept: B3R9 (player-cast support) + G17DragonRide addon UI
+  remain available but the client-mod route (C11) is the authoritative one.
+- Prior verified: dragon visuals (C9 v3), cooldown UI display, B3R8 install.
+- All older batches CLOSED; do not rerun.
 
 REPO-ROOT ASSETS (outside nested wow-mecode/ workspace mirror)
 e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  .sudo_as_admin_successful  (0 bytes)
@@ -51,6 +47,7 @@ a11e6ced6a8593e561017b2a76169aede4505db5b614be2e4718617dc32e38fb  G17B3R7_FINAL.
 565b6611494f58416272e21e0d48118edfc81b4ddb527f2c174d45e66282f05e  G17B3R8_FINAL.zip  (221757 bytes)
 ef15c5e381545c48a3784bd38470542ef16c67582c5a667fe1d127e32ccefdb6  G17B3R9_FINAL.zip  (224053 bytes)
 9d9c546bcaa93cb8778ace0f6cff1fffe0ba41cd80d3bbdb1284354ab83c9eee  G17C10_FINAL.zip  (467969 bytes)
+e038129f37068459161919d1d68408afb221e3f1220bb9435f8b5aca45dd9472  G17C11_FINAL.zip  (465664 bytes)
 2c19c761001dfa02acbf28a1bb0af5549d6c83c6b6f644b4e9e2c10671a80bdd  G17C1_FINAL.zip  (466277 bytes)
 eecc252ddf2069238199f0cc911265f15fe8febf89c1b07099863f2ca8938894  G17C2_FINAL.zip  (469112 bytes)
 038c5434cdac5389449dd854a4cf1b9f8dc2a912661410e651d5417c042cc98c  G17C3v2_FINAL.zip  (476810 bytes)
@@ -71,5 +68,5 @@ a999b38813963a9f906dbd4364c3f0204b6b8e676ddcd68e428d51da5a76cbfd  g17-higher-slo
 [dir] tc-bignum/  (1 files)
 [dir] uploads/  (23 files)
 
-MANIFEST: HANDOFF_FILE_MANIFEST.tsv (regenerated batch 5, whole-repo, excludes .git and itself)
-EVIDENCE: wow-mecode/tc-bignum/规划/G17_飞行与移动/证据/g17dragonride_full_ui_20260827.md
+MANIFEST: HANDOFF_FILE_MANIFEST.tsv (regenerated batch 6, whole-repo, excludes .git and itself)
+EVIDENCE: wow-mecode/tc-bignum/规划/G17_飞行与移动/证据/g17c11_clientmod_vehiclebar_20260827.md

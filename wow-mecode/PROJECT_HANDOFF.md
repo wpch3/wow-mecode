@@ -47,7 +47,7 @@ C8 批次给 25 个战斗技能分配视觉 ID 时**凭技能名字猜**，没�
 
 ## 1. 给下一位代理的 30 秒摘要（2026-08-27 真实状态）
 
-1. **当前主线：用户下达方向性指令——"做个新的客户端 UI 界面直接覆盖整个项目的无效 UI"。已照办：交付 G17DragonRide 全新自定义御龙界面（主行 6 原生槽＋扩展行玩家施法格数无上限＋能量条＋覆盖原版条）＋ B3R9 服务端全玩家施法支持，待用户安装验收。** 此前：C9 v3 特效 PASS、冷却 UI 生效、B3R8 安装 PASS 但原版条仍只显示 6 格（客户端硬限最终确认）。旧批全部关闭。
+1. **当前主线：用户再次纠正方向——要的是客户端魔改本体（不是插件）。已照办：C11 真正的客户端魔改（修改客户端界面源码 VehicleMenuBar.lua/xml 经 MPQ 链下发，原版载具条 6→8 格），23/23 自检，待用户验收。** G17DragonRide 插件界面（B3R9 配套）转为可选方案。此前：C9 v3 特效 PASS、冷却 UI 生效、B3R8 安装 PASS。**G22 深度客户端魔改能力就此闭环证明：任意客户端 UI 文件可提取→修改→MPQ 下发→回滚。**
 2. **御龙术架构已成型**：NPC 1000171 御空龙·B0（VehicleId 70、80 级、75000 HP、能量 100/100），5 种坐骑原型（龙/兽/法/机/通）×5 战斗槽＝25 技能（990000–990024）＋4 载体（990025 切页/990026 拉升/990027 俯冲/990028 制动）；载具动作条双页切换（移动页 6 键↔战斗页 6 键）；能量循环（俯冲+15/生成器+8/被动+1每2秒）；骑手交战时龙每 4.5 秒真实施放生成器（带完整施法动画与弹道）；冷却双门（载具＋玩家 SpellHistory）。
 3. **3.3.5 客户端硬限制已全部摸清并有证据**（§4.3）：载具条最多 6 按钮（VehicleMenuBar.lua 第 6 行硬编码）；`LearnSpell` 只进服务端、客户端全部 IsKnown=false（玩家技能面板路线 B3R3 已死）；DUMMY 效果不渲染视觉（必须 SCHOOL_DAMAGE）；DBC RecoveryTime 造成"按了就转圈"的幻影冷却（C9 已清零，冷却完全由服务端 SMSG_SPELL_COOLDOWN 驱动）；上马卡顿根因是登乘时 40+ 封包（B3R6 已移除 LearnSpell/RemoveSpell）。
 4. **冷却 UI 修复已生效**（用户确认"有冷却"）：服务端 SMSG_SPELL_COOLDOWN 双 GUID 变体（B3R7 起）＋插件 CLEU 施法成功跟踪，互为保险且无幻影。
@@ -93,7 +93,7 @@ World of Warcraft 3.3.5a 客户端＋服务端联合魔改：TrinityCore ＋ NPC
 
 ### 3.1 一句话进度
 
-服务端多页载具技能栏＋25 战斗技能＋能量＋自动战斗已真实落地；特效/冷却均已验收；原版 6 格硬限坐实后转入**全新自定义 UI 路线**；**最新交付＝B3R9＋G17DragonRide 界面，待验收**；随后技能差异化设计＋B4。
+服务端技能体系全部落地；特效/冷却已验收；插件路线被用户否决后转入**真客户端魔改路线**；**最新交付＝C11（原版载具条 6→8 格的 FrameXML 补丁），待验收**；随后技能差异化＋B4＋G22 深度魔改全线复用此能力。
 
 ### 3.2 服务端架构事实（当前已部署语义）
 
@@ -131,6 +131,7 @@ World of Warcraft 3.3.5a 客户端＋服务端联合魔改：TrinityCore ＋ NPC
 | 16 | VehicleMenuBarActionButton1-6 继承 **BonusActionButtonTemplate**（→ActionBarButtonTemplate→SecureActionButtonTemplate）：type="action" 安全点击、GetActionCooldown 冷却、UPDATE_BONUS_ACTIONBAR 自动刷新（ActionButton.lua:369）——**自建按钮继承同一模板即得全部原生行为，可显示施放第 7/8 格** | VehicleMenuBar.xml/BonusActionBarFrame.xml/ActionBarFrame.xml |
 | 17 | **冷却不显示根因**：玩家施法靠 DBC RecoveryTime 本地预测（C9 已清零→无预测）；载具生物施法走 SpellHistory::StartCooldown，**只有 MOD_COOLDOWN 分支发包**，正常路径零发包；GetPlayerOwner() 对载具返回骑手（载具 charmer＝骑手，BotMgr.cpp:1935 佐证）但无人调用 | fork SpellHistory.cpp:280-360 |
 | 18 | SMSG_SPELL_COOLDOWN（fork 0x134）＝GUID(8)+flags(1)+spellId(4)+cd(4)；`SpellHistory::BuildCooldownPacket` 为 public，脚本可直接复用（格式零漂移） | fork SpellHistory.cpp:608 |
+| 19 | **客户端魔改机制（C11 已验证闭环）**：客户端从 MPQ 加载 Interface\FrameXML\*；patch-Z.MPQ（最高字母优先级）可覆盖任意客户端界面文件。载具条 6 格根源＝`VehicleMenuBar.lua:6 VEHICLE_MAX_ACTIONBUTTONS=6`＋xml 只定义 6 按钮；**按键路由（ActionButton.lua:17/31）自动跟随该常量**——改常量＋加按钮定义＝原版条扩容，全原生机制保留。G22 深度客户端魔改全线走此路 | 提取的 FrameXML＋C11 交付 |
 
 ### 3.4 客户端 DBC 补丁链（Spell.dbc，含 SHA256 链）
 
@@ -144,9 +145,10 @@ World of Warcraft 3.3.5a 客户端＋服务端联合魔改：TrinityCore ＋ NPC
 | C7 | Effect_1 DUMMY→SCHOOL_DAMAGE（特效渲染开关） | （C8 前像） | 49868 | ✅ 已装 |
 | C8 | 每槽独立视觉（**凭名猜错**）＋RecoveryTime 写入（**引入幻影冷却**） | — | 49868 | 🔴 用户实测 FAIL，被 C9 取代 |
 | C9 v3 | Wowhead 逐条验证 25 视觉＋RecoveryTime/Category=0；安装器五缺陷已修 | 安装后新哈希 | 49868 | ✅ 用户安装 PASS，龙类特效验收确认 |
-| **C10** | **兽/法/机/通 20 槽视觉重制（G17VisualDB 全量对照＋语义匹配源法术）；龙类不动；附带 G17DragonBar v5 插件** | 安装后新哈希 | 49868 | 🟡 已交付待安装验收 |
+| C10 | 兽/法/机/通 20 槽视觉重制（G17VisualDB 全量对照＋语义匹配源法术）；龙类不动 | 安装后新哈希 | 49868 | 🟡 已装待逐类验收 |
+| **C11 客户端魔改** | **VehicleMenuBar.lua 常量 6→8 ＋ xml 新增按钮 7/8（客户端界面源码，MPQ 链下发；DBC 透传）** | 链内 lua/xml 固定哈希 | — | 🟡 已交付待验收（23/23 自检） |
 
-当前权威客户端包：仓库根 `G17C10_FINAL.zip`（平铺结构，467969 字节，SHA256 `9d9c546bcaa93cb8778ace0f6cff1fffe0ba41cd80d3bbdb1284354ab83c9eee`，35/35 包自检 PASS；内附 addon/G17DragonBar）。C9 v3 的 `G17C9_FINAL.zip`（SHA `2079be3f...df4fb`）已被用户验收后由 C10 接棒。前置：C3v2 及之后任一状态（C3/C6/C7/C8/C9 已装均可直接升级，幂等）。操作：关 WoW → 双击 `01_Install_G17C10.cmd` → PASSED → 复制 addon\G17DragonBar 到 AddOns → 重启客户端。
+当前权威客户端包：仓库根 `G17C11_FINAL.zip`（客户端魔改：原版载具条 6→8 格；payload lua `0d572a7f`/xml `31563ecf`，23/23 包自检 PASS）。C10（`9d9c546b...c9eee`，视觉）已装待逐类验收。C9 v3 的 `G17C9_FINAL.zip`（SHA `2079be3f...df4fb`）已被用户验收后由 C10 接棒。前置：C3v2 及之后任一状态（C3/C6/C7/C8/C9 已装均可直接升级，幂等）。操作：关 WoW → 双击 `01_Install_G17C10.cmd` → PASSED → 复制 addon\G17DragonBar 到 AddOns → 重启客户端。
 
 **C9 v1/v2 安装器事故（2026-08-27 用户真实运行 FAIL，已归档根因）**：`OBSOLETE_PACKAGE: patcher is not v1_real_visuals_no_dbc_cd`。逐行对照查明五处先天缺陷：①版本门 grep 的是 C6 模板遗留变量名 `G17B3R5_VISUAL_PATCHER_VERSION`，而 C9 补丁器变量叫 `G17C9_VERSION`（用户撞到的）；②输入门硬编码要求 C3 镜像 `006a892b`（用户在 C8 态）；③输出门硬编码要求 C6 镜像 `5db5b7a5`（C9 输出按设计不同）；④C3 状态模式钉根 MPQ 哈希（C6/C7/C8 装过必变）；⑤回滚 PS1 为 0 字节空文件。v1/v2 从未具备可安装性；旧目录已改名 `G17C9_v1v2_已废弃_安装器五缺陷_20260826/`（含 DEFECT_NOTE.txt）。**v3 修复**：安装器按用户机器上真实跑通过的 C8 流程重写（状态文件只给路径不钉哈希、输入态由补丁器自判、输出改内容验证＋打包回读校验、真回滚脚本）；DBC 负载与 v2 完全一致；包自检 28/28 PASS，**并新增"安装器门仿真"测试（T2）——把 PS1 里每个对补丁器的正则门用真实补丁文本求值，此类 bug 交付前即被拦截**。证据：`证据/g17c9v3_installer_fix_delivery_20260827.md`。
 
@@ -226,7 +228,7 @@ World of Warcraft 3.3.5a 客户端＋服务端联合魔改：TrinityCore ＋ NPC
 | G17ChatLog | 同上 `G17ChatLog_...20260825/`；`G17ChatLog_FINAL.zip` | 聊天 5000 行＋独立 10000 缓冲；导出窗口 Ctrl+A/C；`/g17log save` |
 | G17CombatBar v4 | `G17CombatBar_v4_战斗技能条_20260826/`；`G17CombatBar_FINAL.zip` | 基于能量类型3+max100 检测载具状态的战斗条（不再依赖 IsKnown） |
 | G17Extract | `G17Extract_客户端提取工具_20260826/`；`G17Extract_FINAL.zip` | 从客户端 MPQ 提取 Interface/FrameXML 源码 |
-| **G17DragonRide 界面** | `G17DragonRide_自定义界面_20260827/`；仓库根 `G17DragonRide_FINAL.zip`（9100B，SHA `fccc6fb1...24d04`） | **全新自定义御龙界面（用户方向性指令落地）**：主行 6 原生槽（100% 可用）＋扩展行最多 6 格玩家施法按钮（`/g17ride add <1-6> <法术ID>` 任意技能——**格数无上限**）＋图形能量条＋页面指示＋冷却圈＋**默认隐藏原版载具条 6 按钮**＋**施法路径自动遥测**（无 SENT 事件→自动折叠扩展行＋红字提示）＋按键 1-6/7-0-=；任务坐骑零影响。取代 G17DragonBar v5/v6（安装前需删除旧插件） |
+| G17DragonRide 界面（可选路线） | `G17DragonRide_自定义界面_20260827/`；仓库根 `G17DragonRide_FINAL.zip`（9100B，SHA `fccc6fb1...24d04`） | 插件界面（用户否决插件路线后转为可选）：主行 6 原生槽（100% 可用）＋扩展行最多 6 格玩家施法按钮（`/g17ride add <1-6> <法术ID>` 任意技能——**格数无上限**）＋图形能量条＋页面指示＋冷却圈＋**默认隐藏原版载具条 6 按钮**＋**施法路径自动遥测**（无 SENT 事件→自动折叠扩展行＋红字提示）＋按键 1-6/7-0-=；任务坐骑零影响。取代 G17DragonBar v5/v6（安装前需删除旧插件） |
 | **G17VisualDB** | `G17工具/G17VisualDB_法术视觉对照库_20260827/` | **3.3.5.12340 全量 Spell.dbc 视觉对照库**（49839 条，Kaev 转储，五法术校准列位）；`g17visualdb.py <法术ID或视觉ID>` 正反查、`--name` 搜索——选特效必查，铁律工具化 |
 | G17_extracted | 仓库根 `G17_extracted/Interface/FrameXML/`（282 文件） | 客户端 UI 源码取证库（§0.1 权威资料源） |
 
@@ -368,7 +370,7 @@ World of Warcraft 3.3.5a 客户端＋服务端联合魔改：TrinityCore ＋ NPC
 
 ## 11. 当前未知项（写"未确认"，不得推断）
 
-- **B3R9＋G17DragonRide 验收结果**（当前最大未知：①扩展行玩家施法是否被客户端放行——界面内置遥测会自动判定并显示红字结论，用户回报即定格 ②`/g17ride status` 输出 ③兽/法/机/通 20 槽视觉）
+- **C11 客户端魔改验收结果**（当前最大未知：①第 7/8 格是否显示并可用——若第 7 格空，说明客户端不填充 Bonus 槽 7+（数据在 SMSG_PET_SPELLS 里但客户端 C++ 不写入动作槽），则需要改下探方向（改 BonusActionBarFrame.xml 让 Bonus 条自身显示槽 7-12，或客户端 C++ 层不可及则走 B3R9 玩家施法）②兽/法/机/通视觉逐类验收
 - 已确认事实：B3R8 安装 PASS 且原版条仍只显示 6 格——客户端 Bonus 槽 7+ 渲染硬限坐实（无论是否填充）
 - 若遥测判定玩家施法被拦截：备选＝petaction 安全路径／有限客户端补丁；主行 6 原生格不受任何影响
 - B3R6 最终像（3fdb46e8）的独立 Windows 构建/运行报告未单独归档（用户现场曾为 r1/r1b 中间像；按与 C9 合并验收处理）
@@ -387,8 +389,9 @@ wow-mecode/HANDOFF_GIT_STATE.txt
 wow-mecode/HANDOFF_FILE_MANIFEST.tsv
 
 # 当前权威交付包（仓库根，用户从这里拿）
-G17B3R9_FINAL.zip      # 服务端当前：全玩家施法支持 payload f0564c5a SHA ef15c5e3...efdb6（待装）
-G17DragonRide_FINAL.zip # 插件当前：全新自定义御龙界面 SHA fccc6fb1...24d04（待装）
+G17C11_FINAL.zip       # 客户端魔改当前：原版载具条6→8格(改FrameXML经MPQ链) 23/23自检（待装）
+G17B3R9_FINAL.zip      # 服务端可选：全玩家施法支持 payload f0564c5a SHA ef15c5e3...efdb6
+G17DragonRide_FINAL.zip # 插件可选路线：全新自定义御龙界面 SHA fccc6fb1...24d04
 G17C10_FINAL.zip        # 客户端：全类型视觉(已装，视觉验收中) SHA 9d9c546b...c9eee
 G17B3R7_FINAL.zip       # 已被 B3R8 取代 SHA a11e6ced...e38fb（勿重跑）
 G17C9_FINAL.zip         # v3 已验收归档 SHA 2079be3f...df4fb（勿重跑）
@@ -401,8 +404,9 @@ G17C9_真实特效_客户端/G17C9v3_Real_Visuals_Fix_Client_20260827/ # C9 v3 �
 G17C9_真实特效_客户端/G17C10_全类型特效_客户端/G17C10_All_Archetypes_Visuals_Client_20260827/ # 当前客户端权威包(35/35自检; addon/G17DragonBar)
 G17C9_真实特效_客户端/G17C9_v1v2_已废弃_安装器五缺陷_20260826/  # 🔴 禁装（DEFECT_NOTE.txt）
 G17B3R7_七槽与冷却显示/G17B3R7_SevenSlots_CooldownUI_Windows_20260827/ # 已被B3R8取代
-G17B3R9_全玩家施法UI支持/G17B3R9_PlayerCast_UI_Support_Windows_20260827/ # 当前服务端权威包(29/29自检)
-G17DragonRide_自定义界面_20260827/                                     # 当前插件权威包(全新自定义界面)
+G17C11_客户端UI魔改_载具条/G17C11_ClientMod_VehicleBar_Windows_20260827/ # 当前客户端魔改权威包(23/23自检)
+G17B3R9_全玩家施法UI支持/G17B3R9_PlayerCast_UI_Support_Windows_20260827/ # 服务端可选(玩家施法路径)
+G17DragonRide_自定义界面_20260827/                                     # 插件可选路线
 G17B3R8_槽位布局修正/ G17工具/G17DragonBar_v6_专用条_20260827/          # 已被取代, 归档
 G17工具/G17VisualDB_法术视觉对照库_20260827/                     # 全量视觉对照库(选特效必查)
 G17C8_技能差异化_客户端/  # 🔴 历史FAIL包，只作对照，禁止安装

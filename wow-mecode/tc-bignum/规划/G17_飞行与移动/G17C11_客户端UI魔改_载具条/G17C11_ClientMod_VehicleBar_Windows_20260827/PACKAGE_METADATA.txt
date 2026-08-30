@@ -1,0 +1,21 @@
+PACKAGE: G17-C11 REAL CLIENT MOD - Stock Vehicle Action Bar 6 -> 8 slots
+BUILD: v1_vehiclebar_8slots
+DATE: 2026-08-27
+PREREQ: G17 MPQ chain installed (C3v2 or any later client state)
+TARGET: client FrameXML (Interface\FrameXML\VehicleMenuBar.lua/.xml) added to
+        the G17 patch-MPQ chain (patch-Z root + zhCN mirror); Spell.dbc and
+        AreaTable.dbc pass through byte-identically
+PAYLOAD:
+  VehicleMenuBar.lua  0d572a7fbb7d69005b02f22932fbdc8f64c06f0d1d4ddc52a048300f30bb1a3c
+    (baseline 2183cb19190a49c5207624c44e756110764c18734c086ad41a8e3eda422a7a34:
+     only VEHICLE_MAX_ACTIONBUTTONS 6->8)
+  VehicleMenuBar.xml  31563ecf8787054408bab4049f212b2b77aa56c12dd264d60aa03b1494f1e628
+    (baseline fff0aec7e40f564b04114c0794be9152e0c546082d9a38ed6e6853e0903bc4df:
+     only VehicleMenuBarActionButton7/8 added)
+INSTALL: 01_Install_G17C11.cmd (double-click; WoW must be closed)
+ROLLBACK: 02_Rollback_G17C11.cmd
+RESULT: uploads\G17C11_CLIENTMOD_RESULT.txt / STATE: uploads\G17C11_CLIENTMOD_STATE.txt
+SELFTEST: python tools/test_g17c11_package.py
+IDEMPOTENT: rerun on a COMPLETE chain prints ALREADY_CURRENT and exits PASS
+NOTE: this is the G22 deep-client-mod capability proof - ANY client UI file can
+      be modified and shipped through this MPQ chain.
