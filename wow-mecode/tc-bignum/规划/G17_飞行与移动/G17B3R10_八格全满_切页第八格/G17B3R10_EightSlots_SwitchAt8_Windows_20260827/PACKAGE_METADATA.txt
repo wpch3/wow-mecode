@@ -1,0 +1,12 @@
+PACKAGE: G17-B3R10 Eight Filled Slots + Page Switch at Slot 8 (server)
+PAYLOAD: 199cff4a8073f60634ae30b3a4c5fed9a6f90d7fab60fe4ece4d6d263a8fe3fe
+PRE:     dcfa78dd92ac4491882b9e2ec5c18a8b0803d6fcbb01cbe553e7fc069ac0f487 (B3R8, user verified)
+UPGRADEABLE FROM: any lineage image (B3R6 3fdb46e8 / B3R7 f2360d7e / B3R8 dcfa78dd / B3R9 f0564c5a)
+ROLLBACK: 3fdb46e89a03a521d641b285a15339619a43b68c6399938121fb24683dfd306b (B3R6 floor)
+DATE: 2026-08-27
+TARGET: D:\TrinityCore\src\server\scripts\Commands\cs_dragonriding.cpp
+CHANGES: both pages = [skills 0-4, BRAKE@slot6, filler@slot7 (movement: archetype
+         generator / combat: dive), PAGE_SWITCH@slot8] - all eight m_spells filled
+         for the C11 8-button client bar; chat feedback on page switch; mount hint;
+         includes all B3R9 dual-caster improvements.
+SELFTEST: python tools/test_g17b3r10_package.py

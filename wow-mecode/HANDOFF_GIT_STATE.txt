@@ -1,89 +1,36 @@
 WOW-MECODE HANDOFF GIT STATE
-Generated: 2026-08-27 (Asia/Shanghai) - batch 6b (cleanup: wrong-route/failed packages archived)
-Previous batch: G17-C11 REAL CLIENT MOD (client mod of the stock vehicle bar)
-HEAD at generation: 6da178521c5e35cefc68a7d5647f21ac034064ca
-
-CLEANUP (user-ordered audit, batch 6b):
-- Moved to 规划/G17_飞行与移动/归档_废弃_20260827/ (archived, NOT deleted - lineage/evidence kept):
-  G17CombatBar_v4 + G17DragonBar_v6 + G17DragonRide (plugin route, forbidden by iron rule 0.3),
-  G17C8 (failed visuals), G17C9 v1/v2 (failed installer), and their 4 root zips.
-- Repo root now contains ONLY right-route lineage zips (server B2/B3R1-R9, client C1-C11,
-  diagnostic/pipeline tools G17Diag/G17ChatLog/G17Extract).
-- Kept in place: C10 package untouched (installed; its embedded addon folder is deprecated
-  per rule 0.3 but altering a delivered/installed package would break version integrity);
-  server lineage dirs B0-R9 (installer lineage evidence); 证据/ research docs (the client
-  mechanism research underpins C11).
-- ACTIVE deliveries unchanged: G17C11_FINAL.zip (client mod, awaiting install),
-  G17B3R8_FINAL.zip (installed), G17B3R9_FINAL.zip (server capability reserve),
-  G17C10_FINAL.zip (installed, visuals delivered).
-Original batch-6 header follows:
+Generated: 2026-08-27 (Asia/Shanghai) - batch 7 (G17-B3R10: 8 filled slots + switch@8)
 Repository: /home/user/wow-mecode  (mirror of https://github.com/wpch3/wow-mecode.git)
 Session branch: arena/01a03878-wow-mecode  (DO NOT switch/push other branches)
 HEAD at generation: ef24e03abcec6fc8c8a7b14ab1f1af9780e70712
 
 CURRENT PROJECT STATE
-- User's directional correction executed: they wanted CLIENT MODIFICATION
-  (客户端魔改), not an addon. G17-C11 delivers exactly that: the stock
-  vehicle action bar goes 6 -> 8 slots by patching the client's own FrameXML
-  and shipping it through the G17 patch-MPQ chain (the same mechanism as
-  every G17 client DBC patch since R1).
-  - Interface\FrameXML\VehicleMenuBar.lua : VEHICLE_MAX_ACTIONBUTTONS 6 -> 8
-    (the client's keybind routing in ActionButton.lua follows the constant)
-  - Interface\FrameXML\VehicleMenuBar.xml : VehicleMenuBarActionButton7/8
-    added (same template, same anchor chain)
-  - Spell.dbc / AreaTable.dbc pass through byte-identically.
-  - Payload hashes: lua 0d572a7fbb7d69005b02f22932fbdc8f64c06f0d1d4ddc52a048300f30bb1a3c
-    (baseline 2183cb19...), xml 31563ecf8787054408bab4049f212b2b77aa56c12dd264d60aa03b1494f1e628
-    (baseline fff0aec7...). 23/23 package self-test. Idempotent.
-- DELIVERY: repo-root G17C11_FINAL.zip (465664B, SHA e038129f37068459161919d1d68408afb221e3f1220bb9435f8b5aca45dd9472)
-  Install: close WoW -> 01_Install_G17C11.cmd -> PASSED -> restart client.
-  Acceptance: 7th slot visible (brake, needs B3R8+ server layout), key 7
-  works; if slot 8 also shows an icon, the client fills bonus slot 8 (report).
-- STRATEGIC: this closes the loop on the G22 deep-client-mod capability -
-  ANY client UI file can be extracted (G17Extract) -> minimally patched ->
-  shipped via the MPQ chain -> verified -> rolled back. All future deep
-  client modifications use this pipeline.
-- Optional routes kept: B3R9 (player-cast support) + G17DragonRide addon UI
-  remain available but the client-mod route (C11) is the authoritative one.
-- Prior verified: dragon visuals (C9 v3), cooldown UI display, B3R8 install.
+- USER-VERIFIED: the C11 CLIENT MOD works - the stock vehicle bar rendered 7
+  slots (1-5 skills, 6 = page switch WORKING, 7 = brake, no 8, exit fine).
+  The client-mod route (modify client FrameXML -> MPQ chain) is proven live.
+- User directive executed: move the page switch from slot 6 to slot 8 and
+  fill every slot. G17-B3R10 delivers (awaiting install):
+  - BOTH pages, all eight m_spells filled:
+    movement: [Ascend, Dive, Boost, Dash, Land | brake@6 | archetype GENERATOR@7
+               (free, +8 energy) | switch@8]
+    combat:   [skill0..skill4 | brake@6 | dive@7 (combat energy engine) | switch@8]
+  - Instant chat feedback on every page switch ("[G17] 已切换到：战斗/移动技能页")
+    plus a mount hint - a failed switch is now immediately visible.
+  - Includes ALL B3R9 dual-caster improvements; installs from B3R6/R7/R8/R9.
+  - Payload 199cff4a8073f60634ae30b3a4c5fed9a6f90d7fab60fe4ece4d6d263a8fe3fe,
+    pre dcfa78dd (B3R8, user's state), rollback 3fdb46e8 (B3R6), 33/33 self-test.
+  - DELIVERY: repo-root G17B3R10_FINAL.zip (225638B, SHA d67bb6738c0be25ab7dc071dafb110f2efaafa8c8aed20ab0216ace924de375a)
+    Close worldserver -> 01_Install_Build_G17B3R10.cmd -> first line
+    G17B3R10_BUILD=199cff4a -> PASSED -> restart.
+- NEXT on this momentum (client+server mod route only, iron rule 0.3):
+  skill variety (new spells 990029+ with distinct cast mechanics: cast-time /
+  channeled / instant / mobility - client DBC carriers + server scripts +
+  G17VisualDB visuals), B4 mounted eat/drink, more client UI mods as needed,
+  a third (stance) page when the skill count warrants it.
 - All older batches CLOSED; do not rerun.
 
-REPO-ROOT ASSETS (outside nested wow-mecode/ workspace mirror)
-e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  .sudo_as_admin_successful  (0 bytes)
-44ba08459986428dbcd4c664713235768d6ab32edea3b857d7687b6717a8bc53  G17B2R2_FINAL.zip  (100554 bytes)
-dd6dee1baf683ec7ecf62c90ddaa3d667ea1ade4cf9e9c32560aa6741a7b6c54  G17B2R3_FINAL.zip  (110161 bytes)
-5d748c1ee02ce45cde443e047c3dc41081bfe88c50decd4c70a92a9e1472ca8a  G17B2R4_FINAL.zip  (19694 bytes)
-9e0e7d6bca16d67a0ac3f017ec8ca59a2a7eed8f979475bed83a0b13c2de60d5  G17B3R1_FINAL.zip  (180174 bytes)
-81b11768a9160f336931f22953f9af8ea7cd1a7bc96cd5df9814f6eff66c8db1  G17B3R2d_FINAL.zip  (208049 bytes)
-29407b14e94f914c8d8bfef41f0db88786e76cb2e16a028103d3e85b7bdbfe78  G17B3R3_FINAL.zip  (216400 bytes)
-eb2c71e39b735f0e237d809b2613034da9bab55aac3372a2472adc4728bf1156  G17B3R4c_FINAL.zip  (232609 bytes)
-d310b56e0a1f33501e05c88406961e0f70a327786105624627a67b6632180097  G17B3R5_FINAL.zip  (226377 bytes)
-a8838aeb123a4332dffb7aadefdabc94ef8970209b826a40b5455834c166be1a  G17B3R5_WINDOWS_BUILD_RESULT.txt  (2003 bytes)
-0e08748b0a821ba52ab139f8e6df18d8d947cb211e0f1d62c5acc09ec13887da  G17B3R6_FINAL.zip  (214875 bytes)
-a11e6ced6a8593e561017b2a76169aede4505db5b614be2e4718617dc32e38fb  G17B3R7_FINAL.zip  (219175 bytes)
-565b6611494f58416272e21e0d48118edfc81b4ddb527f2c174d45e66282f05e  G17B3R8_FINAL.zip  (221757 bytes)
-ef15c5e381545c48a3784bd38470542ef16c67582c5a667fe1d127e32ccefdb6  G17B3R9_FINAL.zip  (224053 bytes)
-9d9c546bcaa93cb8778ace0f6cff1fffe0ba41cd80d3bbdb1284354ab83c9eee  G17C10_FINAL.zip  (467969 bytes)
-e038129f37068459161919d1d68408afb221e3f1220bb9435f8b5aca45dd9472  G17C11_FINAL.zip  (465664 bytes)
-2c19c761001dfa02acbf28a1bb0af5549d6c83c6b6f644b4e9e2c10671a80bdd  G17C1_FINAL.zip  (466277 bytes)
-eecc252ddf2069238199f0cc911265f15fe8febf89c1b07099863f2ca8938894  G17C2_FINAL.zip  (469112 bytes)
-038c5434cdac5389449dd854a4cf1b9f8dc2a912661410e651d5417c042cc98c  G17C3v2_FINAL.zip  (476810 bytes)
-d34ad6ab2ed78e787e3bb717789c205268aba686f917ae768109955f6cbf9e1f  G17C6_FINAL.zip  (461214 bytes)
-44b300e0831f59255b9392b06e7b97fcb233345f8284bf0f9a9b10e2af4e6af1  G17C7_FINAL.zip  (451766 bytes)
-452bb642d07edbb8f2ebcd301d10f1762df60252855c772fc464253da0c4c3cf  G17C8_FINAL.zip  (451615 bytes)
-2079be3f2b9626a6421d0e7efff94ab59de07f4872c0ef83290cfd1051adf4fb  G17C9_FINAL.zip  (459833 bytes)
-c62dcaa3efaeeea77d7cfc77353610c5f51d5f64bb25e2cbf6a0c882c8cd0f64  G17ChatLog_FINAL.zip  (4497 bytes)
-03b81abbba63a006b7b688beac8528e4a2244d7ddbe861475c3aca3391168df5  G17CombatBar_FINAL.zip  (5513 bytes)
-adf94bf4bfcfc9017194c7e353b1c11bdeebe90350c890cbca31ab7c1878a58e  G17Diag_FINAL.zip  (4195 bytes)
-374efad817118200f88f4562fe0fece98546e5fa68a361c8b259d0ddeb710edd  G17DragonBar_FINAL.zip  (8990 bytes)
-fccc6fb1dff1cc97f2a52ecac745fc161c8080b22fbc6f736b618181c4624d04  G17DragonRide_FINAL.zip  (9100 bytes)
-90b3aa78a1d00f8549cc0b2ea87b902acac6be05afa52b4a033f9c12ec7b12d4  G17Extract_FINAL.zip  (441010 bytes)
-[dir] G17_extracted/  (282 files)
-2f5fd044fd921e156d6299ad898b15b348bbd1763f3d7397f394ebb1aaa56342  PROJECT_HANDOFF_PROMPT_WOW335.md  (28359 bytes)
-a999b38813963a9f906dbd4364c3f0204b6b8e676ddcd68e428d51da5a76cbfd  g17-higher-slot-final.txt  (661 bytes)
-[dir] g17r5_lifecycle/  (15 files)
-[dir] tc-bignum/  (1 files)
-[dir] uploads/  (23 files)
-
-MANIFEST: HANDOFF_FILE_MANIFEST.tsv (regenerated batch 6, whole-repo, excludes .git and itself)
-EVIDENCE: wow-mecode/tc-bignum/规划/G17_飞行与移动/证据/g17c11_clientmod_vehiclebar_20260827.md
+REPO-ROOT ASSETS
+See HANDOFF_FILE_MANIFEST.tsv (regenerated this batch) for the full list.
+ACTIVE: G17B3R10_FINAL.zip (server, install now) | G17C11_FINAL.zip (client mod,
+installed+verified) | G17C10_FINAL.zip (DBC visuals, installed).
+EVIDENCE: wow-mecode/tc-bignum/规划/G17_飞行与移动/证据/g17b3r10_eight_slots_20260827.md
