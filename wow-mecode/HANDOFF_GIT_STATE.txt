@@ -1,5 +1,29 @@
 WOW-MECODE HANDOFF GIT STATE
-Generated: 2026-08-27 (Asia/Shanghai) - batch 7 (G17-B3R10: 8 filled slots + switch@8)
+Generated: 2026-08-27 (Asia/Shanghai) - batch 8 (F45R1 quiet + B3R11 land-mount flight emote)
+Previous: G17-B3R10 8 filled slots + switch@8 - USER-VERIFIED ("八个御龙术技能已经出来了")
+HEAD at generation: e46b57ac1b6c14f7293ee70261fd9b930a125140
+
+BATCH 8 (awaiting user install, order: F45R1 -> B3R11, one compile):
+- F45R1_FINAL.zip (5909B, SHA 07f469c25e8ffdd35cc05eb191f8b3cc9a2105885d6f08fd96455082715e0936):
+  source-level silence of the AoE loot announcement. User's conf line
+  (AoELoot.Announce = 0) had no effect -> their compiled CustomAoELoot.cpp
+  predates/ignores the gate (their F45 package folder was version-contaminated).
+  Version-tolerant patcher: V1 flips the gate default true->false; V2 removes
+  the whole ungated ChatHandler statement (paren/string aware). Backup +
+  rollback; self-test 4 cases PASS. The bot party-echo ("任务进度:群体拾取F45")
+  is expected to stop with the message (report if not).
+- G17B3R11_FINAL.zip (228630B, SHA 070206290ed2ede78d616942a40e4754c8176634aff42feb84d384e0a6ff196c):
+  payload 520696ee, pre 199cff4a (B3R10), rollback 3fdb46e8 (B3R6), 16-image
+  whitelist. Land-mount flight animation fix: BEAST/GENERIC archetypes get
+  SetEmoteState(EMOTE_STATE_STAND) while airborne (server emote state
+  overrides movement animation of non-self units) and EMOTE_ONESHOT_NONE on
+  ground/exit. Root cause verified in fork source: AnimTier::Swim is not
+  client-handled and Fly falls back to ground tier for models without fly
+  animations -> run-cycle pedaling. 34/34 self-test.
+- Skill-variety design doc started: G17_技能差异化设计_990029起_20260827.md
+  (5 cast-mechanic families x 5 archetypes, 3rd page, B3R12+C12 next).
+
+Original batch-7 header follows:
 Repository: /home/user/wow-mecode  (mirror of https://github.com/wpch3/wow-mecode.git)
 Session branch: arena/01a03878-wow-mecode  (DO NOT switch/push other branches)
 HEAD at generation: ef24e03abcec6fc8c8a7b14ab1f1af9780e70712
