@@ -225,6 +225,7 @@ World of Warcraft 3.3.5a 客户端＋服务端联合魔改：TrinityCore ＋ NPC
 | 有冷却但 UI 不显示（2026-08-27 用户报告） | DBC RecoveryTime=0 无本地预测＋载具施法不走 StartCooldown 发包分支（§3.3-17） | B3R7 双 GUID 冷却封包＋G17DragonBar CLEU 跟踪，互为保险 | 🟡 待用户验收 |
 | 上马卡顿 | 登乘 40+ 封包 | B3R6 移除 LearnSpell/RemoveSpell | ✅ 用户确认 |
 | 技能被"需要目标"阻断 | B3R6 r1 目标校验过严 | r1c 移除校验 | ✅ |
+| F45 自检播报太碍事＋回滚报 hash mismatch（2026-08-27） | 播报有现成开关 AoELoot.Announce(默认true)；回滚报错＝用户机器 F45 解压包被新旧版本污染（verify_package 校验包内镜像即中止，源码未被碰），中文命令报错＝同因 CMD 行截断 | **配置解决不回滚**：worldserver.conf 加 `AoELoot.Announce = 0` 重启即可（回滚会带回漏尸/金币老 bug）；删除污染的解压包目录 | 🟡 待用户确认 |
 | MSVC C2039 getLevel | fork 访问器名不同 | B3R4c 改 GetLevel() | ✅ |
 | 自动施法刷屏 | 聊天提示无差别 | IsTriggered() 抑制 | ✅ |
 | 玩家技能面板 11 按钮不显示 | LearnSpell 客户端不可见（IsKnown 全 false） | 放弃该路线；转 BonusActionBar 候选 | ⚪ 路线关闭 |
