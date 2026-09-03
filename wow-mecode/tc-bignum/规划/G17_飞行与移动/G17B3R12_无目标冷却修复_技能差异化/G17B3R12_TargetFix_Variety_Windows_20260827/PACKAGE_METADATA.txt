@@ -1,0 +1,14 @@
+PACKAGE: G17-B3R12 No-Target Hidden Cooldown Fix + Skill Variety #1/#2 (server)
+PAYLOAD: 3d501d9bb4b0ca2cb7f553877d6d32f85217e85723caf4602e5ad2863c74bcca
+PRE:     c5c4c332ad8d06b9841a29e546ec6581a253f96bbee6d2a8b4892a4d6cbf92a9 (B3R11 r1a, user current)
+ROLLBACK: 3fdb46e89a03a521d641b285a15339619a43b68c6399938121fb24683dfd306b (B3R6 floor)
+DATE: 2026-08-27
+TARGET: D:\TrinityCore\src\server\scripts\Commands\cs_dragonriding.cpp
+        + D:\TC-Build\bin\RelWithDebInfo\dbc\Spell.dbc (append 990029/990030)
+        + world.spell_script_names (bind 990029/990030)
+CHANGES: (1) CheckCast target pre-validation (full chain, slot 2 + triggered
+         exempt) - targetless press fails CLEANLY, no hidden GCD.
+         (2) 990029 swoop strike: first AoE skill (8yd around target).
+         (3) 990030 wind stance: toggle (+15% turn, doubled regen).
+         (4) slot 7 page-pure (movement=stance, combat=swoop).
+SELFTEST: python tools/test_g17b3r12_package.py

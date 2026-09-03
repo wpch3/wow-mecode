@@ -1,5 +1,39 @@
 WOW-MECODE HANDOFF GIT STATE
-Generated: 2026-08-27 (Asia/Shanghai) - batch 8 (F45R1 quiet + B3R11 land-mount flight emote)
+Generated: 2026-08-27 (Asia/Shanghai) - batch 9 (G17-B3R12: no-target hidden-cooldown fix + skill variety #1/#2)
+Previous batch 8: F45R1 + B3R11 r1a - USER-VERIFIED (compile PASS, leg pedaling fixed)
+HEAD at generation: ef24e03abcec6fc8c8a7b14ab1f1af9780e70712
+
+BATCH 9 (awaiting user install):
+- G17B3R12_FINAL.zip (SHA 46d9b602941eaa1735633db844a40125634d1af5c8f377f2f6eff93846bc60c8):
+  payload 3d501d9b, pre c5c4c332 (B3R11 r1a), rollback 3fdb46e8 (B3R6), 18-image
+  whitelist, 38/38 self-test. ONE CMD does: source apply -> server Spell.dbc
+  append (990029/990030) -> world SQL binding (spell_script_names) -> MSBuild.
+  (1) CRITICAL FIX (user report: no-target press enters a hidden internal
+      cooldown - "not ready" with no UI swirl = skill unusable): root cause =
+      the carrier cast SUCCEEDS at core level (core applies its GCD to any
+      completed cast) while the script layer early-returns (chat hint, no G17
+      cooldown, no UI packet). Fix = CheckCast pre-validates the target with
+      the FULL resolution chain (explicit -> rider selection -> dragon
+      victim; slot 2 defense and triggered auto-combat exempt) so a
+      targetless press FAILS cleanly (SPELL_FAILED_BAD_TARGETS, nothing
+      consumed).
+  (2) Skill variety #1/#2 (first batch of the differentiation roadmap):
+      990029 swoop strike (combat slot 7) - the FIRST AoE skill (8yd around
+      the target; War Stomp 45 prototype, icon 50 / visual 2355);
+      990030 wind stance (movement slot 7) - stance toggle: +15% turn rate +
+      doubled passive energy regen (Aspect of the Cheetah 5118 prototype,
+      icon 1181 / visual 3719). Slot 7 is now PAGE-PURE (fixes the user's
+      "swapped" report: the crossed generator/dive fillers removed).
+- F45R1 NOTE: its source edit never reached the exe (B3R11's compile failed);
+  the moment B3R12 compiles successfully the loot announce goes quiet - the
+  user should verify the broadcast disappears AFTER installing B3R12.
+- C12 follow-up: user reports the 8 buttons are still outside the UI frame.
+  Suspects: (a) client not fully restarted, or (b) VehicleMenuBar_SetSkin
+  resets every skin frame's scale (framedata.scale or 1) AFTER our OnLoad
+  SetScale(0.75). If confirmed after a full restart, C13 will wrap SetSkin
+  to re-apply the scale afterwards.
+
+Original batch-8 header follows:
 Previous: G17-B3R10 8 filled slots + switch@8 - USER-VERIFIED ("八个御龙术技能已经出来了")
 HEAD at generation: e46b57ac1b6c14f7293ee70261fd9b930a125140
 
