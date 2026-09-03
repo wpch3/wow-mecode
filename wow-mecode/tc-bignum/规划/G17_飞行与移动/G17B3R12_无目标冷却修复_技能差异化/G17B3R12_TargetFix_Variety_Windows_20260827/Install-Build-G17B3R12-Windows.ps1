@@ -29,6 +29,7 @@ $Sql = Join-Path $PSScriptRoot "sql\G17B3R12_world_variety_binding.sql"
 $Solution = Join-Path $BuildRoot "TrinityCore.sln"
 $RunDir = Join-Path $BuildRoot "bin\RelWithDebInfo"
 $ServerDbc = Join-Path $RunDir "dbc\Spell.dbc"
+$WorldConf = Join-Path $RunDir "worldserver.conf"
 $Exe = Join-Path $RunDir "worldserver.exe"
 $Pdb = Join-Path $RunDir "worldserver.pdb"
 

@@ -210,6 +210,32 @@ def t8_dbc_sql():
     ok("T8 appender --version works", r.returncode == 0 and "v1_append2_variety" in r.stdout)
 
 
+def t9_ps1_variable_audit():
+    """Every $Variable referenced by the installer must be defined (the
+    $WorldConf null-bind class of failure - caught pre-delivery now)."""
+    import re as _re
+    ps1 = INSTALL_PS1.read_text(encoding="utf-8")
+    lines = ps1.splitlines()
+    defined = set()
+    for ln in lines:
+        for m in _re.finditer(r"\$(\w+)\s*=", ln):
+            defined.add(m.group(1).lower())
+    # function params + automatic vars
+    defined |= {"text", "filepath", "nativeargs", "prefix", "sqlfile", "passmarker",
+                "self", "_", "null", "true", "false", "env", "erroractionpreference",
+                "lastexitcode", "matches", "args", "psscriptroot", "localappdata",
+                "mysql_pwd", "name", "candidate", "entry", "file", "old", "swapold",
+                "required", "state", "states", "values", "frame", "root", "target"}
+    undefined = []
+    for ln in lines:
+        for m in _re.finditer(r"\$(\w+)", ln):
+            v = m.group(1).lower()
+            if v not in defined:
+                undefined.append(v)
+    ok("T9 no undefined PS1 variables (the $WorldConf class)", not undefined,
+       f"undefined={sorted(set(undefined))}")
+
+
 def main() -> int:
     print(f"G17B3R12_PACKAGE_SELFTEST")
     t1_lineage()
@@ -218,6 +244,8 @@ def main() -> int:
     t4_payload_content()
     t5_static()
     t6_sums()
+    t8_dbc_sql()
+    t9_ps1_variable_audit()
     print(f"G17B3R12_PACKAGE_SELFTEST={'PASS' if FAIL == 0 else 'FAIL'} PASS={PASS} FAIL={FAIL}")
     return 0 if FAIL == 0 else 1
 
