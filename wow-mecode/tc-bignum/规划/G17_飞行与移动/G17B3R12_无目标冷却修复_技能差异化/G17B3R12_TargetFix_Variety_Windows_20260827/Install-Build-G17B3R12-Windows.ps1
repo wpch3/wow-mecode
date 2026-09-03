@@ -28,6 +28,7 @@ $Appender = Join-Path $PSScriptRoot "tools\append_g17b3r12_spells.py"
 $Sql = Join-Path $PSScriptRoot "sql\G17B3R12_world_variety_binding.sql"
 $Solution = Join-Path $BuildRoot "TrinityCore.sln"
 $RunDir = Join-Path $BuildRoot "bin\RelWithDebInfo"
+$ServerDbc = Join-Path $RunDir "dbc\Spell.dbc"
 $Exe = Join-Path $RunDir "worldserver.exe"
 $Pdb = Join-Path $RunDir "worldserver.pdb"
 
@@ -125,13 +126,13 @@ function Find-Python {
     return $python
 }
 
-$B3R6_BUILD = "r1_perf_fix"
+$B3R12_BUILD = "r12_targetfix_variety"
 try {
     W "G17B3R12_WINDOWS_BUILD_START"
-    W ("B3R6_BUILD=" + $B3R6_BUILD)
-    W "SCOPE=REMOVE_LEARNSPELL_ON_MOUNT+TARGET_VALIDATION_IN_CHECKCAST"
-    W "RUNS_SQL=False"
-    W "RUNS_DBC=False"
+    W ("G17B3R12_BUILD=" + $B3R12_BUILD)
+    W "SCOPE=CHECKCAST_TARGET_PREVALIDATION+SWOOP_STRIKE_990029+WIND_STANCE_990030+SLOT7_PAGE_PURE"
+    W "RUNS_SQL=True_G17B3R12_WORLD_VARIETY_BINDING"
+    W "RUNS_DBC=True_SERVER_DBC_APPEND_990029_990030"
     W "POST_SHA256=$Post"
     if (Get-Process worldserver -ErrorAction SilentlyContinue) { throw "worldserver is running; stop it first" }
     foreach ($file in @($Target, $Tool, $Solution, $Exe, $Pdb)) {
