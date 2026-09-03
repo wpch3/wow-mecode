@@ -1,0 +1,11 @@
+PACKAGE: G17-C12 Client Mod v2 - Eight Buttons Fit the Stock Skin Art
+BUILD: v1_8slot_bar_fits
+DATE: 2026-08-27
+PREREQ: G17-C11 installed (C11 lua 0d572a7f is the accepted baseline)
+TARGET: Interface\FrameXML\VehicleMenuBar.lua (one added hunk:
+        VehicleMenuBarActionButtonFrame:SetScale(0.75) when >6 buttons)
+        VehicleMenuBar.xml unchanged from C11; DBC passthrough.
+PAYLOAD_LUA: 071e688725661511d8471b6c5534c7abbadaf0538e0e0fb34750a75ecf848ef6
+PAYLOAD_XML: 31563ecf8787054408bab4049f212b2b77aa56c12dd264d60aa03b1494f1e628 (= C11)
+SELFTEST: python tools/test_g17c12_package.py
+IDEMPOTENT: rerun on the C12 image prints ALREADY_CURRENT

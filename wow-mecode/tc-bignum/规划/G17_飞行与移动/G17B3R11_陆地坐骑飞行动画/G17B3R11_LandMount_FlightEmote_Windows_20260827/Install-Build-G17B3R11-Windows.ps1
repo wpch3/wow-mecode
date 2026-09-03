@@ -5,7 +5,9 @@
 # the movement animation of non-self units - legs freeze while airborne and
 # restore on the ground.  Flying-model archetypes untouched.  Includes every
 # B3R7-R10 improvement (one install brings any lineage state current).
-# Works from B3R6-R10 source states. Payload 520696ee, rollback 3fdb46e8.
+# r1a: fixed real MSVC C2065 x2 (ARCHETYPE_* needed the G17Dragonriding:: prefix
+# inside the AI class).  Works from any state incl. the applied-but-uncompiled r1.
+# Payload c5c4c332, rollback 3fdb46e8.
 param(
     [string]$Workspace = "C:\Users\Administrator\Downloads\workspace",
     [string]$SourceRoot = "D:\TrinityCore",

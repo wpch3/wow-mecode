@@ -7,8 +7,8 @@ Locked-lineage installer for cs_dragonriding.cpp, same contract as B3R6-R10:
   rollback - atomic write of the safety-rollback image (B3R6 floor)
 
 Lineage:
-  PRE      199cff4a...  B3R10 (if installed)
-  POST     520696ee...  B3R11 land-mount flight emote fix
+  PRE      520696ee...  B3R11 r1 (applied on disk, MSVC C2065 x2)
+  POST     c5c4c332...  B3R11 r1a namespace fix
   ROLLBACK 3fdb46e8...  undo everything -> back to the deployed B3R6 build
 All earlier images remain valid upgrade sources; the payload carries every
 improvement from B3R7 through B3R10, so one install brings any state current.
@@ -18,8 +18,8 @@ import argparse, hashlib, os
 from pathlib import Path
 
 SOURCE_RELATIVE = Path("src/server/scripts/Commands/cs_dragonriding.cpp")
-PRE_SHA256 = "199cff4a8073f60634ae30b3a4c5fed9a6f90d7fab60fe4ece4d6d263a8fe3fe"   # B3R10 (if installed)
-POST_SHA256 = "520696eedc555108b2afbba6d232d5a8f67c46c7306461b7d4aeca83342a3029" # B3R11 land-mount flight emote fix
+PRE_SHA256 = "520696eedc555108b2afbba6d232d5a8f67c46c7306461b7d4aeca83342a3029"   # B3R11 r1 (applied on the user disk, failed to compile)
+POST_SHA256 = "c5c4c332ad8d06b9841a29e546ec6581a253f96bbee6d2a8b4892a4d6cbf92a9" # B3R11 r1a namespace fix
 # all earlier lineage images remain valid upgrade sources
 INTERMEDIATE_SHA256 = "98446106309b45371f138d9c7bc707ee608d9a3db347e13d61cfd68cc97810f9"  # B2R3 floor
 INTERMEDIATE2_SHA256 = "1a96b72eb28ffa2c0ac0d3e0c07e26c30f25bcd8525babd15efad02a041825d6" # B3R1 first attempt
@@ -38,14 +38,15 @@ INTERMEDIATE12_SHA256 = "3fdb46e89a03a521d641b285a15339619a43b68c6399938121fb246
 INTERMEDIATE13_SHA256 = "f2360d7e1be3ccea66f8bd499b19d4a7cc04acadee804dedbf8bf6774e3ca38c" # B3R7
 INTERMEDIATE14_SHA256 = "dcfa78dd92ac4491882b9e2ec5c18a8b0803d6fcbb01cbe553e7fc069ac0f487" # B3R8
 INTERMEDIATE15_SHA256 = "f0564c5ad225a67f0e49477d31d6939d32b490e6d69b8218f122bc7dce5560c3" # B3R9
-INTERMEDIATE16_SHA256 = "199cff4a8073f60634ae30b3a4c5fed9a6f90d7fab60fe4ece4d6d263a8fe3fe" # B3R10 (may be the user's current state)
+INTERMEDIATE16_SHA256 = "199cff4a8073f60634ae30b3a4c5fed9a6f90d7fab60fe4ece4d6d263a8fe3fe" # B3R10
+INTERMEDIATE17_SHA256 = "520696eedc555108b2afbba6d232d5a8f67c46c7306461b7d4aeca83342a3029" # B3R11 r1 (user's current state: applied, compile failed)
 SAFE_ROLLBACK_SHA256 = "3fdb46e89a03a521d641b285a15339619a43b68c6399938121fb24683dfd306b"  # B3R6 floor
 UPGRADEABLE_SHAS = (INTERMEDIATE_SHA256, INTERMEDIATE2_SHA256, INTERMEDIATE3_SHA256,
                     INTERMEDIATE4_SHA256, INTERMEDIATE5_SHA256, INTERMEDIATE6_SHA256,
                     INTERMEDIATE7_SHA256, INTERMEDIATE8_SHA256, INTERMEDIATE9_SHA256,
                     INTERMEDIATE10_SHA256, INTERMEDIATE11_SHA256, INTERMEDIATE12_SHA256,
                     INTERMEDIATE13_SHA256, INTERMEDIATE14_SHA256, INTERMEDIATE15_SHA256,
-                    INTERMEDIATE16_SHA256)
+                    INTERMEDIATE16_SHA256, INTERMEDIATE17_SHA256)
 PACKAGE_ROOT = Path(__file__).resolve().parents[1]
 PAYLOAD = PACKAGE_ROOT / "payload_src" / SOURCE_RELATIVE
 SAFE_ROLLBACK = PACKAGE_ROOT / "rollback_safe_src" / SOURCE_RELATIVE

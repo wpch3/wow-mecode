@@ -157,7 +157,8 @@ World of Warcraft 3.3.5a 客户端＋服务端联合魔改：TrinityCore ＋ NPC
 | C8 | 每槽独立视觉（**凭名猜错**）＋RecoveryTime 写入（**引入幻影冷却**） | — | 49868 | 🔴 用户实测 FAIL，被 C9 取代 |
 | C9 v3 | Wowhead 逐条验证 25 视觉＋RecoveryTime/Category=0；安装器五缺陷已修 | 安装后新哈希 | 49868 | ✅ 用户安装 PASS，龙类特效验收确认 |
 | C10 | 兽/法/机/通 20 槽视觉重制（G17VisualDB 全量对照＋语义匹配源法术）；龙类不动 | 安装后新哈希 | 49868 | 🟡 已装待逐类验收 |
-| C11 客户端魔改 | VehicleMenuBar.lua 常量 6→8 ＋ xml 新增按钮 7/8（MPQ 链下发；DBC 透传） | 链内 lua/xml 固定哈希 | — | ✅ **用户验证成功**（6→7 格渲染＋切页@6 可用；第 8 格空＝服务端只发 7 技能，由 B3R10 补满） |
+| C11 客户端魔改 | VehicleMenuBar.lua 常量 6→8 ＋ xml 新增按钮 7/8（MPQ 链下发；DBC 透传） | 链内 lua/xml 固定哈希 | — | ✅ 用户验证成功（后由 C12 增补框适配） |
+| **C12 客户端魔改 v2** | VehicleMenuBar.lua 增 `ActionButtonFrame:SetScale(0.75)`（>6 守卫）——8 按钮缩回 6 格占位宽 | lua `071e6887`；xml 不变 | — | 🟡 已交付待验收（25/25 自检；用户报告 UI 框装不下 8 格） |
 
 当前权威客户端包：仓库根 `G17C11_FINAL.zip`（客户端魔改：原版载具条 6→8 格；payload lua `0d572a7f`/xml `31563ecf`，23/23 包自检 PASS）。C10（`9d9c546b...c9eee`，视觉）已装待逐类验收。C9 v3 的 `G17C9_FINAL.zip`（SHA `2079be3f...df4fb`）已被用户验收后由 C10 接棒。前置：C3v2 及之后任一状态（C3/C6/C7/C8/C9 已装均可直接升级，幂等）。操作：关 WoW → 双击 `01_Install_G17C10.cmd` → PASSED → 复制 addon\G17DragonBar 到 AddOns → 重启客户端。
 
@@ -188,9 +189,10 @@ World of Warcraft 3.3.5a 客户端＋服务端联合魔改：TrinityCore ＋ NPC
 | dcfa78dd | B3R8 槽位安全修正 | 已安装 PASS；原版条仍 6 格（硬限坐实） |
 | f0564c5a | B3R9 全玩家施法支持 | 交付（用户未装，B3R10 已包含其全部改进） |
 | 199cff4a | B3R10 八格全满＋切页@8 | ✅ 用户验证（"八个御龙术技能已经出来了"） |
-| **520696ee** | **B3R11 陆地坐骑蹬腿修复** | **当前 payload；BEAST/GENERIC 飞行 EMOTE_STATE_STAND 冻结双腿、落地恢复；PRE=B3R10；回滚＝3fdb46e8；B3R6-R10 均可直装（34/34 自检）** |
+| 520696ee | B3R11 r1 蹬腿修复 | 🔴 真实 MSVC C2065×2（ARCHETYPE_* 裸用于命名空间外的 AI 类）——已应用到你盘上但编译失败 |
+| **c5c4c332** | **B3R11 r1a 命名空间修复** | **当前 payload；蹬腿逻辑不变＋G17Dragonriding:: 前缀；PRE=520696ee（盘上状态）；回滚＝3fdb46e8；35/35 自检** |
 
-安装器升级白名单＝上表除 2ddf54a6 外全部镜像；未知现场状态零写入拒绝。当前权威服务端包：仓库根 `G17B3R11_FINAL.zip`（payload 520696ee，34/34 包自检 PASS；包目录 `G17B3R11_陆地坐骑飞行动画/`）＋ `F45R1_FINAL.zip`（拾取播报静默，V1/V2 版本兼容）。B3R6-R10 包关闭禁重跑（B3R11 已包含其全部改进）。安装顺序：F45R1 → B3R11（统一编译）。
+安装器升级白名单＝上表除 2ddf54a6 外全部镜像；未知现场状态零写入拒绝。当前权威服务端包：仓库根 `G17B3R11_FINAL.zip` r1a（payload c5c4c332，35/35 包自检；包目录 `G17B3R11_陆地坐骑飞行动画/`）。客户端魔改：`G17C12_FINAL.zip`（八按钮 UI 框适配 SetScale 0.75，25/25 自检）。F45R1 已装（V2 路径坐实）。B3R6-R10 关闭禁重跑。
 
 ### 3.6 C9 v2 视觉分配表（每 ID 均经 Wowhead WotLK 核对真实法术）
 

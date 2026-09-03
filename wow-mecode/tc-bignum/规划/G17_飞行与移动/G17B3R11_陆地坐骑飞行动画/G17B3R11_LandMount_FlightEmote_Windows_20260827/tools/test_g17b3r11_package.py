@@ -29,7 +29,8 @@ PRE_B3R6 = "3fdb46e89a03a521d641b285a15339619a43b68c6399938121fb24683dfd306b"
 PRE_B3R7 = "f2360d7e1be3ccea66f8bd499b19d4a7cc04acadee804dedbf8bf6774e3ca38c"
 PRE_B3R9 = "f0564c5ad225a67f0e49477d31d6939d32b490e6d69b8218f122bc7dce5560c3"
 PRE_B3R10 = "199cff4a8073f60634ae30b3a4c5fed9a6f90d7fab60fe4ece4d6d263a8fe3fe"
-POST = "520696eedc555108b2afbba6d232d5a8f67c46c7306461b7d4aeca83342a3029"
+POST = "c5c4c332ad8d06b9841a29e546ec6581a253f96bbee6d2a8b4892a4d6cbf92a9"
+PRE_B3R11R1 = "520696eedc555108b2afbba6d232d5a8f67c46c7306461b7d4aeca83342a3029"
 
 PASS = 0
 FAIL = 0
@@ -50,10 +51,10 @@ def sha(p: Path) -> str:
 
 
 def t1_lineage():
-    ok("T1 original == B3R10 preimage", sha(PKG / "original.cpp") == PRE_B3R10)
+    ok("T1 original == B3R11r1 preimage (user on-disk state)", sha(PKG / "original.cpp") == PRE_B3R11R1)
     ok("T1 payload == B3R7 postimage", sha(PKG / "payload.cpp") == POST)
     ok("T1 rollback == B3R6 (safety floor)", sha(PKG / "rollback_safe.cpp") == PRE_B3R6)
-    for img, expect in [("original_src/src/server/scripts/Commands/cs_dragonriding.cpp", PRE_B3R10),
+    for img, expect in [("original_src/src/server/scripts/Commands/cs_dragonriding.cpp", PRE_B3R11R1),
                         ("payload_src/src/server/scripts/Commands/cs_dragonriding.cpp", POST),
                         ("rollback_safe_src/src/server/scripts/Commands/cs_dragonriding.cpp", PRE_B3R6)]:
         ok(f"T1 mirror {img.split('/')[0]}", sha(PKG / img) == expect)
@@ -66,13 +67,13 @@ def t2_gate_simulation():
     post = re.search(r'POST_SHA256\s*=\s*"([0-9a-f]{64})"', tool)
     rb = re.search(r'SAFE_ROLLBACK_SHA256\s*=\s*"([0-9a-f]{64})"', tool)
     ok("T2 tool PRE/POST/ROLLBACK constants", pre and post and rb
-       and pre.group(1) == PRE_B3R10 and post.group(1) == POST and rb.group(1) == PRE_B3R6)
+       and pre.group(1) == PRE_B3R11R1 and post.group(1) == POST and rb.group(1) == PRE_B3R6)
     # PS1 reads these three names from the tool - all must exist
     for name in ("PRE_SHA256", "POST_SHA256", "SAFE_ROLLBACK_SHA256"):
         ok(f"T2 PS1 reads {name} and tool defines it", name in ps1 and f'{name} = "' in tool)
     inter = re.findall(r'INTERMEDIATE\d*_SHA256\s*=\s*"([0-9a-f]{64})"', tool)
-    ok("T2 16 upgradeable intermediates incl. B3R6/R7/R8/R9/R10", len(inter) == 16 and PRE_B3R6 in inter and PRE_B3R7 in inter and PRE_B3R8 in inter and PRE_B3R9 in inter and PRE_B3R10 in inter)
-    ok("T2 PS1 fingerprint", "520696ee" in ps1 and "G17B3R11_WINDOWS_BUILD_RESULT" in ps1)
+    ok("T2 17 upgradeable intermediates incl. B3R6-R11r1", len(inter) == 17 and PRE_B3R6 in inter and PRE_B3R7 in inter and PRE_B3R8 in inter and PRE_B3R9 in inter and PRE_B3R10 in inter and PRE_B3R11R1 in inter)
+    ok("T2 PS1 fingerprint", "c5c4c332" in ps1 and "G17B3R11_WINDOWS_BUILD_RESULT" in ps1)
 
 
 def t3_functional_check():
@@ -121,6 +122,10 @@ def t4_payload_content():
        and payload.count("UpdateFlightEmote(true)") == 1
        and payload.count("UpdateFlightEmote(false)") == 1
        and "EMOTE_STATE_STAND" in payload and "ARCHETYPE_GENERIC" in payload)
+    ok("T4 r1a namespace fix (the real MSVC C2065 root cause)",
+       "G17Dragonriding::ARCHETYPE_BEAST" in payload
+       and "G17Dragonriding::ARCHETYPE_GENERIC" in payload
+       and payload.count("_archetype == G17Dragonriding::ARCHETYPE_BEAST") == 1)
     ok("T4 mount hint present", "御龙术就绪" in payload)
     ok("T4 runtime attribute sanitize present (B3R9 heritage)",
        payload.count("info->Attributes |= SPELL_ATTR0_CASTABLE_WHILE_MOUNTED;") == 1

@@ -1899,7 +1899,10 @@ private:
     // the ground.  Flying-model archetypes keep their native fly animations.
     void UpdateFlightEmote(bool airborne)
     {
-        if (_archetype == ARCHETYPE_BEAST || _archetype == ARCHETYPE_GENERIC)
+        // r1a fix: the AI class lives OUTSIDE namespace G17Dragonriding - the
+        // bare ARCHETYPE_* ids were undeclared here (real MSVC C2065 x2).
+        if (_archetype == G17Dragonriding::ARCHETYPE_BEAST ||
+            _archetype == G17Dragonriding::ARCHETYPE_GENERIC)
             me->SetEmoteState(airborne ? EMOTE_STATE_STAND : EMOTE_ONESHOT_NONE);
     }
 
@@ -3282,7 +3285,7 @@ void AddSC_dragonriding_commandscript()
     // always active, so it cannot be hidden by appender filtering. If this
     // block is absent from worldserver.log at startup, the running exe is old.
     TC_LOG_INFO("server.loading", " ");
-    TC_LOG_INFO("server.loading", ">> G17-B3R11 dragonriding LOADED  build=20260827-r11 (land-mount flight emote freeze: BEAST/GENERIC stand pose while airborne)");
+    TC_LOG_INFO("server.loading", ">> G17-B3R11 dragonriding LOADED  build=20260827-r11a (land-mount flight emote freeze + namespace fix)");
     TC_LOG_INFO("server.loading", "   skill2=layered audited visual kits | skill3=facing-locked dash w/o reverse | skill4=52226 sanitized cast");
     TC_LOG_INFO("server.loading", " ");
 

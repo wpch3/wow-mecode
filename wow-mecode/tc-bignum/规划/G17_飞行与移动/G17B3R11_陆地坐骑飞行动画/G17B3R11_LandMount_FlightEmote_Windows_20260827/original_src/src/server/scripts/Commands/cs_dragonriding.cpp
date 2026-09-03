@@ -1,5 +1,11 @@
 /*
- * G17-B3R10: eight filled slots per page, page switch pinned at slot 8.
+ * G17-B3R11: land-mount flight animation fix (user report: 陆地坐骑飞行时
+ * 双脚蹬个不停).  Land-mount models (BEAST/GENERIC) lack Fly-tier anims so the
+ * client plays their run cycle in flight; a server EMOTE STATE (stand pose)
+ * overrides the movement animation - legs freeze while airborne and restore
+ * on the ground/exit.  Flying-model archetypes are untouched.
+ *
+ * G17-B3R10 heritage (eight filled slots per page, switch pinned at slot 8):
  *
  * User-verified with the C11 client mod: the stock bar now renders 8 native
  * buttons (7 filled by B3R8 + slot 8 empty).  B3-R10 fills ALL eight on both
@@ -1883,6 +1889,20 @@ private:
         _lastAppliedSpeedRate = flightRate;
     }
 
+    // B3-R11: land-mount models (BEAST/GENERIC archetypes - horses, wolves...)
+    // have no Fly-tier animations.  The 3.3.5 client falls back to the GROUND
+    // tier for them, so the mount's legs pedal the run cycle through the whole
+    // flight (user report: 双脚蹬个不停).  AnimTier cannot fix this (fork docs:
+    // Swim is not client-handled; Fly falls back to ground).  A server-set
+    // EMOTE STATE, however, overrides the movement animation of non-self
+    // units - freeze the model in its stand pose while airborne, clear it on
+    // the ground.  Flying-model archetypes keep their native fly animations.
+    void UpdateFlightEmote(bool airborne)
+    {
+        if (_archetype == ARCHETYPE_BEAST || _archetype == ARCHETYPE_GENERIC)
+            me->SetEmoteState(airborne ? EMOTE_STATE_STAND : EMOTE_ONESHOT_NONE);
+    }
+
     void RestoreClientFlightControl(bool clearServerMotion)
     {
         if (clearServerMotion)
@@ -1893,6 +1913,7 @@ private:
         me->SetCanFly(true);
         me->SetDisableGravity(true);
         me->SetAnimTier(AnimTier::Fly);
+        UpdateFlightEmote(true); // B3-R11: freeze land-mount legs in flight
     }
 
     void NormalizeVehicleForExit()
@@ -1921,6 +1942,7 @@ private:
         me->SetAnimTier(AnimTier::Ground);
         me->SetCanFly(false);
         me->SetDisableGravity(false);
+        UpdateFlightEmote(false); // B3-R11: restore normal ground animations
     }
 
     void UpdateContinuousFlight(uint32 diff)
@@ -3260,7 +3282,7 @@ void AddSC_dragonriding_commandscript()
     // always active, so it cannot be hidden by appender filtering. If this
     // block is absent from worldserver.log at startup, the running exe is old.
     TC_LOG_INFO("server.loading", " ");
-    TC_LOG_INFO("server.loading", ">> G17-B3R10 dragonriding LOADED  build=20260827-r10 (8-slot pages: brake@6 filler@7 switch@8 + switch chat feedback)");
+    TC_LOG_INFO("server.loading", ">> G17-B3R11 dragonriding LOADED  build=20260827-r11 (land-mount flight emote freeze: BEAST/GENERIC stand pose while airborne)");
     TC_LOG_INFO("server.loading", "   skill2=layered audited visual kits | skill3=facing-locked dash w/o reverse | skill4=52226 sanitized cast");
     TC_LOG_INFO("server.loading", " ");
 
