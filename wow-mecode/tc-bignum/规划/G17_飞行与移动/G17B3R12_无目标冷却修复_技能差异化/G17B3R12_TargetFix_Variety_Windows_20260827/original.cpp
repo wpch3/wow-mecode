@@ -1,5 +1,17 @@
 /*
- * G17-B3R11: land-mount flight animation fix (user report: 陆地坐骑飞行时
+ * G17-B3R12: no-target hidden-cooldown fix + skill variety #1/#2.
+ *   - combat-skill CheckCast now pre-validates the target (full resolution
+ *     chain, triggered casts exempt): a targetless press fails CLEANLY with
+ *     SPELL_FAILED_BAD_TARGETS instead of executing, printing the chat hint
+ *     and silently consuming the core GCD (user-reported: "not ready" with
+ *     no UI swirl = unusable).
+ *   - new 990029 突袭·俯冲打击 (combat slot 7): first AREA skill, AoE burst
+ *     around the target; 990030 御风姿态 (movement slot 7): stance toggle
+ *     (+15% turn, doubled regen).  Both DUMMY carriers like the others.
+ *   - slot 7 is now page-pure (was the crossed generator/dive fillers the
+ *     user reported as 换错了).
+ *
+ * G17-B3R11 heritage (land-mount flight animation fix, user report: 陆地坐骑飞行时
  * 双脚蹬个不停).  Land-mount models (BEAST/GENERIC) lack Fly-tier anims so the
  * client plays their run cycle in flight; a server EMOTE STATE (stand pose)
  * overrides the movement animation - legs freeze while airborne and restore
@@ -77,6 +89,9 @@
 #include "DBCStores.h"
 #include "EventProcessor.h"
 #include "GridDefines.h"
+#include "GridNotifiers.h"
+#include "GridNotifiersImpl.h"
+#include "CellImpl.h"
 #include "G3D/Vector3.h"
 #include "Log.h"
 #include "Map.h"
@@ -325,6 +340,18 @@ constexpr int32  ACTION_ASCEND      = 4;
 constexpr int32  ACTION_DIVE        = 5;
 constexpr int32  ACTION_GLIDE_BRAKE = 6;
 constexpr int32  ACTION_PAGE_SWITCH = 7;
+constexpr int32  ACTION_WIND_STANCE = 8;   // B3-R12 御风姿态 toggle
+
+// ---- B3-R12 skill variety #1/#2 (client carriers 990029/990030) ----
+constexpr uint32 SPELL_SWOOP_STRIKE     = 990029; // 突袭·俯冲打击 (combat slot 7: first AoE)
+constexpr uint32 SPELL_WIND_STANCE      = 990030; // 御风姿态 (movement slot 7: stance toggle)
+constexpr uint32 SWOOP_CD_MS            = 12000;
+constexpr uint32 SWOOP_ENERGY           = 15;
+constexpr float  SWOOP_RADIUS           = 8.0f;
+constexpr uint32 SWOOP_BASE_DAMAGE      = 60;
+constexpr uint32 SWOOP_DMG_PER_LEVEL    = 12;
+constexpr uint32 WIND_STANCE_CD_MS      = 1000;   // toggle anti-spam
+constexpr float  WIND_STANCE_TURN_BONUS = 1.15f;  // +15% turn rate while active
 constexpr uint32 DATA_SKILL_PAGE    = 17018;
 constexpr uint32 ASCEND_ENERGY_COST  = 20;
 constexpr int32  DIVE_ENERGY_GAIN    = 15;    // diving is the recovery loop
@@ -990,7 +1017,9 @@ void WriteMovementPage(Creature* dragon, uint32 mountArchetype)
     dragon->m_spells[3] = SPELL_CLIMB;        // 朝向冲刺
     dragon->m_spells[4] = SPELL_SAFE_LANDING; // 飞行器着陆
     dragon->m_spells[5] = SPELL_GLIDE_BRAKE;  // 滑翔/制动 (slot 6, both pages)
-    dragon->m_spells[6] = COMBAT_SPELL_BASE + ArchetypeBlock(mountArchetype) * 5u; // 生成器@7
+    dragon->m_spells[6] = SPELL_WIND_STANCE;  // B3-R12: 御风姿态@7 - a FLIGHT skill on
+                                              // the flight page (user report: the crossed
+                                              // generator here read as a wrong-page skill)
     dragon->m_spells[7] = SPELL_PAGE_SWITCH;  // 切换技能页 (slot 8, ALWAYS last)
 }
 
@@ -1001,7 +1030,8 @@ void WriteCombatPage(Creature* dragon, uint32 mountArchetype)
     for (uint32 i = 0; i < COMBAT_PAGE_SLOTS; ++i)
         dragon->m_spells[i] = COMBAT_SPELL_BASE + block * 5u + i;
     dragon->m_spells[5] = SPELL_GLIDE_BRAKE;  // 滑翔/制动 (slot 6, both pages)
-    dragon->m_spells[6] = SPELL_DIVE;         // 俯冲@7: the combat-page energy engine (+15)
+    dragon->m_spells[6] = SPELL_SWOOP_STRIKE; // B3-R12: 突袭@7 - an ATTACK skill on the
+                                              // attack page (was: dive, the crossed filler)
     dragon->m_spells[7] = SPELL_PAGE_SWITCH;  // 切换技能页 (slot 8, ALWAYS last)
 }
 
@@ -1278,6 +1308,7 @@ struct npc_g17_dragonriding_vehicle : public VehicleAI
         _landingApproach = false;
         _climbing = false;
         _stalling = false;
+        _windStance = false; // B3-R12
         _safetyCleanupStarted = false;
         _safetyCheckTimer = G17Dragonriding::SAFETY_CHECK_INTERVAL_MS;
         _motionSampleAccumulator = 0;
@@ -1615,6 +1646,19 @@ struct npc_g17_dragonriding_vehicle : public VehicleAI
             return;
         }
 
+        // ---- B3-R12 御风姿态 toggle ----
+        if (action == G17Dragonriding::ACTION_WIND_STANCE)
+        {
+            _windStance = !_windStance;
+            ApplyMovementRates(_currentSpeedRate, true);
+            if (Player* rider = GetRider(me))
+                if (WorldSession* session = rider->GetSession())
+                    ChatHandler(session).PSendSysMessage(_windStance
+                        ? "|cff80dfff[G17] 御风姿态：开启（转向+15%%，能量回复加倍）。|r"
+                        : "|cff80dfff[G17] 御风姿态：关闭。|r");
+            return;
+        }
+
         if (action == ACTION_ASCEND)
         {
             if (_landing || _climbing)
@@ -1884,7 +1928,8 @@ private:
         me->SetSpeedRate(MOVE_FLIGHT_BACK, backwardRate);
         // Never amplify angular velocity at high speed. The 1.00 -> 0.82
         // envelope changes in 0.04 steps and remains responsive without a cut.
-        me->SetSpeedRate(MOVE_TURN_RATE, _currentTurnRate);
+        me->SetSpeedRate(MOVE_TURN_RATE,
+            _currentTurnRate * (_windStance ? G17Dragonriding::WIND_STANCE_TURN_BONUS : 1.0f));
         me->SetSpeedRate(MOVE_PITCH_RATE, std::max(0.90f, _currentTurnRate));
         _lastAppliedSpeedRate = flightRate;
     }
@@ -2004,7 +2049,9 @@ private:
         // grounded; the fast paths are diving (+15) and the combat-page
         // generator slot (+8 per use).
         _energyRegenTimer += diff;
-        if (_energyRegenTimer >= G17Dragonriding::PASSIVE_ENERGY_REGEN_MS)
+        if (_energyRegenTimer >= (_windStance
+                ? G17Dragonriding::PASSIVE_ENERGY_REGEN_MS / 2u
+                : G17Dragonriding::PASSIVE_ENERGY_REGEN_MS))
         {
             _energyRegenTimer = 0;
             if (me->GetPower(POWER_ENERGY) < me->GetMaxPower(POWER_ENERGY))
@@ -2565,6 +2612,7 @@ private:
     bool _landingApproach = false;
     bool _climbing = false;
     bool _stalling = false;
+    bool _windStance = false; // B3-R12 御风姿态
     bool _boostTopSpeedAnnounced = false;
     bool _travelHeadingReady = false;
     bool _safetyCleanupStarted = false;
@@ -2634,11 +2682,6 @@ class spell_g17_combat_skill : public SpellScript
 
         uint32 const slot = G17Dragonriding::CombatSlot(GetSpellInfo()->Id);
 
-        // B3-R6b: target validation REMOVED from CheckCast. The vehicle-cast
-        // path can return the dragon itself as the target (friendly), which
-        // was blocking ALL attack skills even with a valid enemy targeted.
-        // The "cooldown without target" cosmetic issue is handled by the
-        // ExecuteCombatSkill early-return (no server-side cooldown applied).
         // Slot 0 is the generator: free and RESTORES energy.
         if (slot != 0)
         {
@@ -2646,6 +2689,29 @@ class spell_g17_combat_skill : public SpellScript
                                             : G17Dragonriding::COMBAT_ENERGY_COST;
             if (dragon->GetPower(POWER_ENERGY) < cost)
                 return SPELL_FAILED_NO_POWER;
+        }
+
+        // B3-R12: pre-validate the target so a targetless press FAILS the
+        // cast cleanly (SPELL_FAILED_BAD_TARGETS, nothing consumed) instead
+        // of executing, printing the chat hint and silently eating the core
+        // GCD - the user-reported hidden lockout ("not ready" with no UI
+        // swirl; the core applies its GCD to any COMPLETED cast, even one
+        // whose G17 effects early-returned).  The B3-R6b removal was about a
+        // naive GetUnitTarget()-only check; this mirrors ExecuteCombatSkill's
+        // FULL resolution chain: explicit target -> rider selection -> dragon
+        // victim.  Triggered casts (the auto-combat generator, which carries
+        // the dragon's victim) are exempt.
+        if (!GetSpell()->IsTriggered() && slot != 2)
+        {
+            Unit* target = GetSpell()->m_targets.GetUnitTarget();
+            if (!target || target == dragon)
+                target = player->GetSelectedUnit();
+            if (!target)
+                target = dragon->GetVictim();
+            if (target == player || (target && target->IsFriendlyTo(player)))
+                target = nullptr;
+            if (!target)
+                return SPELL_FAILED_BAD_TARGETS;
         }
 
         // Server-side cooldown gate (DBC records carry no cooldown).  The
@@ -2887,6 +2953,159 @@ class spell_g17_dragon_safe_landing : public SpellScript
 // ---- B3-R2 bar-button SpellScripts (cast by the vehicle, like the four
 // proven B2 movement skills).  Each is a visual-only DBC dummy; the real
 // behavior goes through the vehicle AI via DoAction. ----
+
+// ---- B3-R12 skill variety #1: 突袭·俯冲打击 (990029, combat slot 7) ----
+// The first AREA skill: instant damage to every enemy within SWOOP_RADIUS of
+// the target (skills 1-5 are single-target).  Prototyped on War Stomp (45)
+// client-side (icon 50 / visual 2355).  Target pre-validated in CheckCast so
+// a targetless press fails cleanly (no hidden GCD lockout - see the combat
+// skill's B3-R12 note).
+class spell_g17_swoop_strike : public SpellScript
+{
+    PrepareSpellScript(spell_g17_swoop_strike);
+
+    SpellCastResult CheckCast()
+    {
+        Creature* dragon = G17Dragonriding::ResolveDragonFromCaster(GetCaster());
+        if (!dragon || !dragon->IsAIEnabled())
+            return SPELL_FAILED_ERROR;
+        Player* player = G17Dragonriding::GetRider(dragon);
+        if (!player)
+            return SPELL_FAILED_NOT_READY;
+        if (player->InBattleground() || player->InArena())
+            return SPELL_FAILED_NOT_READY;
+
+        if (!GetSpell()->IsTriggered())
+        {
+            Unit* target = GetSpell()->m_targets.GetUnitTarget();
+            if (!target || target == dragon)
+                target = player->GetSelectedUnit();
+            if (!target)
+                target = dragon->GetVictim();
+            if (target == player || (target && target->IsFriendlyTo(player)))
+                target = nullptr;
+            if (!target)
+                return SPELL_FAILED_BAD_TARGETS;
+            if (target->GetMap() != player->GetMap() ||
+                !player->IsWithinDist(target, G17Dragonriding::COMBAT_MAX_RANGE) ||
+                !player->IsWithinLOS(target->GetPositionX(), target->GetPositionY(), target->GetPositionZ()))
+                return SPELL_FAILED_OUT_OF_RANGE;
+        }
+
+        if (!dragon->GetSpellHistory()->IsReady(GetSpellInfo()))
+            return SPELL_FAILED_NOT_READY;
+        if (dragon->GetPower(POWER_ENERGY) < G17Dragonriding::SWOOP_ENERGY)
+            return SPELL_FAILED_NO_POWER;
+        return SPELL_CAST_OK;
+    }
+
+    void HandleStrike(SpellEffIndex effectIndex)
+    {
+        Creature* dragon = G17Dragonriding::ResolveDragonFromCaster(GetCaster());
+        if (!dragon || !dragon->IsAIEnabled())
+            return;
+        Player* player = G17Dragonriding::GetRider(dragon);
+        if (!player)
+            return;
+        PreventHitDefaultEffect(effectIndex);
+
+        Unit* target = GetSpell()->m_targets.GetUnitTarget();
+        if (!target || target == dragon)
+            target = player->GetSelectedUnit();
+        if (!target)
+            target = dragon->GetVictim();
+        if (!target || target == player || target->IsFriendlyTo(player))
+            return;
+
+        dragon->ModifyPower(POWER_ENERGY, -int32(G17Dragonriding::SWOOP_ENERGY));
+        dragon->GetSpellHistory()->AddCooldown(
+            G17Dragonriding::SPELL_SWOOP_STRIKE, 0, Milliseconds(G17Dragonriding::SWOOP_CD_MS));
+        player->GetSpellHistory()->AddCooldown(
+            G17Dragonriding::SPELL_SWOOP_STRIKE, 0, Milliseconds(G17Dragonriding::SWOOP_CD_MS));
+        G17Dragonriding::SendVehicleCooldownPackets(
+            player, dragon, G17Dragonriding::SPELL_SWOOP_STRIKE, G17Dragonriding::SWOOP_CD_MS);
+
+        // AoE burst around the target; attacker = rider for credit.
+        uint32 const amount = (G17Dragonriding::SWOOP_BASE_DAMAGE +
+            player->GetLevel() * G17Dragonriding::SWOOP_DMG_PER_LEVEL);
+        std::list<Unit*> hits;
+        Trinity::AnyUnfriendlyUnitInObjectRangeCheck check(player, G17Dragonriding::SWOOP_RADIUS);
+        Trinity::UnitListSearcher<Trinity::AnyUnfriendlyUnitInObjectRangeCheck> searcher(player, hits, check);
+        Cell::VisitAllObjects(target, searcher, G17Dragonriding::SWOOP_RADIUS);
+        uint32 count = 0;
+        for (Unit* hit : hits)
+        {
+            if (!hit || !hit->IsAlive() || hit == player || hit == dragon)
+                continue;
+            Unit::DealDamage(player, hit, amount, nullptr, DIRECT_DAMAGE,
+                SPELL_SCHOOL_MASK_NORMAL, GetSpellInfo(), true);
+            hit->SendPlaySpellVisualKit(G17Dragonriding::VISUAL_KIT_IMPACT_RING, 0);
+            ++count;
+        }
+        dragon->SendMeleeAttackStart(target);
+        dragon->SendMeleeAttackStop(target);
+
+        if (WorldSession* session = player->GetSession())
+            ChatHandler(session).PSendSysMessage(
+                "|cff80dfff[G17] 突袭·俯冲打击：%u 点范围伤害（%u 个目标）。|r", amount, count);
+    }
+
+    void Register() override
+    {
+        OnCheckCast += SpellCheckCastFn(spell_g17_swoop_strike::CheckCast);
+        OnEffectHit += SpellEffectFn(spell_g17_swoop_strike::HandleStrike, EFFECT_0, SPELL_EFFECT_ANY);
+    }
+};
+
+// ---- B3-R12 skill variety #2: 御风姿态 (990030, movement slot 7) ----
+// Stance toggle: +15% turn rate and doubled passive energy regen while
+// active; the AI owns the state (ACTION_WIND_STANCE) and prints on/off.
+// Prototyped on Aspect of the Cheetah (5118) client-side (icon 1181 /
+// visual 3719).  Self-cast: no target required.
+class spell_g17_wind_stance : public SpellScript
+{
+    PrepareSpellScript(spell_g17_wind_stance);
+
+    SpellCastResult CheckCast()
+    {
+        Creature* dragon = G17Dragonriding::ResolveDragonFromCaster(GetCaster());
+        if (!dragon || !dragon->IsAIEnabled())
+            return SPELL_FAILED_ERROR;
+        Player* player = G17Dragonriding::GetRider(dragon);
+        if (!player)
+            return SPELL_FAILED_NOT_READY;
+        if (player->InBattleground() || player->InArena())
+            return SPELL_FAILED_NOT_READY;
+        if (!dragon->GetSpellHistory()->IsReady(GetSpellInfo()))
+            return SPELL_FAILED_NOT_READY;
+        return SPELL_CAST_OK;
+    }
+
+    void HandleToggle(SpellEffIndex effectIndex)
+    {
+        Creature* dragon = G17Dragonriding::ResolveDragonFromCaster(GetCaster());
+        if (!dragon || !dragon->IsAIEnabled())
+            return;
+        PreventHitDefaultEffect(effectIndex);
+
+        dragon->GetSpellHistory()->AddCooldown(
+            G17Dragonriding::SPELL_WIND_STANCE, 0, Milliseconds(G17Dragonriding::WIND_STANCE_CD_MS));
+        if (Player* player = G17Dragonriding::GetRider(dragon))
+        {
+            player->GetSpellHistory()->AddCooldown(
+                G17Dragonriding::SPELL_WIND_STANCE, 0, Milliseconds(G17Dragonriding::WIND_STANCE_CD_MS));
+            G17Dragonriding::SendVehicleCooldownPackets(
+                player, dragon, G17Dragonriding::SPELL_WIND_STANCE, G17Dragonriding::WIND_STANCE_CD_MS);
+        }
+        dragon->AI()->DoAction(G17Dragonriding::ACTION_WIND_STANCE);
+    }
+
+    void Register() override
+    {
+        OnCheckCast += SpellCheckCastFn(spell_g17_wind_stance::CheckCast);
+        OnEffectHit += SpellEffectFn(spell_g17_wind_stance::HandleToggle, EFFECT_0, SPELL_EFFECT_ANY);
+    }
+};
 
 // 切换技能页: swaps the vehicle action bar between movement and combat pages.
 class spell_g17_page_switch : public SpellScript
@@ -3285,7 +3504,7 @@ void AddSC_dragonriding_commandscript()
     // always active, so it cannot be hidden by appender filtering. If this
     // block is absent from worldserver.log at startup, the running exe is old.
     TC_LOG_INFO("server.loading", " ");
-    TC_LOG_INFO("server.loading", ">> G17-B3R11 dragonriding LOADED  build=20260827-r11a (land-mount flight emote freeze + namespace fix)");
+    TC_LOG_INFO("server.loading", ">> G17-B3R12 dragonriding LOADED  build=20260827-r12 (target pre-validation + swoop strike 990029 + wind stance 990030)");
     TC_LOG_INFO("server.loading", "   skill2=layered audited visual kits | skill3=facing-locked dash w/o reverse | skill4=52226 sanitized cast");
     TC_LOG_INFO("server.loading", " ");
 
@@ -3297,6 +3516,8 @@ void AddSC_dragonriding_commandscript()
     RegisterSpellScript(spell_g17_dragon_climb);
     RegisterSpellScript(spell_g17_dragon_safe_landing);
     RegisterSpellScript(spell_g17_combat_skill);
+    RegisterSpellScript(spell_g17_swoop_strike);   // B3-R12
+    RegisterSpellScript(spell_g17_wind_stance);    // B3-R12
     RegisterSpellScript(spell_g17_page_switch);
     RegisterSpellScript(spell_g17_ascend);
     RegisterSpellScript(spell_g17_dive);

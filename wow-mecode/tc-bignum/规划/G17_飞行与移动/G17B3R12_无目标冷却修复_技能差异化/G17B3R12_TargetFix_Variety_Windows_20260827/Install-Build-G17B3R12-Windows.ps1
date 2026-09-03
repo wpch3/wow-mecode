@@ -12,7 +12,9 @@
 # swoop strike (combat slot 7, first AoE) + 990030 wind stance (movement slot
 # 7, toggle) - slot 7 is now page-pure.  Steps: source apply -> server DBC
 # append (990029/990030) -> world SQL binding -> MSBuild.
-# Works from B3R6-R11r1a states. Payload 3d501d9b, rollback 3fdb46e8.
+# r12a: fixed real MSVC C2661 (fork's AnyUnfriendlyUnitInObjectRangeCheck ctor
+# is (obj, funit, range) - 3 args, not 2). Works from any state incl. the
+# applied-but-uncompiled r1. Payload a6074cde, rollback 3fdb46e8.
 param(
     [string]$Workspace = "C:\Users\Administrator\Downloads\workspace",
     [string]$SourceRoot = "D:\TrinityCore",

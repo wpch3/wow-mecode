@@ -29,7 +29,8 @@ PRE_B3R6 = "3fdb46e89a03a521d641b285a15339619a43b68c6399938121fb24683dfd306b"
 PRE_B3R7 = "f2360d7e1be3ccea66f8bd499b19d4a7cc04acadee804dedbf8bf6774e3ca38c"
 PRE_B3R9 = "f0564c5ad225a67f0e49477d31d6939d32b490e6d69b8218f122bc7dce5560c3"
 PRE_B3R10 = "199cff4a8073f60634ae30b3a4c5fed9a6f90d7fab60fe4ece4d6d263a8fe3fe"
-POST = "3d501d9bb4b0ca2cb7f553877d6d32f85217e85723caf4602e5ad2863c74bcca"
+POST = "a6074cde399875ecc6741647bee57ca11a0f5785ab784fd3fe265aa0e1fd54ee"
+PRE_B3R12R1 = "3d501d9bb4b0ca2cb7f553877d6d32f85217e85723caf4602e5ad2863c74bcca"
 PRE_B3R11R1A = "c5c4c332ad8d06b9841a29e546ec6581a253f96bbee6d2a8b4892a4d6cbf92a9"
 
 PASS = 0
@@ -51,10 +52,10 @@ def sha(p: Path) -> str:
 
 
 def t1_lineage():
-    ok("T1 original == B3R11r1a preimage (user current)", sha(PKG / "original.cpp") == PRE_B3R11R1A)
+    ok("T1 original == B3R12r1 preimage (user on-disk state)", sha(PKG / "original.cpp") == PRE_B3R12R1)
     ok("T1 payload == B3R7 postimage", sha(PKG / "payload.cpp") == POST)
     ok("T1 rollback == B3R6 (safety floor)", sha(PKG / "rollback_safe.cpp") == PRE_B3R6)
-    for img, expect in [("original_src/src/server/scripts/Commands/cs_dragonriding.cpp", PRE_B3R11R1A),
+    for img, expect in [("original_src/src/server/scripts/Commands/cs_dragonriding.cpp", PRE_B3R12R1),
                         ("payload_src/src/server/scripts/Commands/cs_dragonriding.cpp", POST),
                         ("rollback_safe_src/src/server/scripts/Commands/cs_dragonriding.cpp", PRE_B3R6)]:
         ok(f"T1 mirror {img.split('/')[0]}", sha(PKG / img) == expect)
@@ -67,13 +68,13 @@ def t2_gate_simulation():
     post = re.search(r'POST_SHA256\s*=\s*"([0-9a-f]{64})"', tool)
     rb = re.search(r'SAFE_ROLLBACK_SHA256\s*=\s*"([0-9a-f]{64})"', tool)
     ok("T2 tool PRE/POST/ROLLBACK constants", pre and post and rb
-       and pre.group(1) == PRE_B3R11R1A and post.group(1) == POST and rb.group(1) == PRE_B3R6)
+       and pre.group(1) == PRE_B3R12R1 and post.group(1) == POST and rb.group(1) == PRE_B3R6)
     # PS1 reads these three names from the tool - all must exist
     for name in ("PRE_SHA256", "POST_SHA256", "SAFE_ROLLBACK_SHA256"):
         ok(f"T2 PS1 reads {name} and tool defines it", name in ps1 and f'{name} = "' in tool)
     inter = re.findall(r'INTERMEDIATE\d*_SHA256\s*=\s*"([0-9a-f]{64})"', tool)
-    ok("T2 18 upgradeable intermediates incl. B3R6-R11r1a", len(inter) == 18 and PRE_B3R6 in inter and PRE_B3R7 in inter and PRE_B3R8 in inter and PRE_B3R9 in inter and PRE_B3R10 in inter and PRE_B3R11R1A in inter)
-    ok("T2 PS1 fingerprint", "3d501d9b" in ps1 and "G17B3R12_WINDOWS_BUILD_RESULT" in ps1)
+    ok("T2 19 upgradeable intermediates incl. B3R6-R12r1", len(inter) == 19 and PRE_B3R6 in inter and PRE_B3R7 in inter and PRE_B3R8 in inter and PRE_B3R9 in inter and PRE_B3R10 in inter and PRE_B3R11R1A in inter)
+    ok("T2 PS1 fingerprint", "a6074cde" in ps1 and "G17B3R12_WINDOWS_BUILD_RESULT" in ps1)
 
 
 def t3_functional_check():
@@ -130,6 +131,9 @@ def t4_payload_content():
     ok("T4 swoop strike class", "class spell_g17_swoop_strike" in payload
        and "AnyUnfriendlyUnitInObjectRangeCheck" in payload
        and "SPELL_SWOOP_STRIKE, 0, Milliseconds(G17Dragonriding::SWOOP_CD_MS)" in payload)
+    ok("T4 r12a AoE check ctor = fork's 3-arg signature (the real C2661 fix)",
+       "AnyUnfriendlyUnitInObjectRangeCheck check(target, player, G17Dragonriding::SWOOP_RADIUS)" in payload
+       and "check(player, G17Dragonriding::SWOOP_RADIUS)" not in payload)
     ok("T4 wind stance class", "class spell_g17_wind_stance" in payload
        and "ACTION_WIND_STANCE" in payload
        and "WIND_STANCE_TURN_BONUS" in payload)

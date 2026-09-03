@@ -3029,7 +3029,11 @@ class spell_g17_swoop_strike : public SpellScript
         uint32 const amount = (G17Dragonriding::SWOOP_BASE_DAMAGE +
             player->GetLevel() * G17Dragonriding::SWOOP_DMG_PER_LEVEL);
         std::list<Unit*> hits;
-        Trinity::AnyUnfriendlyUnitInObjectRangeCheck check(player, G17Dragonriding::SWOOP_RADIUS);
+        // Fork signature (GridNotifiers.h:962): (WorldObject const* obj,
+        // Unit const* funit, float range) - obj = range center, funit = the
+        // faction reference.  Center the burst on the TARGET; faction = the
+        // rider's.  (The real C2661 was my 2-arg call against this 3-arg ctor.)
+        Trinity::AnyUnfriendlyUnitInObjectRangeCheck check(target, player, G17Dragonriding::SWOOP_RADIUS);
         Trinity::UnitListSearcher<Trinity::AnyUnfriendlyUnitInObjectRangeCheck> searcher(player, hits, check);
         Cell::VisitAllObjects(target, searcher, G17Dragonriding::SWOOP_RADIUS);
         uint32 count = 0;
@@ -3504,7 +3508,7 @@ void AddSC_dragonriding_commandscript()
     // always active, so it cannot be hidden by appender filtering. If this
     // block is absent from worldserver.log at startup, the running exe is old.
     TC_LOG_INFO("server.loading", " ");
-    TC_LOG_INFO("server.loading", ">> G17-B3R12 dragonriding LOADED  build=20260827-r12 (target pre-validation + swoop strike 990029 + wind stance 990030)");
+    TC_LOG_INFO("server.loading", ">> G17-B3R12 dragonriding LOADED  build=20260827-r12a (target pre-validation + swoop 990029 + stance 990030; AoE check ctor fixed)");
     TC_LOG_INFO("server.loading", "   skill2=layered audited visual kits | skill3=facing-locked dash w/o reverse | skill4=52226 sanitized cast");
     TC_LOG_INFO("server.loading", " ");
 
