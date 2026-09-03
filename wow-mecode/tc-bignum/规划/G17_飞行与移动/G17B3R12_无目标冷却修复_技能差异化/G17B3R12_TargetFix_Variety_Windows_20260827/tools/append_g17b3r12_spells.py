@@ -112,14 +112,14 @@ def do_append(args) -> int:
     for sid, name, icon, rng, desc in SKILLS:
         new_recs += build_record(sid, name, icon, rng, desc, name_offsets[sid], desc_offsets[sid])
 
-    out = data[:20] + recs + new_recs + strings + new_names
-    # fix header count and string size
+    # bytearray: struct.pack_into needs a mutable buffer (real TypeError fix)
+    out = bytearray(data[:20] + recs + new_recs + strings + new_names)
     new_count = count + len(SKILLS)
     new_strsz = len(strings) + len(new_names)
     struct.pack_into("<I", out, 4, new_count)
     struct.pack_into("<I", out, 16, new_strsz)
 
-    Path(args.output).write_bytes(out)
+    Path(args.output).write_bytes(bytes(out))
     print(f"G17B3R12_SPELL_DBC_OUTPUT_SHA256={sha(out)}")
     print(f"G17B3R12_SPELL_DBC_OUTPUT_RECORDS={new_count}")
     print("G17B3R12_SPELL_DBC_APPEND=PASS")
