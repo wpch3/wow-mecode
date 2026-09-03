@@ -1,0 +1,14 @@
+PACKAGE: G17-C13 Client Spell.dbc - Slot 7 Completion + Full Impact Visuals
+BUILD: v1_slot7_impact_visuals
+DATE: 2026-08-27
+PREREQ: G17 client chain (C3v2+; user is at C12)
+TARGET: client Spell.dbc in the G17 patch-MPQ chain:
+  1. APPEND 990029 (swoop strike, enemy-target, visual 2355 War Stomp)
+     + 990030 (wind stance, self-target, visual 3719 Aspect of Cheetah)
+  2. SET visuals 990025-990028 (Dash/Rocket Jump/Dive/Slow Fall)
+  3. REPLACE all 25 combat visuals with target-side impact kits
+     (classic bolt/nuke visuals from the 3.3.5.12340 dump; 7860+4961 kept
+     as user-confirmed)
+FrameXML (C11 xml + C12 lua) passes through unchanged.
+SELFTEST: python tools/test_g17c13_package.py
+IDEMPOTENT: rerun prints ALREADY_COMPLETE and exits PASS

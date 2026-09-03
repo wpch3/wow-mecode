@@ -157,8 +157,9 @@ World of Warcraft 3.3.5a 客户端＋服务端联合魔改：TrinityCore ＋ NPC
 | C8 | 每槽独立视觉（**凭名猜错**）＋RecoveryTime 写入（**引入幻影冷却**） | — | 49868 | 🔴 用户实测 FAIL，被 C9 取代 |
 | C9 v3 | Wowhead 逐条验证 25 视觉＋RecoveryTime/Category=0；安装器五缺陷已修 | 安装后新哈希 | 49868 | ✅ 用户安装 PASS，龙类特效验收确认 |
 | C10 | 兽/法/机/通 20 槽视觉重制（G17VisualDB 全量对照＋语义匹配源法术）；龙类不动 | 安装后新哈希 | 49868 | 🟡 已装待逐类验收 |
-| C11 客户端魔改 | VehicleMenuBar.lua 常量 6→8 ＋ xml 新增按钮 7/8（MPQ 链下发；DBC 透传） | 链内 lua/xml 固定哈希 | — | ✅ 用户验证成功（后由 C12 增补框适配） |
-| **C12 客户端魔改 v2** | VehicleMenuBar.lua 增 `ActionButtonFrame:SetScale(0.75)`（>6 守卫）——8 按钮缩回 6 格占位宽 | lua `071e6887`；xml 不变 | — | 🟡 已交付待验收（25/25 自检；用户报告 UI 框装不下 8 格） |
+| C11 客户端魔改 | VehicleMenuBar.lua 常量 6→8 ＋ xml 新增按钮 7/8（MPQ 链下发；DBC 透传） | 链内 lua/xml 固定哈希 | — | ✅ 用户验证成功 |
+| C12 客户端魔改 v2 | VehicleMenuBar.lua 增 `ActionButtonFrame:SetScale(0.75)`（>6 守卫） | lua `071e6887` | — | ✅ 用户验证成功（完全重启后按钮入框） |
+| **C13 客户端 DBC 三合一** | ①追加 990029/990030（第 7 格）②飞行 990025-990028 视觉 ③全 25 战斗技换目标侧冲击特效 | 内容验证 COMPLETE | 49870+2 | 🟡 已交付待验收（22/22 自检） |
 
 当前权威客户端包：仓库根 `G17C11_FINAL.zip`（客户端魔改：原版载具条 6→8 格；payload lua `0d572a7f`/xml `31563ecf`，23/23 包自检 PASS）。C10（`9d9c546b...c9eee`，视觉）已装待逐类验收。C9 v3 的 `G17C9_FINAL.zip`（SHA `2079be3f...df4fb`）已被用户验收后由 C10 接棒。前置：C3v2 及之后任一状态（C3/C6/C7/C8/C9 已装均可直接升级，幂等）。操作：关 WoW → 双击 `01_Install_G17C10.cmd` → PASSED → 复制 addon\G17DragonBar 到 AddOns → 重启客户端。
 
