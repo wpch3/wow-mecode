@@ -151,8 +151,21 @@ def t6_sums():
        f"missing={missing[:3]} extra={extra[:3]} bad={bad[:3]}")
 
 
+def t0_cmd_ps1_consistency():
+    """The CMD files must reference PS1 files that actually exist in the
+    package (the -ClientMod/-ClientDBC name-mismatch bug class)."""
+    for cmd_name in ("01_Install_G17C13.cmd", "02_Rollback_G17C13.cmd"):
+        cmd = (PKG / cmd_name).read_text(encoding="utf-8")
+        import re as _re
+        refs = _re.findall(r'"%~dp0([^"]+\.ps1)"', cmd)
+        ok(f"T0 {cmd_name} references an existing PS1",
+           bool(refs) and all((PKG / r).is_file() for r in refs),
+           f"refs={refs}")
+
+
 def main() -> int:
     print(f"G17C13_PACKAGE_SELFTEST")
+    t0_cmd_ps1_consistency()
     t1_passthrough()
     t2_visual_table()
     t3_functional()
