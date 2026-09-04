@@ -189,7 +189,7 @@ def patch(recs: bytes, strings: bytes, count: int, append_missing: bool):
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--version", action="store_true")
-    ap.add_argument("command", nargs="?", choices=("check", "patch"))
+    ap.add_argument("command", nargs="?", choices=("check", "patch", "verify"))
     ap.add_argument("--input", default="")
     ap.add_argument("--output", default="")
     args = ap.parse_args()
@@ -197,8 +197,17 @@ def main() -> int:
     if args.version:
         print("G17C13_VERSION=" + G17C13_VERSION)
         return 0
+    if args.command == "verify":
+        assert len(COMBAT_VISUALS) == 5 and all(len(v) == 5 for v in COMBAT_VISUALS.values())
+        assert COMBAT_VISUALS[0][0] == 7860 and COMBAT_VISUALS[0][3] == 4961
+        assert set(FLIGHT_VISUALS) == {990025, 990026, 990027, 990028}
+        assert len(NEW_SPELLS) == 2 and {s[0] for s in NEW_SPELLS} == {990029, 990030}
+        assert len({v for row in COMBAT_VISUALS.values() for v in row}) >= 15
+        print("G17C13_PAYLOAD_VERIFY=PASS")
+        return 0
+
     if not args.command or not args.input:
-        print("usage: patch_g17c13.py check --input in.dbc | patch --input in.dbc --output out.dbc")
+        print("usage: patch_g17c13.py check --input in.dbc | patch --input in.dbc --output out.dbc | verify")
         return 2
 
     data = Path(args.input).read_bytes()

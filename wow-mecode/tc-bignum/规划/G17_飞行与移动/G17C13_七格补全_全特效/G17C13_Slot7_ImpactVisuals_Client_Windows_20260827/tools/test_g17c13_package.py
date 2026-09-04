@@ -117,6 +117,10 @@ def t4_gate_simulation():
         ok("T4 version gate matches the real patcher", re.search(gates[0], patcher) is not None)
     ok("T4 PS1 packs patched Spell + passthrough lua/xml/area",
        all(k in ps1 for k in ("$GeneratedSpell", "PackSpell", "PackLua", "PackXml", "PackArea")))
+    invocations = re.findall(r"\$Patcher,\s*\"(\w+)\"", ps1)
+    ok("T4 PS1 patcher subcommands all exist", bool(invocations) and all(c in ("check","patch","verify") for c in invocations), str(invocations))
+    rv = subprocess.run([sys.executable, str(PATCHER), "verify"], capture_output=True, text=True)
+    ok("T4 patcher verify works without --input", rv.returncode == 0 and "G17C13_PAYLOAD_VERIFY=PASS" in rv.stdout, rv.stdout + rv.stderr)
     ok("T4 round-trip verifies patched hash", "$PatchedSpellHash" in ps1 and "built archive Spell.dbc mismatch" in ps1)
 
 

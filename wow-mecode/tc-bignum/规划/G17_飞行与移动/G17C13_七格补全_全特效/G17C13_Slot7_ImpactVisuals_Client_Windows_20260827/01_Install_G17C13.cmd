@@ -2,9 +2,9 @@
 setlocal
 chcp 65001 >nul
 echo.
-echo === G17-C11 REAL CLIENT MOD: 8-slot-fits stock vehicle action bar ===
-echo BUILD=v1_vehiclebar_8slots
-echo Patches the client's own FrameXML (VehicleMenuBar.lua/xml) via the MPQ chain.
+echo === G17-C13 Client DBC: slot-7 completion + full impact visuals ===
+echo BUILD=v1_slot7_impact_visuals
+echo Appends 990029/990030 + flight visuals + 25 impact-kit combat visuals via the MPQ chain.
 echo.
 powershell.exe -NoLogo -NoProfile -ExecutionPolicy Bypass -File "%~dp0Install-G17C13-ClientDBC.ps1" %*
 set "RC=%ERRORLEVEL%"
