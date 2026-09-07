@@ -1,0 +1,13 @@
+PACKAGE: G17-C14 Visual Truth Pass + 990029 Rename (client DBC)
+BUILD: v1_visual_truth_rename
+DATE: 2026-08-27
+PREREQ: G17 client chain (user is at C13)
+CHANGES: (1) visual 222 (Learning/level-up golden burst) banned and replaced
+  on all three slot-2 users with reverse-verified heal/shield kits
+  (4302 Ice Barrier / 57 Greater Heal / 3077 Flash Heal / 784 PW:S kept from
+  reverse lookup); (2) all five slot-2 self-heal records re-targeted
+  ImplicitTargetA 18->1 (CASTER) + RangeIndex 4->1 so the visual plays on
+  the dragon; (3) 990029 renamed via string-block append + offset repoint.
+FrameXML passthrough unchanged.
+SELFTEST: python tools/test_g17c14_package.py
+IDEMPOTENT: rerun prints ALREADY_COMPLETE
